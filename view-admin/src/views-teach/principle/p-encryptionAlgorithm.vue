@@ -63,9 +63,9 @@
 	</div>
 		<!--左侧拖拽工具箱-->
 	<div class="leftTool symmetryTool">
-		<div class="showbox" :class="{'showTool':showTool}">
-			<div class="tool1" >
-				 <span class="tool_icon" @click.stop="poinfun(1)">
+		<div class="showbox" :class="{'showTool':showTool,'showBox1':funNum==1,'showBox2':funNum==2}" >
+			<div class="tool1" @click.stop="poinfun(1)">
+				 <span class="tool_icon" >
 				 	  <p class="n_ltips">加密</p>
 			   </span>
 			</div>
@@ -74,8 +74,8 @@
 					
 		   	</span>
 			</div>
-			<div class="tool3" >
-				<span class="tool_icon"  @click.stop="poinfun(2)">
+			<div class="tool3" @click.stop="poinfun(2)">
+				<span class="tool_icon"  >
 					<p class="n_ltips">解密</p>
 				</span>
 				

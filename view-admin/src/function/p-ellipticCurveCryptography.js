@@ -6,7 +6,7 @@ export default{
 		return{
 			menuShow:false,//上方菜单按钮是否显示
 	
-			step:0,
+			step:1,
 	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
@@ -21,7 +21,9 @@ export default{
 	    showTool:false,//左侧工具箱是否显示
 	    
 	    showConfirm:0, //弹出框弹出的次数
-	    iconUrl:require('../assets/teachImg/icon_user.png'),//头像 
+	    iconUrl_1:require('../assets/teachImg/icon_user1.png'),//头像 
+	    iconUrl_2:require('../assets/teachImg/icon_user2.png'),//头像 
+	    iconUrl_3:require('../assets/teachImg/icon_user3.png'),//头像 
 	    fileFinsh:false,//用户A是否已经把文件传给b  
 	    delayTimer:null,//延迟执行时间
 
@@ -40,12 +42,12 @@ export default{
 	    userA:{
 	    	userName:'用户A',
 	    	publicKey:'ldkewjrewf231fwe5r413ew2132fd1s32fsf2d1f5ew2',
-	      privateKey:'fkjekjf13er21t5re1d32a1weq3wr14581gfs3d21fs32'
+	      
 	    },
 	    userB:{
 	    	userName:'用户B',
 	    	publicKey:'ldkewjrewf231fwe5r413ew2132fd1s32fsf2d1f5ew2',
-	      
+	      privateKey:'fkjekjf13er21t5re1d32a1weq3wr14581gfs3d21fs32'
 	    },
 	    userC:{
 	    	userName:'用户C',
@@ -53,7 +55,7 @@ export default{
 	     
 	    },
 	    menuText:'区块链密码学-椭圆线密码算法',
-	    singleStep:true
+	   
 		}
 		
 		
@@ -91,8 +93,9 @@ export default{
 					
 					if(that.wprogress == 70){
 						that.operaInfo.mess = '用户B已通过椭圆线密码生成公钥以及私钥';
-						that.operaInfo.infolist.push('公钥：'+that.userA.publicKey);
-				    that.operaInfo.infolist.push('私钥：'+that.userA.privateKey);
+							that.operaInfo.infolist=[];
+						that.operaInfo.infolist.push('公钥：'+that.userB.publicKey);
+				    that.operaInfo.infolist.push('私钥：'+that.userB.privateKey);
 				    that.operaInfo.infolist.push('并且A用户与C用户已收到B用户公布出来的公钥。')
 				    
 					}
@@ -125,9 +128,6 @@ export default{
 	  tipSure(){
 	  	let that = this
 	  	that.confirShow = false;
-	  	if(that.step==0){
-	  		that.step = that.step + 1;
-	  	}
 	  },
 	  
 	  //椭圆线a,b值输入点击确定
@@ -138,7 +138,9 @@ export default{
 	  surePoint(){
 	  	let that = this;
 	  	that.step = that.step + 1;
-	   
+	  	that.delayTimer = setTimeout(function(){
+	  	that.confirShow = true
+	  	},1000)
 	  },
 	  
 	  //解析完成
@@ -158,20 +160,27 @@ export default{
 	  //点击用户展示用户信息
 	  showUserInfo(obj,num){
 	  	let that = this;
-	  	if(that.step < 3){
-	  		return;
-	  	}
-	  	if(num==1){
+	  	
+	  	if(that.step==1){
+	  		if(num==2){
+	  		   that.$toast('用户还未生成公钥和私钥',3000)
+	  		}else{
+	  			that.$toast('用户还未生成公钥',3000)
+	  		}
+	  	}else{
+	  	
+
+	  	if(num==2){
 	  		that.operaInfo.infolist=[];
-				that.operaInfo.mess = '用户'+obj.userName;
+				that.operaInfo.mess = obj.userName;
 				that.operaInfo.infolist.push('公钥'+obj.publicKey);
 				that.operaInfo.infolist.push('私钥'+obj.privateKey)
 	  	}else{
 	  		that.operaInfo.infolist=[];
-	  		that.operaInfo.mess = '用户'+obj.userName;
+	  		that.operaInfo.mess = obj.userName;
 				that.operaInfo.infolist.push('公钥'+obj.publicKey);
 	  	}
-	  	
+	  	}
 	  }
 	  
 	},

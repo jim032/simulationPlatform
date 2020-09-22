@@ -7,7 +7,7 @@
 		<div class="mainBox">
 			 <div class="userinfo">
 			 	   <div class="d-user" @click="showUserInfo(userA,1)">
-			 	   	 <div class="d-icon"><img :src="iconUrl"/></div>
+			 	   	 <div class="d-icon"><img :src="iconUrl_1"/></div>
 			 	   	 <p class="d-name">用户A</p>
 			 	   </div>
 			 	   <div class="d-file">数据</div>
@@ -15,7 +15,7 @@
 			 
 			  <div class="userinfo1">
 			 	   <div class="d-user" @click="showUserInfo(userB,2)">
-			 	   	 <div class="d-icon"><img :src="iconUrl"/></div>
+			 	   	 <div class="d-icon"><img :src="iconUrl_2"/></div>
 			 	   	 <p class="d-name">用户B</p>
 			 	   </div>
 			 	   <div class="d-file" v-if="fileFinsh">数据</div>
@@ -23,7 +23,7 @@
 			 
 			 <div class="userinfo2">
 			 	   <div class="d-user" @click="showUserInfo(userC,3)">
-			 	   	 <div class="d-icon"><img :src="iconUrl"/></div>
+			 	   	 <div class="d-icon"><img :src="iconUrl_3"/></div>
 			 	   	 <p class="d-name">用户C</p>
 			 	   </div>  
 			 </div>
@@ -34,11 +34,17 @@
 		</div>
 	</div>
 		<!--左侧拖拽工具箱-->
-	<div class="leftTool">
+	<div class="leftTool eccTool">
 		<div class="showbox" :class="{'showTool':showTool}">
-			<div class="tool1" :class="{'animaImg1':funNum==1}"><span class="tool_icon" @click.stop="poinfun(1)">生成</span></div>
-			<div class="tool2" :class="{'animaImg2':funNum==2}" ><span class="tool_icon" @click.stop="poinfun(2)">发送</span></div>
-			<div class="tool3" :class="{'animaImg3':funNum==3}"><span class="tool_icon"  @click.stop="poinfun(3)">解析</span></div>
+			<div class="tool1" :class="{'animaImg1':funNum==1}">
+				<span class="tool_icon" @click.stop="poinfun(1)"><p class="n_ltips">生成哈希</p></span>
+			</div>
+			<div class="tool2" :class="{'animaImg2':funNum==2}" >
+				<span class="tool_icon" @click.stop="poinfun(2)"><p class="n_ltips">发送数据</p></span>
+			</div>
+			<div class="tool3" :class="{'animaImg3':funNum==3}">
+				<span class="tool_icon"  @click.stop="poinfun(3)"><p class="n_ltips">解析数据</p></span>
+			</div>
 		</div>
 		<div class="icon" @click.stop="showTool=!showTool;menuShow = false"><span></span></div>
 	</div>
@@ -54,7 +60,7 @@
 	<rightTips :step="step" :confirShow="confirShow" :stepTips="stepTips" :pageName="pageName" :lineDrawShow="lineDrawShow"
 		@tipSure="tipSure" :winNum="winNum"
 		@sureLine="sureLine" @surePoint="surePoint" :wprogress="wprogress" :isParse="isParse"
-		@sureParse = 'sureParse' :singleStep="singleStep"
+		@sureParse = 'sureParse' 
 		>
 		
 	</rightTips>	

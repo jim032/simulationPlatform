@@ -5,7 +5,7 @@
         <div class="box_point" ref="box_point" :style="{'padding-top':top+'px'}">
 				<div class="pointBox clearfix " ref="pointBox">
 					
-					<!--转账划线-->
+					<!--转账划线
 					
 					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="s_linebox " ref="s_linebox" id="b_line" >  
 		        <defs>    
@@ -26,6 +26,20 @@
 
 						
 					</svg>
+					-->
+					<div class="s_linebox">
+							<!--
+						<div id="backup" style="height:280px;width:280px;border:1px solid black;border-radius:50%;position:absolute;top:0px;left:90px;">
+					    <div id="test" class="gold" style="height: 40px;width: 40px;position:relative;left:300px;top:120px;border-radius:50%"></div>
+					  </div>
+				
+					  <div id="backup" style="height:600px;width:600px;border:1px solid black;border-radius:50%;position:absolute;top:0px;left:90px;">
+					    <div id="test" ref="gold" class="gold" style="height: 40px;width: 40px;position:relative;left:15px;top:120px;border-radius:50%"></div>
+					  </div>
+					   -->
+					</div>
+					
+					
 					<!--转账划线结束-->
 					
 					<div class="info info1" ref="info1" data-div='1' >

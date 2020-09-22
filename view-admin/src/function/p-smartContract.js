@@ -8,6 +8,7 @@ import comHeader from '@/components-teach/sheader';
 import comFooter from '@/components-teach/footer';
 import rightTips from '@/components-teach/tips';
 import common from '@/function/common';
+
 export default{
 	data(){
 	  return{
@@ -56,7 +57,10 @@ export default{
 	    toastText: '',
 			currentLocation:0,
 			
-			iconUrl:require('../assets/teachImg/icon_user.png'),
+			iconUrl1:require('../assets/teachImg/icon_user1.png'),
+			iconUrl2:require('../assets/teachImg/icon_user2.png'),
+			iconUrl3:require('../assets/teachImg/icon_user3.png'),
+			iconUrl4:require('../assets/teachImg/icon_user4.png'),
 			
 			lineFinsh:false,//广播划线是否完成
 			
@@ -134,7 +138,7 @@ export default{
        	  that.blockPro++;
           if(that.blockPro==100){
 	            clearInterval(timer)
-	            that.operaInfo.mess = '此处文本内容为告知正在进行合约的部署:'+that.blockPro+'%';
+	            that.operaInfo.mess = '当前合约正在部署中:'+that.blockPro+'%';
 	            that.isBlcok = false;
 	            clearTimeout(that.timer1);
 						  that.timer1 = setTimeout(function(){
@@ -142,10 +146,10 @@ export default{
 							},500)
 	            //that.confirShow = true; 
 	            that.top = that.top-40;
-							that.operaInfo.mess = "当前合约已经部署完成"
-							that.operaInfo.infolist.push('合约地址：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-							that.operaInfo.infolist.push('其他参数：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-							that.operaInfo.infolist.push('其他参数：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+							that.operaInfo.mess = "当前合约部署完成"
+							that.operaInfo.infolist.push('合约地址：合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
+							that.operaInfo.infolist.push('资产名称：'+that.coinName)
+							that.operaInfo.infolist.push('创建者：'+'用户'+that.chooseUserObj)
 							that.$set(that.divInfo1,'operable',1)
    	   	    	that.$set(that.divInfo2,'operable',1)
    	   	    	that.$set(that.divInfo3,'operable',1)
@@ -236,7 +240,7 @@ export default{
 			end = that.divInfo4.div
 		}
 		that.transferShow = false
-	  that.broadCastLine(start,end);//调用划线
+	  //that.broadCastLine(start,end);//调用划线
   },  
   		
 	//点击转账按钮Location表示第几个div
@@ -445,6 +449,86 @@ export default{
 	    	}
 	  	}
   },
+  
+  
+  circleMove(json){
+  	let that = this;
+    //要操作的元素
+    var obj = json.obj;
+    //方向(顺时针'+'或逆时针'-')
+    var dir = json.dir;
+    dir = dir || '+';
+    //最大圈数
+    var max = json.max;
+    max = Number(max) || 'all'; 
+    //半径
+    var r = json.r;
+    r = Number(r) || 100;
+    //圆心x轴坐标
+     var x0 = json.x0 || parseFloat(that.getCSS(obj,'left'));
+    //圆心y轴坐标
+    var y0 = json.y0 ||  parseFloat(that.getCSS(obj,'top')) - r;
+    //初始夹角，以角度为单位
+    var a0 = json.a0;
+    a0 = Number(a) || 90;
+    //当前夹角
+    var a = json.a ||a0;
+    //当前圈数
+    var num = json.num || 0;
+    //清除定时器
+    if(obj.timer){return;}
+    //声明当前值cur
+    var cur = {};
+    obj.timer = setInterval(function(){
+        //将这些瞬时值储存在obj对象中的属性中
+        obj.a = a;
+        obj.x0 = x0;
+        obj.y0 = y0;
+        obj.x = x;
+        obj.y = y;
+        obj.num = num;
+        //如果元素运动到指定圈数则停止定时器
+        if(num == max){
+            clearInterval(obj.timer);
+        }
+        //顺时针
+        if(dir == '+'){
+            a++;
+            if(a == a0 + 360){
+                a = a0;
+                num++;
+            }
+        //逆时针
+        }else{
+            a--;
+            if(a == a0 - 360){
+                a = a0;
+                num++;
+            }
+        }
+         cur.left = parseFloat(that.getCSS(obj,'left'));
+         cur.top = parseFloat(that.getCSS(obj,'top')); 
+         
+         
+      
+         
+        //更新left和top值
+			        var x = x0 + r*Math.cos(a*Math.PI/180);
+			        var y = y0 + r*Math.sin(a*Math.PI/180)
+			        test.style.left = x + 'px';
+			        test.style.top = y + 'px';    
+			    },15);
+			 },
+			 
+			 
+			 getCSS(obj,style){
+			
+			    if(window.getComputedStyle){
+			        return getComputedStyle(obj)[style];
+			    }
+			    return obj.currentStyle[style];
+			},
+  
  
  //点击弹出框我知道了方法
   tipSure(){
@@ -505,18 +589,18 @@ export default{
 	     switch(parseInt(num)){
 	     	case 1:
          
-          that.divInfo1 =that.sragSetInfo(obj,id,num,that.iconUrl)
+          that.divInfo1 =that.sragSetInfo(obj,id,num,that.iconUrl1)
 	     	  break;
 	     	case 2:
-          that.divInfo2 =that.sragSetInfo(obj,id,num,that.iconUrl)
+          that.divInfo2 =that.sragSetInfo(obj,id,num,that.iconUrl2)
          // that.sragSetInfo(obj,id,num,that.iconUrl)
 	     	   break;
 	     	case 3:
-           that.divInfo3 =that.sragSetInfo(obj,id,num,that.iconUrl)
+           that.divInfo3 =that.sragSetInfo(obj,id,num,that.iconUrl3)
            //that.sragSetInfo(obj,id,num,that.iconUrl)
 	     	   break;
 	     	case 4:
-	         that.divInfo4 =that.sragSetInfo(obj,id,num,that.iconUrl)
+	         that.divInfo4 =that.sragSetInfo(obj,id,num,that.iconUrl4)
             //that.sragSetInfo(obj,id,num,that.iconUrl,)
             break;
 	     }
@@ -650,7 +734,9 @@ export default{
 		this.$nextTick(() => {	  	
 		  	that.initHeight();
 	      that.initPointInfo();
-	       
+	      
+	       //that.circleMove({obj:test,r:150,dir:'-',x0:test.x0,y0:test.y0,a:test.a,num:test.num});
+	       //that.circleMove({obj:test,r:150,dir:'-',x0:test.x0,y0:test.y0,a:test.a,num:test.num,max:1});
 		  })	
 	},
 	//离开页面清除定时器

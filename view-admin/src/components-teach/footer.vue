@@ -25,7 +25,7 @@
 			
 			<template v-if="pageName==3">	
 			<p class="protext" v-if="isBlcok && step==1">hash值正在生成：{{blockPro}}%</p>
-			<p class="protext" v-if="isBlcok && step==3">正在通过梅克尔树生成hash并校验：{{blockPro}}%</p>
+			<p class="protext" v-if="isBlcok && (step==31 ||step==33)">正在通过梅克尔树生成hash并校验：{{blockPro}}%</p>
 			<div class="progress" v-if="isBlcok">
 				<div class="curPro">
 					<div class="proIcon" :style="{'width':blockPro+'%'}"></div>

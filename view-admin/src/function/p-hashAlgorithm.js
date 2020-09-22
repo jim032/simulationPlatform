@@ -19,7 +19,9 @@ export default{
 	    showTool:false,//左侧工具箱是否显示
 	    
 	    showConfirm:0, //弹出框弹出的次数
-	    iconUrl:require('../assets/teachImg/icon_user.png'),//头像 
+	    iconUrl_1:require('../assets/teachImg/icon_user1.png'),//头像 
+	    iconUrl_2:require('../assets/teachImg/icon_user2.png'),//头像 
+	    iconUrl_3:require('../assets/teachImg/icon_user3.png'),//头像 
 	    fileFinsh:false,//用户A是否已经把文件传给b  
 	    delayTimer:null,//延迟执行时间
 	    
@@ -32,7 +34,7 @@ export default{
 	    consoleShow:true,//头部控制台是否显示
 	    
 	    menuText:'区块链密码学-哈希算法',
-	    singleStep:true,//单个步骤提示
+	    
 	    
 		}
 	},
@@ -73,7 +75,7 @@ export default{
 				that.isShowAttack = true;
 				that.funNum = num;
 			}
-			if(num==3 && that.step==3 && that.blockPro==0){
+			if(num==3 && (that.step==31 || that.step==33) && that.blockPro==0){
 				that.funNum = num;
 				that.isBlcok = true;
 				that.operaInfo.mess = ''
@@ -87,7 +89,7 @@ export default{
 						  that.operaInfo.infolist.push('e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda变为f5q4wq9e32d1as821c65sad465w4eq56weq56d6asda');
 						  
 						}else{
-							that.operaInfo.mess = '此处文本提示由A输送过来的“文件A”未受到篡改';
+							that.operaInfo.mess = '由A输送过来的“文件A”未受到篡改';
 						  that.operaInfo.infolist.push('hash值为： e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda');
 						}
 						
@@ -100,7 +102,32 @@ export default{
 				},50)		
 			}
 		},
-		
+		//点击文件生成hash
+		showHash(num){
+			let that = this;
+			that.operaInfo.infolist=[];
+			if(that.isBlcok == true){
+				return;
+			}
+			if(num==1){
+				  if(that.step==1){
+				  	that.$toast('文件hash还未生成',3000)
+				  	return;
+				  }
+					that.operaInfo.mess = '当前文件的hash值：';
+					that.operaInfo.infolist.push('e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda');
+			}
+			if(num==2){
+				if(that.isAttack==1){
+					that.operaInfo.mess = '当前文件的hash值：';
+					that.operaInfo.infolist.push('f5q4wq9e32d1as821c65sad465w4eq56weq56d6asda');
+					return ;
+				}else{
+					that.operaInfo.mess = '当前文件的hash值：';
+					that.operaInfo.infolist.push('e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda');
+				}
+			}
+		},
 	  //点击菜单图标
 	  clickMenu(){
 	 	  this.menuShow = !this.menuShow
@@ -110,8 +137,18 @@ export default{
 	  tipSure(){
 	  	let that = this
 	  	
-	
-	  	that.step = that.step +1;
+	    
+	    if(that.step==2){
+	    	if(that.isAttack==1){
+	    		that.step = that.step=31;
+	    	}else{
+	    		that.step = that.step=33;
+	    	}
+	    	
+	    }else{
+	    	that.step = that.step +1;
+	    }
+	  	
 	 
 	  	that.confirShow = false;
 	  	

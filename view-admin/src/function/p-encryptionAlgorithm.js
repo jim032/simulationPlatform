@@ -59,10 +59,12 @@ export default{
 			let that = this;
 			if(num==1 && that.step==1){
 				that.isEncryption = true
+				that.funNum = 1
 			}
 			if(num==2 && that.step==2 ) {
 				that.isEncryption = false
 				that.isDecrypt = true;
+				that.funNum = 2
 			}
 			
 		},

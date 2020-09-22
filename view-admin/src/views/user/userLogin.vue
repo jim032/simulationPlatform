@@ -15,18 +15,18 @@
 							<p>-区块链虚拟仿真学习平台</p>
 						</div>
 					</div>
-         
+
           <div class="selbox" :class="{'showTransModal':showmodelList}" @click="showmodelList=!showmodelList" v-if="loginType==1">
 						<div class="din din-ms" >
 							<span class="lab"></span>
 							<p class="sel">{{model}}</p>
-							
+
 						</div>
 						<div class="transModal">
 							<p class="pcel" v-for="(item,index) in modelList" :key='item.type' @click.stop="choModel(item)">{{item.text}}</p>
 						</div>
 					</div>
-					
+
 					<div class="din din-zh " :class="{'din-tea-zh':loginType==2}">
 
 						<span class="lab"></span>
@@ -88,7 +88,7 @@
 			login(){
 				let that = this;
 
-				
+
 				if(that.account == ''){
 				   that.$toast('请输入账号',3000)
 				   return;
@@ -100,21 +100,21 @@
 				/*
         if(that.loginType==1){
 	         	let token = sessionStorage.getItem('stu_userToken')
-	          if(token==null || token =='') { 	
+	          if(token==null || token =='') {
 	          	createToken({id:that.account}).then(res=>{
-	          		if(res.code==200){ 			
-	          			sessionStorage.setItem('stu_userToken',res.data.token)		
+	          		if(res.code==200){
+	          			sessionStorage.setItem('stu_userToken',res.data.token)
 	          		}else{
 	          			that.$toast(res.message,3000)
 	          		}
-	          		
+
 	          	})
 	          }
         }
         */
-          
+
         this.login1();
-					
+
 
 
 				 if(that.account == ''){
@@ -129,7 +129,7 @@
              for(let i = keys.length; i--;)
                document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
            }
-          
+
           this.login1();
 
 
@@ -148,13 +148,13 @@
 						  let id = res.data.id
 	            if(role_id==3){
 	            	sessionStorage.setItem('stu_userId',res.data.id)
-	              sessionStorage.setItem('stu_role_id',res.data.role_id); 
+	              sessionStorage.setItem('stu_role_id',res.data.role_id);
 	            	this.$router.push({name:'catalogue'})
 	            	that.getJwt(id);
-	            }else{	            	
+	            }else{
 	            	sessionStorage.setItem('user_id',res.data.id)
-	              sessionStorage.setItem('role_id',res.data.role_id); 
-	            	this.$router.push({name:'index'})  
+	              sessionStorage.setItem('role_id',res.data.role_id);
+	            	this.$router.push({name:'index'})
 	            	that.getJwt(id);
 	            }
 
@@ -177,15 +177,15 @@
 	 				if(res.code==200){
 	            this.jwt = res.data.jwt
 	            if(this.loginType==1){
-	              Cookies.set('jwt', res.data.jwt, { expires:1 });
+	              Cookies.set('stu_jwt', res.data.jwt, { expires:1 });
 	            }else{
-	            	Cookies.set('stu_jwt', res.data.jwt, { expires:1 });
+	            	Cookies.set('jwt', res.data.jwt, { expires:1 });
 	            }
 	          }else{
 	            this.$toast(res.message,2000)
 	          }
 	 			})
-	 			
+
 	 		},
 	 		linkFrontLogin(){
 	 			let that = this;
@@ -198,11 +198,11 @@
 		   	}
 
 		  }
-	 		
+
 		},
 		mounted(){
 			window.addEventListener('keydown',this.keyDown);
-		
+
 		},
 		destroyed(){
       window.removeEventListener('keydown',this.keyDown,false);

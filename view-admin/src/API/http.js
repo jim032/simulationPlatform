@@ -4,9 +4,9 @@ import Cookies from 'js-cookie'
 import store from '@/store/store'
 //自定义配置新建一个axios实例
 const http = axios.create({
-	//baseURL: 'http://192.168.1.138:8080',
-	baseURL: 'http://192.168.1.52:8080',
-	
+	baseURL: 'http://192.168.1.138:8080',
+	//baseURL: 'http://192.168.1.52:8080',
+
 	headers: {
 		'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 	},
@@ -32,17 +32,17 @@ http.interceptors.request.use(function(config) {
  */
 	//console.log(config)
 	//在发送请求之前做某事
-  
+
 	if(config.method=='delete'){
 		config.headers['Content-Type']='application/json'
 	}
-	
+
 	let role_id = sessionStorage.getItem('role_id')
 
 	if(role_id!=null && (role_id==1 ||　role_id==2)){
 		config.headers.Authorization = Cookies.get('jwt')
 	}
-	
+
 	if(role_id!=null && role_id==3) {
 		config.headers.Authorization = Cookies.get('stu_jwt')
 	}

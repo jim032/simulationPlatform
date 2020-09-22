@@ -37,7 +37,7 @@ var hardware = function(data){
 
 //课程访问频率
 var courseFrequency = function(data){
-  return axios.get('/get_visit_course_frequency?per_page='+data.per_page+'&page='+data.page)
+  return axios.get('/get_visit_course_frequency?per_page='+data.per_page+'&page='+data.page+'&category_name='+data.category_name+'&start='+data.dateRangeStart+'&end='+data.dateRangeEnd)
 }
 
 

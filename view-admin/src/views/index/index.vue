@@ -44,7 +44,7 @@
 							      :picker-options="pickerOptions">
 							    </el-date-picker>
 							    <el-input v-model="searchInput" placeholder="请输入知识点"></el-input>
-							    <span class="n-searchbtn"></span>
+							    <span class="n-searchbtn" @click="searchCategory"></span>
 								</div>
 								<h3>课程访问次数</h3>
 							</div>
@@ -57,9 +57,9 @@
 							</el-table>
 							<div class="tab-operation">
 								<div class="page-block">
-									<el-pagination @current-change="handleCourseChange" 
-										:current-page.sync="currentPage" 
-										:page-size="coursePageSize" layout="prev, pager, next, jumper" 
+									<el-pagination @current-change="handleCourseChange"
+										:current-page.sync="currentPage"
+										:page-size="coursePageSize" layout="prev, pager, next, jumper"
 										:total='totalCourse'>
 									</el-pagination>
 								</div>
@@ -160,17 +160,17 @@
 				pageNum: 1, //参数代表传递给头部的是哪个页面
 				operaRecord: [],
         onLineList: [], //在线人数
-				
+
 				datatype: 1, //数据显示方式 1表示周，2表示月
 				showDataType: false, //柱状图显示时间范围
 
 				currentPage: 1,//课程访问次数当前页
 				onlinePage:1,//在线人数分页
-				
+
 				coursePageSize:10,//课程访问次数每页条数
 				onlinePageSize:10,//在线人数每页条数
-				
-				
+
+
 				showEchatrs: false,
 				dateRange:'',
 				searchInput:'',//输入知识点检查
@@ -204,7 +204,7 @@
           }
         })
       },
-      
+
       /*在线人数*/
       onlineUsers(){
       	let that = this;
@@ -215,7 +215,7 @@
           if(res.code==200){
             let onLineList = res.data.content;
             this.onLineList=onLineList;
-           
+
           }else{
             that.$toast(res.message,3000)
           }
@@ -237,11 +237,35 @@
       courseFrequency(){
       	let that = this;
       	let obj = {};
-      	obj.per_page = that.coursePageSize
-      	obj.page = that.currentPage-1
+      	obj.per_page = that.coursePageSize;
+      	obj.page = that.currentPage-1;
+        obj.category_name = that.searchInput.replace(/\s*/g,'');
+        if(that.dateRange !== '') {
+          let time = that.dateRange.toString().split(",");
+          let start = new Date(time[0]);
+          let yS = start.getFullYear();
+          let mS = start.getMonth() + 1;
+          mS = mS < 10 ? ('0' + mS) : mS;
+          let dS = start.getDate();
+          dS = dS < 10 ? ('0' + dS) : dS;
+          obj.dateRangeStart = yS+'-'+mS+'-'+dS;
+          let end = new Date(time[1]);
+          let yE = end.getFullYear();
+          let mE = end.getMonth() + 1;
+          mE = mE < 10 ? ('0' + mE) : mE;
+          let dE = end.getDate();
+          dE = dE < 10 ? ('0' + dE) : dE;
+          obj.dateRangeEnd = yE+'-'+mE+'-'+dE;
+        }else{
+          obj.dateRangeStart='';
+          obj.dateRangeEnd='';
+        }
         courseFrequency(obj).then(res=> {
           if(res.code==200){
-            let total = res.data.length;
+            for(let i = 0 ;i < res.data.content.length; i++){
+              let time  = res.data.content[i].created_at.toString().replace('T',' ');
+              res.data.content[i].created_at = time.substring(0,19);
+            }
             let that = this;
             that.totalCourse = res.data.totalElements;
             let operaRecord = res.data.content;
@@ -252,7 +276,7 @@
         })
       },
 
-		
+
 			//表格酒奇偶行显示不一样
 			tableRowClassName({
 				row,
@@ -265,8 +289,14 @@
 				}
 
 			},
-			
-						/*课程当前页改变的时候触发*/
+
+      //根据搜索文字搜索课程访问次数
+      searchCategory(){
+        let that = this;
+        that.courseFrequency();
+      },
+
+		  /*课程当前页改变的时候触发*/
 			handleCourseChange(val) {
 				let that = this;
 				that.currentPage =  val;

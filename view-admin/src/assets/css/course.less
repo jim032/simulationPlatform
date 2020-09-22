@@ -1,0 +1,155 @@
+@import url("../../assets/css/style.less");
+.course-main{
+    height:650px; position: relative; 
+    .cou-left{height: 100%;float: left;
+    background:#fff;.borderRadius(30px,20px,20px,30px); overflow: hidden; 
+      .coulist{height:100%; overflow: hidden;
+          background: linear-gradient( #009EFF, #006AFF);
+          background: -moz-linear-gradient(top, #009EFF 0%, #006AFF 100%);
+          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#009EFF), color-stop(100%,#006AFF));
+          background: -webkit-linear-gradient(top, #009EFF 0%,#006AFF 100%);
+          background: -o-linear-gradient(top, #009EFF 0%,#009EFF 100%);
+          background: -ms-linear-gradient(top, #009EFF 0%,#006AFF 100%);
+           background: linear-gradient(to bottom, #009EFF 0%,#006AFF 100%);
+                  
+          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006AFF', endColorstr='#009EFF',GradientType=0 );
+          overflow-y: auto;
+
+      .borderRadius(20px,20px,20px,20px)
+    }
+
+}
+
+    //模式选择
+    .typebox{position: absolute; width:100px;height: 44px;.borderRadius(22px,22px,22px,22px);
+     background:#fff;font-size:0px; padding: 0 2px; top:30px;left:10px;
+    }
+     .typebox span{display: inline-block;width:50%;line-height:38px;font-size:15px;color:#3282FF;text-align: center; vertical-align:top;
+     margin-top:3px;cursor: default;}
+     .typebox span.active{background:#009EFF;color:#fff;.borderRadius(19px,19px,19px,19px)}
+  
+   //右边样式
+    .courseMain{ height: 100%; float: left;margin-left:60px;
+    box-sizing:border-box; 
+   -moz-box-sizing:border-box; 
+   -webkit-box-sizing:border-box; position: relative;
+  
+    .right-main{width:100%;height:100%;display:table;background:#fff;.borderRadius(20px,20px,20px,20px);min-width:500px; overflow: auto;
+       .content{width: 100%;height: 100%; display: table-cell; vertical-align: middle;
+       
+       }
+      .form-add{width:57%; border: 3px dashed #D7D7D7; padding:115px 0;min-width:450px; margin: 0 auto;}
+      .icon{width:167px;height: 116px; background: url(../img/icon_course.png) center no-repeat; margin: 0 auto;}
+      .mess{font-size:18px;color:#3182FF; text-align: center; padding-top:20px; width: 100px;cursor:default;margin: 0 auto;}
+      }
+      .addnotice{font-size:14px;color:#666;position: absolute;width: 100%;text-align: center; bottom:-30px;
+         span{background: url(../img/icon_notice.png)left center no-repeat; padding-left: 23px;}
+    }
+    
+     .right-main-data{background:#F6F7FB;}
+     
+    }
+   
+   /*课程列表样式*/
+   .courseList{
+      .ul-course{font-size:0px; padding:0 2%; padding-top:20px;height:580px;overflow: auto;;}
+      li{width:25%;float: left;margin-top:30px;padding:0 15px; 
+        -moz-box-sizing: border-box;  
+     -webkit-box-sizing: border-box; 
+     -o-box-sizing: border-box; 
+     -ms-box-sizing: border-box; 
+     box-sizing: border-box; 
+      }
+      .info{background:#fff;.borderRadius(5px,5px,5px,5px);width:98%; margin: 0 auto;height:240px;position: relative; 
+      padding-top:50px;
+      -moz-box-sizing: border-box;  
+     -webkit-box-sizing: border-box; 
+     -o-box-sizing: border-box; 
+     -ms-box-sizing: border-box; 
+     box-sizing: border-box; 
+      }
+      
+      .icon-del{width:30px;height: 30px;display: block; position: absolute; right:10px; top:10px;
+        background: url(../img/cour_del.png) center no-repeat; background-size:24px; -webkit-background-size:24px;
+      }
+      .icon-edit{width:20px;height: 20px; display: inline-block; vertical-align:middle; background: url(../img/cour_edit.png) center no-repeat; 
+      background-size:14px 16px; -webkit-background-size:14px 16px;
+      margin-left:10px;}
+      
+      .i-info{position: absolute;width:100%;left:0px;top:50%;-webkit-transform:translateY(-50%);
+      -moz-transform: translateY(-50%);
+     -ms-transform:  translateY(-50%);
+     transform: translateY(-50%);}
+      .name{color:#000;font-size:20px; text-align: center;width:94%; margin: 0 auto;}
+      .name p{display: inline-block;vertical-align: middle; max-width:80%;}
+      .perNumber{
+          font-size:16px; text-align: center; padding-top:6px; white-space: nowrap;
+          span{background:url(../img/icon_ava.png)left center no-repeat; padding-left:20px;}
+      }
+      .btn{width:88%;display:block;margin: 0 auto;color:#3182FF;font-size:18px; height:45px;
+      text-align: center;line-height: 45px;border: 1px solid #3182FF; margin-top:20px;cursor: default;
+      .borderRadius(5px,5px,5px,5px);}
+      .course-page{display: block; text-align: right; padding-right: 30px;position: relative;}
+      .btnAdd{width:128px;height: 30px;line-height:30px; display:block;position: absolute;left:40px;top:50%;margin-top:-15px;
+      background:#4484FD;color:#fff;.borderRadius(30px,30px,30px,30px);text-align:center
+      }
+   }
+   
+   
+   
+   
+}
+
+/*输入课程名弹出框*/
+.inName{width:100%;border:1px solid #DDDDDD; text-align: center; padding: 10px 20px;.borderRadius(5px,5px,5px,5px)}
+.inName input{width:100%; text-align: center;font-size:16px;  line-height: 20px;}
+.errorMess{font-size:14px;color:#f56c6c; padding:10px 10px 0 10px;}
+
+/*点击分组列表样式*/
+.group-dialog{
+   .surebtn{width:110px;height:35px;display:block;background:#4484FD;font-size:14px;color:#fff;/*position: absolute;*/
+   text-align: center;line-height: 35px;.borderRadius(15px,15px,15px,15px);left:30px;margin: 0 auto;
+   cursor: default;}
+   .teaclass{/*float: right; margin-right: 50px;*/ padding:20px 0; text-align: center;}
+   
+
+}
+.group-table{max-height: 480px;}
+.group-dialog-title{
+    h3{font-size:22px;color:#000; padding-left:30px; line-height:60px; float: left;}
+}
+
+
+
+@media screen and (max-width:1440px){
+    .course-main{
+        .courseList{
+           .name{font-size:16px;} 
+       }
+    }
+}
+@media screen and (max-width:1200px){
+  .pageWrap{min-width:1040px;}
+  
+  .course-main{
+      .courseMain {
+           .right-main{
+              .form-add{width:80%;} 
+           } 
+       }
+       .courseList{
+           .name{font-size:14px;} 
+       }
+   }
+   .course-main{
+     .courseList{
+        li{width:46%;margin:30px 2% 0 2%}
+    }
+  }
+  
+}
+
+@media screen and (max-width:1000px){
+  
+}
+

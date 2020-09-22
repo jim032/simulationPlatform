@@ -1,0 +1,116 @@
+/*原理篇加密算法*/
+@import url("../../assets/teachCss/style.less");
+@color:#fff;
+.pageWrap{width:100%;min-width:100%;min-height: 100%;background: url(../../assets/teachImg/index_bg.png) left center;
+background-size: cover;-webkit-background-size: cover; overflow:visible;
+-ms-user-select: none;
+user-select: none; 
+-webkit-user-select: none;
+-moz-user-select: none; 
+-o-user-select: none; 
+
+padding-bottom: 130px;
+ -moz-box-sizing:border-box; -webkit-box-sizing:border-box; -o-box-sizing:border-box;
+  
+  -ms-box-sizing:border-box;box-sizing:border-box;
+
+}
+
+
+.leftTool{ position:fixed;;left:0px;width:75px;height: 150px;top:50%; margin-top:-75px;z-index:99;}
+.showbox{width:168px;height:336px;position:absolute;top:50%;margin-top:-168px;left:0px; 
+  -webkit-transform: scale(0.1);-ms-transform:scale(0.1);-o-transform:scale(0.1);transform: scale(0.1);
+  -webkit-transform-origin:0 50%;;-ms-transform-origin:0 50%;;-o-transform-origin:0 50%;;transform-origin:0 50%;
+    transition: all .3s ease;
+    -moz-transition: all .3s ease; /* Firefox 4 */
+    -webkit-transition: all .3s ease; /* Safari 和 Chrome */
+    -o-transition: all .3s ease; /* Opera */
+    -ms-transition: all .3s ease;
+
+}
+.icon{
+    width:75px;height:150px;display:block;background:@toobg;.borderRadius(0,75px,75px,0);
+    position:absolute;left:0px;top:50%;margin-top:-75px;
+    
+    span{width:44px;height: 44px;display:block;position: absolute;left:10px;top:50%;margin-top: -22px;
+    background: url(../../assets/teachImg/icon_tool.png)center no-repeat;-webkit-background-size:100%;background-size:100%;}
+}
+
+.tool_icon{position: absolute; font-size:24px;color:#fff;height:41px; line-height:41px;}
+
+.n_ltips{display: block; white-space: nowrap;font-size:16px;color:#e2e2e2; position: absolute;
+top:40px; left:30px;display: none;}
+
+.tool1{width:146px;height: 131px;display: block;position: absolute;left:0px;top:0px;
+      background: url(../../assets/teachImg/tool1n.png) center no-repeat;z-index:2;
+    
+    .tool_icon{ left:11px;top:43px;/*left:18px;top:32px;*/ }
+    
+      .img{width:100%;height: 100%;display:block;}
+
+    
+}
+
+.tool2{width:168px;height: 336px;position:absolute;left:0px;bottom:0px;
+background: url(../../assets/teachImg/tool2n.png) center no-repeat;-webkit-background-size:100%;background-size:100%;
+   .tool_icon{top:50%;left:81px;margin-top: -20.5px;width:100px; padding: 0 10px;}
+   .n_ltips{top:55px;left:40px;}
+}
+.tool3{width:146px;height: 131px;position: absolute;;left:0px;bottom: 0px;
+background:url(../../assets/teachImg/tool3n.png);-webkit-background-size:100%;background-size:100%;
+  .tool_icon{/*left:35px;bottom:47px;*/left:10px;bottom:31px;width:100px; padding: 0 10px;}
+  .n_ltips{top:55px;left:40px;}
+}
+
+.tool_icon:hover{
+    .n_ltips{display: block;}
+}
+
+.showTool{
+     -webkit-transform: scale(1);-ms-transform:scale(1);-o-transform:scale(1);transform: scale(1);
+  -webkit-transform-origin:0 50%;;-ms-transform-origin:0 50%;;-o-transform-origin:0 50%;transform-origin:0 50%;
+    transition: all .3s ease;
+    -moz-transition: all .3s ease; /* Firefox 4 */
+    -webkit-transition: all .3s ease; /* Safari 和 Chrome */
+    -o-transition: all .3s ease; /* Opera */
+   -ms-transition: all .3s ease;
+    
+}
+
+/*中间内容展示*/
+.eaWrap{display: table; padding-top: 100px; padding-bottom:150px; 
+    .mainContent{
+        width:100%;  display: table-cell; vertical-align: middle;
+    }
+    .eamain{text-align: center;}
+    
+    .simBox{
+        background: rgba(245, 246, 247, 0.8);display: inline-block; padding:10px;.borderRadius(10px,10px,10px,10px);vertical-align: middle;
+        > div{background: rgba(68, 68, 68, 0.9); padding:30px; padding-top: 0px; height: 508px;}
+        h3{font-size:24px;text-align: center; color: @color; padding-bottom:15px; padding-top:15px;}
+        .eacontent{background:#fff; padding:30px 60px;}
+        .eacontent ul{border:2px solid #444; border-bottom: 0 none;}
+        .eacontent ul li{font-size:0px;border-bottom:2px solid #444;}
+        .ditem{display: inline-block;font-size:16px;color:#000;width:160px; line-height:30px;}
+        .ditem-last{border-left:2px solid #444;}
+    }
+    .arrow{width:99px;height:80px;display: inline-block; background: url(../teachImg/jm_arrow.png) center no-repeat;
+    vertical-align: middle; margin: 0 30px;}
+    
+    .formbox{
+        width:404px;
+        .pmess{font-size:18px; color:#000; background:#fff;.borderRadius(5px,5px,5px,5px); text-align: center;
+        height: 150px; line-height: 150px;}
+        .funmess{padding-top: 20px;}
+        .funmess,.resultmess{font-size:16px;color:#fff; text-align: left;}
+        .pawin{padding:20px 0;}
+        input{padding: 0 20px; width: 100%; height:30px;line-height: 30px;.borderRadius(5px,5px,5px,5px);
+        -moz-box-sizing: border-box;  
+       -webkit-box-sizing: border-box; 
+       -o-box-sizing: border-box; 
+       -ms-box-sizing: border-box; 
+        box-sizing: border-box; }
+       .com-btnBox{padding-top:20px;}
+    }
+    
+}

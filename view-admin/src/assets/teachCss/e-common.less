@@ -1,0 +1,32 @@
+.borderRadius(@param1,@param2,@param3,@param4){
+   border-radius:@param1 @param2 @param3 @param4; 
+   -webkit-border-radius:@param1 @param2 @param3 @param4; 
+   -moz-border-radius:@param1 @param2 @param3 @param4;
+   -ms-border-radius:@param1 @param2 @param3 @param4;
+   -o-border-radius:@param1 @param2 @param3 @param4;
+};
+
+
+.swiper-pagination-bullets{position: absolute;right:0px;bottom:0px;width:100%;text-align: center;z-index:99;}
+ .swiper-pagination-bullet{
+    width:20px;height: 20px;/*background:rgba(255,255,255,.3);*/display:inline-block;
+    .borderRadius(10px,10px,10px,10px); margin: 0 10px;
+    color: #999; font-size:24px;
+ }
+.swiper-pagination-bullet-active{/*background: #fff;*/ color:#fff;}
+
+.swiper-button-prev,.swiper-button-next{width:75px;height:75px;display:block; position: absolute;
+top:50%;margin-top:-32.5px;
+}
+
+.swiper-button-prev{left:0px; background:url(../teachImg/arrowleft.png) center no-repeat;}
+.swiper-button-next{right:0px; background:url(../teachImg/arrowright.png) center no-repeat;}
+.swiper-button-prev.swiper-button-disabled{-ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=50);
+   opacity: .5;}
+.swiper-button-next.swiper-button-disabled{-ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=50);
+   opacity: .5;}
+.detail-box .d-img{text-align: center;}
+
+.dialog-detail .el-dialog__body{padding-top:0px;padding-bottom:0px}

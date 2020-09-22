@@ -1,0 +1,134 @@
+	.g-rect-fill {
+		fill: none;
+		stroke-width: 2;
+		stroke: #DBE5F2;
+		stroke-linejoin: round;
+		stroke-linecap: round;
+		stroke-dasharray: 0, 1370;
+		stroke-dashoffset: 0;
+		position: absolute;
+		left: 0px;
+		-webkit-animation: lineMove 2s ease-out forwards;
+		-ms-animation: lineMove 2s ease-out forwards;
+		-moz-animation: lineMove 2s ease-out forwards;
+		-o-animation: lineMove 2s ease-out forwards;
+		animation: lineMove 2s ease-out forwards;
+	}
+	
+
+	
+	.g-rect-IE {
+		fill: none;
+		stroke-width: 2;
+		stroke: #DBE5F2;
+		stroke-linejoin: round;
+		stroke-linecap: round;
+	}
+	
+	@-o-keyframes lineMove {
+		0% {
+			stroke-dasharray: 0, 1350;
+		}
+		100% {
+			stroke-dasharray: 1350, 1350;
+		}
+	}
+	
+	@-moz-keyframes lineMove {
+		0% {
+			stroke-dasharray: 0, 1350;
+		}
+		100% {
+			stroke-dasharray: 1350, 1350;
+		}
+	}
+	
+	@-ms-keyframes lineMove {
+		0% {
+			stroke-dasharray: 0, 1350;
+		}
+		100% {
+			stroke-dasharray: 1350, 1350;
+		}
+	}
+	
+	@-webkit-keyframes lineMove {
+		0% {
+			stroke-dasharray: 0, 1350;
+		}
+		100% {
+			stroke-dasharray: 1350, 1350;
+		}
+	}
+	
+	@keyframes lineMove {
+		0% {
+			stroke-dasharray: 0, 1350;
+		}
+		100% {
+			stroke-dasharray: 1350, 1350;
+		}
+	}
+	
+
+
+	.g-rect-fill1 {
+		fill: none;
+		stroke-width: 2;
+		stroke: #E2E2E2;
+		stroke-linejoin: round;
+		stroke-linecap: round;
+		stroke-dasharray:0 1000;
+		
+		position: absolute;
+		left: 0px;
+		-webkit-animation: lineMove1 3.5s ease-out forwards;
+		-ms-animation: lineMove1 3.5s ease-out forwards;
+		-moz-animation: lineMove1 3.5s ease-out forwards;
+		-o-animation: lineMove1 3.5s ease-out forwards;
+		animation: lineMove1 3.5s ease-out forwards;
+	}
+	
+		.g-rect-IE1 {
+		fill: none;
+		stroke-width: 2;
+		stroke: #E2E2E2;
+		stroke-linejoin: round;
+		stroke-linecap: round;
+	}
+
+
+	@-o-keyframes lineMove1 {
+
+		100% {
+			stroke-dasharray:1000 1000;
+		}
+	}
+	
+	@-moz-keyframes lineMove1 {
+
+		100% {
+			stroke-dasharray:1000 1000;
+		}
+	}
+	
+	@-ms-keyframes lineMove1 {
+
+	100% {
+			stroke-dasharray:1000 1000;
+		}
+	}
+	
+	@-webkit-keyframes lineMove1 {
+
+		100% {
+		stroke-dasharray:1000 1000;
+		}
+	}
+	
+	@keyframes lineMove1 {
+
+		100% {
+			stroke-dasharray:1000 1000;
+		}
+	}

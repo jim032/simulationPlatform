@@ -1,0 +1,228 @@
+ul,li{list-style: none;}
+@basecolor:#fff;
+a,i,em{font-style:normal; text-decoration:0 none;}
+.stabox{width:100%;height: 70px;background:rgba(67,67,67,0.8);.borderRadius(5px,5px,5px,5px);
+    background:rgba(67,67,67,.8); text-align:center; color:@basecolor;
+    display: table-cell; vertical-align: middle;position: relative;
+  }
+.staDiv{padding:10px;width:880px;background:rgba(255,255,255,.5);margin:0 auto;
+    .borderRadius(10px,10px,10px,10px); display: table;
+  }
+.borderRadius(@param1,@param2,@param3,@param4){
+   border-radius:@param1 @param2 @param3 @param4; 
+   -webkit-border-radius:@param1 @param2 @param3 @param4; 
+   -moz-border-radius:@param1 @param2 @param3 @param4;
+   -ms-border-radius:@param1 @param2 @param3 @param4;
+   -o-border-radius:@param1 @param2 @param3 @param4;
+}
+
+.stabox{width:100%;height: 70px;background:rgba(67,67,67,0.8);.borderRadius(5px,5px,5px,5px);
+    background:rgba(67,67,67,.8); text-align:center; color:@basecolor;
+    display: table-cell; vertical-align: middle;position: relative;z-index: 22;
+  }
+.staDiv{padding:10px;width:880px;background:rgba(255,255,255,.5);margin:0 auto;
+    .borderRadius(10px,10px,10px,10px); display: table;
+  }
+.tipsDiv{
+    position: fixed;width:236px !important;height:496px; right:0px;top:50%;margin-top:-248px !important; display:block;
+    z-index:99;
+    .stabox{
+        width:100%; height:100%;display:block;text-align:left; padding-bottom:40px;position: relative;
+         -moz-box-sizing: border-box;  
+     -webkit-box-sizing: border-box; 
+     -o-box-sizing: border-box; 
+     -ms-box-sizing: border-box; 
+     box-sizing: border-box; 
+overflow: hidden;
+        ul{padding:0 10px; /*height:300px; *//*width: 246px; */width:216px;overflow-y: auto; height:92%;}
+        ul li{font-size:18px;color:#fff; line-height:24px;padding:4px 10px 4px 0;}
+    }
+    .tipTitle{color:#fff;font-size:24px; text-align: center;padding:12px 0;}
+    .btn_next{width:154px;height:53px;position: absolute; bottom:39px;left:50%; margin-left:-77px;
+    background:url(../teachImg/btn_next.png) center no-repeat;
+    background-size: 100%;-webkit-background-size: 100%;}
+
+}
+
+.confirmBox{width:680px;height: 380px;background:rgba(68,68,68,.9); .borderRadius(10px,10px,10px,10px);
+position: fixed;left:50%;margin-left:-340px;top:50%;margin-top:-240px;z-index:999;border:10px solid rgba(245,246,247,.8);
+-ms-transform: scale(0);
+-moz-transform: scale(0);
+-webkit-transform: scale(0);
+ -o-transform: scale(0); 
+ transform:scale(0);
+ 
+ -ms-transform-origin: 130% 30%;
+ -moz-transform-origin: 130% 30%;
+-webkit-transform-origin: 130% 30%;
+ -o-transform-origin: 130% 30%; 
+ transform-origin:130% 30%;
+ 
+transition: transform 0.5s ease;
+-moz-transition: -moz-transform 0.5s ease; /* Firefox 4 */
+-webkit-transition: -webkit-transform 0.5s ease; /* Safari 和 Chrome */
+-o-transition:  -o-transform 0.5s ease; 
+
+
+   .c_box{width:100%;height:80%;.borderRadius(10px,10px,0px,0px);position: relative;
+    overflow-y: auto;
+      
+      -moz-box-sizing: content-box;  
+     -webkit-box-sizing: content-box; 
+     -o-box-sizing: content-box; 
+     -ms-box-sizing: content-box; 
+     box-sizing:content-box;
+     
+     
+   }
+   .icon{width:79px;height:79px;position: absolute; background: url(../teachImg/tips.png) center no-repeat;
+   background-size:cover;-webkit-background-size:cover;left:-40px;top:-40px;
+    }
+   p{font-size:18px;color:#fff; padding: 30px 20px; text-align: left;}
+   p.title{ padding-bottom: 0px; font-size:24px;color:#fff; text-align: center;}
+   p.c_mess{font-size:14px;color:#fff; padding:5px 20px 0 20px; text-align: center;}
+   
+
+   /*进度条样式*/
+    .progress {
+        width: 70%;
+        height: 40px;
+        margin: 0 auto;
+        .borderRadius(5px, 5px, 5px, 5px);
+        background: linear-gradient(1deg, rgba(27, 27, 27, 1), rgba(51, 51, 51, 1));
+        margin-top: 10px;    
+    }
+    
+    .curPro {padding: 5px; width: 100%; height: 40px; position: relative;}
+    
+    .proIcon {
+        width: 100%;
+        height: 100%;
+        background: #0E94D4 url(../../assets/teachImg/progress.png) left center repeat-x;
+        background-size: auto 100%;
+        -webkit-background-size: auto 100%;
+        .borderRadius(5px, 5px, 5px, 5px);
+    }
+    .failtext{position: absolute;width:100%;height:40px;left:0px;top:0px;line-height: 40px;padding: 0px; text-align: center;}
+   
+}
+
+/*hash算法文件传输*/
+.fileConfirmBox{
+    height:300px;
+    .c_box{padding-bottom: 0px;}
+    .btnbox{text-align: center; padding-top: 20px;}
+    .chooseBtn{width:120px;height: 40px; display: inline-block; background:#fff; text-align: center; line-height: 40px;
+    font-size:18px; color:#446EDE;.borderRadius(9px,9px,9px,9px); margin: 0 20px;}
+}
+
+/*椭圆线高度*/
+.eccConfirmBox{height: auto; margin-top: -310px;
+   p.result_title{font-size:18px; text-align:left;}
+    .ecc-in{font-size:0px; text-align: center; padding: 20px 0;
+        .e-in{display: inline-block; width:40%;vertical-align: middle; text-align: center;font-size:16px;
+        padding-left:30px; position: relative;}
+        .e-in label{font-size:18px;color:#fff; position: absolute;left:0px;}
+        .e-in input{width:100%; outline: none; padding: 0 20px;.borderRadius(2px,2px,2px,2px);border:0 none;
+         -moz-box-sizing: border-box;  
+     -webkit-box-sizing: border-box; 
+     -o-box-sizing: border-box; 
+     -ms-box-sizing: border-box; 
+     box-sizing: border-box; line-height:30px; height:30px; vertical-align: middle;
+        }
+    }
+    .e-in-last{margin-left: 40px;}
+    
+    .ec-img{margin: 0 8%; height: 260px;overflow:hidden;.borderRadius(5px,5px,5px,5px);
+      img{max-width:100%;position: relative;
+    top: 50%;overflow:hidden;
+    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+   -moz-transform: translateY(-50%);
+   -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);}
+    }
+    p.result_mess{text-align: left;}
+    .result-img{height:320px;text-align:center; margin:15px 0;}
+    .result-img img{height:320px;}
+    
+    .btnbox{padding-bottom: 20px;}
+    
+    
+   
+    
+
+}
+
+.parseconfirmbox{
+    height: auto; 
+    .c_box{ padding-bottom: 30px;}
+    .pintro{padding-bottom: 0px;text-align: center;}
+    .functintro{font-size:16px; text-align: center; padding:5px 20px; text-align: center;}
+}
+
+
+.confirmBox.show{
+-ms-transform: scale(1);
+-moz-transform: scale(1);
+-webkit-transform: scale(1);
+-o-transform: scale(1); 
+transform:scale(1);
+ 
+ -ms-transform-origin: 130% 30%;
+ -moz-transform-origin: 130% 30%;
+-webkit-transform-origin: 130% 30%;
+ -o-transform-origin: 130% 30%; 
+ transform-origin:130% 30%;
+ 
+ 
+ transition: transform 0.8s ease;
+-moz-transition: -moz-transform 0.8s ease; /* Firefox 4 */
+-webkit-transition: -webkit-transform 0.8s ease; /* Safari 和 Chrome */
+-o-transition:  -o-transform 0.8s ease; 
+ 
+}
+
+.transbox{position: fixed;width:100%;height: 100%;left:0px;top:0px;
+background: rgba(0,0,0,.1);z-index:120}
+
+.sureBtn{width:120px;height: 40px; display: block;position: absolute; left:50%;margin-left: -60px;
+bottom: 20px;.borderRadius(10px,10px,10px,10px);
+background:#fff;line-height:40px;text-align: center; color:#446EDE; font-size: 18px;}
+
+
+/*提示框*/
+.promptBox{height: 200px;margin-top: -100px;}
+.promptBox .pintro{text-align: center; font-size:18px;}
+
+.com-btnBox{
+    text-align: center;
+    .com-btn{width:100px;height:40px;color:#223EAA;font-size:18px; background:#fff;
+      .borderRadius(5px,5px,5px,5px); overflow: hidden; display: block; margin: 0 auto; line-height:40px;
+    }
+}
+
+ @media screen and (max-width:1440px) {
+ .tipsDiv{height:360px;margin-top: -180px !important;}
+  .tipsDiv .stabox{height: 338px; padding-bottom:0px;}
+  .tipsDiv .tipTitle{font-size: 18px;}
+  .tipsDiv .stabox ul{height: 80%;}
+  .tipsDiv .stabox ul li{font-size: 14px;}
+  .tipsDiv .btn_next{height: 40px;width:60%;left:50%;margin-left: -30%; bottom:20px;}
+  
+
+  
+ }
+ 
+  @media screen and (max-width:1200px) {
+    .confirmBox{width:60%;margin-left:-30%; height:280px;margin-top: -150px; 
+      .c_box{padding-bottom:40px;}
+    }
+    .confirmBox .icon{top:-20px;left:-20px}
+    
+    /**/
+    .eccConfirmBox{height: 500px;margin-top:-250px;}
+    
+    .sureBtn{position: static; margin: 0 auto;} 
+    
+  }

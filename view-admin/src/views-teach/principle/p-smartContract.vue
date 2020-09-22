@@ -37,6 +37,8 @@
 					    <div id="test" ref="gold" class="gold" style="height: 40px;width: 40px;position:relative;left:15px;top:120px;border-radius:50%"></div>
 					  </div>
 					   -->
+					  <img class="i-img12" src="../../assets/teachImg/12.gif" />
+					  <img src="../../assets/teachImg/31.gif" />
 					</div>
 					
 					

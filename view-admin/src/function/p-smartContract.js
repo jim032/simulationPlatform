@@ -450,86 +450,7 @@ export default{
 	  	}
   },
   
-  
-  circleMove(json){
-  	let that = this;
-    //要操作的元素
-    var obj = json.obj;
-    //方向(顺时针'+'或逆时针'-')
-    var dir = json.dir;
-    dir = dir || '+';
-    //最大圈数
-    var max = json.max;
-    max = Number(max) || 'all'; 
-    //半径
-    var r = json.r;
-    r = Number(r) || 100;
-    //圆心x轴坐标
-     var x0 = json.x0 || parseFloat(that.getCSS(obj,'left'));
-    //圆心y轴坐标
-    var y0 = json.y0 ||  parseFloat(that.getCSS(obj,'top')) - r;
-    //初始夹角，以角度为单位
-    var a0 = json.a0;
-    a0 = Number(a) || 90;
-    //当前夹角
-    var a = json.a ||a0;
-    //当前圈数
-    var num = json.num || 0;
-    //清除定时器
-    if(obj.timer){return;}
-    //声明当前值cur
-    var cur = {};
-    obj.timer = setInterval(function(){
-        //将这些瞬时值储存在obj对象中的属性中
-        obj.a = a;
-        obj.x0 = x0;
-        obj.y0 = y0;
-        obj.x = x;
-        obj.y = y;
-        obj.num = num;
-        //如果元素运动到指定圈数则停止定时器
-        if(num == max){
-            clearInterval(obj.timer);
-        }
-        //顺时针
-        if(dir == '+'){
-            a++;
-            if(a == a0 + 360){
-                a = a0;
-                num++;
-            }
-        //逆时针
-        }else{
-            a--;
-            if(a == a0 - 360){
-                a = a0;
-                num++;
-            }
-        }
-         cur.left = parseFloat(that.getCSS(obj,'left'));
-         cur.top = parseFloat(that.getCSS(obj,'top')); 
-         
-         
-      
-         
-        //更新left和top值
-			        var x = x0 + r*Math.cos(a*Math.PI/180);
-			        var y = y0 + r*Math.sin(a*Math.PI/180)
-			        test.style.left = x + 'px';
-			        test.style.top = y + 'px';    
-			    },15);
-			 },
-			 
-			 
-			 getCSS(obj,style){
-			
-			    if(window.getComputedStyle){
-			        return getComputedStyle(obj)[style];
-			    }
-			    return obj.currentStyle[style];
-			},
-  
- 
+
  //点击弹出框我知道了方法
   tipSure(){
   	let that = this
@@ -629,94 +550,6 @@ export default{
 		  return obj;
 		},
 	
-	//转账成功划线 参数表示划线的开始和结束div
-	broadCastLine(start,end) {
-		let that = this
-		var mysvg = document.getElementById("b_line");
-    chart = document.getElementById("chart")
-    chart.setAttribute("marker-end",'')
-    //调用划线坐标方法获取path的路径
-    let lineLoc = that.lineLocation(start,end)
-		if(chart) {
-		  	chart.setAttribute("d", lineLoc);
-			 	length = chart.getTotalLength();
-        frames = length;
-			//IE代码
-			if(!!window.ActiveXObject || "ActiveXObject" in window) {
-				var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串 
-				var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
-				if(isIE11){
-				  if(frames){
-					that.Frame();
-				  }
-				}else{
-					that.lineFinsh = true
-				  chart.setAttribute("class", 'g-rect-IE1');
-				  markerArrow.style.display = 'block'
-				  chart.setAttribute("marker-end",'url(#markerArrow)')
-				}
-			
-			} else {
-				if(frames){
-					that.Frame();
-				  }
-			}
-		}
-	},
-	//划线动画效果
-  Frame() {
-  	let that = this;
-	  window.clearInterval(rid);
-	  chart = document.getElementById("chart")
-	  arrow.style.display = "block"
-	  chart.style.strokeDasharray = length;
-	  chart.style.strokeDashoffset = length-10;
-	  let point1, point2; 
-	  rid = setInterval(that.Frame,100);
-	  
-	  chart.style.strokeDashoffset = frames;
-	
-	  point1 = chart.getPointAtLength(length - frames);
-	  point2 = chart.getPointAtLength((length - frames + 2) % length);
-	  angle = Math.atan2(point2.y - point1.y, point2.x - point1.x);
-	  arrow.setAttribute(
-	    "transform",
-	    "translate(" +
-	      [point1.x, point1.y+1] +
-	      ")" +
-	      "rotate(" +
-	      angle * 180 / Math.PI +
-	      ")"
-	  );
-	  frames-=20;
-	  if (frames <= 0) {
-	   window.clearInterval(rid);
-	   arrow.style.display = "none"
-	   markerArrow.style.display = 'block'
-	   chart.setAttribute("marker-end",'url(#markerArrow)')
-	   rid = null;
-	   that.lineFinsh = true
-	  }
-	},
-	
-	//划线坐标确定
-	lineLocation(start,end){
-		let lines = ''
-		if(start==1){
-			end==2?lines='M 100,120 C 166,50 232,50 295,108':end==3?lines='M 100,120 C 233,30 366,30 495,108':lines='M 100,120 C 300,10 500,10 695,108'
-		}else if(start==2){
-			end==1?lines='M 300,120 C 232,50 166,50 95,108':end==3?lines='M 300,120 C 366,50 432,50 495,108':lines='M 300,120 C 433,30 566,30 695,108'
-		}else if(start==3){
-			end==1?lines='M 500,120 C 366,30 233,30 95,108':end==2?lines='M 500,120 C 432,50 366,50 295,108':lines='M 500,120 C 566,30 632,30 695,108'
-		}
-		 else if(start==4){
-			end==1?lines='M 700,120 C 500,10 300,10 95,108':end==2?lines='M 700,120 C 566,30 433,30 295,108':lines='M 700,120 C 632,30 566,30 495,108'
-		}
-
-		return lines;
-		
-	}
-
  },
   	mounted(){
 		 	let that = this;
@@ -734,9 +567,7 @@ export default{
 		this.$nextTick(() => {	  	
 		  	that.initHeight();
 	      that.initPointInfo();
-	      
-	       //that.circleMove({obj:test,r:150,dir:'-',x0:test.x0,y0:test.y0,a:test.a,num:test.num});
-	       //that.circleMove({obj:test,r:150,dir:'-',x0:test.x0,y0:test.y0,a:test.a,num:test.num,max:1});
+	   
 		  })	
 	},
 	//离开页面清除定时器

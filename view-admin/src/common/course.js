@@ -6,7 +6,7 @@
 			return{
 				pageNum:3,
 				curcourse:null,
-				
+
 				leftNavWidth:'125',//左边宽度
 				leftwidth:'125',//左边父菜单宽度
 				dialogVisible:false,//添加课程弹出框是否显示
@@ -14,31 +14,11 @@
 				mainWidth:0,//右边的宽度
 				currentPage:1,
 
-				menus:[{
-					id:1,
-					label:'启蒙篇',
-					children:[
-				  	{
-				  		id:'1-1',
-				  		label:'区块链底层',
-				  	  children:[
-				  	    {id:'1-11',label:'数据结构原理'},
-				  	    {id:'1-12',label:'运行原理',
-				  	    	children:[
-				  	    	  {id:'1-12-1',label:'节点模拟运行'},
-				  	    	  {id:'1-12-2',label:'合约部署与调用'}
-				  	    	]
-				  	    }
-				  	  ]
-				  	},
-				  	{id:'1-2',label:'区块链底层',children:[]},
-				  	{id:'1-3',label:'区块链底层',children:[]}
-					]},
-					{id:2,label:'应用篇',children:[]},
-					{id:3,label:'原理篇',children:[]},
-					{id:4,label:'其他篇',children:[]}
+				menus:[
 				],
-				actId:'',
+        actId:'',
+        personal:'',
+        multiplayer:'',
 				courseList:[//type为1表示单人，type表示2表示双人
 				],
 				teaClassList:[{id:'c1',label:'区块链一班'},{id:'c2',label:'区块链二班'},{id:'c3',label:'区块链三班'},{id:'c4',label:'区块链四班'}],
@@ -51,10 +31,10 @@
 		components:{
 			comheader,tree
 		},
-		watch:{	
+		watch:{
 			mainWidth(val) {
 				// 为了避免频繁触发resize函数导致页面卡顿，使用定时器
-				if(!this.timer) {				
+				if(!this.timer) {
 					this.mainWidth = val
 					this.timer = true
 					let that = this
@@ -64,18 +44,29 @@
 				let that = this
 				that.mainWidth = that.$refs.courseMain.offsetWidth-that.leftNavWidth-61
 			}
-			
+
 		},
 
 		methods:{
-			
+
 			//获取课程列表
 			getCourse(){
-				course().then(res=>{
-					console.log(res)
-				})
+			  let that = this;
+        course().then(res=>{
+          if(res.code==200){
+            for (let j = 0; j < res.data.length; j++) {
+              if( res.data[j].name == "单人"){
+                that.personal = "单人";
+                that.multiplayer = "多人"
+              }
+              that.menus = res.data[j].children;
+            }
+          }else{
+
+          }
+        })
 			},
-			
+
 			 /*当前页改变的时候触发*/
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
@@ -86,7 +77,7 @@
           return 'odd-row';
         } else if (rowIndex%2 === 0) {
           return 'even-row';
-        } 
+        }
       },
       //表头单元格的className的回调方法
       cellClass(row){
@@ -95,15 +86,15 @@
       	}
 
       },
-      
+
 			//课程选择
 			chooseCourse(index,obj){
 				let that = this
 				that.curcourse = index
-				
-				
+
+
 			},
-			
+
 	    //创建课程
 	    createCourse(){
 	    	this.dialogVisible = true
@@ -120,14 +111,14 @@
 				  {'name':'区块链课程',number:'200',type:'1'},{'name':'区块链课程',number:'200',type:'2'}]
 	    		that.courseList = tmp;
 	    		that.dialogVisible = false
-	    		
+
 	    	}
-	    },	    
+	    },
 	    //创建课程单双人选择
 	    chooseType(num){
 	    	this.newClassType = num
 	    },
-	    
+
 	    addShow(arr){
       for(var i = 0; i < arr.length;i++){
         this.$set(arr[i],"show",false);
@@ -140,7 +131,7 @@
 	    //点击箭头使树展开收缩
     selectItem(data,index,level){
       let that = this
-      
+
       switch(parseInt(level)){
       	case 1://表示点击第一级
     	    if(data.show==true){
@@ -150,7 +141,7 @@
 		      	 for(var i = 0; i < that.menus.length; i++){
 			      	if(i==index){
 			          if(data.children.length > 0){
-					        //如果此项下有children且length大于0，则切换展开与折叠状态  
+					        //如果此项下有children且length大于0，则切换展开与折叠状态
 					        data.show = true;
 					        that.leftNavWidth = 350;
 					      }else{
@@ -158,23 +149,23 @@
 					        that.leftNavWidth = 125;
 					        data.show = true;
 					      }
-					      
+
 			      	}else{
 			      		that.$set(that.menus[i],"show",false);
-			      	}	
+			      	}
 			      }
 		      }
       	break;
       	case 2:
       	if(data.children && data.children.length > 0){
 	          data.show = !data.show;
-	         
+
 	      }
       	break;
-      	
+
       }
-      
-       
+
+
 
     },
     //进行多选勾选
@@ -197,7 +188,7 @@
         //如果此选项勾选后，要判断所有的上级元素是不是应该全部打勾
         this.selectFather(this.menus,data);
       }
-      
+
     },
     //定义函数清空所有孩子的勾选
     clearChild(arr){
@@ -244,7 +235,7 @@
     //定义函数一层一层的往上寻找父元素的children
     selectFather(father,data){
       for(var i = 0; i < father.length;i++){
-      	
+
         if(father[i].id == data.id){
           var arr = [];
           for(var j = 0; j < father.length;j++){
@@ -280,27 +271,27 @@
         }
       }
     }
-	    
-	    
-	    
+
+
+
 		},
 		mounted(){
 			let that = this;
 			window.onresize = () => {
-				return(() => {					
+				return(() => {
 					that.mainWidth = that.$refs.courseMain.offsetWidth-that.leftNavWidth-61
-				
+
 				})()
 			}
-			that.$nextTick(function (){	
+			that.$nextTick(function (){
 				that.mainWidth = that.$refs.courseMain.offsetWidth-that.leftNavWidth-61
 			})
-			
+
 			//获取课程列表
 			that.getCourse()
-			
+
 			that.addShow(that.menus)
-			
+
 		},
 		beforeDestroy() {
 			if(this.timer) {　　

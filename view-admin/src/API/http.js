@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 import store from '@/store/store'
 //自定义配置新建一个axios实例
 const http = axios.create({
-	baseURL: 'http://192.168.1.138:8080',
+	baseURL: 'http://192.168.1.11:8088',
 	//baseURL: 'http://192.168.1.52:8080',
 
 	headers: {

@@ -23,9 +23,9 @@
               　　       :post-action="getuploadUrl"
               　　       @input-file="inputFile"
               　　       @input-filter="inputFilter"
-            
+
              name="excel_file"
-             
+
              :headers="{'Authorization': jwt}"
             >
             <el-button class="btn btn-upload" type="text" @click.prevent="$refs.upload.active = true">
@@ -51,8 +51,8 @@ export default{
  	data(){
  		return{
  		  files: [],// excel文件列表
- 		  
- 		  uploadUrl:'http://192.168.1.52:8080/upload_excel',
+
+ 		  uploadUrl:'http://192.168.1.11:8088/upload_excel',
  		  jwt:''
  		}
  	},
@@ -69,7 +69,7 @@ export default{
  	props:['limit','pageNum']
  	,
  	computed: {
-		getUrl(){	
+		getUrl(){
 			return store.templateurl
 		},
 		getuploadUrl(){
@@ -77,7 +77,7 @@ export default{
 		}
 	},
  	methods:{
- 	
+
 
     uploadExcel(){
       window.location.href = this.getUrl;
@@ -102,7 +102,7 @@ export default{
     },
     //上传的回调函数，每次上传回调都不一样
     inputFile(newFile, oldFile) {
-    	let that = this;	
+    	let that = this;
 
     	if (Boolean(newFile) !== Boolean(oldFile) || oldFile.error !== newFile.error) {
         if (!this.$refs.upload.active) {
@@ -114,7 +114,7 @@ export default{
          if (newFile && oldFile && !newFile.active && oldFile.active) {
 		        //console.log('response', newFile.response)
 		         let  response = newFile.response
-		        if(response.code==200){  	
+		        if(response.code==200){
 		        	 this.$emit('inputFile')
 		        }else{
 		        	this.$toast(response.message,3000)
@@ -125,8 +125,8 @@ export default{
 		        }
 		      }
       }
-     
-      
+
+
     },
     getJwt(){
  			let id = sessionStorage.getItem('user_id');
@@ -150,7 +150,7 @@ export default{
     }else{
     	this.jwt = Cookies.get('jwt')
     }
- 	
+
  	}
  }
 </script>

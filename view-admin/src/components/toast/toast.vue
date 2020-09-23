@@ -8,7 +8,7 @@
     left: 50%;
     top:50%;
     background: rgba(0,0,0,.5);
-    padding: 10px;
+    /*padding: 10px;*/
     border-radius: 5px;
     transform: translate(-50%,-50%);
     color:#fff;
@@ -33,7 +33,7 @@
   @-webkit-keyframes animate_in { 0% { opacity: 0; } 100%{ opacity: 1; } }
   @-moz-keyframes animate_in { 0% { opacity: 0; } 100%{ opacity: 1; } }
   @-o-keyframes animate_in { 0% { opacity: 0; } 100%{ opacity: 1; } }
-  
+
   @keyframes animate_out { 0% { opacity: 1; } 100%{ opacity: 0; } }
   @-webkit-keyframes animate_out { 0% { opacity: 1; } 100%{ opacity: 0; } }
   @-moz-keyframes animate_out { 0% { opacity: 1; } 100%{ opacity: 0; } }

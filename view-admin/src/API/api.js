@@ -65,13 +65,19 @@ var delete_user =function(params){
 
 /*查询课程表*/
 var course =function(data){
-	return axios.get('/course',getJson(data))
+	return axios.get('/categoryTree?type=0')
+}
+
+
+//用户重置密码
+var updateUserPassword =function(data){
+  return axios.post('/update_userPassword',data,{headers: {'Content-Type':'application/json'}})
 }
 
 
 export{
-	login,updateUser,createToken,online,onlineUsers,hardware,courseFrequency,upload_excel,search_user,jwt,modify_user,
-	delete_user,course,logout
+	login,updateUser,createToken,online,onlineUsers,hardware,courseFrequency,search_user,jwt,modify_user,
+	delete_user,course,logout,updateUserPassword
 }
 
 function getJson (data) {

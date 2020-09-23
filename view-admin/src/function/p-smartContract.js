@@ -70,7 +70,14 @@ export default{
 			consoleShow:true,//头部控制台是否显示
 			menuText:'智能合约部署与调用',
 			moneyNumber:'',//设置金额
-			transAmout:''//转账金额
+			transAmout:'',//转账金额
+			
+			animateCss:'',
+			animateUrl:'',
+			showPic:false,//动画效果是否展示
+			time:'',//gif动画执行
+			
+			
 	  }
 	},
   components:{comHeader,comFooter,rightTips},
@@ -156,7 +163,7 @@ export default{
    	   	    	that.$set(that.divInfo4,'operable',1)
 							that.blockPro = 0;
 		      }else{
-							that.operaInfo.mess = '此处文本内容为告知正在进行合约的部署:'+that.blockPro+'%';
+							that.operaInfo.mess = '当前合约正在部署:'+that.blockPro+'%';
 				  }
         },50)
 			}   
@@ -207,46 +214,95 @@ export default{
 			that.toast('转账金额必须是数字')
 			return
 		}
-		switch (that.currentLocation){
-			case 1:
-				that.divInfo1.balance = parseInt(that.divInfo1.balance) - parseInt(transferAmount)
-			
-				break
-			case 2:
-				that.divInfo2.balance = parseInt(that.divInfo2.balance) - parseInt(transferAmount)
-				break
-			case 3:
-				that.divInfo3.balance = parseInt(that.divInfo3.balance) - parseInt(transferAmount)
-				break
-			case 4:
-				that.divInfo4.balance = parseInt(that.divInfo4.balance) - parseInt(transferAmount)
-				break
-		}
-		start = that.currentLocation;
-		if (that.chooseUserObj == that.divInfo1.userId){
-			that.divInfo1.balance = parseInt(that.divInfo1.balance) + parseInt(transferAmount)
-		 	end = that.divInfo1.div
-		}
-		if (that.chooseUserObj == that.divInfo2.userId){
-			that.divInfo2.balance = parseInt(that.divInfo2.balance) + parseInt(transferAmount)
-			end = that.divInfo2.div
-		}
-		if (that.chooseUserObj == that.divInfo3.userId){
-			that.divInfo3.balance = parseInt(that.divInfo3.balance) + parseInt(transferAmount)
-			end = that.divInfo3.div
-		}
-		if (that.chooseUserObj == that.divInfo4.userId){
-			that.divInfo4.balance = parseInt(that.divInfo4.balance) + parseInt(transferAmount)
-			end = that.divInfo4.div
-		}
-		that.transferShow = false
-	  //that.broadCastLine(start,end);//调用划线
+		
+		that.blockPro = 0;
+	  that.isBlcok = true;
+	  that.operaInfo.infolist = [];
+	  that.transferShow = false
+	  let timer = setInterval(function(){
+   	  that.blockPro++;
+   	  start = that.currentLocation;
+   	  
+   	  if(that.blockPro==40){
+   	  	if (that.chooseUserObj == that.divInfo1.userId){
+   	  		that.timer1 = setTimeout(function(){
+						 	that.divInfo1.balance = parseInt(that.divInfo1.balance) + parseInt(transferAmount)
+					},2800)
+				
+				 	end = that.divInfo1.div
+				}
+				if (that.chooseUserObj == that.divInfo2.userId){
+					that.timer1 = setTimeout(function(){
+					that.divInfo2.balance = parseInt(that.divInfo2.balance) + parseInt(transferAmount)
+					},2800)
+					end = that.divInfo2.div
+				}
+				if (that.chooseUserObj == that.divInfo3.userId){
+					that.timer1 = setTimeout(function(){
+					that.divInfo3.balance = parseInt(that.divInfo3.balance) + parseInt(transferAmount)
+					},2800)
+					end = that.divInfo3.div
+				}
+				if (that.chooseUserObj == that.divInfo4.userId){
+					that.timer1 = setTimeout(function(){
+					that.divInfo4.balance = parseInt(that.divInfo4.balance) + parseInt(transferAmount)
+					},2800)
+					end = that.divInfo4.div
+				}
+				that.time = new Date();
+				that.showAnimate(start,end)
+				
+   	  }
+   	  
+      if(that.blockPro==100){
+          clearInterval(timer)
+          that.operaInfo.mess = '转账事务打包完成';
+          that.isBlcok = false;
+         
+         
+					that.blockPro = 0;
+					
+					switch (that.currentLocation){
+						case 1:
+							that.divInfo1.balance = parseInt(that.divInfo1.balance) - parseInt(transferAmount)		
+							break
+						case 2:
+							that.divInfo2.balance = parseInt(that.divInfo2.balance) - parseInt(transferAmount)
+							break
+						case 3:
+							that.divInfo3.balance = parseInt(that.divInfo3.balance) - parseInt(transferAmount)
+							break
+						case 4:
+							that.divInfo4.balance = parseInt(that.divInfo4.balance) - parseInt(transferAmount)
+							break
+					}
+					
+      }else{
+					that.operaInfo.mess = '转账事务打包中:'+that.blockPro+'%';
+		  }
+    },50)
+	  
+		/*
+		
+		
+		
+	
+	
+    //调用金币效果	  
+	  
+	  */
+	  
   },  
   		
 	//点击转账按钮Location表示第几个div
 	showFb(location,userId){
 		let that = this;
+		if (that.blockPro > 0){
+		   return
+	   }
 	  that.currentLocation = location;
+	  that.showPic = false;
+
 	  that.curtransfer = userId;
     that.transUserList= [];
     that.transAmout = '';
@@ -260,14 +316,7 @@ export default{
 
 	  
 	  that.chooseUserObj = that.transUserList[0].userId
-	  let chart = document.getElementById("chart")
-	  let arrow = document.getElementById("arrow")  
-	  let qarrow = document.getElementById("markerArrow")
-	  arrow.style.display = "none"
-	  qarrow.style.display = 'block'
-	  chart.setAttribute("d", '');
-	  chart.removeAttribute("marker-end",'')
-	   that.transferShow = true;
+	  that.transferShow = true;
 	},
 	//点击菜单图标
 	 clickMenu(){
@@ -278,6 +327,79 @@ export default{
 	 	this.showUser = false
 	 	this.chooseUserObj = id;
 	 },
+	 //展示金币动画
+	 showAnimate(start,end){
+	 	let that = this
+	 	that.showPic = true;
+	 	let Start = parseInt(start);
+	 	let End = parseInt(end)
+	 	let p = End - Start;
+	 	if(p==1){
+	 		switch(Start){
+	 			case 1:
+	 			  that.animateCss="i-img12"
+	 			  break;
+	 		  case 2:
+	 		    that.animateCss="i-img23"
+	 			  break;
+	 			case 3:
+	 		    that.animateCss="i-img34"
+	 			  break;
+	 		}
+	 		that.animateUrl= require('../assets/teachImg/12.gif')
+	 	}else if(p==-1){
+	 		switch(Start){
+	 			case 2:
+	 			  that.animateCss="i-img21"
+	 			  break;
+	 		  case 3:
+	 		    that.animateCss="i-img32"
+	 			  break;
+	 			case 4:
+	 		    that.animateCss="i-img43"
+	 			  break;
+	 		}
+	 		that.animateUrl= require('../assets/teachImg/21.gif')
+	 	}else if(p==2){
+	 		switch(Start){
+	 			case 1:
+	 			  that.animateCss="i-img13"
+	 			  break;
+	 		  case 2:
+	 		    that.animateCss="i-img24"
+	 			  break;
+	 			
+	 		}
+	 		that.animateUrl= require('../assets/teachImg/13.gif')
+	 	}else if(p==-2){
+	 		switch(Start){
+	 			case 3:
+	 			  that.animateCss="i-img31"
+	 			  break;
+	 		  case 4:
+	 		    that.animateCss="i-img42"
+	 			  break;
+	 			
+	 		}
+	 		that.animateUrl= require('../assets/teachImg/31.gif')
+	 	}else if(p==3){
+	 		switch(Start){
+	 			case 1:
+	 			  that.animateCss="i-img14"
+	 			  break;	
+	 		}
+	 		that.animateUrl= require('../assets/teachImg/14.gif')
+	 	}else if(p==-3){
+	 		switch(Start){
+	 			case 4:
+	 			  that.animateCss="i-img41"
+	 			  break;	
+	 		}
+	 		that.animateUrl= require('../assets/teachImg/41.gif')
+	 	}
+	 	
+	 	
+	 },
 	 //初始化高度
 	 initHeight(){
 		let that = this;
@@ -287,7 +409,7 @@ export default{
 	this.mainheight = mainh > 300 ? mainh : 300 
 	
 	let pdiv = this.$refs.box_point.offsetTop 
-	this.top = (that.mainheight-315)/2;
+	this.top = (that.mainheight-560)/2;
 	
 	let startx = 0
 	let starty = 0

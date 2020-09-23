@@ -4,9 +4,9 @@
 	 	<div class="e-mainbox">
 	 		
      <div class="timeLine" style="overflow: hidden;">
-        <div class="content">
+        <div class="content timeContent">
             <p class="tit">{{timeLineList[timeIndex].year}}</p>
-            <p>{{timeLineList[timeIndex].info}}</p>
+            <p class="titIntro">{{timeLineList[timeIndex].info}}</p>
         </div>
        
         <div class="ul_box">
@@ -18,7 +18,8 @@
                     <div class="my_timeline_item_line"></div>
                     <!--标注-->
                     <div class="my_timeline_item_content" :style="{color: item.color, fontSize: item.fontsize + 'px'}">
-                        {{item.timestamp}}
+                        <p>{{item.timestamp}}</p>
+                        <p class="intro">{{item.info}}</p>
                     </div>
                 </li>
             </ul>

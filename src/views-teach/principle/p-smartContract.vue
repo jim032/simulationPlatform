@@ -5,38 +5,9 @@
         <div class="box_point" ref="box_point" :style="{'padding-top':top+'px'}">
 				<div class="pointBox clearfix " ref="pointBox">
 					
-					<!--转账划线
-					
-					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="s_linebox " ref="s_linebox" id="b_line" >  
-		        <defs>    
-						 <marker id="markerArrow" 
-								markerUnits="strokeWidth" 
-								markerWidth="10" 
-								markerHeight="12" 
-								viewBox="0 0 12 12" 
-								refX="6" 
-								refY="6" 
-								orient="auto">
-						        <path d="M2,2 L10,6 L2,10  L2,2" style="fill: #fff;" />
-						</marker>
-						</defs>
-						
-						<path id="chart" fill="none"  stroke-linecap="round" stroke-linejoin="round" stroke="white" stroke-width="2" d="" marker-end=''/>
-						<path id="arrow" fill="white" d="M0,0L0,-6L14,0L0,6" style="display: none;"/>
 
-						
-					</svg>
-					-->
 					<div class="s_linebox">
-							<!--
-						<div id="backup" style="height:280px;width:280px;border:1px solid black;border-radius:50%;position:absolute;top:0px;left:90px;">
-					    <div id="test" class="gold" style="height: 40px;width: 40px;position:relative;left:300px;top:120px;border-radius:50%"></div>
-					  </div>
-				
-					  <div id="backup" style="height:600px;width:600px;border:1px solid black;border-radius:50%;position:absolute;top:0px;left:90px;">
-					    <div id="test" ref="gold" class="gold" style="height: 40px;width: 40px;position:relative;left:15px;top:120px;border-radius:50%"></div>
-					  </div>
-					   -->
+		
 					  <img class="i-img" :class="animateCss" :src="animateUrl+'?+' + time" v-if="showPic"/>
 					 
 					</div>

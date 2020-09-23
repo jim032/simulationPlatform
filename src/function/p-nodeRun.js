@@ -45,7 +45,7 @@ import 'jquery-ui/ui/widgets/draggable';
 				
 				broadcast: false, //广播是否完成画线
 				
-				consoleShow:true,//头部控制台是否显示
+				consoleShow:false,//头部控制台是否显示
 				
 				menuText:'节点共识模拟',
 			}

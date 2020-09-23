@@ -83,7 +83,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/console',//首页菜单目录页
+      path: '/teach/console',//控制台目录页
       name: 'console',
       component: () =>import('@/views-teach/catalogue/console'),
        meta:{

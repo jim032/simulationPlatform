@@ -67,7 +67,7 @@ export default{
 			curtransfer:'',//当前转账对象
 			transUserList:[],//转账用户列表
 
-			consoleShow:true,//头部控制台是否显示
+			consoleShow:false,//头部控制台是否显示
 			menuText:'智能合约部署与调用',
 			moneyNumber:'',//设置金额
 			transAmout:'',//转账金额

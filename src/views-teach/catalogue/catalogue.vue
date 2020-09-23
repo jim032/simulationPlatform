@@ -1,6 +1,7 @@
 <template>
 	<div class="pageWrap homePageWrap"  ref="pageWrap" >
 		<div class="headerFun">
+		 <a class="btn btn_console"  @click="linkConsole"><span></span><em>控制台</em></a>
 		  <a class="bindex" @click="signOut">
 		  	<span class="icon"></span>
 		  	<em>退出</em>
@@ -132,6 +133,11 @@
 	 			this.$router.push({name:'subCatalogue',params:{id:id}})
 	 			
 	 		},
+	 		//点击跳转控制台
+	 		linkConsole(){
+	 			let that = this;
+	 			this.$router.push({name:'console'})
+	 		}
 	 	
 	 	},
 	 	mounted(){
@@ -162,7 +168,10 @@
       background-size:contain;-webkit-background-size:contain;
       margin-left:8px;margin-top:12px;
     }
-    
+    .btn_console{margin-right:20px;}
+    .btn_console span{width:64px;height:64px; display: block; margin: 0 auto;
+      background: url(../../assets/teachImg/btn_console.png) center no-repeat;background-size:cover;-webkit-background-size:cover;}
+    .btn_console em{margin-top: -10px; }
   }
   .cataBox{display:table-cell; width: 100%;vertical-align: middle;}
   .cataMain{width:1400px; text-align: center; margin: 0 auto;  display: table;}
@@ -225,6 +234,7 @@
 	.cataMain{width: 100%;}
 	.pcat{width:26%;height: auto;}
 	.headerFun .icon{width:50px;height: 50px;}
+	.headerFun  .btn_console span{width:50px;height:50px;}
 	.headerFun em{font-size:16px; line-height:40px;}
 	.headerFun .bback{ height:24px;}
 

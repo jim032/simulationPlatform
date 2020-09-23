@@ -65,9 +65,15 @@ export default{
 	 
 	  //提示框确定
 	  surePrompt(num){
-	  		console.log(123)
 	  	this.isPrompt = false;
-	  }
+	  },
+	  //点击左侧工具箱
+	  clickTool(){
+	  	let that = this;
+	  	that.menuShow = false;
+	  
+	  	that.isPrompt = true;
+	  },
 	},
 	mounted(){
 		

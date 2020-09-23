@@ -288,6 +288,7 @@ export default{
 @media only screen and (max-width:1400px ) {
 .pageWrap{
 	.cataMain{width: 100%;}
+	.w1400{width:100%;}
 	.pcat{width:26%;height: auto;}
 	.headerFun .icon{width:50px;height: 50px;}
 	.headerFun em{font-size:16px; line-height:40px;}

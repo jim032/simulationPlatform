@@ -5,15 +5,12 @@
         <div class="box_point" ref="box_point" :style="{'padding-top':top+'px'}">
 				<div class="pointBox clearfix " ref="pointBox">
 					
-
-					<div class="s_linebox">
-		
-					  <img class="i-img" :class="animateCss" :src="animateUrl+'?+' + time" v-if="showPic"/>
-					 
+          
+          <!--金币动画-->
+					<div class="s_linebox">		
+					  <img class="i-img" :class="animateCss" :src="animateUrl+'?+' + time" v-if="showPic"/> 
 					</div>
 					
-					
-					<!--转账划线结束-->
 					
 					<div class="info info1" ref="info1" data-div='1' >
 						<img :src="divInfo1.icon" class="userIcon" v-if="divInfo1.icon" @click.stop="showPointInfo(1)"/>

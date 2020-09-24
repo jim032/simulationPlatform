@@ -10,8 +10,8 @@
 		</div>
 		<div class="cataBox" ref="cataBox">
 			
-			<div class="cataMain">
-				<div class="cata-main">
+			<div class="cataMain" :class="{'cataMain-4':isTab4}">
+				<div class="cata-main" >
 						<div class="pcat pcat1" @click="linkSubCatalog(catlog1.id)" >
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
@@ -27,7 +27,7 @@
 								<p class="pt">{{catlog2.title}}</p>
 							</div>	
 						</div>
-						<div class="pcat pcat-zdy" @click="linkSubCatalog(catlog5.id)">
+						<div class="pcat pcat-zdy" @click="linkSubCatalog(catlog5.id)" v-if="!isTab4">
 						   <img src="../../assets/teachImg/circle.png"/>
 							 <div class="intro">
 								 <img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
@@ -72,6 +72,8 @@
 		 		boxheight: 0,
 		 		bodyH:0,
 		 		index: 0,
+		 		
+		 		isTab4:true,//判断当前自定义篇幅不存在为true,否则为false
 	 		}
 	 	},
 	 	filters:{
@@ -91,6 +93,7 @@
     			if(res.code==200){
     				sessionStorage.removeItem('stu_userId')
 		    		sessionStorage.removeItem('stu_role_id')
+		    		sessionStorage.removeItem('loginModal');
 		        Cookies.remove('stu_jwt');
 						that.$router.push({'path':'/login'})
     			}else{
@@ -226,6 +229,16 @@
   
   .pcat1{margin-right:15%;}
   .pcat2{margin-left: 15%;}
+  
+  /*自定义篇不在的篇章*/
+  .cataMain-4 {
+  	width:1200px;
+  	.pcat{width:340px;}
+  	.pcat-yl{margin-top:80px;}
+  	.pcat1{margin-right:8%;}
+  	.pcat2{margin-left: 8%;}
+  }
+  
   
 }
 

@@ -113,7 +113,7 @@
       },
      //跳转到后台登陆
 		linkAdminLogin(){
-			console.log('什么鬼')
+			
 			window.location.href=this.$store.state.adminlogin
 		}
 			

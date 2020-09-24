@@ -20,57 +20,92 @@ export default{
 	  	winNum:0,//代表当前不显示获胜节点
 	  	pageName:2,//代表页面是发币页面
 	  	 	
-    	userInfo:[{id:1,text:'用户1'},{id:2,text:'用户2'},{id:3,text:'用户3'},{id:4,text:'用户4'}].reverse(),//左侧拖拽设置四个用户信息进行遍历
     	
+    	userId:'',//当前用户登陆的userId
     	funNum:0,//左侧点击判断工具箱
 	    showTool:false,//左侧工具箱是否显示
 	  	confirShow:false,//右侧弹出框是否显示
 	  	//底部传递信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
-	    invisable:true,	 
+	  	
 	  	step:1,
 	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~',infolist:[]},//底部传递的信息
-	    pointList:[],//四个div的四个点坐标
-	    
-	    isDrag:false,//拖拽是否放入到指定元素中
-	    
-	    divInfo1:{status:0},//每个div显示的内容 status = 0 没有完成拖拽 1完成拖拽
-	    divInfo2:{status:0},
-	    divInfo3:{status:0},
-	    divInfo4:{status:0},
-	    userList:[],//已经拖拽完成的用户
+	  	
+	    userList:[ //type:0普通用户   1房主  2机器人
+	       {
+		       icon:require('../assets/teachImg/icon_user1n.png'),
+		       icon_1:require('../assets/teachImg/icon_user1.png'),
+		       name:'用户1',
+		       userId:'',
+		       amount:0,//用户余额
+		       onlineStatus:false,
+		       type:'',
+	       },
+	       {
+		       icon:require('../assets/teachImg/icon_user2n.png'),
+		       icon_1:require('../assets/teachImg/icon_user2.png'),
+		       name:'用户2',
+		       userId:'',
+		       amount:0,//用户余额
+		       onlineStatus:false,
+		       type:'',
+	       },
+	       {
+		       icon:require('../assets/teachImg/icon_user3n.png'),
+		       icon_1:require('../assets/teachImg/icon_user3.png'),
+		       name:'用户3',
+		       userId:'',
+		       amount:0,//用户余额
+		       onlineStatus:false,
+		       type:'',
+	       },
+	       {
+		       icon:require('../assets/teachImg/icon_user4n.png'),
+		       icon_1:require('../assets/teachImg/icon_user4.png'),
+		       name:'用户4',
+		       userId:'',
+		       amount:0,//用户余额
+		       onlineStatus:false,
+		       type:'',
+	       }
+	    ],
 	    
 	    transferShow:false,//转账弹出框显示
 	    showUser:false,
-	    chooseUserObj:'',//转账选择对象(id)
+	    chooseUserObj:{
+	    	id:'',
+	    	name:'',
+	    },//转账选择对象(id)
 	    
 	    setShow:false,//设置币种弹出框是否显示
 
-			hasSettedShowUser:false, 
-	
-			coinName:'', //币种名称
-			coinNumber:0, 
+			hasSettedShowUser:false, //币种已设置完成
+      
+      transUser:{},//当前谁转账,
+       
+
 			deployContractPro:0,
 			currentTransferUser:0,
 			toastShow: false,
 	    toastText: '',
 			currentLocation:0,
 			
-			iconUrl1:require('../assets/teachImg/icon_user1.png'),
-			iconUrl2:require('../assets/teachImg/icon_user2.png'),
-			iconUrl3:require('../assets/teachImg/icon_user3.png'),
-			iconUrl4:require('../assets/teachImg/icon_user4.png'),
-			
-			lineFinsh:false,//广播划线是否完成
-			
-			curtransfer:'',//当前转账对象
+
+			from_userId:'',//转账对象的userId
+			to_userId:'',//到账账对象的userId
 			transUserList:[],//转账用户列表
 
 			consoleShow:false,//头部控制台是否显示
 			menuText:'智能合约部署与调用',
+			
+			coinName:'', //币种名称
 			moneyNumber:'',//设置金额
 			transAmout:'',//转账金额
+			
+			onlineNumber:0,//在线人数
+			
+			contractDeployment:false,
 			
 			animateCss:'',
 			animateUrl:'',
@@ -86,26 +121,7 @@ export default{
 			return this.$store.state.sm_stepTips
 		}
 	},
-	filters:{
-		userName:function(value){
-		  let str = '';
-		  switch(parseInt(value)){
-		     case 1:
-		       str='用户1'
-		       break;
-		     case 2:
-		       str='用户2'
-		       break;
-		     case 3:
-		       str='用户3'
-		       break;
-		     case 4:
-		       str='用户4'
-		       break;
-		  }
-		  return str	  
-		}
-	},
+	
 	watch:{
 		screenWidth(val){
 	    // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
@@ -121,20 +137,70 @@ export default{
 	  }
   },
 	methods:{
+		
+		//页面刚进来的时候默认第一个用户在线
+		userOnline(){
+			let that = this;
+			let userId = sessionStorage.getItem('stu_userId')
+			that.userList[0].onlineStatus = true
+			that.userList[0].userId = userId;
+			that.userList[0].type=1
+			that.userId = sessionStorage.getItem('stu_userId')
+			that.onlineNumber=1;
+		},
+		
 		poinfun(num){
 			let that = this;
-			//表示转账
+			if(num==1){
+				if(that.onlineNumber==4){
+					that.$toast('当前小组人数已经达到',2000)
+				}else{
+					let index = that.onlineNumber
+					that.userList[index].onlineStatus = true
+					that.userList[index].name = '机器' + that.onlineNumber
+			    that.userList[index].type=2
+			    that.userList[index].userId = '0-' + that.onlineNumber
+			    that.onlineNumber = that.onlineNumber + 1;
+				}
+			}
 
-			if(num==2 && that.step==2){
+			else if(num==2){
 				if (that.hasSettedShowUser){
+					that.$toast('币种已设置',2000)
 					return;
-				}   
+				} 
+				if(that.onlineNumber<4){
+					that.$toast('小组人数达到4人，才可设置币种',2000)
+					return;
+				}			
+				let arr = that.userList;
+				that.transUserList= []; 
+				for(var j = 0; j < arr.length; j++) {
+				   if(arr[j].userId==that.userId){
+				   	  if( arr[j].type!=1){
+				   	  	this.$toast('您不是房主，无权限设置币种！',3000);
+				   	  	return;
+				   	  }
+				   	
+				   }
+				   /*
+				   if(arr[j].onlineStatus){
+				   	that.transUserList.push(arr[j]);
+				   }*/
+				} 
+				
+				that.transUserList = that.userList
+			
 				that.funNum = num;
 				that.setShow = true;
-				that.hasSettedShowUser = true;
+				
 			}  
 		
-		if (num==3 && that.step==3 && !that.isBlcok){
+		else if (num==3 && !that.isBlcok){
+			if(!that.hasSettedShowUser){
+				this.$toast('请先设置币种！',3000);
+				return;
+			}
 				that.funNum = num;
 	   		that.operaInfo.infolist = [];
 			if(that.userList.length==4 && that.step==3){
@@ -154,7 +220,7 @@ export default{
 	            //that.confirShow = true; 
 	            that.top = that.top-40;
 							that.operaInfo.mess = "当前合约部署完成"
-							that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
+							that.operaInfo.infolist.push('合约地址：合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
 							that.operaInfo.infolist.push('资产名称：'+that.coinName)
 							that.operaInfo.infolist.push('创建者：'+'用户'+that.chooseUserObj)
 							that.$set(that.divInfo1,'operable',1)
@@ -281,41 +347,37 @@ export default{
 					that.operaInfo.mess = '转账事务打包中:'+that.blockPro+'%';
 		  }
     },50)
-	  
-		/*
-		
-		
-		
-	
-	
-    //调用金币效果	  
-	  
-	  */
+
 	  
   },  
   		
-	//点击转账按钮Location表示第几个div
-	showFb(location,userId){
+	//点击转账按钮直接把用户带过来
+	showFb(obj){
 		let that = this;
+		that.transUser = obj
 		if (that.blockPro > 0){
 		   return
 	   }
-	  that.currentLocation = location;
+	  
+	  that.chooseUserObj.id='';
+	  that.chooseUserObj.name='';
 	  that.showPic = false;
 
-	  that.curtransfer = userId;
-    that.transUserList= [];
+	  that.from_userId = obj.userId;
+   
+    that.transUserList= [];    
     that.transAmout = '';
+    
 	  let arr = that.userList
 	  
 	  for (var i = 0;i<arr.length;i++){
-	  	if(userId!=arr[i].userId){
+	  	if(that.from_userId!=arr[i].userId){
+	  		
 	  		that.transUserList.push(arr[i])
 	  	}
 	  }
 
 	  
-	  that.chooseUserObj = that.transUserList[0].userId
 	  that.transferShow = true;
 	},
 	//点击菜单图标
@@ -323,9 +385,10 @@ export default{
 	 	 this.menuShow = !this.menuShow
 	 },
 	 //点击选择转账用户
-	 chooseUser(id){
+	 chooseUser(id,name){
 	 	this.showUser = false
-	 	this.chooseUserObj = id;
+	 	this.chooseUserObj.id = id; 
+	 	this.chooseUserObj.name = name; 
 	 },
 	 //展示金币动画
 	 showAnimate(start,end){
@@ -404,99 +467,12 @@ export default{
 	 initHeight(){
 		let that = this;
 		let height= this.$refs.header.$el.offsetHeight+30;  //
-	let bottom= this.$refs.bottom.$el.offsetHeight;  //100
-	let mainh = window.innerHeight-height-bottom  	
-	this.mainheight = mainh > 300 ? mainh : 300 
+	  let bottom= this.$refs.bottom.$el.offsetHeight;  //100
+	  let mainh = window.innerHeight-height-bottom  	
+	  this.mainheight = mainh > 300 ? mainh : 300 
 	
-	let pdiv = this.$refs.box_point.offsetTop 
-	this.top = (that.mainheight-560)/2;
-	
-	let startx = 0
-	let starty = 0
-	    
-	    
-	$(".droppoint").draggable({
-	    containment:'.pageWrap',
-		  addClasses: true,
-		  start:function(event,ui){
-		 	   startx = ui.position.left - ui.offset.left
-		 	   starty = ui.offset.top - ui.position.top
-		     $(".info").addClass("usable");
-		     $(this).children(".n_ltips").css({'display':'none'})
-		 	   that.menuShow = false
-		     //that.operaInfo.mess ='当前节点网络已部署完毕，如需重新学习，请点击上方目录按钮，选择“运行原理”。' 	
-		 },
-		 stop:function(event,ui){
-		 	//临时存放数组和索引的距离
-		   	let distanceArray = [];
-		   	let id = $(this)[0].getAttribute("data-id")
-		   	$(this).draggable({ disabled :true, })
-		    //判断是否拖进了目标元素中
-		 	if(that.isDrag){
-		 		that.isDrag = false;
-		 		$(this).remove()
-		 		that.userStart(id,that.divnum)
-		   }else{
-		   	 //未拖拽到目标元素中
-		   	  let array = that.pointList 
-	 		  for(let j = 0,len=array.length; j < len; j++) {
-		 	     let distance = common.distance(ui.offset.left,ui.offset.top+20,array[j].x,array[j].y)
-		 	     distanceArray.push({distance,point:{x:array[j].x,y:array[j].y},num:array[j].num,div:array[j].div})   
-	      }
-	 		  //离他最近的坐标和索引
-		 	   let pointInfo = common.getMinIndex(distanceArray);
-		 	   let num = pointInfo.num 
-		 	   let div = pointInfo.div
-		 	    switch(num){
-		 	      case 1:
-		 	        $(this).animate({left:pointInfo.point.x+4,top:pointInfo.point.y-starty})
-		 	        break;
-		 	      case 2:
-		 	         $(this).animate({left:pointInfo.point.x-45,top:pointInfo.point.y-starty})
-		 	         break;
-		 	      case 3: 
-		 	         $(this).animate({left:pointInfo.point.x-45,top:pointInfo.point.y-starty-45})
-		 	         break;
-		 	      case 4:
-		 	         $(this).animate({left:pointInfo.point.x+4,top:pointInfo.point.y-starty-45})
-		 	         break;
-		 		}
-		 	   this.timer = setTimeout(()=>{ //设置延迟执行
-		 	   	  if(div==1){
-			 	    	$(".info1").droppable({'disabled':true})
-			 	    	$(this).remove()
-			 	    }
-			 	    else if(div==2){
-			 	    	$(".info2").droppable({'disabled':true})
-			 	    	$(this).remove()
-			 	    }
-			 	    else if(div==3){
-			 	    	$(".info3").droppable({'disabled':true})
-			 	    	$(this).remove()
-			 	    }
-			 	    else{
-			 	    	$(".info4").droppable({'disabled':true})	
-			 	    	$(this).remove()
-			 	    }
-			 	    that.userStart(id,div)
-		 	   },400);
-		 	   common.clear(pointInfo.div,that.pointList)
-		   }
-		 }
-	    })
-	    
-	    //可放置拖拽元素放置事件封装
-	    $(".info").droppable({
-		      accept: ".droppoint",
-	        drop: function( event, ui ) {
-	        that.isDrag = true;  
-	        $(this).droppable({'disabled':true})
-	          var  num = event.target.dataset.div			        
-	          common.clear(num,that.pointList)     
-	          that.divnum = num;  
-	      }      
-	  	}) 
-	      
+  	let pdiv = this.$refs.box_point.offsetTop 
+	  this.top = (that.mainheight-560)/2;     
 	 },
       
     //点击信息展示
@@ -536,38 +512,37 @@ export default{
 			}
    },
        
-  //获取可放置拖拽元素四个div的四个点坐标
-  initPointInfo(){
-     	let that = this;
-	  	let top = that.top
-	  	let p1 = that.$refs.info1.getBoundingClientRect()
-	  	let p2 = that.$refs.info2.getBoundingClientRect()
-	  	let p3 = that.$refs.info3.getBoundingClientRect()
-	  	let p4 = that.$refs.info4.getBoundingClientRect() 
-      let scrollTop=document.body.scrollTop||document.documentElement.scrollTop;
-      //引用初始化方法
-      that.pointList = common.initPointInfo(top,p1,p2,p3,p4,scrollTop,that.pointList);
+  
+  //币种名称验证
+  validateCoinName(value){
+  	var reg = /^[A-Za-z]{3,8}$/
+  	if(this.coinName!='' && this.coinName != undefined){
+  		if (!reg.test(this.coinName)) {
+	        this.$toast('币种名称为3-8个英文字符',2000)
+	        this.coinName='';
+	    	}
+  	}
   },
   
    validateNum(value) { //验证只能填入数字
-	    var reg = /(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)/
+	    //var reg = /(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)/
+	    var reg = /^\+?[1-9]\d{0,3}(\.\d*)?$/
 	     //验证警戒值
 	    if(this.moneyNumber!='' && this.moneyNumber != undefined){
 	    	if (!reg.test(this.moneyNumber)) {
-	        this.$toast('请输入正整数',2000)
+	        this.$toast('请输入0-9999区间正整数',2000)
 	        this.moneyNumber='';
-	        return ;
 	    	}
 	  	}
   },
   validateNum1(value) { //验证只能填入数字
-	    var reg = /(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)/
+	    //var reg = /(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)/
+	    var reg = /^\+?[1-9]\d{0,3}(\.\d*)?$/
 	     //验证警戒值
 	    if(this.transAmout!='' && this.transAmout != undefined){
 	    	if (!reg.test(this.transAmout)) {
-	        this.$toast('请输入正整数',2000)
+	        this.$toast('请输入0-9999区间',2000)
 	        this.transAmout='';
-	        return ;
 	    	}
 	  	}
   },
@@ -584,94 +559,40 @@ export default{
 	  chooseCompleted(){  
 		let that = this
 		// that.funNum = 0;
-		that.coinName = document.getElementById("coinName").value;
-		that.coinNumber = document.getElementById("coinNumber").value;
-		
 		if(that.coinName == ''){
-			that.toast('请输入币种名称')
+			that.$toast('请输入币种名称',3000)
+			return
+		}
+		if (that.moneyNumber == ''){
+			that.$toast('币种数量不能为空且只能为数字',3000)
 			return
 		}
 		
-		if (that.coinNumber == ''){
-			that.toast('币种数量不能为空且只能为数字')
+		if(that.chooseUserObj.name == ''){
+			that.$toast('请选择初始拥有者',3000)
 			return
 		}
 		
-		if(that.chooseUserObj == ''){
-			that.toast('请选择初始拥有者')
-			return
-		}
-		if (parseInt(this.chooseUserObj) == that.divInfo1.userId){
-			that.divInfo1.balance = parseInt(that.coinNumber);
-	
-		}
-		if (parseInt(this.chooseUserObj) == that.divInfo2.userId){
-			that.divInfo2.balance = parseInt(that.coinNumber);
-		}
-		if (parseInt(this.chooseUserObj) == that.divInfo3.userId){
-			that.divInfo3.balance = parseInt(that.coinNumber);
-		}
-		if (parseInt(this.chooseUserObj) == that.divInfo4.userId){
-			that.divInfo4.balance = parseInt(that.coinNumber);
-		}
+		let arr = that.userList;
+		
+		for(var j = 0; j < arr.length; j++) {
+		   if(arr[j].userId==that.chooseUserObj.id){
+		   	 that.userList[j].amount = that.moneyNumber;
+		   }
+		} 
 		
 
 		that.setShow = false;
-	
+	  that.hasSettedShowUser = true;
+	  
 		clearTimeout(that.timer1);
 		that.timer1 = setTimeout(function(){
 			 that.confirShow = true;
 		},500)
 	  },
 	  
-	  //用户拖拽方法
-	  userStart(id,num){
-	  	 //id表示用户id,num表示第几个div
-	     let that = this;
-	     let obj = {}
-	     switch(parseInt(num)){
-	     	case 1:
-         
-          that.divInfo1 =that.sragSetInfo(obj,id,num,that.iconUrl1)
-	     	  break;
-	     	case 2:
-          that.divInfo2 =that.sragSetInfo(obj,id,num,that.iconUrl2)
-         // that.sragSetInfo(obj,id,num,that.iconUrl)
-	     	   break;
-	     	case 3:
-           that.divInfo3 =that.sragSetInfo(obj,id,num,that.iconUrl3)
-           //that.sragSetInfo(obj,id,num,that.iconUrl)
-	     	   break;
-	     	case 4:
-	         that.divInfo4 =that.sragSetInfo(obj,id,num,that.iconUrl4)
-            //that.sragSetInfo(obj,id,num,that.iconUrl,)
-            break;
-	     }
-		 
-	  },
-	  //拖拽完成信息保存
-		sragSetInfo(obj,id,num,iconUrl){
-			  let that = this;
-		  	obj.userId = id;
-		  	obj.userName = '用户'+id;
-		  	obj.icon = iconUrl;
-		  	obj.div = num;
-		  	obj.balance = 0;
-		  	obj.address = num==1?'6050758d80d291fb21474fbf0830c9852e6462f8':
-		  	num==2?'acde4cef5ee607adf56ce582f89fe1050f8a478d':
-		  	num==3?'f2c94fff78bdab1ff5078cddd3e62edab5b0e31f':'a0a2cf9e1ef6f4edc314fea2833a3400a3a6af12'
-		  	obj.status = 1 ;
-		  	that.userList.push(obj);	
-		  	if (that.userList.length == 4){
-				that.operaInfo.infolist = [];
-				clearTimeout(that.timer1);
-			  that.timer1 = setTimeout(function(){
-					that.confirShow = true;
-				},500)
-			 }
-		  return obj;
-		},
-	
+	  
+	  
  },
   	mounted(){
 		 	let that = this;
@@ -680,17 +601,14 @@ export default{
 		        window.screenWidth = document.body.clientWidth
 		        that.screenWidth = window.screenWidth;
 		        that.initHeight();
-		        that.initPointInfo();
-		       
-		     
 		    })()
 			}
 	
 		this.$nextTick(() => {	  	
-		  	that.initHeight();
-	      that.initPointInfo();
-	   
-		  })	
+	  	that.initHeight();
+	  	
+      that.userOnline();
+		})	
 	},
 	//离开页面清除定时器
    beforeDestroy() {

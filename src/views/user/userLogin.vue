@@ -66,8 +66,8 @@
 
 			  model:'选择模式',
 				showmodelList:false,
-				modelList:[{type:'1',text:'单人模式'},{type:'2',text:'多人模式'}],
-
+				modelList:[{type:1,text:'单人模式'},{type:2,text:'多人模式'}],
+        modalType:0,//登陆模式
 				account:'',
 				password:'',
 				modal1: false,
@@ -82,21 +82,12 @@
 			choModel(obj){
 				let that = this;
 				that.model = obj.text;
+				that.modalType = obj.type
 				that.showmodelList = false;
 			},
 			//点击登陆
 			login(){
 				let that = this;
-
-
-				if(that.account == ''){
-				   that.$toast('请输入账号',3000)
-				   return;
-				}
-				if(that.password == ''){
-					 that.$toast('请输入密码',3000)
-					 return;
-				}
 				/*
         if(that.loginType==1){
 	         	let token = sessionStorage.getItem('stu_userToken')
@@ -113,15 +104,14 @@
         }
         */
 
-        this.login1();
-
-
-
-				 if(that.account == ''){
-				   that.$toast('请输入账号',2000)
+        if(that.model == '选择模式' && that.loginType==1){
+					that.$toast('请选择模式',3000)			
+				}
+				else if(that.account == ''){
+				   that.$toast('请输入账号',3000)
 				}
 				else if(that.password == ''){
-					 that.$toast('请输入密码',2000)
+					 that.$toast('请输入密码',3000)
 				}else{
            //清除cookie缓存
            let keys = document.cookie.match(/[^ =;]+(?=\=)/g);
@@ -129,10 +119,7 @@
              for(let i = keys.length; i--;)
                document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
            }
-
           this.login1();
-
-
 				}
 
 			},
@@ -149,6 +136,7 @@
 	            if(role_id==3){
 	            	sessionStorage.setItem('stu_userId',res.data.id)
 	              sessionStorage.setItem('stu_role_id',res.data.role_id);
+	              sessionStorage.setItem('loginModal',that.modalType);
 	            	this.$router.push({name:'catalogue'})
 	            	that.getJwt(id);
 	            }else{

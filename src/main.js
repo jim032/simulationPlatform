@@ -37,14 +37,14 @@ router.beforeEach((to, from, next) => {
 		   	next()
 		   }
 	  }else{
-	  	/*
+	  
 	  	let userId = sessionStorage.getItem('stu_userId') 
 		   if (userId == null || userId == '') { 
 		    next({ path: '/login' }) 
 		   }else{
 		   	next()
 		   }
-		   */
+		  
 		  next()
 	  }
   }
@@ -64,14 +64,14 @@ beforeEnter: (to, from, next) => {
 	    next()
 	  }
   }else{
-  	/*
+  	
   	let userId = sessionStorage.getItem('stu_userId')
 	  if (userId == null || userId == '') {
 	    next({ path: '/login' })
 	  } else {
 	  	console.log(token);
 	    next()
-	  }*/
+	  }
 	 next();
   }
 }

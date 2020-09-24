@@ -133,7 +133,15 @@ export default new Router({
       }
     },
     {
-      path: '/teach/hashAlgorithm',//职能合约部署，发币过程
+      path: '/teach/multipleSmartContract',//职能合约部署，发币过程
+      name: 'multipleSmartContract',
+      component: () =>import('@/views-teach/principle/p-smartContract-multiple'),
+      meta:{
+      	direction:1
+      }
+    },
+    {
+      path: '/teach/hashAlgorithm',//职能合约部署，hashAlgorithm
       name: 'hashAlgorithm',
       component: () =>import('@/views-teach/principle/p-hashAlgorithm'),
       meta:{
@@ -141,7 +149,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/keyStore',//职能合约部署，发币过程
+      path: '/teach/keyStore',//职能合约部署，keyStore
       name: 'keyStore',
       component: () =>import('@/views-teach/principle/p-keyStore'),
       meta:{

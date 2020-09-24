@@ -140,8 +140,16 @@ export default{
 			 			}else if(text.indexOf('数据结构')!=-1){
 			 			   that.$router.push({name:'dataStructure'})
 			 			}
-						else if(text.indexOf('智能合约')!=-1){
-			 				that.$router.push({name:'smartContract'})
+						else if(text.indexOf('智能合约部署与调用')!=-1){
+			 				
+			 				let loginModal = sessionStorage.getItem('loginModal');
+			 				if(loginModal==1){
+			 					that.$router.push({name:'smartContract'})
+			 				}else{
+			 					that.$router.push({name:'multipleSmartContract'})
+			 					
+			 				}
+			 				
 			 			}else if(text.indexOf('哈希算法')!=-1){
 			 				that.$router.push({name:'hashAlgorithm'})
 			 				

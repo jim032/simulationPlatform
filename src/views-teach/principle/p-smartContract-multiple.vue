@@ -12,9 +12,9 @@
 					
 					<div class="info" ref="info1"   v-for="(item,index) in userList" :key="index">
 						<div class="fz-icon" v-if="item.type==1"></div>
-						<img :src="item.onlineStatus?item.icon_1:item.icon" class="userIcon"  @click.stop="showPointInfo(item.userId)"/>
+						<img :src="item.onlineStatus?item.icon_1:item.icon" class="userIcon"  @click.stop="showPointInfo(item)"/>
 						<p class="userName">{{item.name}}</p>
-						<div class="btnbox" v-if="item.amount>0 &&　contractDeployment==true"><span class="button" @click.stop="showFb(item)">转账</span></div>
+						<div class="btnbox" v-if="item.amount>0 &&　contractDeployment==true"><span class="button" @click.stop="showFb(item,index+1)">转账</span></div>
 					</div>
 
 				</div>
@@ -31,13 +31,13 @@
 					<div class="col">
 						<p class="lab">币种名称：</p>
 						<div class="for_din">
-							<input id="coinName" v-model="coinName" type="text" placeholder="币种名称" autocomplete="off" maxlength="8" @change="validateCoinName($event)" :validate-event="true"/>
+							<input id="coinName" v-model="coinName" ref="coinName" type="text" placeholder="币种名称" autocomplete="off" maxlength="8" @change="validateCoinName($event)" :validate-event="true"/>
 						</div>
 					</div>
 					<div class="col">
 						<p class="lab">币种数量：</p>
 						<div class="for_din">
-							<input id="coinNumber"  placeholder="币种数量" autocomplete="off" maxlength="4" v-model="moneyNumber" @change="validateNum($event)" :validate-event="true"/>
+							<input id="coinNumber" ref="moneyNumber"  placeholder="币种数量" autocomplete="off" maxlength="4" v-model="moneyNumber" @change="validateNum($event)" :validate-event="true"/>
 						</div>
 					</div>
 					<div class="col">
@@ -94,7 +94,7 @@
 					<div class="col">
 						<p class="lab">转账金额：</p>
 						<div class="for_din">
-							<input id="transferAmount" v-model="transAmout" placeholder="请输入转账金额" autocomplete="off" maxlength="4" @change="validateNum1($event)" :validate-event="true"/>
+							<input id="transferAmount" ref="transferAmount" v-model="transAmout" placeholder="请输入转账金额" autocomplete="off" maxlength="4" @change="validateNum1($event)" :validate-event="true"/>
 						</div>
 					</div>
 					<div class="col">

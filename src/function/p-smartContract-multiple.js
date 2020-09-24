@@ -18,7 +18,7 @@ export default{
 	  	menuShow:false,//上方菜单按钮是否显示
 	  	
 	  	winNum:0,//代表当前不显示获胜节点
-	  	pageName:2,//代表页面是发币页面
+	  	pageName:'2-multiple',//代表页面是发币页面
 	  	 	
     	
     	userId:'',//当前用户登陆的userId
@@ -118,7 +118,7 @@ export default{
   components:{comHeader,comFooter,rightTips},
  computed: {
 		stepTips(){
-			return this.$store.state.sm_stepTips
+			return this.$store.state.sm_multiple_stepTips
 		}
 	},
 	
@@ -161,10 +161,16 @@ export default{
 			    that.userList[index].type=2
 			    that.userList[index].userId = '0-' + that.onlineNumber
 			    that.onlineNumber = that.onlineNumber + 1;
+			    if(that.onlineNumber==4){
+			    	that.confirShow = true;
+			    }
 				}
 			}
 
 			else if(num==2){
+				if (that.blockPro > 0){
+				   return
+			   }
 				if (that.hasSettedShowUser){
 					that.$toast('币种已设置',2000)
 					return;
@@ -190,20 +196,18 @@ export default{
 				} 
 				
 				that.transUserList = that.userList
-			
 				that.funNum = num;
 				that.setShow = true;
 				
-			}  
-		
-		else if (num==3 && !that.isBlcok){
+			} 
+		else if (num==3 && !that.isBlcok && !that.contractDeployment){
 			if(!that.hasSettedShowUser){
 				this.$toast('请先设置币种！',3000);
 				return;
 			}
 				that.funNum = num;
 	   		that.operaInfo.infolist = [];
-			if(that.userList.length==4 && that.step==3){
+			if(that.hasSettedShowUser){
 				that.isBlcok = true;
 				//that.isShowBlock = false;
 				that.isShowMess = true
@@ -220,14 +224,12 @@ export default{
 	            //that.confirShow = true; 
 	            that.top = that.top-40;
 							that.operaInfo.mess = "当前合约部署完成"
-							that.operaInfo.infolist.push('合约地址：合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
+							that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
 							that.operaInfo.infolist.push('资产名称：'+that.coinName)
-							that.operaInfo.infolist.push('创建者：'+'用户'+that.chooseUserObj)
-							that.$set(that.divInfo1,'operable',1)
-   	   	    	that.$set(that.divInfo2,'operable',1)
-   	   	    	that.$set(that.divInfo3,'operable',1)
-   	   	    	that.$set(that.divInfo4,'operable',1)
+							that.operaInfo.infolist.push('拥有者：'+that.chooseUserObj.name)						
 							that.blockPro = 0;
+							//智能合约部署完成
+							that.contractDeployment = true;
 		      }else{
 							that.operaInfo.mess = '当前合约正在部署:'+that.blockPro+'%';
 				  }
@@ -252,32 +254,17 @@ export default{
 		that.operaInfo.mess = ''
 	},
     
-  //获取用户余额
-	getCurrentTranferBalance(location){
-    let that = this;
-		switch (location){
-			case 1:
-				return that.divInfo1.balance
-			case 2:
-				return that.divInfo2.balance
-			case 3:
-				return that.divInfo3.balance
-			case 4:
-				return that.divInfo4.balance
-		}
-  },
+
   //确定转账
   submitTranfer(){
-      let that = this;
-      let  start = null;
-      let end = null;
-      let transferAmount = document.getElementById("transferAmount").value;
-      if (that.getCurrentTranferBalance(that.currentLocation) < transferAmount){
-			  that.toast('余额不足')
+     let that = this; 
+     let end ='';
+     if (that.transUser.amount < that.transAmout){
+			  that.$toast('余额不足')
 			return
 		}
-		if (transferAmount.match(/^-?[0-9]+$/) == null){
-			that.toast('转账金额必须是数字')
+		if (that.transAmout.match(/^-?[0-9]+$/) == null){
+			that.$toast('转账金额必须是0-9999区间的正整数')
 			return
 		}
 		
@@ -285,38 +272,28 @@ export default{
 	  that.isBlcok = true;
 	  that.operaInfo.infolist = [];
 	  that.transferShow = false
+	  that.to_userId = that.chooseUserObj.id;
 	  let timer = setInterval(function(){
-   	  that.blockPro++;
-   	  start = that.currentLocation;
-   	  
-   	  if(that.blockPro==40){
-   	  	if (that.chooseUserObj == that.divInfo1.userId){
-   	  		that.timer1 = setTimeout(function(){
-						 	that.divInfo1.balance = parseInt(that.divInfo1.balance) + parseInt(transferAmount)
-					},2800)
-				
-				 	end = that.divInfo1.div
-				}
-				if (that.chooseUserObj == that.divInfo2.userId){
-					that.timer1 = setTimeout(function(){
-					that.divInfo2.balance = parseInt(that.divInfo2.balance) + parseInt(transferAmount)
-					},2800)
-					end = that.divInfo2.div
-				}
-				if (that.chooseUserObj == that.divInfo3.userId){
-					that.timer1 = setTimeout(function(){
-					that.divInfo3.balance = parseInt(that.divInfo3.balance) + parseInt(transferAmount)
-					},2800)
-					end = that.divInfo3.div
-				}
-				if (that.chooseUserObj == that.divInfo4.userId){
-					that.timer1 = setTimeout(function(){
-					that.divInfo4.balance = parseInt(that.divInfo4.balance) + parseInt(transferAmount)
-					},2800)
-					end = that.divInfo4.div
-				}
+   	that.blockPro++;
+    
+   	  if(that.blockPro==35){
+   	  	
+   	  	let arr = that.userList;
+				for(var j = 0; j < arr.length; j++) {
+				   if(that.to_userId==arr[j].userId){  
+				   		
+				   	end = j+1;
+				   }
+				   
+				   
+				   /*
+				   if(arr[j].onlineStatus){
+				   	that.transUserList.push(arr[j]);
+				   }*/
+				} 
+   	  	
 				that.time = new Date();
-				that.showAnimate(start,end)
+				that.showAnimate(that.start,end)
 				
    	  }
    	  
@@ -324,24 +301,15 @@ export default{
           clearInterval(timer)
           that.operaInfo.mess = '转账事务打包完成';
           that.isBlcok = false;
-         
-         
 					that.blockPro = 0;
-					
-					switch (that.currentLocation){
-						case 1:
-							that.divInfo1.balance = parseInt(that.divInfo1.balance) - parseInt(transferAmount)		
-							break
-						case 2:
-							that.divInfo2.balance = parseInt(that.divInfo2.balance) - parseInt(transferAmount)
-							break
-						case 3:
-							that.divInfo3.balance = parseInt(that.divInfo3.balance) - parseInt(transferAmount)
-							break
-						case 4:
-							that.divInfo4.balance = parseInt(that.divInfo4.balance) - parseInt(transferAmount)
-							break
-					}
+				 let arr = that.userList;
+				 that.userList[end-1].amount = parseInt(that.userList[end-1].amount) + parseInt(that.transAmout)
+				 for(var j = 0; j < arr.length; j++) {
+				   if(that.form_userId==arr[j].userId){  
+				   	that.userList[j].amount = that.userList[j].amount-parseInt(that.transAmout)
+				   }
+				 }
+				
 					
       }else{
 					that.operaInfo.mess = '转账事务打包中:'+that.blockPro+'%';
@@ -352,7 +320,7 @@ export default{
   },  
   		
 	//点击转账按钮直接把用户带过来
-	showFb(obj){
+	showFb(obj,index){
 		let that = this;
 		that.transUser = obj
 		if (that.blockPro > 0){
@@ -371,13 +339,12 @@ export default{
 	  let arr = that.userList
 	  
 	  for (var i = 0;i<arr.length;i++){
-	  	if(that.from_userId!=arr[i].userId){
-	  		
+	  	if(that.from_userId!=arr[i].userId){	
 	  		that.transUserList.push(arr[i])
 	  	}
 	  }
 
-	  
+	  that.start = index
 	  that.transferShow = true;
 	},
 	//点击菜单图标
@@ -476,39 +443,28 @@ export default{
 	 },
       
     //点击信息展示
-   showPointInfo(location){
+   showPointInfo(obj){
 	   let that = this;
 	   if (that.blockPro > 0){
 		   return
 	   }
+	   //表示智能合约部署完成
+	   if(!that.contractDeployment){
+	   	return
+	   }
 	   that.isShowBlock = false
 	   that.isShowMess = true
-	    let obj = {};
-	  	switch(parseInt(location)){
-				case 1:
-		  	 	obj = that.divInfo1; 
-		  	 	break;
-				case 2:
-          obj = that.divInfo2;
-		  	 	break;
-				case 3:
-			     obj = that.divInfo3;  
-	  	 	   break;
-				case 4:
-		  	 	 obj = that.divInfo4;  
-	  	 	   break;	  	  	  
-			}
+	
+	  	
 	  	that.operaInfo.infolist = [];
-	  	if(obj.status==0){
-	  	 	   	  that.operaInfo.mess ='您还未拖动用户'
-	  	}else if(that.coinName ==''){
+	   if(that.coinName ==''){
 				  that.operaInfo.mess =''
-				  that.operaInfo.infolist.push('余额：'+ obj.balance)
-	  	 	      that.operaInfo.infolist.push('用户地址：'+ obj.address)
+				  that.operaInfo.infolist.push('余额：'+ obj.amount)
+	  	 	      that.operaInfo.infolist.push('用户姓名：'+ obj.name)
 	  	 	   } else{
 					  that.operaInfo.mess = '币种名称: '+that.coinName;
-					  that.operaInfo.infolist.push('账户余额：'+ obj.balance)
-					  that.operaInfo.infolist.push('用户地址：'+ obj.address)
+					  that.operaInfo.infolist.push('账户余额：'+ obj.amount)
+					  that.operaInfo.infolist.push('用户姓名：'+ obj.name)
 			}
    },
        
@@ -520,8 +476,10 @@ export default{
   		if (!reg.test(this.coinName)) {
 	        this.$toast('币种名称为3-8个英文字符',2000)
 	        this.coinName='';
+	        this.$refs.coinName.focus()
 	    	}
   	}
+  	
   },
   
    validateNum(value) { //验证只能填入数字
@@ -532,8 +490,10 @@ export default{
 	    	if (!reg.test(this.moneyNumber)) {
 	        this.$toast('请输入0-9999区间正整数',2000)
 	        this.moneyNumber='';
+	          this.$refs.moneyNumber.focus()
 	    	}
 	  	}
+	  
   },
   validateNum1(value) { //验证只能填入数字
 	    //var reg = /(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)/
@@ -543,8 +503,10 @@ export default{
 	    	if (!reg.test(this.transAmout)) {
 	        this.$toast('请输入0-9999区间',2000)
 	        this.transAmout='';
+	         this.$refs.transAmout.focus()
 	    	}
 	  	}
+	   
   },
   
 

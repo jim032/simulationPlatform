@@ -219,6 +219,20 @@
 			   }				
 				   return;
 				}
+			 if(that.pageName='2-multiple'){
+			 	switch(that.step){
+				   case 1:
+				   	that.confirmInfo = '当前小组已有4人在线，请按照右侧步骤提示栏进行下一步操作'
+				   	break;
+				   case 2:
+				   	that.confirmInfo = '币种的初始设置已完成，请按照右侧步骤提示栏进行下一步操作。'
+				   	break;
+				   case 3:
+				   	that.confirmInfo = '一个转账智能合约已部署完毕，你可以和其他用户之间进行相互转账啦！'
+				   	break;
+			   }				
+				   return;
+			 }
 			 if(that.pageName == '3'){
 			 	   if(that.confirShow ==true){
 				   switch(that.step){

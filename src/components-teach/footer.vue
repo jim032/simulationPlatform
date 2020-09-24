@@ -2,7 +2,7 @@
 	<div class="staDiv bottomDiv">
 		<div class="stabox">
 			<p class="pt" >{{operaInfo.mess}}</p>
-			<template v-if="pageName==2"> 
+			<template v-if="(pageName==2 || pageName=='2-multiple')"> 
 				<div class="progress" v-if="isBlcok">
 					<div class="curPro">
 						<div class="proIcon" :style="{'width':blockPro+'%'}"></div>

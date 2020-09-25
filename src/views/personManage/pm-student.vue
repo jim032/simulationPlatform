@@ -3,10 +3,7 @@
     <comheader ref="header" :pageNum="pageNum"></comheader>
     <div class="mainbox mainbox_per">
       <div class="mmain mmain_per">
-        <template v-if="dataList.length==0 && isSearch == false">
-          <p class="m_title">一键导入学员信息</p>
-          <upload @inputFile="inputFile"  :pageNum="roleId"></upload>
-        </template>
+  
         <template v-if="dataList.length>0 || isSearch == true">
           <div class="htitle">
             <div class="search">
@@ -75,8 +72,6 @@
                 </a>
               </file-upload>
 
-
-
             </div>
             <div class="page-block">
               <el-pagination
@@ -88,6 +83,10 @@
               </el-pagination>
             </div>
           </div>
+        </template>
+        <template v-if="dataList.length==0 && isSearch == false && showUpload">
+          <p class="m_title">一键导入学员信息</p>
+          <upload @inputFile="inputFile"  :pageNum="roleId"></upload>
         </template>
       </div>
     </div>
@@ -174,7 +173,7 @@
         pageNum:2,
         personPage:1,
 
-
+        showUpload:false,//默认上传页面不显示
         limit: 3,  // 上传excell时，同时允许上传的最大数
 
 
@@ -358,6 +357,9 @@
           if(res.code==200){
             this.dataList = res.data.content
             that.totalElements = res.data.totalElements
+            if(res.data.content.length==0){
+            	that.showUpload=true;
+            }
           }else{
             that.$toast(res.message,3000)
           }

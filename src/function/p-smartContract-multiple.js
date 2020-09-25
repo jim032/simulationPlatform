@@ -112,6 +112,8 @@ export default{
 			showPic:false,//动画效果是否展示
 			time:'',//gif动画执行
 			
+			websock: null,
+			
 			
 	  }
 	},
@@ -119,6 +121,9 @@ export default{
  computed: {
 		stepTips(){
 			return this.$store.state.sm_multiple_stepTips
+		},
+		socketUrl(){
+			return this.$store.state.socketUrl
 		}
 	},
 	
@@ -136,17 +141,76 @@ export default{
 	    }   
 	  }
   },
+ created() {
+    //this.initWebSocket();
+    this.userId = sessionStorage.getItem('stu_userId')
+  },
+  mounted(){
+		 	let that = this;
+			window.onresize = () => {
+		    return (() => {
+		        window.screenWidth = document.body.clientWidth
+		        that.screenWidth = window.screenWidth;
+		        that.initHeight();
+		    })()
+			}
+	
+		this.$nextTick(() => {	  	
+	  	that.initHeight();
+	  	
+      that.userOnline();
+		})	
+	},
+  
 	methods:{
 		
+		//初始化socket
+		initWebSocket(){ //初始化weosocket
+			if(typeof(WebSocket) == "undefined") {
+        that.$toast("您的浏览器不支持WebSocket",3000);
+      }else{
+      	 
+         if(this.websock!=null){
+            this.websock.close();
+            this.websock=null;
+          }
+          let userId = sessionStorage.getItem('stu_userId')
+          this.websock = new WebSocket(this.socketUrl+userId);
+		      this.websock.onmessage = this.websocketonmessage;
+          this.websock.onopen = this.websocketonopen;
+          this.websock.onerror = this.websocketonerror;
+          this.websock.onclose = this.websocketclose;
+      }
+		
+     
+    },
+    
+    websocketonopen(){ //连接建立之后执行send方法发送数据 
+      let userId = sessionStorage.getItem('stu_userId') 
+      let actions = {"userId":userId};
+      //this.websocketsend(JSON.stringify(actions));
+    },
+    websocketonerror(){//连接建立失败重连
+      this.initWebSocket();
+    },
+    websocketonmessage(e){ //数据接收
+     console.log(e)
+    },
+    websocketsend(Data){//数据发送
+      this.websock.send(Data);
+    },
+    websocketclose(e){  //关闭
+      console.log('断开连接',e);
+    },
+
 		//页面刚进来的时候默认第一个用户在线
-		userOnline(){
-			let that = this;
-			let userId = sessionStorage.getItem('stu_userId')
+		userOnline(){	
+			let that = this
 			that.userList[0].onlineStatus = true
-			that.userList[0].userId = userId;
+			that.userList[0].userId = that.userId;
 			that.userList[0].type=1
-			that.userId = sessionStorage.getItem('stu_userId')
 			that.onlineNumber=1;
+			
 		},
 		
 		poinfun(num){
@@ -305,7 +369,8 @@ export default{
 				 let arr = that.userList;
 				 that.userList[end-1].amount = parseInt(that.userList[end-1].amount) + parseInt(that.transAmout)
 				 for(var j = 0; j < arr.length; j++) {
-				   if(that.form_userId==arr[j].userId){  
+				   if(that.from_userId==arr[j].userId){  
+				   	
 				   	that.userList[j].amount = that.userList[j].amount-parseInt(that.transAmout)
 				   }
 				 }
@@ -460,11 +525,11 @@ export default{
 	   if(that.coinName ==''){
 				  that.operaInfo.mess =''
 				  that.operaInfo.infolist.push('余额：'+ obj.amount)
-	  	 	      that.operaInfo.infolist.push('用户姓名：'+ obj.name)
+	  	 	      that.operaInfo.infolist.push('姓名：'+ obj.name)
 	  	 	   } else{
 					  that.operaInfo.mess = '币种名称: '+that.coinName;
 					  that.operaInfo.infolist.push('账户余额：'+ obj.amount)
-					  that.operaInfo.infolist.push('用户姓名：'+ obj.name)
+					  that.operaInfo.infolist.push('姓名：'+ obj.name)
 			}
    },
        
@@ -556,22 +621,7 @@ export default{
 	  
 	  
  },
-  	mounted(){
-		 	let that = this;
-			window.onresize = () => {
-		    return (() => {
-		        window.screenWidth = document.body.clientWidth
-		        that.screenWidth = window.screenWidth;
-		        that.initHeight();
-		    })()
-			}
-	
-		this.$nextTick(() => {	  	
-	  	that.initHeight();
-	  	
-      that.userOnline();
-		})	
-	},
+  	
 	//离开页面清除定时器
    beforeDestroy() {
 	   if(this.timer) {
@@ -585,5 +635,6 @@ export default{
    },
    destroyed() {
       window.onresize = null;
+      this.websock.close();
     }
   }

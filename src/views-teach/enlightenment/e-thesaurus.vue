@@ -32,10 +32,8 @@
 
 			    
 			</div>
-			 <div class="swiper-button-prev"
-           slot="button-prev"></div>
-          <div class="swiper-button-next"
-           slot="button-next"></div>
+			 <div class="swiper-button-prev"slot="button-prev" v-if="cateList.length>3"></div>
+       <div class="swiper-button-next"slot="button-next" v-if="cateList.length>3"></div>
 			</div>			   
    </div>
 			<!----头部-->

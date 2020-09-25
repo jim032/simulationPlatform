@@ -1,12 +1,14 @@
 <template>
 	<div class="pageWrap homePageWrap"  ref="pageWrap" >
 		<div class="headerFun">
-		 <a class="btn btn_console"  @click="linkConsole"><span></span><em>控制台</em></a>
-		  <a class="bindex" @click="signOut">
-		  	<span class="icon"></span>
-		  	<em>退出</em>
-		  </a>
-		  <a class="bback"></a>
+		 <div class="hed-fun-box" :class="{'fadeIn':isOperate}">
+			 <a class="btn btn_console"  @click="linkConsole"><span></span><em>控制台</em></a>
+			  <a class="bindex" @click="signOut">
+			  	<span class="icon"></span>
+			  	<em>退出</em>
+			  </a>
+		  </div>
+		  <a class="bback" @click="isOperate=!isOperate"></a>
 		</div>
 		<div class="cataBox" ref="cataBox">
 			
@@ -57,13 +59,14 @@
 <script>
 	import {logout} from '@/API/api'
 	import Cookies from 'js-cookie'
+	import {course} from '@/API/api'
 	 export default{
 	 	data(){
 	 		return{
-	 			catalogNum:0,//当前显示菜单项
 	 			
-	 		
+	 			isOperate:false,
 	 			
+	 			catalogNum:0,//当前显示菜单项	 			
 	 			catlog1:{title:'启蒙篇',id:'1'}, 
 	 			catlog2:{title:'场景篇',id:'2'},
 	 			catlog3:{title:'原理篇',id:'3'},
@@ -86,6 +89,19 @@
 		    }
 	 	},
 	 	methods:{
+	 		
+	 		//获取目录
+	 		getData(){
+	 			let that = this;
+	 			course().then(res=>{
+          if(res.code==200){
+          	console.log(res)
+          }else{
+          	 that.$toast(res.message,3000)
+          }
+        })
+	 		},
+	 		
 	 		//退出
     	signOut(){   		
     		let that = this;   		
@@ -144,7 +160,7 @@
 	 	
 	 	},
 	 	mounted(){
-	 		
+	 		this.getData();//获取课程目录
 	 	}
 	 }
 </script>
@@ -167,11 +183,11 @@
     em{display: block; text-align: center;font-size:18px;color:#fff;}
     .bindex em{ margin-top: -10px;}
     
-    .bback{width:18px;height:36px;display: inline-block; background: url(../../assets/teachImg/arrow_right.png) center no-repeat;
+    .bback{width:18px;height:36px;display: inline-block; background: url(../../assets/teachImg/hed_arrow.png) center no-repeat;
       background-size:contain;-webkit-background-size:contain;
       margin-left:8px;margin-top:12px;
     }
-    .btn_console{margin-right:20px;}
+    .btn_console{margin-right:15px;}
     .btn_console span{width:64px;height:64px; display: block; margin: 0 auto;
       background: url(../../assets/teachImg/btn_console.png) center no-repeat;background-size:cover;-webkit-background-size:cover;}
     .btn_console em{margin-top: -10px; }
@@ -239,12 +255,15 @@
   	.pcat2{margin-left: 8%;}
   }
   
+  /*头部点击箭头*/
+  .hed-fun-box{position: absolute;white-space: nowrap; right:40px; overflow: hidden; }
+  .fadeIn{width:0px;}
   
 }
 
 @media only screen and (max-width:1400px ) {
 .pageWrap{
-	.cataMain{width: 100%;}
+	.cataMain{width: 90%;}
 	.pcat{width:26%;height: auto;}
 	.headerFun .icon{width:50px;height: 50px;}
 	.headerFun  .btn_console span{width:50px;height:50px;}

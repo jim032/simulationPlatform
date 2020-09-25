@@ -14,10 +14,12 @@
 			</div>
 		</div>
 		<div class="funbox">
-			<a class="btn btn_console" v-if="consoleShow"><span></span><em>控制台</em></a>
-			<a class="btn btn_reset" @click="Pagereload " v-if="courseId!=1"><span></span><em>重置</em></a>
-			<a class="btn btn_back" @click="back"><span></span><em>返回</em></a>
-			<a class="arrow"></a>
+			<div class="hed-fun-box" :class="{'fadeIn':isOperate}">
+				<a class="btn btn_console" v-if="consoleShow"><span></span><em>控制台</em></a>
+				<a class="btn btn_reset" @click="Pagereload " v-if="courseId!=1"><span></span><em>重置</em></a>
+				<a class="btn btn_back" @click="back"><span></span><em>返回</em></a>
+			</div>
+			<a class="arrow" @click="isOperate=!isOperate"></a>
 		</div>
 	</div>
 </template>
@@ -27,6 +29,8 @@
 		 inject:['reload'], //注入app的方法
 		data(){
 			return{
+				isOperate:false,
+				
 				cataList:[
 				 {title:'区块链的整体系统架构',
 				  data:['区块的组成','梅克尔树的典型架构','交易事务的数据结构','内存池的介绍与设计','节点启动','P2P网络模拟','共识过程模拟','出块流程','密码算法应用','智能合约部署','区块集成开发工具',
@@ -106,8 +110,8 @@
      .btn em{font-size:18px;color:#fff;text-shadow:0px 5px 7px rgba(19,49,127,0.15); line-height:20px; margin-top: -5px;
             -webkit-text-shadow:0px 5px 7px rgba(19,49,127,0.15);display: block;text-align: center;
      }
-     .arrow{width:18px;height:36px;display: inline-block; vertical-align: top; background: url(../assets/teachImg/arrow_right.png) center no-repeat;
-     background-size: cover;-webkit-background-size: cover; margin-top:30px; margin-left:20px;}
+     .arrow{width:18px;height:36px;display: inline-block; vertical-align: top; background: url(../assets/teachImg/hed_arrow.png) center no-repeat;
+     background-size: cover;-webkit-background-size: cover; margin-top:20px; margin-left:20px;}
   }
   
   .catalogBox{
@@ -147,6 +151,9 @@
   
 }
 
+.hed-fun-box{position: absolute;white-space: nowrap; right:40px; overflow: hidden; }
+.fadeIn{width:0px;}
+
  @media screen and (max-width:1440px) {
   	.headerbox {
     .stabox{font-size:24px; height: 50px;;}
@@ -154,8 +161,9 @@
     .funbox{right:8px;}
     .funbox .btn span{margin-top: 0px;width:40px;height: 40px;}
     .funbox .btn em{font-size:14px;}
-    .funbox .arrow{margin-top: 0px;margin-left: 8px;width:12px;height: 24px;}
+    .funbox .arrow{margin-top:4px;margin-left: 8px;width:12px;height: 24px;}
     .catalogBox{top:70px}
     }
+    .hed-fun-box{right:20px;}
  }
 </style>

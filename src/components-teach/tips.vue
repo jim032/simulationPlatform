@@ -219,7 +219,7 @@
 			   }				
 				   return;
 				}
-			 if(that.pageName='2-multiple'){
+			 if(that.pageName=='2-multiple'){
 			 	switch(that.step){
 				   case 1:
 				   	that.confirmInfo = '当前小组已有4人在线，请按照右侧步骤提示栏进行下一步操作'

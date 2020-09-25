@@ -1,11 +1,13 @@
 <template>
 	<div class="pageWrap subcatWrap"  ref="pageWrap" >
 		<div class="headerFun">
-		  <a class="bindex" @click="goBack">
-		  	<span class="icon"></span>
-		  	<em>返回</em>
-		  </a>
-		  <a class="bback"></a>
+			<div class="hed-fun-box" :class="{'fadeIn':isOperate}">  
+			  <a class="bindex" @click="goBack" >
+			  	<span class="icon"></span>
+			  	<em>返回</em>
+			  </a>
+		 </div>
+		  <a class="bback" @click="isOperate=!isOperate"></a>
 		</div>
 		
 		<div class="wrapMain">
@@ -39,6 +41,7 @@
 export default{
 	data(){
 		return{	
+			isOperate:false,//头部返回按钮是否隐藏
 			cataList:[{
 				id:'1',
 				name:'启蒙篇',
@@ -128,7 +131,13 @@ export default{
 	 		  else if(text.indexOf('初识区块链')!=-1){
 	 		  	 that.$router.push({name:'knowBlockchain'})
 	 		  }
-	 		  else if(text.indexOf('发展')!=-1){
+	 		   else if(text.indexOf('区块链的分类')!=-1){
+	 		  	 that.$router.push({name:'knowBlockchain'})
+	 		  }
+	 		    else if(text.indexOf('区块链的经典产品')!=-1){
+	 		  	 that.$router.push({name:'knowBlockchain'})
+	 		  }
+	 		  else if(text.indexOf('区块链发展')!=-1){
 	 		  	 that.$router.push({name:'develop'})
 	 		  }
 			}else{
@@ -214,7 +223,7 @@ export default{
     em{display: block; text-align: center;font-size:18px;color:#fff;}
     .bindex em{ margin-top: -10px;}
     
-    .bback{width:18px;height:36px;display: inline-block; background: url(../../assets/teachImg/arrow_right.png) center no-repeat;
+    .bback{width:18px;height:36px;display: inline-block; background: url(../../assets/teachImg/hed_arrow.png) center no-repeat;
       background-size:contain;-webkit-background-size:contain;
       margin-left:8px;margin-top:12px;
     }
@@ -291,7 +300,9 @@ export default{
 	margin-top: -30px;}
 	.ii-item{font-size:18px;}
 }
-  
+/*头部箭头点击*/
+.hed-fun-box{position: absolute;white-space: nowrap; right:40px; overflow: hidden; }
+.fadeIn{width:0px;}  
 
 @media only screen and (max-width:1400px ) {
 .pageWrap{

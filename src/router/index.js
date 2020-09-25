@@ -99,14 +99,7 @@ export default new Router({
       }
     },
     
-    {
-      path: '/teach/login',//登陆页面
-      name: 'login',
-      component: () =>import('@/views-teach/user/userLogin'),
-      meta:{
-      	direction:1
-      }
-    },
+    
     {
       path: '/teach/dataStructure',//节点模拟运行
       name: 'dataStructure',

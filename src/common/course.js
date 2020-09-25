@@ -60,6 +60,7 @@
                 that.multiplayer = "多人"
               }
               that.menus = res.data[j].children;
+              that.addShow(that.menus)
             }
           }else{
 
@@ -290,7 +291,7 @@
 			//获取课程列表
 			that.getCourse()
 
-			that.addShow(that.menus)
+			
 
 		},
 		beforeDestroy() {

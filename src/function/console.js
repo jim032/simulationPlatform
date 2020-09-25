@@ -34,6 +34,8 @@
 				 ],
 				 timer: '',
 				 passwordList: [],
+				 
+				 delayTimer:null
 			}
 		},
 		components:{
@@ -130,11 +132,19 @@
 		  			//console.log(account.length)
 		  			let command_str = command.substring(16, command.length-2)
 		  			//console.log(command_str)
-		  			if (command_str != account) {
-		  				that.total.push('账号不存在');
-		  			} else {
-		  				that.total.push('账号余额：' + that.money);
-		  			}
+		  	    
+		  	    if(that.accountList.indexOf(command_str)!=-1){
+		  	    	if(command_str != account){
+	  							that.total.push('账号余额：0');	  
+	  						}
+		  	    	else{
+					  		that.total.push('账号余额：' + that.money);
+					  	}
+		  	    }else{
+		  	    	that.total.push('账号不存在');
+		  	    }
+	  				
+		  		
 		  		}
 		  		if (that.command=='tds height') {
 		  			//最新的区块在前面显示
@@ -191,9 +201,16 @@
 		  		
 		  	}
 		  	that.command = '';
+		  	
+		  	var div = this.$refs.commmain;
+				that.delayTimer=setTimeout(()=>{   
+		       div.scrollTop = div.scrollHeight;
+		    },0)
+		  	
 		  }
 		  
 		  
+ 
 	  }
 	}
 

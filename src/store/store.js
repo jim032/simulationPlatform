@@ -3,8 +3,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 var store = new Vuex.Store({
 	state: {
-  	adminlogin:'http://192.168.1.158:8081/login',
   	
+  	socketUrl:'ws://192.168.1.167:8080/webSocket/',
+
   	 //节点未开始提示
   	node_noStart:'您还未拖动节点',
   	//节点未启动状态的提示

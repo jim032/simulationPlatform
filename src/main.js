@@ -12,19 +12,22 @@ import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/store'
 import $ from 'jquery'
 
+
 import 'ie-placeholder'
 import toastRegistry from './components/toast/index'
 Vue.config.productionTip = false
+
+
+
+
 Vue.use(toastRegistry)
 Vue.use(ViewUI)
-
 Vue.use(ElementUI)
 import router from './router'
 
 
 // 全局路由导航拦截
-router.beforeEach((to, from, next) => {
-	
+router.beforeEach((to, from, next) => {	  
   if (to.path === '/login') { // 如果是登录页面路径，就直接next()
     next()
   } else { 
@@ -36,16 +39,15 @@ router.beforeEach((to, from, next) => {
 		   }else{
 		   	next()
 		   }
-	  }else{
-	  
-	  	let userId = sessionStorage.getItem('stu_userId') 
-		   if (userId == null || userId == '') { 
+	  }else{	   
+	  	let userId = sessionStorage.getItem('stu_userId') 	
+		   if (userId == null) { 
 		    next({ path: '/login' }) 
 		   }else{
 		   	next()
 		   }
 		  
-		  next()
+
 	  }
   }
 })
@@ -55,6 +57,7 @@ router.beforeEach((to, from, next) => {
 beforeEnter: (to, from, next) => {
   // 判断用户是否登录
   
+  console.log('to2'+to)
   if(to.meta.direction==0){  
 	  let userId = sessionStorage.getItem('user_id')
 	  if (userId == null || userId == '') {
@@ -72,7 +75,7 @@ beforeEnter: (to, from, next) => {
 	  	console.log(token);
 	    next()
 	  }
-	 next();
+	
   }
 }
 

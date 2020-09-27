@@ -14,18 +14,24 @@
 				mainWidth:0,//右边的宽度
 				currentPage:1,
 
-				menus:[
-				],
+				menus:[], //菜单列表
         actId:'',
-        personal:'',
-        multiplayer:'',
-				courseList:[//type为1表示单人，type表示2表示双人
-				],
+        
+        personal:'', //单人模式
+        multiplayer:'',//多人模式
+				courseList:[],//type为1表示单人，type表示2表示双人
 				teaClassList:[{id:'c1',label:'区块链一班'},{id:'c2',label:'区块链二班'},{id:'c3',label:'区块链三班'},{id:'c4',label:'区块链四班'}],
 				teacurClass:'',//当前班级
 				newClassName:'',//创建课程名称
-				newClassType:1,//当前创建课程的模式，1代表单人模式，2代表多人模式
+				newClassType:1,//当前创建课程的模式，1代表单人模式，2代表多人模式(选择多人，单人的样式)
 				errorMess:'',//创建课程提示框文字
+				
+				personal_menus:[],//单人菜单列表
+				personal_id:'',
+				multiplayer_menus:[], //多人菜单列表
+				multiplayer_id:'',
+				
+				categories:[]
 			}
 		},
 		components:{
@@ -54,19 +60,32 @@
 			  let that = this;
         course().then(res=>{
           if(res.code==200){
-            for (let j = 0; j < res.data.length; j++) {
-              if( res.data[j].name == "单人"){
+            for (let j = 0; j < res.data.length; j++) {   	
+              if( res.data[j].name == "单人模式"){
                 that.personal = "单人";
-                that.multiplayer = "多人"
+                that.personal_menus = res.data[j].children;
+                that.personal_id =  res.data[j].id
+              }else{
+              	that.multiplayer = "多人";
+              	if(res.data[j].children){
+              		that.multiplayer_menus = res.data[j].children;
+              	  that.multiplayer_id = res.data[j].id
+              	}else{
+              		that.multiplayer_menus = [];
+              		that.multiplayer_id = '';
+              	}
+              	
               }
-              that.menus = res.data[j].children;
-              that.addShow(that.menus)
+             
             }
+            that.menus = res.data[0].children;    
+            that.addShow(that.menus)
           }else{
-
+             that.$toast(res.message,3000)
           }
         })
 			},
+			
 
 			 /*当前页改变的时候触发*/
       handleCurrentChange(val) {
@@ -117,7 +136,14 @@
 	    },
 	    //创建课程单双人选择
 	    chooseType(num){
-	    	this.newClassType = num
+	    	let that = this;
+	    	that.newClassType = num
+	    	if(num==1){
+					that.menus = that.personal_menus;
+				}else{
+					that.menus = that.multiplayer_menus;
+					
+				}
 	    },
 
 	    addShow(arr){
@@ -180,34 +206,59 @@
         }
         //如果此选项清空勾选后，要把所有的父元素，也全部清空勾选，因为它不勾选了，所有父元素的状态不可能还处于勾选状态，不管它勾选不勾选，我们都要清除一遍，以防万一
         this.clearFather(this.menus,data);
+        
+         if(this.categories.indexOf(data.id)!=-1){
+      		let index = this.categories.indexOf(data.id)
+      		this.categories.splice(index,1)
+      	}
+        
+        
       }else{//如果这一项的selectArr为[]，说明是未被勾选状态，在selectArr里加id值，添加勾选
         data.selectArr.push(data.id);
+        
         //如果此选项清空勾选后，如果下面有children的话，那么也同时勾选下面所有的孩子
         if(data.children && data.children.length > 0){
           this.addChild(data.children);
+        }else{
+        	this.categories.push(data.id); 
         }
         //如果此选项勾选后，要判断所有的上级元素是不是应该全部打勾
         this.selectFather(this.menus,data);
       }
+      
+      console.log(this.categories)
 
     },
     //定义函数清空所有孩子的勾选
     clearChild(arr){
       for(var i = 0; i < arr.length;i++){
         arr[i].selectArr = [];
+         
+        if(this.categories.indexOf(arr[i].id)!=-1){
+      		let index = this.categories.indexOf(arr[i].id)
+      		this.categories.splice(index,1)
+      	}
+         
         if(arr[i].children && arr[i].children.length > 0){
           this.clearChild(arr[i].children);
         }
+        	
+        
       }
+
     },
     //定义函数添加所有孩子的勾选
     addChild(arr){
       for(var i = 0; i < arr.length;i++){
         arr[i].selectArr.push(arr[i].id);
+       
         if(arr[i].children && arr[i].children.length > 0){
           this.addChild(arr[i].children);
+        }else{
+        	 this.categories.push(arr[i].id); 
         }
       }
+
     },
     //定义函数一层一层的往上寻找父元素的children
     clearFather(father,data){
@@ -261,12 +312,9 @@
         if(menus[i].children == arr){
           //找到这个拥有children的父元素后，给selectArr赋值，使其勾选
           menus[i].selectArr.push(menus[i].id);
-          //console.log(menus[i].selectArr)
           //找到这个拥有children的父元素后，再调用selectFather，再进行向上寻找父元素，知道没有父元素为止
           this.selectFather(this.menus,menus[i]);
-          //console.log(menus[i].selectArr)
-          //console.log(menus)
-          //console.log(this.menus)
+    
         }else if(menus[i].children && menus[i].children.length > 0){
           this.selectRealFather(menus[i].children,arr);
         }

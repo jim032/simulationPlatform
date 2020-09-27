@@ -2,6 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 
 import store from '@/store/store'
+import router from '@/router/index'
 //自定义配置新建一个axios实例
 const http = axios.create({
 	baseURL: 'http://192.168.1.11:8088',
@@ -54,6 +55,13 @@ http.interceptors.request.use(function(config) {
 
 //添加响应拦截器
 http.interceptors.response.use(function(response) {
+	console.log(response)
+	if (response.data.code == 400 || response.data.message == 'jwt is valid') {
+      router.push({
+        path: "/login",
+        querry: { redirect: router.currentRoute.fullPath }//从哪个页面跳转
+      })
+    }
 	return response.data;
 }, function(error) {
 	return Promise.reject(error)

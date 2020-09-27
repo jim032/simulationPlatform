@@ -59,7 +59,7 @@
 <script>
 	import {logout} from '@/API/api'
 	import Cookies from 'js-cookie'
-	import {course} from '@/API/api'
+	import {categoryTree} from '@/API/api-teach'
 	 export default{
 	 	data(){
 	 		return{
@@ -93,9 +93,15 @@
 	 		//获取目录
 	 		getData(){
 	 			let that = this;
-	 			course().then(res=>{
+	 			let obj = {};
+	 			obj.type = 0 ,//type为0表示中文名
+	 			categoryTree(obj).then(res=>{
           if(res.code==200){
-          	console.log(res)
+          	let temp = res.data
+          	for (let j = 0; j < temp.length; j++) {   	         
+	            that.personal_menus = res.data[j].children;
+	            that.personal_id =  res.data[j].id;  
+            }	
           }else{
           	 that.$toast(res.message,3000)
           }

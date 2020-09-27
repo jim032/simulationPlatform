@@ -27,7 +27,7 @@
 						</div>
 
 						<div class="sblock" v-if="divInfo1.prowidth==100" @click="showBlock(1)"> 创世<br>区块 </div>
-						<div class="sblock sblock1" v-if="divInfo1.beat==true" @click="showBlock(2)"> 区块1 </div>
+						<div class="sblock sblock1" v-if="divInfo1.broadcast==true" @click="showBlock(2)"> 区块1 </div>
 					</div>
 
 					<div class="pointDiv">
@@ -53,7 +53,7 @@
 						</div>
 
 						<div class="sblock" v-if="divInfo2.prowidth==100"  @click="showBlock(1)"> 创世<br>区块 </div>
-						<div class="sblock sblock1" v-if="divInfo2.beat==true" @click="showBlock(2)"> 区块1 </div>
+						<div class="sblock sblock1" v-if="divInfo2.broadcast==true" @click="showBlock(2)"> 区块1 </div>
 					</div>
 
 					<div class="pointDiv">
@@ -79,7 +79,7 @@
 						</div>
 
 						<div class="sblock"  v-if="divInfo3.prowidth==100" @click="showBlock(1)"> 创世<br>区块 </div>
-						<div class="sblock sblock1" v-if="divInfo3.beat==true" @click="showBlock(2)"> 区块1 </div>
+						<div class="sblock sblock1" v-if="divInfo3.broadcast==true" @click="showBlock(2)"> 区块1 </div>
 					</div>
 
 					<div class="pointDiv">
@@ -104,7 +104,7 @@
 							</div>
 						</div>
 						<div class="sblock" v-if="divInfo4.prowidth==100" @click="showBlock(1)">创世<br>区块</div>
-						<div class="sblock sblock1" v-if="divInfo4.beat==true" @click="showBlock(2)">区块1</div>
+						<div class="sblock sblock1" v-if="divInfo4.broadcast==true" @click="showBlock(2)">区块1</div>
 					</div>
 
 					<svg class="lineBox" id="lineBox" xmlns="http://www.w3.org/2000/svg" version="1.1" ref="lineBox"></svg>
@@ -116,7 +116,7 @@
 						<div class="sendLine sendLine3"></div>	
 					</div>
 					-->
-					 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="s_linebox " ref="s_linebox" id="b_line" >
+					 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="s_linebox " ref="s_linebox" id="b_line" v-if="broadcasting">
 		        
 		        <defs>
 						    

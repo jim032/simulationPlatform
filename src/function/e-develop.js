@@ -8,54 +8,60 @@ export default{
 	 		 courseId:1,
 	 		 
         timeLineList: [{
-              timestamp: '1992',
+              timestamp: '2008年11月',
               color: '#fff',
               fontsize: 24,
               size: '28',
               bgcolor: '#e4e7ed',
               icon: 'el-iconprev',
-              year: '1992',
-              info: '“加密朋克”组织秘密成立'
+              year: '2008年11月',
+              info: '中本聪发布《比特币白皮书》',
+              detailInfo:'2008年11月中本聪发表论文《比特币：一种点对点的电子现金系统》，提出了BlockChain这种数据结构。'
             }, {
-              timestamp: '2008年',
+              timestamp: '2010年5月',
               color: '#fff',
               fontsize: 24,
               size: '28',
               bgcolor: '#e4e7ed',
-              year: '2008',
-              info: '中本聪发布《比特币白皮书》'
+              year: '2010年5月',
+              info: '弗罗里达程序员用一万比特币购买披萨',
+              detailInfo:'2010年5月佛罗里达程序员Laszlo Hanyecz用一万比特币购买了价值25美元的披萨，完成了比特币历史上的第一笔实物交易。'
             }, {
-              timestamp: '2009年1月3日',
+              timestamp: '2013年11月',
               color: '#fff',
               fontsize: 24,
               size: '28',
               bgcolor: '#e4e7ed',
-              year: '2009',
-              info: '比特币世界的第一个区块被创建'
+              year: '2013年11月',
+              info: '以太坊项目发起',
+              detailInfo:'2013年11月 Vitalik Buterin发起Ethereum项目，并在12月发布了以太坊白皮书的首个版本，预示区块链进入2.0时代。'
             }, {
-              timestamp: '2013年10月',
+              timestamp: '2016年3月',
               color: '#fff',
               fontsize: 24,
-              year: '2013',
+              year: '2016年3月',
               size: '28',
               bgcolor: '#e4e7ed',
-              info: '比特大陆成立'
+              info: '以太坊硬分叉',
+              detailInfo:'2016年3月 以太坊著名的The DAO被攻击事件发生，以太坊硬分叉，出现了ETC和ETH并行。'
             }, {
-              timestamp: '2014年1月23日',
+              timestamp: '2017年8月',
               color: '#fff',
               fontsize: 24,
               size: '28',
-              year: '2014',
+              year: '2017年8月',
               bgcolor: '#e4e7ed',
-              info: '以太坊项目开始启动'
+              info: '比特币硬分叉，同年比特币达到最高价',
+              detailInfo:'2017年8月，比特币发生硬分叉，BCH诞生；12月，比特币价格达到有史以来最高价，接近20000美元。'
             }, {
-              timestamp: '2018年至今',
+              timestamp: '2019年10月',
               color: '#fff',
               fontsize:24,
               size: '28',
               bgcolor: '#e4e7ed',
-              year: '2018',
-              info: '大势所趋'
+              year: '2019年10月',
+              info: '我国将区块链技术上升到国家战略高度',
+              detailInfo:'2019年10月24日，中共中央政治局召开区块链学习会议，重点强调要将发展区块链技术上升到了国家战略高度。'
             }]
 	 	}
 	 },

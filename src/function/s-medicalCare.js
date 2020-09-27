@@ -175,7 +175,7 @@ export default{
 	  		return;
 	  	}
 	  	if(!that.cur_Hospital.authorized){
-	  		that.$toast('请点击用户对该医院进行授权',3000);
+	  		that.$toast('请点击病人对该医院进行授权',3000);
 	  		return;
 	  	}
 	  	that.showSearch = true;

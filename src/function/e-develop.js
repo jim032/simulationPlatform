@@ -1,4 +1,5 @@
 import comHeader from '@/components-teach/sheader';
+import {visitCourse} from '@/API/api-teach'
 export default{
 	 data(){
 	 	return{
@@ -62,12 +63,19 @@ export default{
               year: '2019年10月',
               info: '我国将区块链技术上升到国家战略高度',
               detailInfo:'2019年10月24日，中共中央政治局召开区块链学习会议，重点强调要将发展区块链技术上升到了国家战略高度。'
-            }]
+            }],
+            category_id:''//访问课程的id
 	 	}
 	 },
 	 components:{
 	 	comHeader
 	 },
+	  mounted(){
+	  	let that = this;
+		 	that.menuText = '启蒙篇-'+this.$route.params.name
+		 	that.category_id = this.$route.params.id
+		 	that.getvisit();
+		},
 	  methods: {
         changeActive(index) {
             this.timeIndex = index;
@@ -76,7 +84,19 @@ export default{
 			  clickMenu(){
 			 	  this.menuShow = !this.menuShow
 			  },
-       
+			  
+			  getvisit(){  
+				  let that = this
+				  let obj = {}
+				  obj.user_id = sessionStorage.getItem('stu_userId');
+				  obj.category_id = that.category_id
+				  visitCourse(obj).then(res=>{
+	          if(res.code==200){   
+	          }else{
+	          	 that.$toast(res.message,3000)
+	          }
+	        })
+        }
        
     }
 }

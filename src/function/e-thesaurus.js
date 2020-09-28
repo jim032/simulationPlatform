@@ -1,5 +1,7 @@
 import comHeader from '@/components-teach/sheader';
 import Swiper , { Navigation, Pagination }from 'swiper';
+import {visitCourse} from '@/API/api-teach'
+
 Swiper.use([Navigation, Pagination]);
 export default{
 	data(){
@@ -19,9 +21,11 @@ export default{
 	      {name:'Node-节点',intro:'区块链与大数据的联系'},
 	      {name:'Oracles',intro:'区块链与大数据的联系'},
 	      {name:'去中心化',intro:'区块链与大数据的联系'},
-	    ]
-
+	    ],
+	  category_id:''
+     
 		}
+		
 		
 	},
 	filters: {
@@ -86,17 +90,31 @@ export default{
 			    // 如果需要滚动条
 			    scrollbar: '.swiper-scrollbar',
 
-			   
-			   
+
 
 			})  
-	  }
+	  },
+	  getvisit(){  
+		  let that = this
+		  let obj = {}
+		  obj.user_id = sessionStorage.getItem('stu_userId');
+		  obj.category_id = that.category_id
+		  visitCourse(obj).then(res=>{
+        if(res.code==200){   
+        }else{
+        	 that.$toast(res.message,3000)
+        }
+      })
+    }
 
 	},
 	mounted(){
 		let that = this;
+		this.menuText = '启蒙篇-'+this.$route.params.name
+		that.category_id = this.$route.params.id;
 		that.$nextTick(function(){
 			that.swiper();
+			that.getvisit();
 		})
 		
 	}

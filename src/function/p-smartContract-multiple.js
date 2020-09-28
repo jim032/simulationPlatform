@@ -8,7 +8,7 @@ import comHeader from '@/components-teach/sheader';
 import comFooter from '@/components-teach/footer';
 import rightTips from '@/components-teach/tips';
 import common from '@/function/common';
-
+import {visitCourse} from '@/API/api-teach';
 export default{
 	data(){
 	  return{
@@ -113,7 +113,7 @@ export default{
 			time:'',//gif动画执行
 			
 			websock: null,
-			
+			category_id:''
 			
 	  }
 	},
@@ -147,6 +147,9 @@ export default{
   },
   mounted(){
 		 	let that = this;
+		 	this.menuText = '区块链密码学-'+this.$route.params.name
+		 	that.category_id = this.$route.params.id;
+	    that.getvisit();
 			window.onresize = () => {
 		    return (() => {
 		        window.screenWidth = document.body.clientWidth
@@ -163,7 +166,19 @@ export default{
 	},
   
 	methods:{
-		
+		//知识点访问
+	  getvisit(){  
+		  let that = this
+		  let obj = {}
+		  obj.user_id = sessionStorage.getItem('stu_userId');
+		  obj.category_id = that.category_id
+		  visitCourse(obj).then(res=>{
+        if(res.code==200){   
+        }else{
+        	 that.$toast(res.message,3000)
+        }
+      })
+    },
 		//初始化socket
 		initWebSocket(){ //初始化weosocket
 			if(typeof(WebSocket) == "undefined") {

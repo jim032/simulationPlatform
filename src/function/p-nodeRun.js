@@ -6,7 +6,7 @@ import 'jquery-ui/ui/widgets/draggable';
 	import { mapState } from "vuex";
 	import common from '@/function/common'//公用js
 	import nodeCommon from '@/function/nodeRun'//节点模拟运行js
-	
+	import {visitCourse} from '@/API/api-teach';
 	export default {
 		data() {
 			return {
@@ -49,6 +49,7 @@ import 'jquery-ui/ui/widgets/draggable';
 				
 				menuText:'节点共识模拟',
 				broadcasting:true,
+				category_id:''
 			}
 		},
 		components: {
@@ -62,6 +63,19 @@ import 'jquery-ui/ui/widgets/draggable';
 			}
 		},
 		methods: {
+			//知识点访问
+		  getvisit(){  
+			  let that = this
+			  let obj = {}
+			  obj.user_id = sessionStorage.getItem('stu_userId');
+			  obj.category_id = that.category_id
+			  visitCourse(obj).then(res=>{
+	        if(res.code==200){   
+	        }else{
+	        	 that.$toast(res.message,3000)
+	        }
+	      })
+	    },
 			//点击菜单
 			clickMenu() {
 				this.menuShow = !this.menuShow
@@ -530,7 +544,9 @@ import 'jquery-ui/ui/widgets/draggable';
 
 		mounted() {
 			let that = this;
-
+      this.menuText = '区块链密码学-'+this.$route.params.name
+      that.category_id = this.$route.params.id;
+	    that.getvisit();
 			window.onresize = () => {
 				return(() => {
 					window.screenWidth = document.body.clientWidth

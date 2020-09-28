@@ -1,6 +1,7 @@
 import comHeader from '@/components-teach/sheader';
 import comFooter from '@/components-teach/footer';
 import rightTips from '@/components-teach/tips';
+import {visitCourse} from '@/API/api-teach';
 export default{
 	data(){
 		return{
@@ -34,7 +35,7 @@ export default{
 	    consoleShow:true,//头部控制台是否显示
 	    
 	    menuText:'区块链密码学-哈希算法',
-	    
+	    category_id:''
 	    
 		}
 	},
@@ -47,7 +48,19 @@ export default{
 		}
 	},
 	methods:{
-		
+		//知识点访问
+	  getvisit(){  
+		  let that = this
+		  let obj = {}
+		  obj.user_id = sessionStorage.getItem('stu_userId');
+		  obj.category_id = that.category_id
+		  visitCourse(obj).then(res=>{
+        if(res.code==200){   
+        }else{
+        	 that.$toast(res.message,3000)
+        }
+      })
+    },
 		//点击左边的三个工具箱
 		poinfun(num){
 			//num==1表示生成hash,2表示发送，3表示校验
@@ -192,6 +205,9 @@ export default{
 	},
 	mounted(){
 		let that = this
+		this.menuText = '区块链密码学-'+this.$route.params.name
+		that.category_id = this.$route.params.id;
+	  that.getvisit();
 		that.$nextTick(() => {
 		   that.confirShow = true
 		  

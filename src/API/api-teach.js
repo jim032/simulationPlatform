@@ -1,15 +1,26 @@
 import axios from './http'
 import qs from 'qs'
-export{
-	login,updateUser,createToken,online,onlineUsers,hardware,courseFrequency,search_user,jwt,modify_user,
-	delete_user,course,logout,updateUserPassword
+
+
+//首页子目录
+var categoryTree =function(data){
+  return axios.get('/category_tree?type='+data.type+'&category_id='+data.category_id)
 }
 
-//用户重置密码
-var updateUserPassword =function(data){
-  return axios.post('/update_userPassword',data,{headers: {'Content-Type':'application/json'}})
+//首页父目录
+var pcategoryTree =function(data){
+  return axios.get('/category_tree?type='+data.type)
 }
+
+//课程访问
+var visitCourse =function(data){
+  return axios.post('/visit_course',data,{headers: {'Content-Type':'application/json'}})
+}
+
 
 function getJson (data) {
 	return qs.stringify(data)
+}
+export{
+	categoryTree,pcategoryTree,visitCourse
 }

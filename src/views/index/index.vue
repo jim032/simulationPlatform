@@ -41,7 +41,9 @@
 							      range-separator="至"
 							      start-placeholder="开始日期"
 							      end-placeholder="结束日期"
-							      :picker-options="pickerOptions">
+							      :picker-options="pickerOptions" @change="dateSearch"
+							      value-format="yyyy-MM-dd"
+							      >
 							    </el-date-picker>
 							    <el-input v-model="searchInput" placeholder="请输入知识点"></el-input>
 							    <span class="n-searchbtn" @click="searchCategory"></span>
@@ -174,7 +176,10 @@
 				showEchatrs: false,
 				dateRange:'',
 				searchInput:'',//输入知识点检查
-				onlineNumber:''
+				onlineNumber:'',
+				
+				startTime:'', //知识点访问开始时间
+				endTime:''//知识点访问结束时间
 			}
 		},
 		components: {
@@ -190,7 +195,36 @@
 		},
 		computed: {},
 		methods: {
-
+      
+      //点击日期
+      dateSearch(value){
+        let that = this
+      	that.startTime = value[0];
+      	that.endTime = value[1]
+      	let obj = {}
+        obj.per_page = that.coursePageSize;
+      	obj.page = that.currentPage-1;
+        obj.category_name = that.searchInput.replace(/\s*/g,'');
+        obj.dateRangeStart=value[0];
+        obj.dateRangeEnd=value[1]
+        
+        courseFrequency(obj).then(res=> {
+          if(res.code==200){
+            for(let i = 0 ;i < res.data.content.length; i++){
+              let time  = res.data.content[i].created_at.toString().replace('T',' ');
+              res.data.content[i].created_at = time.substring(0,19);
+            }
+            let that = this;
+            that.totalCourse = res.data.totalElements;
+            let operaRecord = res.data.content;
+            this.operaRecord=operaRecord;
+          }else{
+            that.$toast(res.message,3000)
+          }
+        })
+        
+      },
+      
 	    online(){
 	    	let that = this;
         online().then(res=> {
@@ -241,7 +275,7 @@
       	obj.page = that.currentPage-1;
         obj.category_name = that.searchInput.replace(/\s*/g,'');
         if(that.dateRange !== '') {
-          let time = that.dateRange.toString().split(",");
+          /*let time = that.dateRange.toString().split(",");
           let start = new Date(time[0]);
           let yS = start.getFullYear();
           let mS = start.getMonth() + 1;
@@ -256,10 +290,16 @@
           let dE = end.getDate();
           dE = dE < 10 ? ('0' + dE) : dE;
           obj.dateRangeEnd = yE+'-'+mE+'-'+dE;
+          */
+          
+          obj.dateRangeStart = that.startTime
+          obj.dateRangeEnd = that.endTime
+          
         }else{
           obj.dateRangeStart='';
           obj.dateRangeEnd='';
         }
+        
         courseFrequency(obj).then(res=> {
           if(res.code==200){
             for(let i = 0 ;i < res.data.content.length; i++){

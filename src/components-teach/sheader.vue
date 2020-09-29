@@ -6,9 +6,19 @@
 			    <span class="menu"  @click="clickMenu"></span>
 			</div>
 			<div class="catalogBox">
-				<div v-for="(item,index) in cataList" :key="index">
-					<p class="pt"><span>{{item.title}}</span></p>
-					<div class="colbox"><span class="scol" v-for="(iitem,index) in item.data">{{iitem}}</span></div>
+				<div class="icata_box" v-for="(item,index) in cataList" :key="index" >
+					<p class="pt"><span>{{item.name}}</span></p>
+					<div class="slide_cata clearfix">
+						<div class="colbox"  v-for="(iitem,index) in item.children" :key="index">
+							  <span class="scol" :class="{'noBorder':iitem.children}" @click="linkRouter(iitem)" v-if="iitem.id!='12a7c38a-f985-11ea-adc1-0242ac120002'">{{iitem.name}}</span>
+							  <div class="icolbox " 
+							  	v-for="(iiitem,index) in iitem.children" :key="index" 
+							  	v-if="iitem.children && item.id!='890affa2-f984-11ea-adc1-0242ac120002'">
+							  	<span class="iscol" @click="item.id!='890affa2-f984-11ea-adc1-0242ac120002'?linkRouter(iiitem):''">{{iiitem.name}}</span>
+							  </div>
+							
+						</div>
+					</div>
 				</div>
 				
 			</div>
@@ -25,6 +35,7 @@
 </template>
 
 <script>
+  import {pcategoryTree} from '@/API/api-teach'
 	export default{
 		 inject:['reload'], //注入app的方法
 		data(){
@@ -32,14 +43,7 @@
 				isOperate:false,
 				
 				cataList:[
-				 {title:'区块链的整体系统架构',
-				  data:['区块的组成','梅克尔树的典型架构','交易事务的数据结构','内存池的介绍与设计','节点启动','P2P网络模拟','共识过程模拟','出块流程','密码算法应用','智能合约部署','区块集成开发工具',
-				  '区块链运维工具','区块链浏览器']
-				  },
-				  {title:'区块链中的密码学',
-				  data:['哈希算法和哈希值的基本概率','哈希算法的特点','哈希算法的应用','对称加密算法和非对称加密算法','椭圆曲线密码学','梅克尔树','数字签名个数字证书','keyStore基本概率和作用',
-				  '模拟生成keyStore','模拟利用KeyStore']
-				  }
+				 
 				],
 			}
        },
@@ -60,11 +64,125 @@
     		this.$emit('clickMenu')
     	},
     	back(){
-    		this.$router.go(-1)
+    		this.$router.push({name:'catalogue'})
     	},
     	Pagereload(){
     		this.reload();
-    	}
+    	},
+    	
+    	//获取目录结构
+    	getData(){
+	 			let that = this;
+	 			let obj = {};
+	 			obj.type = 0 ,//type为0表示中文名
+	 			pcategoryTree(obj).then(res=>{
+          if(res.code==200){
+          	console.log(res)
+          	if(res.data[0].children){
+          		that.cataList = res.data[0].children
+          	}
+          	
+          }else{
+          	 that.$toast(res.message,3000)
+          }
+        })
+    	},
+    	//点击路由跳转
+    	linkRouter(obj){
+			let that = this;
+			let text = obj.id
+		   		//名词库
+				if(text=='e8d78d7e-f984-11ea-adc1-0242ac120002'){
+	 			   that.$router.push({name:'thesaurus',params:{id:obj.id,name:obj.name}})
+	 		  }	
+	 		  //初始区块链
+	 		  if(text=='a3c5cdfe-f984-11ea-adc1-0242ac120002'){
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  }
+	 		  //区块链的分类
+	 		  if(text=='b6251572-f984-11ea-adc1-0242ac120002'){
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  }
+	 		  //区块链经典产品
+	 		  if(text=='c11f35ca-f984-11ea-adc1-0242ac120002'){
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  }
+	 		  //区块链的发展
+	 		  if(text=='a0681f36-f984-11ea-adc1-0242ac120002'){
+	 		  	 that.$router.push({name:'develop',params:{id:obj.id,name:obj.name}})
+	 		  }
+
+				//节点共识模拟				
+				if(text=='0bdec04e-f985-11ea-adc1-0242ac120002'){
+	 			   that.$router.push({name:'nodeRun',params:{id:obj.id,name:obj.name}})
+	 			} 
+	 			//数据结构
+	 			if(text=='08a7ce0c-f985-11ea-adc1-0242ac120002'){
+	 			   that.$router.push({name:'dataStructure',params:{id:obj.id,name:obj.name}})
+	 			}
+				if(text=='0f2f5394-f985-11ea-adc1-0242ac120002'){			 				
+	 				let loginModal = sessionStorage.getItem('loginModal');
+	 				if(loginModal==1){
+	 					that.$router.push({name:'smartContract',params:{id:obj.id,name:obj.name}})
+	 				}else{
+	 					that.$router.push({name:'multipleSmartContract',params:{id:obj.id,name:obj.name}})	
+	 				}	
+	 			} 
+	 			if(text=='152eeb56-f985-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'hashAlgorithm',params:{id:obj.id,name:obj.name}})	
+	 			} 
+	 			//keyStore
+	 			if(text=='0eda79cc-f98b-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'keyStore',params:{id:obj.id,name:obj.name}})	
+	 			}
+	 			//椭圆线
+	 			if(text=='1807f1ba-f985-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'ellipticCurveCryptography',params:{id:obj.id,name:obj.name}})	
+	 			}
+	 			//对称
+	 			if(text=='03ca5372-f98b-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'encryptionAlgorithm',params:{id:obj.id,name:obj.name}})	
+	 			}
+	 			//版权
+	 			
+	 		   if(text=='fa082928-f984-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'copyRight',params:{id:obj.id,name:obj.name}})	
+	 		  }
+	 		  //物流
+	 			if(text=='fd55f8f8-f984-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'logistics',params:{id:obj.id,name:obj.name}})	
+	 		  }
+	 			//捐赠
+	     	if(text=='f64ff4e6-f984-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'publicWelfare',params:{id:obj.id,name:obj.name}})	
+	 			}
+	     	//保单
+	 			 if(text=='0543b9d8-f985-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'insurancePolicy',params:{id:obj.id,name:obj.name}})	
+	 			}
+	 			 //金融
+	 			if(text=='fff96d42-f984-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'finance',params:{id:obj.id,name:obj.name}})	
+	 			}
+	 			//病历信息共享
+	 			if(text=='ee3642f6-f984-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'medicalCare',params:{id:obj.id,name:obj.name}})	
+	 			}
+	 			
+	 			
+	 		 if(text=='12d4a962-f98b-11ea-adc1-0242ac120002'){
+	 				that.$router.push({name:'51attack',params:{id:obj.id,name:obj.name}})	
+	 			}
+			 			
+			 	this.reload();		
+	
+			
+		}
+    },
+    mounted(){
+    	let that = this;
+    
+    	that.getData();
     }
 	}
 </script>
@@ -78,7 +196,7 @@
 .staDiv{padding:10px;width:880px;background:rgba(255,255,255,.5);margin:0 auto;
     .borderRadius(10px,10px,10px,10px); display: table;
   }
-.headerbox{position:fixed;width:100%;  left:0px;z-index:2; top:30px;z-index:99;
+.headerbox{position:fixed;width:100%;  left:0px;z-index:2; top:30px;z-index:999;
    .staDiv{position: relative; }
    .stabox{ font-size:36px;position:relative; z-index: 2;}
    .stabox p{width:80%; margin: 0 auto;}
@@ -118,7 +236,7 @@
   	color:@basecolor;
   	position: absolute;top:90px;left:0px;border:2px solid #fff;.borderRadius(5px,5px,5px,5px);
   right:0px; background: url(../assets/teachImg/catalog_bg.png) left center repeat-x;
-     overflow-y: auto;z-index: 1;padding:30px 0;max-height:400px;
+     overflow-y: auto;z-index: 1;padding-bottom:30px;max-height:450px;
     
    -webkit-transform: scale(0);-ms-transform:scale(0);-o-transform:scale(0);transform: scale(0);
   -webkit-transform-origin:93% 0;-ms-transform-origin:93% 0;-o-transform-origin:93% 0;transform-origin:93% 0;
@@ -128,11 +246,26 @@
 	-o-transition: all 0.3s ease-out;
 	-ms-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
-  	.pt{font-size:20px;	padding:15px 30px 0 30px;}
-  	.colbox{padding: 0 22px; font-size:16px;}
-  	.scol{margin-top:15px; padding: 0 8px; white-space: nowrap; display: inline-block;border-right:2px solid #fff;
+  	.pt{font-size:20px;	padding-top:10px; color:#FF9A0E; margin-bottom: 10px;}
+  	.icata_box{margin: 0 30px;word-break:break-all;}
+  	.colbox{ font-size:16px; display:inline-block; vertical-align: middle;}
+  	.colbox::after{content: '|';}
+  	.colbox:last-child{display: inline;}
+  	.colbox:last-child::after{content:'';}
+  	.icolbox {display: inline-block;}
+  	.icolbox::after{content: '|';}
+  	.icolbox:last-child::after{content:'';}
+  	.scol{ padding: 0 8px; white-space: nowrap; display: inline-block;
   	height: 12px;line-height: 12px;}
-  	.scol:last-child{border:0 none}
+  	.colbox:last-child .scol{border:0 none}
+  	.scol.noBorder{border:0 none;padding-right: 0px;}
+  	/*.iscol::after{content:'、';}
+  	.icolbox:last-child .iscol::after{content:'>'; margin-left:5px; margin-right: 8px;}
+  	.scol.noBorder::after{content:'<'; margin-left:5px;}*/
+  	.iscol{padding: 0 8px;}
+  	
+  	.slide_cata{}
+  	
   }
   
   .showCatalog{

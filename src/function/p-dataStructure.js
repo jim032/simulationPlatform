@@ -1,6 +1,7 @@
 import comHeader from '@/components-teach/sheader';
 import comFooter from '@/components-teach/footer';
 import rightTips from '@/components-teach/tips';
+import {visitCourse} from '@/API/api-teach';
 export default{
 	data(){
 		return{
@@ -33,6 +34,7 @@ export default{
 	   promptText:'当前无工具可用！',
 	   
 	   showContent:false,
+	   category_id:''
 		}
 	},
 	components:{
@@ -44,6 +46,19 @@ export default{
 		}
 	},
 	methods:{
+		//知识点访问
+	  getvisit(){  
+		  let that = this
+		  let obj = {}
+		  obj.user_id = sessionStorage.getItem('stu_userId');
+		  obj.category_id = that.category_id
+		  visitCourse(obj).then(res=>{
+        if(res.code==200){   
+        }else{
+        	 that.$toast(res.message,3000)
+        }
+      })
+    },
 		//点击菜单图标
 	  clickMenu(){
 	 	  this.menuShow = !this.menuShow
@@ -76,6 +91,9 @@ export default{
 	  },
 	},
 	mounted(){
-		
+		let that = this;
+		that.menuText = '区块链密码学-'+this.$route.params.name
+		that.category_id = this.$route.params.id;
+	  that.getvisit();
 	}
 }

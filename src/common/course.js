@@ -70,7 +70,7 @@
               if( res.data[j].name == "单人模式"){
                 that.personal = "单人";
                 that.personal_menus = res.data[j].children;
-                that.personal_id =  res.data[j].id
+                that.personal_id =  res.data[j].id;
               }else{
               	that.multiplayer = "多人";
               	if(res.data[j].children){

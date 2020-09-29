@@ -2,6 +2,7 @@ import comHeader from '@/components-teach/sheader';
 import comFooter from '@/components-teach/footer';
 import rightTips from '@/components-teach/tips';
 import store from '@/store/store'
+import {visitCourse} from '@/API/api-teach'
 export default{
 	data(){
 		return{
@@ -61,7 +62,8 @@ export default{
 	    searchHash:'',//查询hash
       
       searchStep:0,//查询的步骤
-      menuText:'场景篇-捐赠数据确权'
+      menuText:'场景篇-捐赠数据确权',
+      category_id:''
 			
 		}
 	},
@@ -91,8 +93,28 @@ export default{
      return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
     }
  },
-
+ mounted(){
+ 	let that = this;
+ 	that.menuText = '场景篇-'+this.$route.params.name
+ 	that.category_id = this.$route.params.id;
+ 	that.getvisit();
+ },
 	methods:{
+		
+		//知识点访问接口
+		getvisit(){  
+		  let that = this
+		  let obj = {}
+		  obj.user_id = sessionStorage.getItem('stu_userId');
+		  obj.category_id = that.category_id
+		  visitCourse(obj).then(res=>{
+        if(res.code==200){   
+        }else{
+        	 that.$toast(res.message,3000)
+        }
+      })
+    },
+		
 		//点击菜单图标
 	  clickMenu(){
 	 	  this.menuShow = !this.menuShow

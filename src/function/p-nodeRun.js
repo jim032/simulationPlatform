@@ -6,7 +6,7 @@ import 'jquery-ui/ui/widgets/draggable';
 	import { mapState } from "vuex";
 	import common from '@/function/common'//公用js
 	import nodeCommon from '@/function/nodeRun'//节点模拟运行js
-	
+	import {visitCourse} from '@/API/api-teach';
 	export default {
 		data() {
 			return {
@@ -48,6 +48,8 @@ import 'jquery-ui/ui/widgets/draggable';
 				consoleShow:false,//头部控制台是否显示
 				
 				menuText:'节点共识模拟',
+				broadcasting:true,
+				category_id:''
 			}
 		},
 		components: {
@@ -61,6 +63,19 @@ import 'jquery-ui/ui/widgets/draggable';
 			}
 		},
 		methods: {
+			//知识点访问
+		  getvisit(){  
+			  let that = this
+			  let obj = {}
+			  obj.user_id = sessionStorage.getItem('stu_userId');
+			  obj.category_id = that.category_id
+			  visitCourse(obj).then(res=>{
+	        if(res.code==200){   
+	        }else{
+	        	 that.$toast(res.message,3000)
+	        }
+	      })
+	    },
 			//点击菜单
 			clickMenu() {
 				this.menuShow = !this.menuShow
@@ -90,12 +105,16 @@ import 'jquery-ui/ui/widgets/draggable';
 								that.winNum = that.winpoint.pointId
 								if(that.winpoint.div == 1) {
 									that.divInfo1.beat = true
+									that.divInfo1.broadcast = true
 								} else if(that.winpoint.div == 2) {
 									that.divInfo2.beat = true
+									that.divInfo2.broadcast = true
 								} else if(that.winpoint.div == 3) {
 									that.divInfo3.beat = true
+									that.divInfo3.broadcast = true
 								} else {
 									that.divInfo4.beat = true
+									that.divInfo4.broadcast = true
 								}
 								that.isBlcok = false
 						   
@@ -152,9 +171,38 @@ import 'jquery-ui/ui/widgets/draggable';
 
 						   clearTimeout(that.timer);
 								that.isBlcok = false;
+								
+								that.timer1 = setTimeout(function(){
+									//获胜div
+									let winDiv = that.winpoint.div;
+									that.broadcasting = false;
+									switch(parseInt(winDiv)){
+										case 1:
+										  that.divInfo2.broadcast = true;
+										  that.divInfo3.broadcast = true;
+										  that.divInfo4.broadcast = true;
+										  break;
+										case 2:
+										  that.divInfo1.broadcast = true;
+										  that.divInfo3.broadcast = true;
+										  that.divInfo4.broadcast = true;
+										  break;
+										case 3:
+										  that.divInfo1.broadcast = true;
+										  that.divInfo2.broadcast = true;
+										  that.divInfo4.broadcast = true;
+										  break;
+										case 4:
+										  that.divInfo1.broadcast = true;
+										  that.divInfo2.broadcast = true;
+										  that.divInfo3.broadcast = true;
+										  break;
+									}
+								},700)
+								
 								that.timer1 = setTimeout(function(){
 									that.confirShow = true;
-								},800)
+								},1000)
 								
 								
 								
@@ -496,7 +544,9 @@ import 'jquery-ui/ui/widgets/draggable';
 
 		mounted() {
 			let that = this;
-
+      this.menuText = '区块链密码学-'+this.$route.params.name
+      that.category_id = this.$route.params.id;
+	    that.getvisit();
 			window.onresize = () => {
 				return(() => {
 					window.screenWidth = document.body.clientWidth
@@ -505,11 +555,7 @@ import 'jquery-ui/ui/widgets/draggable';
 					that.initPointInfo();
 					that.boxWidth = (that.$refs.pointBox.offsetWidth * 0.75).toFixed(2);
 	      
-	        if(that.step==2){
-	        	that.top = that.top - 40;
-	        }else if(that.step==3){
-	        	that.top = that.top - 80;
-	        }
+	        
 
 				})()
 			}

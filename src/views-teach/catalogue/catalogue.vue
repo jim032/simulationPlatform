@@ -14,7 +14,7 @@
 			
 			<div class="cataMain" :class="{'cataMain-4':isTab4}">
 				<div class="cata-main" >
-						<div class="pcat pcat1" @click="linkSubCatalog(catlog1.id)" >
+						<div class="pcat pcat1" @click="linkSubCatalog(catlog1.id,catlog1.title)" >
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
 								<img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
@@ -22,28 +22,28 @@
 							</div>
 						</div>
 						
-						<div class="pcat pcat2" @click="linkSubCatalog(catlog2.id)">
+						<div class="pcat pcat2" @click="linkSubCatalog(catlog2.id,catlog2.title)">
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
 								<img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
 								<p class="pt">{{catlog2.title}}</p>
 							</div>	
 						</div>
-						<div class="pcat pcat-zdy" @click="linkSubCatalog(catlog5.id)" v-if="!isTab4">
+						<div class="pcat pcat-zdy" @click="linkSubCatalog(catlog5.id,catlog5.title)" v-if="!isTab4">
 						   <img src="../../assets/teachImg/circle.png"/>
 							 <div class="intro">
 								 <img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
 								 <p class="pt">{{catlog5.title}}</p>
 							 </div>
 						</div>
-						<div class="pcat pcat-yl pcat1" @click="linkSubCatalog(catlog3.id)">
+						<div class="pcat pcat-yl pcat1" @click="linkSubCatalog(catlog3.id,catlog3.title)">
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
 								<img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
 								<p class="pt">{{catlog3.title}}</p>
 							</div>
 						</div>
-						<div class="pcat pcat-yl pcat2" @click="linkSubCatalog(catlog4.id)">
+						<div class="pcat pcat-yl pcat2" @click="linkSubCatalog(catlog4.id,catlog4.title)">
 						   <img src="../../assets/teachImg/circle.png"/>
 							 <div class="intro">
 								 <img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
@@ -59,7 +59,7 @@
 <script>
 	import {logout} from '@/API/api'
 	import Cookies from 'js-cookie'
-	import {course} from '@/API/api'
+	import {pcategoryTree} from '@/API/api-teach'
 	 export default{
 	 	data(){
 	 		return{
@@ -67,11 +67,11 @@
 	 			isOperate:false,
 	 			
 	 			catalogNum:0,//当前显示菜单项	 			
-	 			catlog1:{title:'启蒙篇',id:'1'}, 
-	 			catlog2:{title:'场景篇',id:'2'},
-	 			catlog3:{title:'原理篇',id:'3'},
-	 			catlog4:{title:'异常篇',id:'4'},
-	 			catlog5:{title:'自定义篇',id:'5'},
+	 			catlog1:{title:'',id:''}, 
+	 			catlog2:{title:'',id:''},
+	 			catlog3:{title:'',id:''},
+	 			catlog4:{title:'',id:''},
+	 			catlog5:{title:'',id:''},
 		 		boxheight: 0,
 		 		bodyH:0,
 		 		index: 0,
@@ -93,9 +93,35 @@
 	 		//获取目录
 	 		getData(){
 	 			let that = this;
-	 			course().then(res=>{
+	 			let obj = {};
+	 			obj.type = 0 ,//type为0表示中文名
+	 
+	 			pcategoryTree(obj).then(res=>{
           if(res.code==200){
-          	console.log(res)
+          	let temp = res.data[0].children;
+          	for (let j = 0; j < temp.length; j++) {   	         
+	            if(temp[j].name=='启蒙篇'){
+	            	that.catlog1.title = temp[j].name
+	            	that.catlog1.id = temp[j].id
+	            }
+	            if(temp[j].name=='场景篇'){
+	            	that.catlog2.title = temp[j].name
+	            	that.catlog2.id = temp[j].id
+	            }
+	            if(temp[j].name=='原理篇'){
+	            	that.catlog3.title = temp[j].name
+	            	that.catlog3.id = temp[j].id
+	            }
+	            if(temp[j].name=='异常篇'){
+	            	that.catlog4.title = temp[j].name
+	            	that.catlog4.id = temp[j].id
+	            }
+	            if(temp[j].name=='自定义篇'){
+	            	that.catlog5.title = temp[j].name
+	            	that.catlog5.id = temp[j].id
+	            	that.isTab4 = false
+	            }
+            }	
           }else{
           	 that.$toast(res.message,3000)
           }
@@ -148,8 +174,8 @@
 	 			
 	 		},
 	 		//点击分类跳转
-	 		linkSubCatalog(id){
-	 			this.$router.push({name:'subCatalogue',params:{id:id}})
+	 		linkSubCatalog(id,title){
+	 			this.$router.push({name:'subCatalogue',params:{id:id,name:title}})
 	 			
 	 		},
 	 		//点击跳转控制台

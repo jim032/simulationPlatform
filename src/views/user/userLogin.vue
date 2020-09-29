@@ -137,12 +137,12 @@
 	            	sessionStorage.setItem('stu_userId',res.data.id)
 	              sessionStorage.setItem('stu_role_id',res.data.role_id);
 	              sessionStorage.setItem('loginModal',that.modalType);
-	            	this.$router.push({name:'catalogue'})
+	            	this.$router.replace({name:'catalogue'})
 	            	that.getJwt(id);
 	            }else{
 	            	sessionStorage.setItem('user_id',res.data.id)
 	              sessionStorage.setItem('role_id',res.data.role_id);
-	            	this.$router.push({name:'index'})
+	            	this.$router.replace({name:'index'})
 	            	that.getJwt(id);
 	            }
 

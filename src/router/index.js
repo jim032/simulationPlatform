@@ -91,7 +91,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/subCatalogue/:id',//首页菜单点击进去跳入子目录
+      path: '/teach/subCatalogue/:id/:name?',//首页菜单点击进去跳入子目录
       name: 'subCatalogue',
       component: () =>import('@/views-teach/catalogue/subCatalogue'),
       meta:{
@@ -101,7 +101,7 @@ export default new Router({
     
     
     {
-      path: '/teach/dataStructure',//节点模拟运行
+      path: '/teach/dataStructure/:id/:name?',//节点模拟运行
       name: 'dataStructure',
       component: () =>import('@/views-teach/principle/p-dataStructure'),
       meta:{
@@ -109,7 +109,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/nodeRun',//节点模拟运行
+      path: '/teach/nodeRun/:id/:name?',//节点模拟运行
       name: 'nodeRun',
       component: () =>import('@/views-teach/principle/p-nodeRun'),
       meta:{
@@ -118,7 +118,7 @@ export default new Router({
     },
     
     {
-      path: '/teach/smartContract',//职能合约部署，发币过程
+      path: '/teach/smartContract/:id/:name?',//职能合约部署，发币过程
       name: 'smartContract',
       component: () =>import('@/views-teach/principle/p-smartContract'),
       meta:{
@@ -126,7 +126,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/multipleSmartContract',//职能合约部署，发币过程
+      path: '/teach/multipleSmartContract/:id/:name?',//职能合约部署，发币过程
       name: 'multipleSmartContract',
       component: () =>import('@/views-teach/principle/p-smartContract-multiple'),
       meta:{
@@ -134,7 +134,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/hashAlgorithm',//职能合约部署，hashAlgorithm
+      path: '/teach/hashAlgorithm/:id/:name?',//职能合约部署，hashAlgorithm
       name: 'hashAlgorithm',
       component: () =>import('@/views-teach/principle/p-hashAlgorithm'),
       meta:{
@@ -142,7 +142,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/keyStore',//职能合约部署，keyStore
+      path: '/teach/keyStore/:id/:name?',//职能合约部署，keyStore
       name: 'keyStore',
       component: () =>import('@/views-teach/principle/p-keyStore'),
       meta:{
@@ -151,7 +151,7 @@ export default new Router({
     },
    
     {
-      path: '/teach/ellipticCurveCryptography',//椭圆线密码学
+      path: '/teach/ellipticCurveCryptography/:id/:name?',//椭圆线密码学
       name: 'ellipticCurveCryptography',
       component: () =>import('@/views-teach/principle/p-ellipticCurveCryptography'),
       meta:{
@@ -159,7 +159,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/encryptionAlgorithm',//对称加密算法
+      path: '/teach/encryptionAlgorithm/:id/:name?',//对称加密算法
       name: 'encryptionAlgorithm',
       component: () =>import('@/views-teach/principle/p-encryptionAlgorithm'),
       meta:{
@@ -168,7 +168,7 @@ export default new Router({
     }
     ,
     {
-      path: '/teach/copyRight',//场景篇-作品版权存证
+      path: '/teach/copyRight/:id/:name?',//场景篇-作品版权存证
       name: 'copyRight',
       component: () =>import('@/views-teach/scene/s-copyRight'),
       meta:{
@@ -176,7 +176,7 @@ export default new Router({
       }
     },
      {
-      path: '/teach/logistics',//场景篇-物流
+      path: '/teach/logistics/:id/:name?',//场景篇-物流
       name: 'logistics',
       component: () =>import('@/views-teach/scene/s-logistics'),
       meta:{
@@ -184,7 +184,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/publicWelfare',//场景篇-物流
+      path: '/teach/publicWelfare/:id/:name?',//场景篇-物流
       name: 'publicWelfare',
       component: () =>import('@/views-teach/scene/s-publicWelfare'),
       meta:{
@@ -192,7 +192,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/insurancePolicy',//场景篇-快速保单处理
+      path: '/teach/insurancePolicy/:id/:name?',//场景篇-快速保单处理
       name: 'insurancePolicy',
       component: () =>import('@/views-teach/scene/s-insurance'),
       meta:{
@@ -200,7 +200,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/finance',//场景篇-供应链金融审计
+      path: '/teach/finance/:id/:name?',//场景篇-供应链金融审计
       name: 'finance',
       component: () =>import('@/views-teach/scene/s-finance'),
       meta:{
@@ -208,7 +208,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/medicalCare',//场景篇-病例信息共享
+      path: '/teach/medicalCare/:id/:name?',//场景篇-病例信息共享
       name: 'medicalCare',
       component: () =>import('@/views-teach/scene/s-medicalCare'),
       meta:{
@@ -216,14 +216,14 @@ export default new Router({
       }
     },
     {
-      path: '/teach/thesaurus',//场景篇-病例信息共享
+      path: '/teach/thesaurus/:id/:name?',//启蒙篇-名词库
       name: 'thesaurus',
       component: () =>import('@/views-teach/enlightenment/e-thesaurus'),
       meta:{
       	direction:1
       }
     },{
-      path: '/teach/knowBlockchain',//场景篇-病例信息共享
+      path: '/teach/knowBlockchain/:id/:name?',//启蒙蒙-区块链分类
       name: 'knowBlockchain',
       component: () =>import('@/views-teach/enlightenment/e-knowBlockchain'),
       meta:{
@@ -231,7 +231,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/develop',//场景篇-病例信息共享
+      path: '/teach/develop/:id/:name?',//启蒙篇-发展史
       name: 'develop',
       component: () =>import('@/views-teach/enlightenment/e-develop'),
       meta:{
@@ -239,7 +239,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/51attack',//场景篇-病例信息共享
+      path: '/teach/51attack/:id/:name?',//场景篇-病例信息共享
       name: '51attack',
       component: () =>import('@/views-teach/abnormal/a-attack51'),
       meta:{

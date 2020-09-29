@@ -1,6 +1,6 @@
   import comheader from '@/components/sheader';
 	import tree from '@/components/tree';
-	import {course} from '@/API/api'
+	import {categoryTree,addCourse,course,modifyCourseName,deleteCourse,classes} from '@/API/api'
 	export default{
 		data(){
 			return{
@@ -10,27 +10,33 @@
 				leftNavWidth:'125',//左边宽度
 				leftwidth:'125',//左边父菜单宽度
 				dialogVisible:false,//添加课程弹出框是否显示
+        updatedialogVisible:false,//修改课程名称
 				groupVisible:false,//分组弹出框
 				mainWidth:0,//右边的宽度
 				currentPage:1,
+        totalCourse:'',   //课程总数
+        per_page:8,     //课程每页数
 
 				menus:[], //菜单列表
         actId:'',
-        
+
         personal:'', //单人模式
         multiplayer:'',//多人模式
 				courseList:[],//type为1表示单人，type表示2表示双人
-				teaClassList:[{id:'c1',label:'区块链一班'},{id:'c2',label:'区块链二班'},{id:'c3',label:'区块链三班'},{id:'c4',label:'区块链四班'}],
+				teaClassList:[],
 				teacurClass:'',//当前班级
 				newClassName:'',//创建课程名称
+        updateClassName:'',//修改课程名称
 				newClassType:1,//当前创建课程的模式，1代表单人模式，2代表多人模式(选择多人，单人的样式)
 				errorMess:'',//创建课程提示框文字
-				
+
 				personal_menus:[],//单人菜单列表
 				personal_id:'',
 				multiplayer_menus:[], //多人菜单列表
 				multiplayer_id:'',
-				
+
+        update_course_id:'',//修改课程名称id
+
 				categories:[]
 			}
 		},
@@ -56,11 +62,11 @@
 		methods:{
 
 			//获取课程列表
-			getCourse(){
+			getCategory(){
 			  let that = this;
-        course().then(res=>{
+        categoryTree().then(res=>{
           if(res.code==200){
-            for (let j = 0; j < res.data.length; j++) {   	
+            for (let j = 0; j < res.data.length; j++) {
               if( res.data[j].name == "单人模式"){
                 that.personal = "单人";
                 that.personal_menus = res.data[j].children;
@@ -74,22 +80,25 @@
               		that.multiplayer_menus = [];
               		that.multiplayer_id = '';
               	}
-              	
+
               }
-             
+
             }
-            that.menus = res.data[0].children;    
+            that.menus = res.data[0].children;
             that.addShow(that.menus)
           }else{
              that.$toast(res.message,3000)
           }
         })
 			},
-			
+
 
 			 /*当前页改变的时候触发*/
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        let that = this;
+        that.currentPage =val;
+        that.getCourse();
       },
       //表格酒奇偶行显示不一样
 		  tableRowClassName({row, rowIndex}) {
@@ -119,6 +128,35 @@
 	    createCourse(){
 	    	this.dialogVisible = true
 	    },
+
+      //修改课程名称
+      modifyCourseName(course_id){
+        this.update_course_id = course_id;
+        this.updatedialogVisible = true
+      },
+
+      sureUpdateCourseName(){
+        let that = this
+        if(this.updateClassName == '' ){
+          that.errorMess = '请输入课程名称'
+          return ;
+        }else{
+          let obj ={};
+          obj.user_id = that.$store.state.userId || sessionStorage.getItem('user_id');
+          obj.course_id = that.update_course_id;
+          obj.course_name = that.updateClassName;
+          modifyCourseName(JSON.stringify(obj)).then(res=> {
+            if (res.code == 200) {
+              this.updatedialogVisible = false;
+              this.getCourse();
+            } else {
+              that.$toast(res.message, 3000)
+            }
+          })
+
+        }
+      },
+
 	    //创建课程确认
 	    sureNewClass(){
 	    	let that = this
@@ -126,14 +164,82 @@
 	    		that.errorMess = '请输入课程名称'
 	    		return ;
 	    	}else{
-	    		let tmp = [{'name':'区块链课程区块链课程',number:'200',type:'2'},{'name':'区块链课程',number:'200',type:'1'},{'name':'区块链课程',number:'200',type:'1'},
-				  {'name':'区块链课程',number:'200',type:'1'},{'name':'区块链课程',number:'200',type:'2'},{'name':'区块链课程',number:'200',type:'1'},
-				  {'name':'区块链课程',number:'200',type:'1'},{'name':'区块链课程',number:'200',type:'2'}]
-	    		that.courseList = tmp;
-	    		that.dialogVisible = false
+          let obj ={};
+          obj.user_id = that.$store.state.userId || sessionStorage.getItem('user_id');
+          obj.course_name = that.newClassName;
+          obj.classes = [];
+          obj.categories = that.categories;
+          if(that.categories == ""){
+            that.$toast("请勾选知识点", 3000)
+            return ;
+          }
+          addCourse(JSON.stringify(obj)).then(res=> {
+              if (res.code == 200) {
+                this.getCourse();
+            } else {
+              that.$toast(res.message, 3000)
+            }
+          })
 
 	    	}
 	    },
+
+      //班级
+      getClasses(){
+        let that = this;
+        classes().then(res=> {
+          if (res.code == 200) {
+            that.teaClassList = res.data;
+          } else {
+            that.$toast(res.message, 3000)
+          }
+        })
+      },
+
+      getCourse() {
+        let that = this;
+        let obj = {};
+        obj.per_page = that.per_page;
+        obj.page = that.currentPage-1;
+        course(obj).then(res=> {
+          if (res.code == 200) {
+            if(res.data.content.classes_list != ""){
+              that.teaClassList = res.data.content.classes_list;
+            }
+            that.courseList = res.data.content;
+            that.totalCourse= res.data.totalElements;
+            that.dialogVisible = false
+          } else {
+            that.$toast(res.message, 3000)
+          }
+        })
+      },
+
+      //删除课程
+      deleteCourse(course_id){
+        this.$confirm('是否确认删除课程?', '确认', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let that = this;
+          let obj ={};
+          obj.user_id = that.$store.state.userId || sessionStorage.getItem('user_id');
+          obj.course_id = course_id;
+          deleteCourse(obj).then(res=>{
+            if(res.code==200){
+              console.log(obj.user_id);
+              that.getCourse();
+            }else{
+              this.$toast(res.message,2000)
+            }
+          })
+
+
+        }).catch(() => {
+        });
+      },
+
 	    //创建课程单双人选择
 	    chooseType(num){
 	    	let that = this;
@@ -142,7 +248,7 @@
 					that.menus = that.personal_menus;
 				}else{
 					that.menus = that.multiplayer_menus;
-					
+
 				}
 	    },
 
@@ -206,26 +312,26 @@
         }
         //如果此选项清空勾选后，要把所有的父元素，也全部清空勾选，因为它不勾选了，所有父元素的状态不可能还处于勾选状态，不管它勾选不勾选，我们都要清除一遍，以防万一
         this.clearFather(this.menus,data);
-        
+
          if(this.categories.indexOf(data.id)!=-1){
       		let index = this.categories.indexOf(data.id)
       		this.categories.splice(index,1)
       	}
-        
-        
+
+
       }else{//如果这一项的selectArr为[]，说明是未被勾选状态，在selectArr里加id值，添加勾选
         data.selectArr.push(data.id);
-        
+
         //如果此选项清空勾选后，如果下面有children的话，那么也同时勾选下面所有的孩子
         if(data.children && data.children.length > 0){
           this.addChild(data.children);
         }else{
-        	this.categories.push(data.id); 
+        	this.categories.push(data.id);
         }
         //如果此选项勾选后，要判断所有的上级元素是不是应该全部打勾
         this.selectFather(this.menus,data);
       }
-      
+
       console.log(this.categories)
 
     },
@@ -233,17 +339,17 @@
     clearChild(arr){
       for(var i = 0; i < arr.length;i++){
         arr[i].selectArr = [];
-         
+
         if(this.categories.indexOf(arr[i].id)!=-1){
       		let index = this.categories.indexOf(arr[i].id)
       		this.categories.splice(index,1)
       	}
-         
+
         if(arr[i].children && arr[i].children.length > 0){
           this.clearChild(arr[i].children);
         }
-        	
-        
+
+
       }
 
     },
@@ -251,11 +357,11 @@
     addChild(arr){
       for(var i = 0; i < arr.length;i++){
         arr[i].selectArr.push(arr[i].id);
-       
+
         if(arr[i].children && arr[i].children.length > 0){
           this.addChild(arr[i].children);
         }else{
-        	 this.categories.push(arr[i].id); 
+        	 this.categories.push(arr[i].id);
         }
       }
 
@@ -314,7 +420,7 @@
           menus[i].selectArr.push(menus[i].id);
           //找到这个拥有children的父元素后，再调用selectFather，再进行向上寻找父元素，知道没有父元素为止
           this.selectFather(this.menus,menus[i]);
-    
+
         }else if(menus[i].children && menus[i].children.length > 0){
           this.selectRealFather(menus[i].children,arr);
         }
@@ -337,9 +443,10 @@
 			})
 
 			//获取课程列表
-			that.getCourse()
+			that.getCategory();
+      that.getCourse();
+      that.getClasses();
 
-			
 
 		},
 		beforeDestroy() {

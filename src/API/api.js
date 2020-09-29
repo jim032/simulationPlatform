@@ -63,9 +63,9 @@ var delete_user =function(params){
 }
 
 
-/*查询课程表*/
-var course =function(data){
-	return axios.get('/categoryTree?type=0')
+/*查询知识点列表*/
+var categoryTree =function(data){
+	return axios.get('/category_tree?type=0')
 }
 
 
@@ -74,10 +74,34 @@ var updateUserPassword =function(data){
   return axios.post('/update_userPassword',data,{headers: {'Content-Type':'application/json'}})
 }
 
+/*添加课程*/
+var addCourse =function(data){
+  return axios.post('/add_course',data,{headers: {'Content-Type':'application/json'}})
+}
+
+/*查询课程*/
+var course =function(data){
+  return axios.get('/course?per_page='+data.per_page+'&page='+data.page)
+}
+
+/*修改课程名称*/
+var modifyCourseName =function(data){
+  return axios.post('/modify_course_name',data,{headers: {'Content-Type':'application/json'}})
+}
+
+/*删除课程*/
+var deleteCourse =function(params){
+  return axios.delete('/delete_course',{data:params})
+}
+
+/*查询班级*/
+var classes =function(params){
+  return axios.get('/classes',{data:params})
+}
 
 export{
 	login,updateUser,createToken,online,onlineUsers,hardware,courseFrequency,search_user,jwt,modify_user,
-	delete_user,course,logout,updateUserPassword
+	delete_user,categoryTree,logout,updateUserPassword,addCourse,course,modifyCourseName,deleteCourse,classes
 }
 
 function getJson (data) {

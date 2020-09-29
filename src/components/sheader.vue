@@ -26,20 +26,20 @@
 
 	 import Cookies from 'js-cookie'
 	 import {logout} from '@/API/api'
-	 
+
 export default{
 	 inject:['reload'], //注入app的方法
 		data(){
 			return{
-				
+
 			}
     },
     computed: {
 	  	roleId:function(){
-	  	
-	  		return sessionStorage.getItem('role_id');  
-	  	
-	  		
+
+	  		return sessionStorage.getItem('role_id');
+
+
 	    }
 	  },
     props:['pageNum'],
@@ -58,17 +58,17 @@ export default{
     			  break;
     			case 3:
     			  this.$router.push({name:'course'})
-    			
-    			  break;  
-    			
+
+    			  break;
+
     		}
     	},
     	linkPerCenter(){
     		this.$router.push({name:'perSet'})
     	},
     	//退出
-    	signOut(){   		
-    		let that = this;   		
+    	signOut(){
+    		let that = this;
     		logout().then(res=>{
     			if(res.code==200){
     				sessionStorage.removeItem('user_id')
@@ -79,9 +79,9 @@ export default{
             that.$toast(res.message,3000)
           }
     		})
-    		
-				
-    		
+
+
+
     	}
     }
 }
@@ -90,8 +90,8 @@ export default{
 <style scoped lang="less">
 ul,li{list-style:none;}
 .borderRadius(@param1,@param2,@param3,@param4){
-   border-radius:@param1 @param2 @param3 @param4; 
-   -webkit-border-radius:@param1 @param2 @param3 @param4; 
+   border-radius:@param1 @param2 @param3 @param4;
+   -webkit-border-radius:@param1 @param2 @param3 @param4;
    -moz-border-radius:@param1 @param2 @param3 @param4;
    -ms-border-radius:@param1 @param2 @param3 @param4;
    -o-border-radius:@param1 @param2 @param3 @param4;
@@ -106,30 +106,30 @@ ul,li{list-style:none;}
 	background:@headerColor; height:310px; .borderRadius(0,0,40px,40px); position: relative; z-index: 1;
 	.wmain{width:1400px;margin:0 auto;}
 	.h_top{height:100px;width:100%; display: table;position: relative;}
-	
+
 	.sysName{
 		display: table-cell;height: 100%;vertical-align: middle;
 		.logo{width:60px;height:60px; display: inline-block;vertical-align: middle;}
 		.logo img{width:100%;height: 100%;}
 	    .sysTitle{font-size:24px;color:#fff; font-weight: 500;display: inline-block;vertical-align: middle; margin-left:20px;}
 	}
-	
+
 	.h_info{height:44px; position: absolute;right:0px;top:50%; margin-top: -22px;}
-	.loginRole{font-size:18px;color:#fff;background: url(../assets/img/top_person.png)left center no-repeat; 
+	.loginRole{font-size:18px;color:#fff;background: url(../assets/img/top_person.png)left center no-repeat;
 	padding:8px 10px 8px 50px; display: inline-block; vertical-align: middle;cursor:default;
 	background-size: 40px; -moz-background-size: 40px; -webkit-background-size: 40px; -o-background-size: 40px;
 	.role-sel{background: url(../assets/img/sel_white.png) right center no-repeat; padding-right:25px;}
   }
-    
+
     .exit{
-    font-size:18px;color:#fff;background: url(../assets/img/top_exit.png)left center no-repeat; 
+    font-size:18px;color:#fff;background: url(../assets/img/top_exit.png)left center no-repeat;
 	padding:8px 0 8px 32px; margin-left: 15px;
 	background-size: 24px;
 	-moz-background-size: 24px;
     -webkit-background-size: 24px;
     -o-background-size:24px;
     }
-    
+
     .nav{
     	height:60px; background:@navbg;.borderRadius(30px,30px,30px,30px); margin:30px 0;
     	.curItem{width:33.33%;float: left; text-align: center; line-height: 60px; font-size:22px; color:@navcolor; cursor: pointer;}
@@ -143,7 +143,7 @@ margin-right:20px;}
 
 @media screen and (max-width:1420px){
     .headerbox{
-      .wmain{width:88%;}  
+      .wmain{width:88%;}
     }
 }
 </style>

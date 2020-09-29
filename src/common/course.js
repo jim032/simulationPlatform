@@ -203,9 +203,6 @@
         obj.page = that.currentPage-1;
         course(obj).then(res=> {
           if (res.code == 200) {
-            if(res.data.content.classes_list != ""){
-              that.teaClassList = res.data.content.classes_list;
-            }
             that.courseList = res.data.content;
             that.totalCourse= res.data.totalElements;
             that.dialogVisible = false

@@ -293,8 +293,7 @@
           */
           
           obj.dateRangeStart = that.startTime
-          obj.dateRangeEnd = that.endTime
-          
+          obj.dateRangeEnd = that.endTime         
         }else{
           obj.dateRangeStart='';
           obj.dateRangeEnd='';

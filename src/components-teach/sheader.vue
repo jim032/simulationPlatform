@@ -64,7 +64,7 @@
     		this.$emit('clickMenu')
     	},
     	back(){
-    		this.$router.go(-1)
+    		this.$router.push({name:'catalogue'})
     	},
     	Pagereload(){
     		this.reload();

@@ -67,6 +67,38 @@
 					<p>{{this.height - 6 > 1 ? 1: this.height - 6}}</p>
 				</div>
 			</div>
+			
+			
+			<!---51%攻击-->
+			<template v-if="pageName==51 && isShowAmount==false">
+				<ul class="affairsList" v-if="step >= 2">
+      		 <li class="affairItem" v-for="(item,index) in tansferInfo" :key="index"
+      		 	@mouseenter="enter(index)" @mouseleave="leave()"
+      		 	>
+      		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{index+1}}</div>
+              <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
+              <div class="deltrans" v-if="index!=0 && (step == 4 || step == 11)"><a class="chooseBtn" @click="showdel(index)" >删除</a></div>
+      		 </li>
+      	</ul>
+		
+      </template>
+
+      <template v-if="pageName==54 && isShowAmount==false">
+      	<ul class="affairsList" v-if="step >= 2">
+      		 <li class="affairItem" v-for="(item,index) in tansferInfo" :key="index">
+      		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{index+1}}</div>
+              <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
+      		 </li>
+      	</ul>
+      	<ul class="affairsList" v-if="tansferInfoEdit.length > 0">
+      		 <li class="affairItem" v-for="(item,index) in tansferInfoEdit" :key="index">
+      		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{tansferInfo.length+1}}</div>
+              <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
+      		 </li>
+      	</ul>
+
+      </template>
+			
 		</div>
 	</div>
 </template>
@@ -82,14 +114,33 @@
 		},
 		//isBlcok是否展示进度，blockPro具体进度值
 		props: {operaInfo:null, blockPro:null, isBlcok:null, step:null,
-		isShowMess:{
-			type: null,
-      default:true
-		},
-		pageName:{
-			type: null,
-      default: 0
-		}
+			isShowMess:{
+				type: null,
+	      default:true
+			},
+			pageName:{
+				type: null,
+	      default: 0
+			},
+			isshowdel: null,
+			tansferInfo: {
+	      initiate: '',
+	      object: '',
+	      amount: ''
+	    },
+	    tansferInfoEdit: {
+	      initiate: '',
+	      object: '',
+	      amount: ''
+	    },
+	    wprogressmalleability:{
+	      type:null,
+	      default:0
+	    },
+	    isShowAmount: {
+	      type:Boolean,
+	      default:false
+	    }
 		},
 		watch: {
 			'operaInfo': function() {
@@ -97,6 +148,20 @@
 
 			}
 		},
+		methods: {
+      showdel(index) {
+        let that = this;
+        that.$emit('showdel', index)
+      },
+      enter(index) {
+        let that = this;
+        that.$emit('enter', index)
+      },
+      leave() {
+        let that = this;
+        that.$emit('leave')
+      }
+   },
 		mounted() {
 			let that = this
 
@@ -286,6 +351,23 @@
 			white-space: nowrap;
 		}
 	}
+
+/*50%攻击事务*/
+.affairsList{
+	.affairItem{
+		width: 120px;height: 100px;.borderRadius(2px,2px,2px,2px); margin-right: 0px;
+    background-color: white;border: 4px solid lightblue;margin-left: 25px;color: black;text-align:center;padding: 3px;
+    cursor: pointer;display: inline-block;
+    vertical-align: middle; position: relative;
+    }
+  .deltrans{display:none;}
+  .affairItem:hover .deltrans{background: rgba(255, 0, 0, 0.75); position: absolute;width:120px;height:100px;
+  left:-4px;top:-4px; display: block;.borderRadius(2px,2px,2px,2px);}
+  .chooseBtn{width:85px;height:30px; display: block; position: absolute;
+  left:50%;margin-left:-44px;top:50%;margin-top:-15px; line-height: 30px;
+  background:#fff;.borderRadius(5px,5px,5px,5px); overflow: hidden;
+  }
+}
 	
 	@media screen and (max-width:1440px) {
 		.bottomDiv .pt {

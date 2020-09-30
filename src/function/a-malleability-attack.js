@@ -7,34 +7,33 @@ export default{
 		  menuShow:false,//上方菜单按钮是否显示
 		  showTool:false,//左侧工具箱是否显示		
 		  funNum:0,//左侧点击判断工具箱
-		  menuText:'异常篇-51%攻击',
+		  menuText:'异常篇-交易延展性',
 		  
 		  step:1,//当前步骤
-		  pageName:'51',
+		  pageName:'54',
 
 		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
 		  singleStep:true,//单步骤提示
 		  
 		  confirShow:false,
-  
+
       iconUrl_1:require('../assets/teachImg/icon_user2.png'),//头像
       iconUrl_2:require('../assets/teachImg/icon_user3.png'),//头像
       iconUrl_3:require('../assets/teachImg/icon_user4.png'),//头像
 
-      lineDraw51Show: false,
+      lineDrawMalleabilityShow: false,
       tansferInfo: [],
-      wprogress51:0, //打包的进度
+      tansferInfoEdit: [],
+      wprogressmalleability:0, //打包的进度
       delayTimer:null,//延迟执行时间
-      isshowdel: -1, // 是否显示删除按钮
-      upComputeUser: '',
-      del51: -1,
+      editAmount: 0.0,
+      selectIndexDataM: [],
       balance: 850, // tips显示的余额
       balance1: 850,
       balance2: 850,
       balance3: 850,
       isShowAmount: false,
-      
-      transNumber:0,//转账次数
+      toEditAmount: ''
     }
 	},
 	components:{
@@ -42,7 +41,7 @@ export default{
 	},
 	computed: {
 		stepTips(){
-			return this.$store.state.a_51attack
+			return this.$store.state.ecc__stepTips
 		}
 	},
 	methods:{
@@ -61,64 +60,64 @@ export default{
     //点击左边的三个工具箱
     poinfun(num){
       let that = this;
-      if(num==2  && that.tansferInfo.length>0 && that.step != 4 && (that.step<5 || that.step==11) ){
-        that.step = 3;
-        that.lineDraw51Show = true
-        that.funNum = num;
-      }
-      if(num==1 && (that.step<3 || that.step == 11) && that.transNumber<3) {
-        that.step = 2;
-        that.lineDraw51Show = true
+      if(num==1 && that.step < 3 ){
+        that.lineDrawMalleabilityShow = true
         that.isShowAmount = false;
         that.funNum = num;
-        //that.operaInfo.mess = ''
-        //that.operaInfo.infolist = [];
+        that.operaInfo.mess = ''
+        that.operaInfo.infolist = [];
       }
-      if(num==3 && (that.step == 4 || that.step == 11)){
-        that.step = 4;
-        that.lineDraw51Show = true
+      console.log(that.step)
+      if(num==2 && that.step==2 && that.tansferInfo.length>0 ) {
+        that.step = 3
+        that.lineDrawMalleabilityShow = true
+        that.funNum = num;
+        that.operaInfo.mess = ''
+        that.operaInfo.infolist = [];
+        for(let i = 0;i < that.tansferInfo.length;i ++) {
+          that.selectIndexDataM.push({value: i + 1})
+        }
+      }
+      if(num==3 && that.step == 4){
+        that.step = that.step + 1
+        that.lineDrawMalleabilityShow = true
         that.funNum = num;
         that.operaInfo.mess = ''
         that.operaInfo.infolist = [];
         let timer = setInterval(function() {
-          that.wprogress51++;
-          if(that.wprogress51 == 100) {
+          that.wprogressmalleability++;
+          if(that.wprogressmalleability == 100) {
             clearInterval(timer)
+            that.lineDrawMalleabilityShow = false
             that.delayTimer = setTimeout(function(){
-              that.lineDraw51Show = false
               that.confirShow = true;
-              that.step = that.step + 1;
             },500)
           }
         },50)
       }
     },
-    sureUpCompute(upComputeUser) {
+    sureEditAmount(index) {
       let that = this;
-      that.lineDraw51Show = false
-      that.step = that.step + 1
-      that.confirShow = true;
-      that.upComputeUser = upComputeUser
-      
-      if (that.upComputeUser == 'A') {
-        that.iconUrl_1 = require('../assets/teachImg/icon_user2_warning.png')
-      } else
-      if (that.upComputeUser == 'B') {
-        that.iconUrl_2 = require('../assets/teachImg/icon_user3_warning.png')
-      } else
-      if (that.upComputeUser == 'C') {
-        that.iconUrl_3 = require('../assets/teachImg/icon_user4_warning.png')
+      if(index > 0) {
+        that.tansferInfoEdit = [];
+        that.tansferInfoEdit.push({
+          initiate: that.tansferInfo[index-1].initiate,
+          object: that.tansferInfo[index-1].object,
+          amount: parseInt(that.tansferInfo[index-1].amount).toFixed(1)
+        })
       }
+      that.lineDrawMalleabilityShow = false
+      that.step = that.step + 1;
     },
     sureTransfer(tansferInfo) {
       let that = this;
       if (that.tansferInfo.length > 2) {
-        that.lineDraw51Show = false
+        that.lineDrawMalleabilityShow = false
         return;
       }
-      that.lineDraw51Show = false
+      that.lineDrawMalleabilityShow = false
       that.step = 2
-      
+      that.confirShow = true;
       if (tansferInfo.initiate == 'A') {
         that.balance1 = that.balance1 - parseInt(tansferInfo.amount)
         if (tansferInfo.object == 'B') {
@@ -149,65 +148,14 @@ export default{
         object: tansferInfo.object,
         amount: tansferInfo.amount
       })
-      that.transNumber = that.transNumber + 1;
-      if(that.transNumber==1){
-      	that.delayTimer = setTimeout(function(){
-	      	that.confirShow = true;
-	      },500)
-      }
-      
-      that.operaInfo.mess = ''
-      that.operaInfo.infolist = [];
-      
     },
-    sureBale() {
+    del(index) {
       let that = this;
-      that.lineDraw51Show = false
-      that.confirShow = true;
-      that.step = that.step + 1;
-    },
-    showdel(index) {
-      let that = this;
-      that.del51 = index;
-      that.step = 11;
-      that.lineDraw51Show = true;
-    },
-    del () {
-	    let that = this
-      that.lineDraw51Show = false
-      if(that.tansferInfo[that.del51].initiate == 'A') {
-        that.balance1 = that.balance1 + parseInt(that.tansferInfo[that.del51].amount)
-        if(that.tansferInfo[that.del51].object == 'B'){
-          that.balance2 = that.balance2 - parseInt(that.tansferInfo[that.del51].amount)
-        } else if (that.tansferInfo[that.del51].object == 'C') {
-          that.balance3 = that.balance3 - parseInt(that.tansferInfo[that.del51].amount)
-        }
-      } else if (that.tansferInfo[that.del51].initiate == 'B') {
-        that.balance2 = that.balance2 + parseInt(that.tansferInfo[that.del51].amount)
-        if(that.tansferInfo[that.del51].object == 'A'){
-          that.balance1 = that.balance1 - parseInt(that.tansferInfo[that.del51].amount)
-        } else if (that.tansferInfo[that.del51].object == 'C') {
-          that.balance3 = that.balance3 - parseInt(that.tansferInfo[that.del51].amount)
-        }
-      } else if (that.tansferInfo[that.del51].initiate == 'C') {
-        that.balance3 = that.balance3 + parseInt(that.tansferInfo[that.del51].amount)
-        if(that.tansferInfo[that.del51].object == 'A'){
-          that.balance1 = that.balance1 - parseInt(that.tansferInfo[that.del51].amount)
-        } else if (that.tansferInfo[that.del51].object == 'B') {
-          that.balance2 = that.balance2 - parseInt(that.tansferInfo[that.del51].amount)
-        }
-      }
-      that.tansferInfo.splice(that.del51, 1)
-    },
-    canc() {
-      let that = this
-      that.lineDraw51Show = false
+	    that.tansferInfo.splice(index)
     },
     enter(index) {
       let that = this;
-      if (that.tansferInfo.length > 1) {
-        that.isshowdel = index;
-      }
+      that.isshowdel = index;
     },
     leave() {
       let that = this;
@@ -232,24 +180,10 @@ export default{
     },
     noShowAmount() {
       let that = this;
-      
-      
-      if(that.tansferInfo.length==0){
-      	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
-        that.operaInfo.infolist = [];
-      }else{
-      	that.operaInfo.mess = ''
-        that.operaInfo.infolist = [];
-        that.isShowAmount = false;
-      }
-     
+      that.operaInfo.mess = ''
+      that.operaInfo.infolist = [];
+      that.isShowAmount = false;
     },
-    
-    //点击透明区域隐藏
-    hideLineDrawShow(){
-    	 this.lineDraw51Show = false
-    },
-    
     showUserAmount(user) {
       let that = this;
       if (user == 'A') {
@@ -259,6 +193,10 @@ export default{
       } else if(user == 'C') {
         that.balance = that.balance3;
       }
+    },
+    upToEditAmount(value) {
+	    let that = this;
+	    that.toEditAmount = parseInt(that.tansferInfo[value-1].amount).toFixed(1)
     }
  	},
   mounted(){
@@ -266,11 +204,5 @@ export default{
     that.$nextTick(() => {
       that.confirShow = true
     })
-  },
-  beforeDestroy() {
-	   if(this.delayTimer) {
-		　　clearInterval(this.delayTimer); //关闭
-		 }
-	 
-   }
+  }
 }

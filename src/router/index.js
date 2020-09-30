@@ -239,11 +239,52 @@ export default new Router({
       }
     },
     {
-      path: '/teach/51attack/:id/:name?',//场景篇-病例信息共享
+      path: '/teach/51attack/:id/:name?',//异常篇-51%攻击
       name: '51attack',
       component: () =>import('@/views-teach/abnormal/a-attack51'),
       meta:{
       	direction:1
+      }
+    },
+   
+    {
+      path: '/teach/smartContractLoophole/:id/:name?',//场景篇-智能合约漏洞
+      name: 'smartContractLoophole',
+      component: () =>import('@/views-teach/abnormal/a-smart-contract-loophole'),
+      meta:{
+        direction:1
+      }
+    },
+    {
+      path: '/teach/malleabilityAttack/:id/:name?',//场景篇-延展性攻击
+      name: 'malleabilityAttack',
+      component: () =>import('@/views-teach/abnormal/a-malleability-attack'),
+      meta:{
+        direction:1
+      }
+    },
+    {
+      path: '/teach/replayAttack/:id/:name?',//场景篇-重放攻击
+      name: 'replayAttack',
+      component: () =>import('@/views-teach/abnormal/a-replay-attack'),
+      meta:{
+        direction:1
+      }
+    },
+    {
+      path: '/teach/longRangeAttack/:id/:name?',//场景篇-长程攻击
+      name: 'longRangeAttack',
+      component: () =>import('@/views-teach/abnormal/a-long-range-attack'),
+      meta:{
+        direction:1
+      }
+    },
+    {
+      path: '/teach/softHardFork/:id/:name?', //场景篇-软硬分叉
+      name: 'softHardFork',
+      component: () =>import('@/views-teach/abnormal/a-soft-hard-fork'),
+      meta:{
+        direction:1
       }
     }
     

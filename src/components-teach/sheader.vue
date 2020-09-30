@@ -77,7 +77,7 @@
 	 			obj.type = 0 ,//type为0表示中文名
 	 			pcategoryTree(obj).then(res=>{
           if(res.code==200){
-          	console.log(res)
+          	//console.log(res)
           	if(res.data[0].children){
           		that.cataList = res.data[0].children
           	}

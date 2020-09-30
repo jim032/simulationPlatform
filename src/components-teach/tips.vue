@@ -122,6 +122,289 @@
 	  	 
 	  </template>
 	  
+	  
+	  <!--转账-->
+    <template v-if="pageName==51  && step==2">
+      <div class="transbox" v-if="lineDraw51Show && step==2" @click="hideLineDrawShow">
+      </div>
+      <div class="confirmBox fileConfirmBox confirmBox51" :class="{'show':lineDraw51Show}" style="width:350px;margin-left: -170px;margin-top: -200px;font-size: 18px">
+        <div class="c_box">
+          <div class="main_form">
+            <div class="cr_din">
+              <span class="lab">账户余额：</span>
+              <div  class="lab_in">
+                <span>￥{{balance}}</span>
+              </div>
+            </div>
+            <div class="cr_din" >
+              <span class="lab">转账发起：</span>
+              <div class="lab_in">
+                <div style="margin: auto;padding: 0;width:150px">
+                  <i-select v-model="tansferInfo.initiate" @on-change="selectUser(tansferInfo.initiate)">
+                    <i-option :value="'A'">用户A</i-option>
+                    <i-option :value="'B'">用户B</i-option>
+                    <i-option :value="'C'">用户C</i-option>
+                  </i-select>
+                </div>
+              </div>
+            </div>
+            <div class="cr_din">
+              <span class="lab">转账对象：</span>
+              <div class="lab_in">
+                <div style="margin: auto;padding: 0;width:150px">
+                  <i-select v-model="tansferInfo.object">
+                    <i-option :value="'A'">用户A</i-option>
+                    <i-option :value="'B'">用户B</i-option>
+                    <i-option :value="'C'">用户C</i-option>
+                  </i-select>
+                </div>
+              </div>
+            </div>
+            <div class="cr_din" >
+              <span class="lab">转账金额：</span>
+              <div class="lab_in">
+                <div><i-input  placeholder="" v-model="tansferInfo.amount" style="width:150px"></i-input></div>
+              </div>
+            </div>
+          </div>
+          <div class="btnbox">
+            <a class="chooseBtn" @click="sureTransfer">确定转账</a>
+          </div>
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template>
+    <!--提升算力-->
+    <template v-if="pageName==51  && step==3">
+      <div class="transbox" v-if="lineDraw51Show">
+      </div>
+      <div class="confirmBox fileConfirmBox confirmBox51" :class="{'show':lineDraw51Show}" style="width:340px;margin-left: -170px;margin-top: -200px;font-size: 18px">
+        <div class="c_box">
+          <div class="main_form">
+            <div class="cr_din cr_din_obj" >
+              <span class="lab" >提升对象：</span>
+              <div class="lab_in">
+                <i-select style="width:150px" v-model="upComputeUser">
+                  <i-option :value="'A'">用户A</i-option>
+                  <i-option :value="'B'">用户B</i-option>
+                  <i-option :value="'C'">用户C</i-option>
+                </i-select>
+              </div>
+            </div>
+            <div class="cr_din cr_din_value">
+              <span style="margin: auto;color: white">{{computevalue}}%</span>
+              <div class="block" style="width:80%;margin: auto;">
+                <el-slider v-model="computevalue"></el-slider>
+              </div>
+              <span style="margin: auto;color: white">请提升算力值最低至51%</span>
+            </div>
+          </div>
+          <div class="btnbox">
+            <a class="chooseBtn" @click="sureUpCompute">确定</a>
+          </div>
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template>
+    <!--打包-->
+    <template v-if="pageName==51 && step == 4">
+      <div class="transbox" v-if="lineDraw51Show">
+      </div>
+      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw51Show}">
+        <div class="c_box">
+          <p class="pintro">
+            正在打包剩余事务
+          </p>
+          <div class="progress" >
+            <div class="curPro">
+              <div class="proIcon" :style="{'width':wprogress51+'%'}"></div>
+            </div>
+          </div>
+          <!--<div class="btnbox">
+            <a class="chooseBtn" @click="sureBale" v-if="wprogress51==100">确定</a>
+          </div>-->
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template >
+    <!--删除提示-->
+    <template v-if="pageName==51 && step == 11">
+      <div class="transbox" v-if="lineDraw51Show && step==11">
+      </div>
+      <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDraw51Show}">
+        <div class="c_box">
+          <p class="title">请注意</p>
+          <p>是否删除事务</p>
+          <div class="btnbox">
+            <button class="chooseBtn" @click="del">确认</button>
+            <button class="chooseBtn" @click="canc">取消</button>
+          </div>
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template>
+    <!--转账-->
+    <template v-if="pageName==54  && step==2">
+      <div class="transbox" v-if="lineDrawMalleabilityShow && step==2">
+      </div>
+      <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDrawMalleabilityShow}" style="width:340px;margin-left: -170px;margin-top: -200px;font-size: 18px">
+        <div class="c_box">
+          <div class="main_form">
+            <div class="cr_din" style="display: flex;margin-top: 20px">
+              <span class="lab" style="margin: auto;color: white">账户余额：</span>
+              <div style="margin: auto;padding: 0;color: white;width:150px">
+                <span>￥{{balance}}</span>
+              </div>
+            </div>
+            <div class="cr_din" style="display: flex;margin-top: 20px">
+              <span class="lab" style="margin: auto;color: white">转账发起：</span>
+              <div style="margin: auto;padding: 0">
+                <div style="margin: auto;padding: 0;width:150px">
+                  <i-select v-model="tansferInfo.initiate" @on-change="selectUser(tansferInfo.initiate)">
+                    <i-option :value="'A'">用户A</i-option>
+                    <i-option :value="'B'">用户B</i-option>
+                    <i-option :value="'C'">用户C</i-option>
+                  </i-select>
+                </div>
+              </div>
+            </div>
+            <div class="cr_din" style="display: flex;margin-top: 20px">
+              <span class="lab" style="margin: auto;color: white">转账对象：</span>
+              <div style="margin: auto;padding: 0">
+                <div style="margin: auto;padding: 0;width:150px">
+                  <i-select v-model="tansferInfo.object">
+                    <i-option :value="'A'">用户A</i-option>
+                    <i-option :value="'B'">用户B</i-option>
+                    <i-option :value="'C'">用户C</i-option>
+                  </i-select>
+                </div>
+              </div>
+            </div>
+            <div class="cr_din" style="display: flex;margin-top: 20px">
+              <span class="lab" style="margin: auto;color: white">转账金额：</span>
+              <div style="margin: auto;padding: 0">
+                <div><i-input  placeholder="" v-model="tansferInfo.amount" style="width:150px"></i-input></div>
+              </div>
+            </div>
+          </div>
+          <div class="btnbox">
+            <a class="chooseBtn" @click="sureTransfer">确定转账</a>
+          </div>
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template>
+    <!--修改-->
+    <template v-if="pageName==54  && step==3">
+      <div class="transbox" v-if="lineDrawMalleabilityShow && step==2">
+      </div>
+      <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDrawMalleabilityShow}" style="width:400px;margin-left: -170px;margin-top: -200px;font-size: 18px">
+        <div class="c_box">
+          <div style="margin: auto;width:80%">
+            <div class="cr_din" style="margin-top: 20px;color: white">
+              已截获到未打包到链中的事务
+            </div>
+            <div class="cr_din" style="display: flex;margin-top: 20px">
+              <span class="lab" style="margin: auto;color: white">选择事务：</span>
+              <div style="margin: auto;padding: 0">
+                <div style="margin: auto;padding: 0;width:200px">
+                  <i-select v-model="selectIndexDataM.value" @on-change="upToEditAmount(selectIndexDataM.value)">
+                    <i-option v-for="item in selectIndexDataM" :value="item.value" :key="index">事务{{item.value}}</i-option>
+                  </i-select>
+                </div>
+              </div>
+            </div>
+            <div class="cr_din" style="display: flex;margin-top: 20px">
+              <span class="lab" style="margin: auto;color: white">修改金额：</span>
+              <div style="margin: auto;padding: 0;width:200px">
+                <input :placeholder="'只能将金额修改为' + toEditAmount" style="width:100%;border-radius: 5px" type="" v-model="editAmount"/>
+              </div>
+            </div>
+          </div>
+          <div class="btnbox">
+            <a class="chooseBtn" @click="sureEditAmount">确定修改</a>
+          </div>
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template>
+    <!--打包-->
+    <template v-if="pageName==54 && step == 5">
+      <div class="transbox" v-if="lineDrawMalleabilityShow">
+      </div>
+      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDrawMalleabilityShow}">
+        <div class="c_box">
+          <p class="pintro">
+            正在打包剩余事务
+          </p>
+          <div class="progress" >
+            <div class="curPro">
+              <div class="proIcon" :style="{'width':wprogressmalleability+'%'}"></div>
+            </div>
+          </div>
+          <!--<div class="btnbox">
+            <a class="chooseBtn" @click="sureBale" v-if="wprogress51==100">确定</a>
+          </div>-->
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template >
+    <!--打包-->
+    <template v-if="pageName==53 && step == 5">
+      <div class="transbox" v-if="lineDraw53Show">
+      </div>
+      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
+        <div class="c_box">
+          <p class="pintro">
+            正在打包剩余事务
+          </p>
+          <div class="progress" >
+            <div class="curPro">
+              <div class="proIcon" :style="{'width':wprogress+'%'}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template >
+	  <!--重放攻击-->
+		<template v-if="pageName==53">
+		  <div class="transbox" v-if="D2" >
+		  </div>
+		  <div class="confirmBox fileConfirmBox eccConfirmBox" style="margin-top: -240px" :class="{'show':D2}">
+		    <div class="c_box">
+		      <div class="ecc-in">
+		        <div class="e-in"><label style="left: -60px;">提现对象:A链</label></div>
+		      </div>
+		      <div class="ecc-in">
+		
+		        <div class="e-in"><label style="left: -60px;">提现金额:</label><input placeholder="请输入转账金额"  maxlength="10" value="20" readonly="true" /></div>
+		      </div>
+		      <div class="btnbox">
+		        <a class="chooseBtn" @click="D2click">确定转账</a>
+		      </div>
+		    </div>
+		    <div class="icon"></div>
+		  </div>
+		</template>
+
+		<!--合约漏洞提现金额-->
+		<template v-if="pageName==56" >
+  <div class="transbox" v-if="D1" >
+  </div>
+  <div class="confirmBox fileConfirmBox eccConfirmBox" style="margin-top: -240px" :class="{'show':D1}">
+    <div class="c_box">
+      <div class="ecc-in">
+        <div class="e-in"><label style="left: -60px;">提现金额:</label><input placeholder="请输入转账金额"  maxlength="10"  value="1" readonly="true"/></div>
+      </div>
+      <div class="btnbox">
+        <a class="chooseBtn" @click="D1click">确定提现</a>
+      </div>
+    </div>
+    <div class="icon"></div>
+  </div>
+</template>
+
 	</div>
 </template>
 
@@ -137,7 +420,16 @@
 			  b:'',//椭圆线b的值
 			  abimg:require('@/assets/ecc/11.jpg'),//根据a、b生成的椭圆线
 			  lineFinsh:false,//椭圆线是否生成
-			  
+			   /*51%攻击*/
+        computevalue: 0, //算力值
+        tansferInfo: {
+          initiate: '',
+          object: '',
+          amount: ''
+        },
+        upComputeUser: '没有人',
+        editAmount: '',
+        
 			}
 		},
 		//pageName为1表示当前页面是节点操作   2发币  3hash算法 4keyStore模拟  5椭圆线密码  2-4区块链+版权  
@@ -183,7 +475,48 @@
 			 singleStep:{
 			   	type:Boolean,
 			   	default:false
-			 }
+			 },
+			 balance: 0,toEditAmount: '',
+			 // 51%攻击是否显示
+       lineDraw51Show: {
+         type:Boolean,
+         default:false
+       },
+      // 解析进度
+       wprogress51:{
+         type:null,
+         default:0
+       },
+      // 延展性攻击
+      lineDrawMalleabilityShow: {
+        type:Boolean,
+        default:false
+      },
+      selectIndexDataM: {
+		    value: ''
+      },
+      //合约提现
+      D1:{
+        type:Boolean,
+        default:false
+      },
+      //重放攻击转账
+      D2:{
+        type:Boolean,
+        default:false
+      },
+      lineDraw53Show: {
+        type:Boolean,
+        default:false
+      },
+      inputMoney: {
+        type:null,
+        default:false
+      },
+      wprogressmalleability:{
+        type:null,
+        default:0
+      }
 			
 		},
 		
@@ -336,6 +669,127 @@
 					return					
 				}
 			 
+			 if(that.pageName == '51') {
+          switch(that.step){
+            case 1:
+              that.tipTiltle = '%51攻击的基本概念和危害'
+              that.confirmInfo = '%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害' +
+                '%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害'
+              break;
+            case 2:
+              that.tipTiltle = '%51攻击的基本概念和危害'
+              that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
+              break;
+            case 4:
+              that.tipTiltle = '请注意'
+              that.confirmInfo = '当前' + that.upComputeUser + '用户的算力值已达51%，已超过全网算力值的一半水平，用户' + that.upComputeUser + '已具备攻击区块链网络安全的功能'
+              break;
+            case 5:
+              that.tipTitle = '结束'
+              that.confirmInfo = '结束。'
+              break;
+          }
+          return;
+        }
+        if(that.pageName == '54') {
+          switch(that.step){
+            case 1:
+              that.tipTiltle = '交易延展性的基本概念及危害性'
+              that.confirmInfo = '%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害' +
+                '%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害'
+              break;
+            case 2:
+              that.tipTiltle = '请注意'
+              that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
+              break;
+            case 5:
+              that.tipTitle = '结束'
+              that.confirmInfo = '结束，打包失败！'
+              break;
+          }
+          return;
+        }
+        if(that.pageName == '52'){
+          if(that.confirShow == true){
+            switch(that.step){
+              case 1:
+                that.tipTiltle = '软分叉与硬分叉的基本概念及特点：'
+                that.confirmInfo = '文本1'+
+                  '文本2。'
+                break;
+              case 3:
+                that.tipTiltle = '请注意!'
+                that.confirmInfo = '由于社区条件不统一，发生了链分叉'
+                break;
+              case 4:
+                that.tipTiltle = '请注意!';
+                that.confirmInfo = '软分叉与硬分叉已结束，可点击右上方的重置或者返回。'
+                break;
+            }
+            return;
+          }
+        }
+        if(that.pageName == '53'){
+          if(that.confirShow == true){
+            switch(that.step){
+              case 1:
+                that.tipTiltle = '重放攻击的基本概念及特点：'
+                that.confirmInfo = '文本1'+
+                  '文本2。'
+                break;
+              case 5:
+                that.tipTiltle = '请注意!'
+                that.confirmInfo = '当前把A链的提现区块再B链中广播'
+                break;
+              case 6:
+                that.tipTiltle = '请注意!';
+                that.confirmInfo = '发起了一次20的提现，因为重放攻击获得了40。'
+                break;
+            }
+            return;
+          }
+        }
+        if(that.pageName == '55'){
+          if(that.confirShow == true){
+            switch(that.step){
+              case 1:
+                that.tipTiltle = '长程攻击的基本概念及危害性：'
+                that.confirmInfo = '文本1'+
+                  '文本2。'
+                break;
+              case 3:
+                that.tipTiltle = '请注意!'
+                that.confirmInfo = 'B链速度超过A链，B链将取代A链成为主链。'
+                break;
+              case 4:
+                that.tipTiltle = '请注意!';
+                that.confirmInfo = '长程攻击已结束，可点击右上方的重置或者返回。'
+                break;
+            }
+            return;
+          }
+        }
+        if(that.pageName == '56'){
+          if(that.confirShow == true){
+            switch(that.step){
+              case 1:
+                that.tipTiltle = '合约漏洞的基本概念及危害性：'
+                that.confirmInfo = '文本1'+
+                  '文本2。'
+                break;
+              case 4:
+                that.tipTiltle = '请注意!'
+                that.confirmInfo = '由于没有进行校验，A用户发起的提现1元的操作导致月变成'+ that.inputMoney +'元。'
+                break;
+             /* case 5:
+                that.tipTiltle = '请注意!';
+                that.confirmInfo = '合约漏洞攻击已结束，可点击右上方的重置或者返回。'
+                break;*/
+            }
+            return;
+          }
+        }
+			 
 			}
 		},
 		methods:{
@@ -387,7 +841,122 @@
 					this.$emit('surePrompt',0);	
 				}
 				
-			}
+			},
+			// 提升算力点击确定
+      sureUpCompute() {
+        let that = this;
+        if(that.upComputeUser == '没有人'){
+      	  that.$toast('请选择提升对象',3000)
+      	  return;
+        }
+        if(that.computevalue < 51) {
+          that.$toast('请提升算力值最少至51%！')
+          return;
+        }
+        that.$emit('sureUpCompute', that.upComputeUser)
+      },
+      
+      // 转账
+      sureTransfer() {
+        let that = this;
+        if (that.tansferInfo.initiate == '') {
+          that.$toast('转账发起人不能为空！',3000)
+          return;
+        }
+        if (that.tansferInfo.object == '') {
+          that.$toast('转账对象不能为空！',3000)
+          return;
+        }
+        if (that.tansferInfo.initiate == that.tansferInfo.object) {
+          that.$toast('不能向自己转账！',3000)
+          return;
+        }
+        if (that.tansferInfo.amount == '' || that.tansferInfo.amount == 0) {
+          that.$toast('请输入金额！',3000)
+          return;
+        }
+        if (that.tansferInfo.amount > that.balance) {
+          that.$toast('转账金额不能大于余额！',3000)
+          return;
+        }
+        that.$emit('sureTransfer',that.tansferInfo)
+      },
+      // 打包
+      sureBale() {
+        let that = this;
+        that.$emit('sureBale')
+      },
+      del() {
+        let that = this;
+        that.$emit('del')
+      },
+      canc() {
+        let that = this;
+        that.$emit('canc')
+      },
+      // 确认修改金额
+      sureEditAmount() {
+        let that = this;
+        if (this.selectIndexDataM.length < 1){
+          that.$toast('请选择要修改的事务！',3000)
+          return;
+        }
+        if (that.toEditAmount !== that.editAmount) {
+          that.$toast('金额请按要求修改！',3000)
+          return;
+        }
+        that.$emit('sureEditAmount', that.selectIndexDataM.value)
+      },
+			//椭圆线计算新点点击确认
+			surePoint(){
+				let that = this;
+				that.lineFinsh = false;
+				that.$emit('surePoint');
+			},
+			//用户c解析完成确定
+			sureParse(){
+				this.$emit('sureParse');
+			},
+			surePrompt(){
+				if(this.isRight){
+					this.$emit('surePrompt',1);
+				}else{
+					this.$emit('surePrompt',0);	
+				}
+				
+			},
+      D1click(){
+        let that = this;
+        // console.log(that.inputMoney)
+        // if(that.inputMoney == '' || that.inputMoney == undefined){
+        //   that.$toast('请输入提现金额',2000)
+        //   return;
+        // }
+        that.$emit('D1clickfinish');
+      },
+      D2click(){
+        let that = this;
+        // console.log(that.inputMoney)
+        // if(that.inputMoney == '' || that.inputMoney == undefined){
+        //   that.$toast('请输入提现金额',2000)
+        //   return;
+        // }
+        that.$emit('D2clickfinish');
+      },
+      selectUser(user) {
+			  let that = this;
+        that.$emit('showUserAmount',user);
+      },
+      upToEditAmount(value) {
+        let that = this;
+        that.$emit('upToEditAmount',value);
+      },
+      
+      
+      //51%转账点击透明隐藏
+      hideLineDrawShow(){
+      	this.$emit('hideLineDrawShow');
+      }
 			
 		}
 		
@@ -395,6 +964,10 @@
 	}
 </script>
 
+<style>
+	.confirmBox51 .ivu-select{ vertical-align: top;}
+	.confirmBox51 .ivu-input-wrapper{ vertical-align: top;}
+</style>
 <style scoped lang='less'>
 	@import url("../assets/teachCss/tips.less");
 

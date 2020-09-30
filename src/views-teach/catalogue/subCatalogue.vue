@@ -163,10 +163,32 @@ export default{
 			 				that.$router.push({name:'medicalCare',params:{id:obj.id,name:obj.name}})	
 			 			}
 			 			
-			 			
+			 			//51%攻击
 			 		 if(text=='12d4a962-f98b-11ea-adc1-0242ac120002'){
-			 				that.$router.push({name:'51attack',params:{id:obj.id,name:obj.name}})	
+			 		   let tmp = obj.name;
+			 				that.$router.push({name:'51attack',params:{id:obj.id,name:tmp.replace(/%/g, '')}})	
 			 			}
+			 		 
+				 	
+				 		if(text=='16cc493a-f98b-11ea-adc1-0242ac120002'){
+	              that.$router.push({name:'softHardFork',params:{id:obj.id,name:obj.name}})
+	            }
+				 		//重放攻击
+				 		if(text=='1c6ddc1e-f98b-11ea-adc1-0242ac120002'){
+	              that.$router.push({name:'replayAttack',params:{id:obj.id,name:obj.name}})
+	            }
+				 	  //延展性攻击
+				 		if(text=='1f4dd650-f98b-11ea-adc1-0242ac120002'){
+	              that.$router.push({name:'malleabilityAttack',params:{id:obj.id,name:obj.name}})
+	            }
+				 	  //长程攻击
+				 		if(text=='223590f6-f98b-11ea-adc1-0242ac120002'){
+	              that.$router.push({name:'longRangeAttack',params:{id:obj.id,name:obj.name}})
+	            }
+				 	   //智能合约漏洞
+				 		if(text=='25771b22-f98b-11ea-adc1-0242ac120002'){
+	              that.$router.push({name:'smartContractLoophole',params:{id:obj.id,name:obj.name}})
+	            }
 			 			
 			 			
 				}else{

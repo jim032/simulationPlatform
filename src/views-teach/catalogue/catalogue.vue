@@ -17,7 +17,7 @@
 						<div class="pcat pcat1" @click="linkSubCatalog(catlog1.id,catlog1.title)" >
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
-								<img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
+								<img class="introIcon" src="../../assets/teachImg/cat_icon1.png" />
 								<p class="pt">{{catlog1.title}}</p>
 							</div>
 						</div>
@@ -25,28 +25,28 @@
 						<div class="pcat pcat2" @click="linkSubCatalog(catlog2.id,catlog2.title)">
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
-								<img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
+								<img class="introIcon" src="../../assets/teachImg/cat_icon2.png" />
 								<p class="pt">{{catlog2.title}}</p>
 							</div>	
 						</div>
 						<div class="pcat pcat-zdy" @click="linkSubCatalog(catlog5.id,catlog5.title)" v-if="!isTab4">
 						   <img src="../../assets/teachImg/circle.png"/>
 							 <div class="intro">
-								 <img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
+								 <img class="introIcon" src="../../assets/teachImg/cat_icon5.png" />
 								 <p class="pt">{{catlog5.title}}</p>
 							 </div>
 						</div>
 						<div class="pcat pcat-yl pcat1" @click="linkSubCatalog(catlog3.id,catlog3.title)">
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
-								<img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
+								<img class="introIcon" src="../../assets/teachImg/cat_icon3.png" />
 								<p class="pt">{{catlog3.title}}</p>
 							</div>
 						</div>
 						<div class="pcat pcat-yl pcat2" @click="linkSubCatalog(catlog4.id,catlog4.title)">
 						   <img src="../../assets/teachImg/circle.png"/>
 							 <div class="intro">
-								 <img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
+								 <img class="introIcon" src="../../assets/teachImg/cat_icon4.png" />
 								 <p class="pt">{{catlog4.title}}</p>
 							 </div>
 						</div>

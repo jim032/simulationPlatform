@@ -36,7 +36,7 @@
     					 	   	 	  	 <div class="i-info">
 		    					 	   	 	  	 <div class="name"><p class="line1">{{item.course_name}}</p><span class="icon-edit" @click="modifyCourseName(item.course_id)"></span></div>
 		    					 	   	 	  	 <p class="perNumber"><span>人数：{{item.numbers}}人</span></p>
-		    					 	   	 	  	 <el-select class="cour-select" v-model="item.class" clearable placeholder="请选择班级">
+		    					 	   	 	  	 <el-select class="cour-select" v-model="item.class" clearable placeholder="请选择班级"  @change="changeClass($event,item.course_id)">
 														    <el-option
 														      v-for="item in teaClassList"
 														      :key="item.class_id"

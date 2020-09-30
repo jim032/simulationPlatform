@@ -99,9 +99,16 @@ var classes =function(params){
   return axios.get('/classes',{data:params})
 }
 
+/*绑定班级*/
+var bindCourseClasses =function(data){
+  return axios.post('/bind_course_classes',data,{headers: {'Content-Type':'application/json'}})
+}
+
+
 export{
 	login,updateUser,createToken,online,onlineUsers,hardware,courseFrequency,search_user,jwt,modify_user,
-	delete_user,categoryTree,logout,updateUserPassword,addCourse,course,modifyCourseName,deleteCourse,classes
+	delete_user,categoryTree,logout,updateUserPassword,addCourse,course,modifyCourseName,deleteCourse,classes,
+  bindCourseClasses
 }
 
 function getJson (data) {

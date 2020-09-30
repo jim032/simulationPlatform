@@ -11,7 +11,7 @@ const http = axios.create({
 	headers: {
 		'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 	},
-	timeout: 5000
+	timeout: 50000
 })
 
 //添加请求拦截器

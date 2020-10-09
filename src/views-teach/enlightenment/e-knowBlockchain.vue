@@ -9,18 +9,18 @@
 			        	 <div class="slide-main front">
 			        	 	  <div class="tab-box">
 					        	 	  <div class="icon">
-					        	 	  	  <img :src="item.icon" />
+					        	 	  	  <img :src="item.card_pic" />
 					        	 	  </div>
-					        	 	  <p class="name">{{item.name | ellipsis}}</p>
+					        	 	  <p class="name">{{item.section_title | ellipsis}}</p>
 			        	 	  </div>
 			        	 </div>
 			        	 
 			        	 <div class="back">
 			        	 	  <div class="tab-box">
-			        	 	  	  <p class="name" v-for="(iitem,index) in item.intro" :key="index" v-if="index<6">{{iitem}}</p>
+			        	 	  	  <p class="name" v-for="(iitem,index) in item.section" :key="index" v-if="index<6">{{iitem}}</p>
 			        	 	  
 			        	 	      <div class="btnbox">
-			        	 	      	  <span class="btnDetail" @click="centerDialogVisible=true">查看详情>></span>
+			        	 	      	  <span class="btnDetail" @click="showDetail(item.specific_pic,item.section_title)">查看详情>></span>
 			        	 	      </div>
 			        	 	  </div>
 			        	 	
@@ -40,13 +40,13 @@
 		
 		
 		<el-dialog
-		  title="区块链与比特币"
+		  :title="specific_title"
 		  :visible.sync="centerDialogVisible"
 		 :width="dialogWidth" class="dialog-detail"
 		  center>
 		  <div slot="header"></div>
 		  <div class="detail-box">
-		  	 <div class="d-img"><img src="../../assets/pic/detail-img.png" /></div>
+		  	 <div class="d-img"><img :src="specific_pic" /></div>
 		  </div>
 		  <span slot="footer" class="dialog-footer">
 		   

@@ -216,14 +216,14 @@ export default new Router({
       }
     },
     {
-      path: '/teach/thesaurus/:id/:name?',//启蒙篇-名词库
+      path: '/teach/thesaurus/:id/:pname/:name?',//启蒙篇-名词库
       name: 'thesaurus',
       component: () =>import('@/views-teach/enlightenment/e-thesaurus'),
       meta:{
       	direction:1
       }
     },{
-      path: '/teach/knowBlockchain/:id/:name?',//启蒙蒙-区块链分类
+      path: '/teach/knowBlockchain/:id/:pname/:name?',//启蒙蒙-区块链分类
       name: 'knowBlockchain',
       component: () =>import('@/views-teach/enlightenment/e-knowBlockchain'),
       meta:{
@@ -231,7 +231,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/develop/:id/:name?',//启蒙篇-发展史
+      path: '/teach/develop/:id/:pname/:name?',//启蒙篇-发展史
       name: 'develop',
       component: () =>import('@/views-teach/enlightenment/e-develop'),
       meta:{

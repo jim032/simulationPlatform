@@ -1,6 +1,6 @@
 import comHeader from '@/components-teach/sheader';
 import Swiper , { Navigation, Pagination }from 'swiper';
-import {visitCourse} from '@/API/api-teach'
+import {visitCourse,courseDatail} from '@/API/api-teach'
 
 Swiper.use([Navigation, Pagination]);
 export default{
@@ -22,7 +22,8 @@ export default{
 	      {name:'Oracles',intro:'区块链与大数据的联系'},
 	      {name:'去中心化',intro:'区块链与大数据的联系'},
 	    ],
-	  category_id:''
+	  category_id:'',
+	  cat_index:'',
      
 		}
 		
@@ -105,16 +106,32 @@ export default{
         	 that.$toast(res.message,3000)
         }
       })
+    },
+    
+    getData(){
+    	courseDatail().then(res=>{
+    		var data2 = [];
+    		let obj = res.data	
+				let name = this.$route.params.name
+				let pname = this.$route.params.pname
+			  if(obj){
+				   this.cateList = obj[pname][name]
+		  	}
+    	 
+    	})
     }
+    
 
 	},
 	mounted(){
 		let that = this;
-		this.menuText = '启蒙篇-'+this.$route.params.name
+		this.menuText = this.$route.params.pname+'-'+this.$route.params.name
 		that.category_id = this.$route.params.id;
+		
 		that.$nextTick(function(){
-			that.swiper();
+			this.swiper();
 			that.getvisit();
+			that.getData();
 		})
 		
 	}

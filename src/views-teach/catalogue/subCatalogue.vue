@@ -15,7 +15,7 @@
 			 	  <div class="pcat" >
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
-								<img class="introIcon" src="../../assets/teachImg/cat_icon.png" />
+								<img class="introIcon" :src="iconSrc" />
 								<p class="pt">{{courName}}</p>
 							</div>
 					</div>
@@ -23,9 +23,9 @@
 					<div class="scataList">
 						 <ul >
 						 	<li class="sitem" v-for="(item,index) in cataList" :key="index" >
-						 		<p :class="{'arrow':item.children && item.children.length}" @click="linkRouter(item)"><span class="snum">0{{index+1}}</span>{{item.name}}</p>
+						 		<p :class="{'arrow':item.children && item.children.length}" @click="linkRouter(item,index)"><span class="snum">0{{index+1}}</span>{{item.name}}</p>
 						 	  <div class="listbox" v-if="item.ishow">
-						 	 	  <span class="ii-item" v-for="(iitem,index) in item.children" @click="linkRouter(iitem)">{{iitem.name}}</span> 
+						 	 	  <span class="ii-item" v-for="(iitem,index) in item.children" @click="linkRouter(iitem,index)">{{iitem.name}}</span> 
 						 	 	</div>
 						 	</li>
 
@@ -47,6 +47,8 @@ export default{
 			cataList:[],
 			courseId:'',
 			courName:'',
+			
+			iconSrc:'',
 		}
 	},
 	methods:{
@@ -56,6 +58,24 @@ export default{
 	 			let that = this;
 	 			that.courseId = this.$route.params.id
 	 			that.courName = this.$route.params.name
+
+    		if(that.courseId=='890affa2-f984-11ea-adc1-0242ac120002'){
+    			that.iconSrc=require('../../assets/teachImg/cat_icon1.png')
+    		}
+    		if(that.courseId=='44c07268-f98f-11ea-adc1-0242ac120002'){
+    			that.iconSrc=require('../../assets/teachImg/cat_icon2.png')
+    		}
+    		if(that.courseId=='93e73ec2-f984-11ea-adc1-0242ac120002'){
+    			that.iconSrc=require('../../assets/teachImg/cat_icon3.png')
+    		}
+    		if(that.courseId=='9982d8aa-f984-11ea-adc1-0242ac120002'){
+    			that.iconSrc=require('../../assets/teachImg/cat_icon4.png')
+    		}
+    		if(that.courseId=='890affa3-f984-11ea-adc1-0242ac120002'){
+    			that.iconSrc=require('../../assets/teachImg/cat_icon2.png')
+    		}
+	 			
+	 			
 	 			let obj = {};
 	 			obj.type = 0 ,//type为0表示中文名
 	 			obj.category_id = that.courseId
@@ -64,9 +84,8 @@ export default{
           	that.cataList = res.data;
           	for(var i =0;i<that.cataList.length;i++){
           		if(that.cataList[i].children!=null){
-          			this.$set(that.cataList[i],'ishow',false)
-          			
-          		}
+          			this.$set(that.cataList[i],'ishow',false)	
+          		}	
           	}
           
           }else{
@@ -78,7 +97,7 @@ export default{
 		goBack(){
 			this.$router.go(-1);
 		},
-		linkRouter(obj){
+		linkRouter(obj,index){
 			let that = this;
 			let text = obj.id
 			//表示启蒙篇
@@ -86,23 +105,23 @@ export default{
 			if(that.courseId=='890affa2-f984-11ea-adc1-0242ac120002'){
 				//名词库
 				if(text=='e8d78d7e-f984-11ea-adc1-0242ac120002'){
-	 			   that.$router.push({name:'thesaurus',params:{id:obj.id,name:obj.name}})
+	 			   that.$router.push({name:'thesaurus',params:{id:obj.id,name:obj.name,pname:that.courseName}})
 	 		  }	
 	 		  //初始区块链
 	 		  if(text=='a3c5cdfe-f984-11ea-adc1-0242ac120002'){
-	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:that.courseName}})
 	 		  }
 	 		  //区块链的分类
 	 		  if(text=='b6251572-f984-11ea-adc1-0242ac120002'){
-	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:that.courseName}})
 	 		  }
 	 		  //区块链经典产品
 	 		  if(text=='c11f35ca-f984-11ea-adc1-0242ac120002'){
-	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:that.courseName}})
 	 		  }
 	 		  //区块链的发展
 	 		  if(text=='a0681f36-f984-11ea-adc1-0242ac120002'){
-	 		  	 that.$router.push({name:'develop',params:{id:obj.id,name:obj.name}})
+	 		  	 that.$router.push({name:'develop',params:{id:obj.id,name:obj.name,pname:that.courseName}})
 	 		  }
 			}else{
 				if(!obj.children){
@@ -200,6 +219,7 @@ export default{
 	mounted(){
 		let that = this;
 		//that.courseId = this.$route.params.id
+		that.courseName = this.$route.params.name
 		//获取子目录
 		that.getData()
 

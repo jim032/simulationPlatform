@@ -59,7 +59,7 @@
 <script>
 	import {logout} from '@/API/api'
 	import Cookies from 'js-cookie'
-	import {pcategoryTree} from '@/API/api-teach'
+	import {pcategoryTree,getCourseClass} from '@/API/api-teach'
 	 export default{
 	 	data(){
 	 		return{
@@ -167,6 +167,16 @@
 	 			}
 	 			
 	 		},
+	 		
+	 		//获取自定义篇
+	 		getCustomize(){
+	 			getCourseClass().then(res=>{
+	 				console.log(res.data)
+	 				if(res.data.length>0){
+	 					this.isTab4 = true
+	 				}
+	 			})
+	 		},
 	 		//目录三点击跳转
 	 		linkRouter(text){
 	 			let that = this;
@@ -187,6 +197,7 @@
 	 	},
 	 	mounted(){
 	 		this.getData();//获取课程目录
+	 		this.getCustomize();
 	 	}
 	 }
 </script>

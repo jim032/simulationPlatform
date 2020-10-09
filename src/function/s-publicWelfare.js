@@ -26,7 +26,7 @@ export default{
 	    navList:[ 
 		    {title:'捐赠人',icon:require('../assets/teachImg/jz1.png')},
 		    {title:'红十字会',icon:require('../assets/teachImg/jz2.png')},
-		    {title:'收益人',icon:require('../assets/teachImg/jz3.png')}
+		    {title:'受益人',icon:require('../assets/teachImg/jz3.png')}
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成

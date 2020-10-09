@@ -13,7 +13,7 @@
 					        	 	  	<span class="line"></span>
 					        	 	  </div>
 					        	 	  <p class="name">
-					        	 	  	 {{item.name | ellipsis}}
+					        	 	  	 {{item.noun | ellipsis}} 
 					        	 	  	 
 					        	 	  </p>
 			        	 	  </div>
@@ -21,7 +21,7 @@
 			        	 
 			        	 <div class="back">
 			        	 	  <div class="tab-box">
-			        	 	  	  <p class="intro">{{item.intro}}</p>
+			        	 	  	  <p class="intro">{{item.meaning}}</p>
 			        	 	  </div>
 			        	 	
 			        	 </div>

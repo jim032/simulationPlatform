@@ -5,26 +5,26 @@
 	 		
      <div class="timeLine" style="overflow: hidden;">
        
-        <p class="timeTitle">自2008年比特币诞生以来，区块链已经走过12年激荡岁月。让我们一同回顾区块链历史上发生过的大事件：</p>
+        <p class="timeTitle">{{title}}</p>
         
         <div class="ul_box">
             <ul class="my_timeline" ref="mytimeline" style="margin-left: 10px;">
-                <li class="my_timeline_item" v-for="(item,index) in timeLineList" :key="index">
+                <li class="my_timeline_item" v-for="(item,index) in timeLineList" :key="index" > 
                     <!--圈圈节点-->
                     <div class="my_timeline_node" :style = " {backgroundColor: item.bgcolor, width: item.size + 'px', height: item.size + 'px'}" @click="changeActive(index)" :class="{active: index == timeIndex}"></div>
                     <!--线-->
                     <div class="my_timeline_item_line"></div>
                     <!--标注-->
                     <div class="my_timeline_item_content" :style="{color: item.color, fontSize: item.fontsize + 'px'}">
-                        <p>{{item.timestamp}}</p>
-                        <p class="intro">{{item.info}}</p>
+                        <p>{{item.date_time}}</p>
+                        <p class="intro">{{item.event}}</p>
                     </div>
                 </li>
             </ul>
         </div>
          <div class="content timeContent">
-            <p class="tit">{{timeLineList[timeIndex].year}}</p>
-            <p class="titIntro">{{timeLineList[timeIndex].detailInfo}}</p>
+            <!--<p class="tit">{{cateList.content[timeIndex].year}}</p>-->
+            <p class="titIntro">{{timeLineList[timeIndex].specific_event}}</p>
         </div>
         
     </div>

@@ -1,6 +1,6 @@
 import comHeader from '@/components-teach/sheader';
 import Swiper , { Navigation, Pagination }from 'swiper';
-import {visitCourse} from '@/API/api-teach'
+import {visitCourse,courseDatail} from '@/API/api-teach'
 Swiper.use([Navigation, Pagination]);
 export default{
 	data(){
@@ -21,7 +21,8 @@ export default{
 	    //点击详情弹出框
 	    centerDialogVisible:false,
       
-      category_id:''
+      category_id:'',
+      specific_pic:''//点击查看详情显示的文字
       
 		}
 		
@@ -99,16 +100,33 @@ export default{
         	 that.$toast(res.message,3000)
         }
       })
+    },
+    getData(){
+    	courseDatail().then(res=>{
+    		var data2 = [];
+    		let obj = res.data	
+				let name = this.$route.params.name
+				let pname = this.$route.params.pname
+    	  this.cateList = obj[pname][name].sections
+    	
+    	})
+    },
+    showDetail(src,title){
+    	let that = this;
+      that.centerDialogVisible=true;
+      that.specific_pic = src
+      that.specific_title = title
     }
 
 	},
 	mounted(){
 		let that = this;
-	  this.menuText = '启蒙篇-'+this.$route.params.name
+	  this.menuText = this.$route.params.pname+'-'+this.$route.params.name
 	  that.category_id = this.$route.params.id;
 		that.$nextTick(function(){
 			that.swiper();
 			that.getvisit();
+			that.getData();
 		})
 		window.onresize = () => {
       return (() => {

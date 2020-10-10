@@ -17,7 +17,7 @@
       	 	</p>
       	 </div>
       	 <ul class="ii-course" v-if="item1.show==true">
-      	 	<li v-for="(item2,index) in item1.children" :class="{'hasArrow':item2.children && item2.children.length>0}">
+      	 	<li v-for="(item2,index) in item1.children" v-if="item1.children" :class="{'hasArrow':item2.children && item2.children.length>0}">
       	 		<div class="name line1" @click = "selectItem(item2,index,2)">
       	 			<span class="checkn" :class="{'checkh':(item2.selectArr && item2.selectArr.length)}"
       	 				 @click.stop = "checkItem(item2)">
@@ -48,7 +48,15 @@ export default{
 				courindex:null
 			}
 		},
-		props:['menus'],
+		props:{
+			menus:{
+				type:null
+			},
+		  courseIndex:{
+		  	default:null
+		  }
+		},
+		
 		methods:{
 
 		    // 将selectItem方法暴露出去
@@ -62,7 +70,7 @@ export default{
 			    	}
 		    	}
 		      this.$emit("selectItem",item,index,level);
-
+          //console.log(this.courindex)
 		    },
 		    // 将checkItem方法暴露出去
 		    checkItem(item){
@@ -70,6 +78,18 @@ export default{
 		    }
 
 		},
+		watch: {
+	    courseIndex: {
+	      handler(newValue, oldValue) {
+	 
+	      	if(this.courseIndex==0){
+	      		this.courindex = null
+	      	}
+	        
+	      },
+	      deep: true
+	    }
+  },
 		mounted(){
 
 		}
@@ -80,7 +100,8 @@ export default{
 .line1{
      white-space:nowrap;
   overflow:hidden;
-  text-overflow:ellipsis;
+  -o-text-overflow: ellipsis; /* for Opera *
+   text-overflow: ellipsis; /* for IE */ 
 }
 .borderRadius(@param1,@param2,@param3,@param4){
    border-radius:@param1 @param2 @param3 @param4;

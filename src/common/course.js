@@ -39,7 +39,8 @@ export default {
       update_course_id: '',//修改课程名称id
 
       categories: [],
-      numbers: ''
+      numbers: '',
+      courseIndex:null,
     }
   },
   components: {
@@ -72,7 +73,7 @@ export default {
       categoryTree().then(res => {
         if (res.code == 200) {
           for (let j = 0; j < res.data.length; j++) {
-            if (res.data[j].name == "单人模式") {
+            if (res.data[j].id == "e72d3a24-f983-11ea-adc1-0242ac120002") {
               that.personal = "单人";
               that.personal_menus = res.data[j].children;
               that.personal_id = res.data[j].id;
@@ -180,6 +181,7 @@ export default {
         }
         addCourse(JSON.stringify(obj)).then(res => {
           if (res.code == 200) {
+          	this.dialogVisible = false;
             this.getCourse();
           } else {
             that.$toast(res.message, 3000)
@@ -213,7 +215,7 @@ export default {
       obj1.course_id = courseId;
       obj1.classes = [];
       obj1.classes.push(obj.class_id);
-      console.log(obj1.classes);
+//   console.log(obj1.classes);
       bindCourseClasses(obj1).then(res => {
         if (res.code == 200) {
           classes().then(res1 => {
@@ -276,7 +278,7 @@ export default {
         obj.course_id = course_id;
         deleteCourse(obj).then(res => {
           if (res.code == 200) {
-            console.log(obj.user_id);
+//          console.log(obj.user_id);
             that.getCourse();
           } else {
             this.$toast(res.message, 2000)
@@ -292,12 +294,18 @@ export default {
     chooseType(num) {
       let that = this;
       that.newClassType = num
+      that.leftNavWidth = 125;
+      that.menus = []
+      
       if (num == 1) {
         that.menus = that.personal_menus;
       } else {
-        that.menus = that.multiplayer_menus;
-
+        that.menus = that.multiplayer_menus; 
       }
+      that.courseIndex = 0;
+      that.addShow(that.menus)
+       
+   
     },
 
     addShow(arr) {
@@ -311,8 +319,10 @@ export default {
     },
     //点击箭头使树展开收缩
     selectItem(data, index, level) {
+    	
       let that = this
-
+      that.courseIndex = 1;
+      
       switch (parseInt(level)) {
         case 1://表示点击第一级
           if (data.show == true) {
@@ -379,7 +389,7 @@ export default {
         this.selectFather(this.menus, data);
       }
 
-      console.log(this.categories)
+//    console.log(this.categories)
 
     },
     //定义函数清空所有孩子的勾选

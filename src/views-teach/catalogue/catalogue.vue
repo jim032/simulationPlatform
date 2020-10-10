@@ -14,7 +14,7 @@
 			
 			<div class="cataMain" :class="{'cataMain-4':isTab4}">
 				<div class="cata-main" >
-						<div class="pcat pcat1" @click="linkSubCatalog(catlog1.id,catlog1.title)" >
+						<div class="pcat pcat1 cursorPoint" @click="linkSubCatalog(catlog1.id,catlog1.title)" v-if="catlog1.title!=''">
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
 								<img class="introIcon" src="../../assets/teachImg/cat_icon1.png" />
@@ -22,28 +22,28 @@
 							</div>
 						</div>
 						
-						<div class="pcat pcat2" @click="linkSubCatalog(catlog2.id,catlog2.title)">
+						<div class="pcat pcat2 cursorPoint" @click="linkSubCatalog(catlog2.id,catlog2.title)" v-if="catlog2.title!=''">
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
 								<img class="introIcon" src="../../assets/teachImg/cat_icon2.png" />
 								<p class="pt">{{catlog2.title}}</p>
 							</div>	
 						</div>
-						<div class="pcat pcat-zdy" @click="linkSubCatalog(catlog5.id,catlog5.title)" v-if="!isTab4">
+						<div class="pcat pcat-zdy cursorPoint" @click="linkCustCatalog" v-if="!isTab4">
 						   <img src="../../assets/teachImg/circle.png"/>
 							 <div class="intro">
 								 <img class="introIcon" src="../../assets/teachImg/cat_icon5.png" />
 								 <p class="pt">{{catlog5.title}}</p>
 							 </div>
 						</div>
-						<div class="pcat pcat-yl pcat1" @click="linkSubCatalog(catlog3.id,catlog3.title)">
+						<div class="pcat pcat-yl pcat1 cursorPoint" @click="linkSubCatalog(catlog3.id,catlog3.title)" v-if="catlog3.title!=''">
 							<img src="../../assets/teachImg/circle.png"/>
 							<div class="intro">
 								<img class="introIcon" src="../../assets/teachImg/cat_icon3.png" />
 								<p class="pt">{{catlog3.title}}</p>
 							</div>
 						</div>
-						<div class="pcat pcat-yl pcat2" @click="linkSubCatalog(catlog4.id,catlog4.title)">
+						<div class="pcat pcat-yl pcat2 cursorPoint" @click="linkSubCatalog(catlog4.id,catlog4.title)" v-if="catlog4.title!=''">
 						   <img src="../../assets/teachImg/circle.png"/>
 							 <div class="intro">
 								 <img class="introIcon" src="../../assets/teachImg/cat_icon4.png" />
@@ -71,12 +71,14 @@
 	 			catlog2:{title:'',id:''},
 	 			catlog3:{title:'',id:''},
 	 			catlog4:{title:'',id:''},
-	 			catlog5:{title:'',id:''},
+	 			catlog5:{title:'自定义篇',id:''},
 		 		boxheight: 0,
 		 		bodyH:0,
 		 		index: 0,
 		 		
 		 		isTab4:true,//判断当前自定义篇幅不存在为true,否则为false
+		 		
+		 		
 	 		}
 	 	},
 	 	filters:{
@@ -94,15 +96,34 @@
 	 		getData(){
 	 			let that = this;
 	 			let obj = {};
-	 			obj.type = 0 ,//type为0表示中文名
-	 
+	 			obj.type = 0;//type为0表示中文名
+	      let loginModal = sessionStorage.getItem('loginModal'); //1表示单人，2表示多人
 	 			pcategoryTree(obj).then(res=>{
           if(res.code==200){
-          	let temp = res.data[0].children;
+          	let tmpArray = res.data;
+          	let temp = [];
+          	console.log(tmpArray);
+          	for(let i=0;i<tmpArray.length;i++){
+          		if(loginModal &&　loginModal==1 && tmpArray[i].id=="e72d3a24-f983-11ea-adc1-0242ac120002"){
+          			//console.log('单人模式')
+          			temp = res.data[i].children;
+          		
+          		}
+          		if(loginModal &&　loginModal==2 && tmpArray[i].id=="e72d3a88-f983-11ea-adc1-0242ac120002"){
+          		
+          			//temp = res.data[i].children;
+          			temp = [];
+          		}
+          	}
+            
+            
+            console.log(temp)
+            
           	for (let j = 0; j < temp.length; j++) {   	         
 	            if(temp[j].name=='启蒙篇'){
 	            	that.catlog1.title = temp[j].name
 	            	that.catlog1.id = temp[j].id
+	            	
 	            }
 	            if(temp[j].name=='场景篇'){
 	            	that.catlog2.title = temp[j].name
@@ -116,11 +137,7 @@
 	            	that.catlog4.title = temp[j].name
 	            	that.catlog4.id = temp[j].id
 	            }
-	            if(temp[j].name=='自定义篇'){
-	            	that.catlog5.title = temp[j].name
-	            	that.catlog5.id = temp[j].id
-	            	that.isTab4 = false
-	            }
+	            
             }	
           }else{
           	 that.$toast(res.message,3000)
@@ -170,11 +187,19 @@
 	 		
 	 		//获取自定义篇
 	 		getCustomize(){
+	 			let that = this;
 	 			getCourseClass().then(res=>{
-	 				console.log(res.data)
-	 				if(res.data.length>0){
-	 					this.isTab4 = true
-	 				}
+	 				//console.log(res)
+	 				
+	 				if(res.code==200){
+//	 					console.log(res.data.length);
+	 					if(res.data.length>0){
+		 					this.isTab4 = false
+		 					this.courseList = res.data
+		 				}
+	        }else{
+	        	 that.$toast(res.message,3000)
+	        }
 	 			})
 	 		},
 	 		//目录三点击跳转
@@ -187,6 +212,10 @@
 	 		linkSubCatalog(id,title){
 	 			this.$router.push({name:'subCatalogue',params:{id:id,name:title}})
 	 			
+	 		},
+	 		//跳转到自定义篇
+	 		linkCustCatalog(){
+	 			this.$router.push({name:'customizeCatalogue'})
 	 		},
 	 		//点击跳转控制台
 	 		linkConsole(){

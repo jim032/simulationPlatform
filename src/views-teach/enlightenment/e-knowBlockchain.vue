@@ -31,8 +31,8 @@
 			    </div>
 			    
 			</div>
-			<div class="swiper-button-prev" slot="button-prev" v-if="cateList.length>3"></div>
-      <div class="swiper-button-next" slot="button-next" v-if="cateList.length>3"></div>
+			<div class="swiper-button-prev" slot="button-prev" v-show="prevnextShow"></div>
+      <div class="swiper-button-next" slot="button-next" v-show="prevnextShow"></div>
 	    </div>
    </div>
 			<!----头部-->

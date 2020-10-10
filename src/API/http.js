@@ -5,7 +5,7 @@ import store from '@/store/store'
 import router from '@/router/index'
 //自定义配置新建一个axios实例
 const http = axios.create({
-	 //baseURL: 'http://47.96.19.10:8282',
+	// baseURL: 'http://47.96.19.10:8282',
   baseURL: 'http://192.168.1.52:8282',
 	
 
@@ -17,39 +17,24 @@ const http = axios.create({
 
 //添加请求拦截器
 http.interceptors.request.use(function(config) {
-	/*
-	if(config.method == 'get') {
-		if(config.url.indexOf("?") != -1) {
-			config.url += '&token=' + sessionStorage.getItem('userToken')
-		} else {
-			config.url += '?token=' + sessionStorage.getItem('userToken')
-		}
-	} else {
-		if(config.data == '') {
-			config.data += 'token=' + sessionStorage.getItem('userToken')
-		} else {
-			config.data += '&token=' + sessionStorage.getItem('userToken')
-		}
-	}
- */
-	//console.log(config)
-	//在发送请求之前做某事
 
 	if(config.method=='delete'){
 		config.headers['Content-Type']='application/json'
 	}
 
 	let role_id = sessionStorage.getItem('role_id')
-
+  
+  let stu_role_id = sessionStorage.getItem('stu_role_id')
+  
 	if(role_id!=null && (role_id==1 ||　role_id==2)){
 		config.headers.Authorization = Cookies.get('jwt')
 	}
 
-	if(role_id!=null && role_id==3) {
+	if(stu_role_id!=null && stu_role_id==3) {
 		config.headers.Authorization = Cookies.get('stu_jwt')
 	}
 
-	//对响应数据做点什么\
+	//对响应数据做点什么
 	return config;
 
 }, )

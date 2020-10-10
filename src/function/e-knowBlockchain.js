@@ -22,7 +22,10 @@ export default{
 	    centerDialogVisible:false,
       
       category_id:'',
-      specific_pic:''//点击查看详情显示的文字
+      specific_pic:'',//点击查看详情显示的文字
+      specific_title:'',//点击查看详情的标题
+      
+      prevnextShow:false,//左右滑动按钮是否显示
       
 		}
 		
@@ -108,7 +111,9 @@ export default{
 				let name = this.$route.params.name
 				let pname = this.$route.params.pname
     	  this.cateList = obj[pname][name].sections
-    	
+    	  if(this.cateList.length>3){
+    	  	this.prevnextShow = true;
+    	  }
     	})
     },
     showDetail(src,title){

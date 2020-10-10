@@ -1,0 +1,120 @@
+.pageWrap{background:url(../../assets/teachImg/index_bg.png) center no-repeat;overflow:auto;
+   background-size:cover; -webkit-background-size:cover; display:table;color:#fff;
+  -ms-user-select: none;
+  user-select: none; 
+  -webkit-user-select: none;
+  -moz-user-select: none; 
+  -o-user-select: none; 
+  
+  .headerFun{position:fixed;right:30px; top:30px; z-index:999;
+    a{display: inline-block; vertical-align: top;}
+    .icon{width:64px;height: 64px;display: block; margin: 0 auto; background: url(../teachImg/btn_back.png) center no-repeat;
+       background-size: cover;-webkit-background-size: cover;
+    }
+    em{display: block; text-align: center;font-size:18px;color:#fff;}
+    .bindex em{ margin-top: -10px;}
+    
+    .bback{width:18px;height:36px;display: inline-block; background: url(../teachImg/hed_arrow.png) center no-repeat;
+      background-size:contain;-webkit-background-size:contain;
+      margin-left:8px;margin-top:12px;
+    }
+    
+  }
+}
+
+.subcatWrap{
+    display: table; text-align: center;
+    .wrapMain{display: table-cell; vertical-align: middle;}
+    .w1400{width:1400px; margin: 0 auto;}
+}
+
+.pcat{  
+    width:322px;display: inline-block;margin:30px 0;position: relative; text-align:  center; vertical-align: middle;
+    .intro{
+        position: absolute;width:100%; height: 100%;left:0px;top:0px;
+        opacity: 1;
+        transition: opacity .5s linear;
+       -moz-transition: opacity .5s linear;
+        -webkit-transition: opacity .5s linear;
+       -o-transition: opacity .5s linear;
+        -ms-transition: opacity .5s linear;
+    
+    }
+    .pcat:nth-of-type(1){margin-bottom: 40px;}
+    .pcat:nth-of-type(2){margin-bottom: 40px;}
+    .pintro{position: absolute;width:80%;left:10%;top:50%; max-height:80%; overflow: hidden;
+       opacity: 0;
+        transition: opacity .5s linear;
+       -moz-transition: opacity .5s linear;
+       -webkit-transition: opacity .5s linear;
+      -o-transition: opacity .5s linear;
+      -ms-transition: opacity .5s linear;
+      
+      -ms-transform:translate(0,-50%);  
+     -moz-transform:translate(0,-50%);  
+     -webkit-transform:translate(0,-50%);
+     -o-transform:translate(0,-50%); 
+     transform:translate(0,-50%);
+     font-size:16px;color:#fff;
+       h4{font-size:20px; padding: 10px 0;};
+     }
+    
+    .introIcon{width:60%; vertical-align: bottom; margin-top:19%;}
+    p.pt{font-size:28px;color: #F5F6F7; opacity: .5;  line-height:30px;}
+  }
+.pcat img{width:100%; vertical-align: top; height: auto;}
+.scataList{
+    display:inline-block; padding-left:196px; vertical-align: middle; padding-top: 30px; text-align: left;
+    ul{width:600px;}
+    ul li.sitem > p {font-size:36px; position: relative; padding:15px 0 8px 140px; display: inline-block;} 
+    ul li.sitem > p .snum{width:88px;height:88px;display:block;font-size:48px; background: #FFA427;
+    position: absolute;left:0px;top:50%;margin-top:-44px;text-align: center; line-height: 88px;
+    .borderRadius(5px,5px,5px,5px)}
+    ul li p.arrow{background: url(../teachImg/arrow_right.png) right 34px no-repeat; padding-right:28px;
+    }
+    ul li.sitem{min-height: 110px;margin:8px 0;}
+    .listbox{padding-top:10px;}
+    .ii-item{font-size: 24px; padding: 0 8px; border-right:2px solid #fff;
+    display: inline-block; line-height:20px; height: 20px; /*cursor: default;*/ margin: 4px 0;}
+    .ii-item:last-child{border:0 none}  
+    .packup{font-size:16px; color:#FFA427;} 
+} 
+  
+.subcatWrap{
+    .w1400{width:1400px; margin: 0 auto; min-width: 1000px; display: inline-block;}
+    ul li.sitem > p {font-size:36px; padding-left:90px; }
+    ul li.sitem > p .snum{width:60px;height:60px;text-align: center; line-height:60px; font-size:36px;
+    margin-top: -30px;}
+    .ii-item{font-size:18px;}
+}
+/*头部箭头点击*/
+.hed-fun-box{position: absolute;white-space: nowrap; right:40px; overflow: hidden; }
+.fadeIn{width:0px;}  
+
+/*自定义*/
+.cutomSubcatWrap{
+   .scataList{
+       ul li.sitem{margin-bottom: 20px;}
+   } 
+}
+
+
+@media only screen and (max-width:1400px ) {
+.pageWrap{
+    .cataMain{width: 100%;}
+    .w1400{width:100%;}
+    .pcat{width:26%;height: auto;}
+    .headerFun .icon{width:50px;height: 50px;}
+    .headerFun em{font-size:16px; line-height:40px;}
+    .headerFun .bback{ height:24px;}
+}
+}
+
+
+@media only screen and (max-width:1200px ) {
+   .scataList{padding-left: 136px;} 
+}
+
+
+
+

@@ -11,7 +11,7 @@
     				    	 <span :class="{'active':newClassType==1}" @click="chooseType(1)">单人</span>
     				    	 <span :class="{'active':newClassType==2}" @click="chooseType(2)">多人</span>
     				    </div>
-    				     <tree :menus = "menus"  @selectItem = "selectItem"  @checkItem = "checkItem"
+    				     <tree :menus = "menus" :courseIndex="courseIndex"  @selectItem = "selectItem"  @checkItem = "checkItem"
     				     	:actId = "actId">
     				     </tree>
     				  </div>
@@ -52,7 +52,7 @@
     					 	   	 </li>
     					 	   </ul>
     					 	   <div class="page-block course-page">
-    					 	   	<span class="btnAdd" @click="dialogVisible=true">创建课程</span>
+    					 	   	<span class="btnAdd" @click="dialogVisible=true;newClassName=''">创建课程</span>
 								    <el-pagination
 								      @current-change="handleCurrentChange"
 								      :current-page.sync="currentPage"

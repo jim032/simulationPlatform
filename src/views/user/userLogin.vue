@@ -124,7 +124,19 @@
 
 			},
 			login1(){
-				let obj = {}
+				let that = this;
+				that.getJwt(that.account)
+			},
+			keyDown(e){
+        //如果是回车则执行登录方法
+	      if(e.keyCode == 13){
+	        this.login();
+	      }
+      },
+      
+      //用户登陆
+      userLogin(){
+      	let obj = {}
 				let that = this
 			  obj.id = that.account;
 			  obj.password = that.password
@@ -134,29 +146,25 @@
 						  let role_id = res.data.role_id
 						  let id = res.data.id
 	            if(role_id==3){
+	            	console.log(res.data.role_id)
 	            	sessionStorage.setItem('stu_userId',res.data.id)
 	              sessionStorage.setItem('stu_role_id',res.data.role_id);
 	              sessionStorage.setItem('loginModal',that.modalType);
 	            	this.$router.replace({name:'catalogue'})
-	            	that.getJwt(id);
+	            
 	            }else{
 	            	sessionStorage.setItem('user_id',res.data.id)
 	              sessionStorage.setItem('role_id',res.data.role_id);
 	            	this.$router.replace({name:'index'})
-	            	that.getJwt(id);
+	          
 	            }
 
 					}else{
 						that.$toast(res.message,3000)
 					}
 				})
-			},
-			keyDown(e){
-        //如果是回车则执行登录方法
-	      if(e.keyCode == 13){
-	        this.login();
-	      }
       },
+      
       getJwt(id){
 	 			//let id = sessionStorage.getItem(id);
 	 			let obj={};
@@ -165,9 +173,13 @@
 	 				if(res.code==200){
 	            this.jwt = res.data.jwt
 	            if(this.loginType==1){
+	            	
 	              Cookies.set('stu_jwt', res.data.jwt, { expires:1 });
+	              this.userLogin();
 	            }else{
+	          
 	            	Cookies.set('jwt', res.data.jwt, { expires:1 });
+	            	 this.userLogin();
 	            }
 	          }else{
 	            this.$toast(res.message,2000)

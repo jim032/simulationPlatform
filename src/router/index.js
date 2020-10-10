@@ -98,7 +98,14 @@ export default new Router({
       	direction:1
       }
     },
-    
+    {
+      path: '/teach/customizeCatalogue',//首页菜单点击进去跳入子目录
+      name: 'customizeCatalogue',
+      component: () =>import('@/views-teach/catalogue/customizeCatalogue'),
+      meta:{
+      	direction:1
+      }
+    },
     
     {
       path: '/teach/dataStructure/:id/:name?',//节点模拟运行

@@ -116,6 +116,9 @@ export default{
 				let pname = this.$route.params.pname
 			  if(obj){
 				   this.cateList = obj[pname][name]
+				   if(this.cateList.length>3){
+	    	  	this.prevnextShow = true;
+	    	  }
 		  	}
     	 
     	})

@@ -133,14 +133,11 @@ export default{
 			 			if(text=='08a7ce0c-f985-11ea-adc1-0242ac120002'){
 			 			   that.$router.push({name:'dataStructure',params:{id:obj.id,name:obj.name}})
 			 			}
+			 			//单人模式发币
 						if(text=='0f2f5394-f985-11ea-adc1-0242ac120002'){			 				
-			 				let loginModal = sessionStorage.getItem('loginModal');
-			 				if(loginModal==1){
 			 					that.$router.push({name:'smartContract',params:{id:obj.id,name:obj.name}})
-			 				}else{
-			 					that.$router.push({name:'multipleSmartContract',params:{id:obj.id,name:obj.name}})	
-			 				}	
 			 			} 
+			 			
 			 			if(text=='152eeb56-f985-11ea-adc1-0242ac120002'){
 			 				that.$router.push({name:'hashAlgorithm',params:{id:obj.id,name:obj.name}})	
 			 			} 

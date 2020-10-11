@@ -175,6 +175,7 @@ export default {
         obj.course_name = that.newClassName;
         obj.classes = [];
         obj.categories = that.categories;
+        obj.type = that.newClassType;
         if (that.categories == "") {
           that.$toast("请勾选知识点", 3000)
           return;
@@ -242,6 +243,7 @@ export default {
       let obj = {};
       obj.per_page = that.per_page;
       obj.page = that.currentPage - 1;
+      obj.type = that.newClassType;
       course(obj).then(res => {
         if (res.code == 200) {
           that.courseList = res.data.content;
@@ -295,8 +297,8 @@ export default {
       let that = this;
       that.newClassType = num
       that.leftNavWidth = 125;
-      that.menus = []
-      
+      that.categories = [];
+      that.menus = [];      
       if (num == 1) {
         that.menus = that.personal_menus;
       } else {
@@ -304,7 +306,7 @@ export default {
       }
       that.courseIndex = 0;
       that.addShow(that.menus)
-       
+      this.getCourse();
    
     },
 

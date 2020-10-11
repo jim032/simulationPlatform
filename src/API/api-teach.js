@@ -24,7 +24,7 @@ var courseDatail = function(data){
 
 //自定义篇章
 var getCourseClass = function(data){
-	return axios.get('/course_have_classes')	
+	return axios.get('/course_have_classes?type='+data.type)	
 }
 
 

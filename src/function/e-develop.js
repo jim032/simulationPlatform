@@ -76,7 +76,7 @@ export default{
 		 	that.menuText = this.$route.params.pname+'-'+this.$route.params.name
 		 	that.category_id = this.$route.params.id
 		 	that.getvisit();
-		 	that.getData();
+		 	that.getDataList();
 		},
 	  methods: {
         changeActive(index) {
@@ -99,7 +99,7 @@ export default{
 	          }
 	        })
        },
-       getData(){
+       getDataList(){
 	    	courseDatail().then(res=>{
 	    		var data2 = [];
 	    		let obj = res.data	

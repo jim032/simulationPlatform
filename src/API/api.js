@@ -81,7 +81,7 @@ var addCourse =function(data){
 
 /*查询课程*/
 var course =function(data){
-  return axios.get('/course?per_page='+data.per_page+'&page='+data.page)
+  return axios.get('/course?per_page='+data.per_page+'&page='+data.page+'&type='+data.type)
 }
 
 /*修改课程名称*/

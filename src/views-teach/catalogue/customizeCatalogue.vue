@@ -60,13 +60,10 @@ export default{
 	 			//that.courName = this.$route.params.name
         that.courName = '自定义篇'
         that.iconSrc=require('../../assets/teachImg/cat_icon5.png')
-       
-	 			
-	 			
+
 	 			let obj = {};
-	 			obj.type = 0 ,//type为0表示中文名
-	 			
-	 			getCourseClass().then(res=>{
+	 			obj.type = sessionStorage.getItem('loginModal');
+	 			getCourseClass(obj).then(res=>{
           if(res.code==200){
           	that.cataList = res.data;
           	for(var i =0;i<that.cataList.length;i++){
@@ -125,13 +122,15 @@ export default{
 			 			   that.$router.push({name:'dataStructure',params:{id:text,name:name}})
 			 			}
 						if(text=='0f2f5394-f985-11ea-adc1-0242ac120002'){			 				
-			 				let loginModal = sessionStorage.getItem('loginModal');
-			 				if(loginModal==1){
+			 			
 			 					that.$router.push({name:'smartContract',params:{id:text,name:name}})
-			 				}else{
-			 					that.$router.push({name:'multipleSmartContract',params:{id:text,name:name}})	
-			 				}	
+			 				
 			 			} 
+			 			//多人模式发币
+			 			if(text=='0f2f5388-f985-11ea-adc1-0242ac120002'){
+			 				  that.$router.push({name:'multipleSmartContract',params:{id:text,name:name}})	
+			 				 
+			 			}
 			 			if(text=='152eeb56-f985-11ea-adc1-0242ac120002'){
 			 				that.$router.push({name:'hashAlgorithm',params:{id:text,name:name}})	
 			 			} 

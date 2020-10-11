@@ -24,7 +24,7 @@ export default{
 	    ],
 	  category_id:'',
 	  cat_index:'',
-     
+     prevnextShow:false,
 		}
 		
 		
@@ -108,7 +108,7 @@ export default{
       })
     },
     
-    getData(){
+    getDataList(){
     	courseDatail().then(res=>{
     		var data2 = [];
     		let obj = res.data	
@@ -134,7 +134,7 @@ export default{
 		that.$nextTick(function(){
 			this.swiper();
 			that.getvisit();
-			that.getData();
+			that.getDataList();
 		})
 		
 	}

@@ -10,11 +10,11 @@
 					<p class="pt"><span>{{item.name}}</span></p>
 					<div class="slide_cata clearfix">
 						<div class="colbox"  v-for="(iitem,index) in item.children" :key="index">
-							  <span class="scol" :class="{'noBorder':iitem.children}" @click="linkRouter(iitem)" v-if="iitem.id!='12a7c38a-f985-11ea-adc1-0242ac120002'">{{iitem.name}}</span>
+							  <span class="scol" :class="{'noBorder':iitem.children}" @click="linkRouter(iitem,item.name)" v-if="iitem.id!='12a7c38a-f985-11ea-adc1-0242ac120002'">{{iitem.name}}</span>
 							  <div class="icolbox " 
 							  	v-for="(iiitem,index) in iitem.children" :key="index" 
 							  	v-if="iitem.children && item.id!='890affa2-f984-11ea-adc1-0242ac120002'">
-							  	<span class="iscol" @click="item.id!='890affa2-f984-11ea-adc1-0242ac120002'?linkRouter(iiitem):''">{{iiitem.name}}</span>
+							  	<span class="iscol" @click="item.id!='890affa2-f984-11ea-adc1-0242ac120002'?linkRouter(iiitem,item.name):''">{{iiitem.name}}</span>
 							  </div>
 							
 						</div>
@@ -59,12 +59,20 @@
     		default:'',
     	}
     },
+  
     methods:{
+    	
     	clickMenu(){
     		this.$emit('clickMenu')
     	},
     	back(){
-    		this.$router.push({name:'catalogue'})
+    		if(this.$route.query.level && this.$route.query.level==1){
+    			
+    		  this.$router.push({name:'catalogue'})
+    		}
+    		else{
+    			this.$router.go(-1);
+    		}
     	},
     	Pagereload(){
     		this.reload();
@@ -88,100 +96,125 @@
         })
     	},
     	//点击路由跳转
-    	linkRouter(obj){
+    	linkRouter(obj,pname){
 			let that = this;
 			let text = obj.id
+	
+				
 		   		//名词库
 				if(text=='e8d78d7e-f984-11ea-adc1-0242ac120002'){
-	 			   that.$router.push({name:'thesaurus',params:{id:obj.id,name:obj.name}})
+	 			   that.$router.push({name:'thesaurus',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
 	 		  }	
 	 		  //初始区块链
 	 		  if(text=='a3c5cdfe-f984-11ea-adc1-0242ac120002'){
-	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
 	 		  }
 	 		  //区块链的分类
 	 		  if(text=='b6251572-f984-11ea-adc1-0242ac120002'){
-	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
 	 		  }
 	 		  //区块链经典产品
 	 		  if(text=='c11f35ca-f984-11ea-adc1-0242ac120002'){
-	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name}})
+	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
 	 		  }
 	 		  //区块链的发展
 	 		  if(text=='a0681f36-f984-11ea-adc1-0242ac120002'){
-	 		  	 that.$router.push({name:'develop',params:{id:obj.id,name:obj.name}})
+	 		  	 that.$router.push({name:'develop',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
 	 		  }
 
 				//节点共识模拟				
 				if(text=='0bdec04e-f985-11ea-adc1-0242ac120002'){
-	 			   that.$router.push({name:'nodeRun',params:{id:obj.id,name:obj.name}})
+	 			   that.$router.push({name:'nodeRun',params:{id:obj.id,name:obj.name},query:{level:1}})
 	 			} 
 	 			//数据结构
 	 			if(text=='08a7ce0c-f985-11ea-adc1-0242ac120002'){
-	 			   that.$router.push({name:'dataStructure',params:{id:obj.id,name:obj.name}})
+	 			   that.$router.push({name:'dataStructure',params:{id:obj.id,name:obj.name},query:{level:1}})
 	 			}
 				if(text=='0f2f5394-f985-11ea-adc1-0242ac120002'){			 				
 	 				let loginModal = sessionStorage.getItem('loginModal');
 	 				if(loginModal==1){
-	 					that.$router.push({name:'smartContract',params:{id:obj.id,name:obj.name}})
+	 					that.$router.push({name:'smartContract',params:{id:obj.id,name:obj.name},query:{level:1}})
 	 				}else{
-	 					that.$router.push({name:'multipleSmartContract',params:{id:obj.id,name:obj.name}})	
+	 					that.$router.push({name:'multipleSmartContract',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 				}	
 	 			} 
 	 			if(text=='152eeb56-f985-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'hashAlgorithm',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'hashAlgorithm',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			} 
 	 			//keyStore
 	 			if(text=='0eda79cc-f98b-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'keyStore',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'keyStore',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			}
 	 			//椭圆线
 	 			if(text=='1807f1ba-f985-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'ellipticCurveCryptography',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'ellipticCurveCryptography',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			}
 	 			//对称
 	 			if(text=='03ca5372-f98b-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'encryptionAlgorithm',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'encryptionAlgorithm',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			}
 	 			//版权
 	 			
 	 		   if(text=='fa082928-f984-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'copyRight',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'copyRight',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 		  }
 	 		  //物流
 	 			if(text=='fd55f8f8-f984-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'logistics',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'logistics',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 		  }
 	 			//捐赠
 	     	if(text=='f64ff4e6-f984-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'publicWelfare',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'publicWelfare',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			}
 	     	//保单
 	 			 if(text=='0543b9d8-f985-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'insurancePolicy',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'insurancePolicy',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			}
 	 			 //金融
 	 			if(text=='fff96d42-f984-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'finance',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'finance',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			}
 	 			//病历信息共享
 	 			if(text=='ee3642f6-f984-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'medicalCare',params:{id:obj.id,name:obj.name}})	
+	 				that.$router.push({name:'medicalCare',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			}
 	 			
 	 			
+	 		//51%攻击
 	 		 if(text=='12d4a962-f98b-11ea-adc1-0242ac120002'){
-	 				that.$router.push({name:'51attack',params:{id:obj.id,name:obj.name}})	
+	 		   let tmp = obj.name;
+	 				that.$router.push({name:'51attack',params:{id:obj.id,name:tmp.replace(/%/g, '')},query:{level:1}})	
 	 			}
+	 		 
+		 	
+		 		if(text=='16cc493a-f98b-11ea-adc1-0242ac120002'){
+            that.$router.push({name:'softHardFork',params:{id:obj.id,name:obj.name},query:{level:1}})
+          }
+		 		//重放攻击
+		 		if(text=='1c6ddc1e-f98b-11ea-adc1-0242ac120002'){
+            that.$router.push({name:'replayAttack',params:{id:obj.id,name:obj.name},query:{level:1}})
+          }
+		 	  //延展性攻击
+		 		if(text=='1f4dd650-f98b-11ea-adc1-0242ac120002'){
+            that.$router.push({name:'malleabilityAttack',params:{id:obj.id,name:obj.name},query:{level:1}})
+          }
+		 	  //长程攻击
+		 		if(text=='223590f6-f98b-11ea-adc1-0242ac120002'){
+            that.$router.push({name:'longRangeAttack',params:{id:obj.id,name:obj.name},query:{level:1}})
+          }
+		 	   //智能合约漏洞
+		 		if(text=='25771b22-f98b-11ea-adc1-0242ac120002'){
+            that.$router.push({name:'smartContractLoophole',params:{id:obj.id,name:obj.name},query:{level:1}})
+          }
 			 			
-			 	this.reload();		
+			 
 	
 			
 		}
     },
     mounted(){
     	let that = this;
-    
+   
     	that.getData();
     }
 	}

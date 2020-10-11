@@ -142,7 +142,7 @@ export default{
 	  }
   },
  created() {
-    //this.initWebSocket();
+    this.initWebSocket();
     this.userId = sessionStorage.getItem('stu_userId')
   },
   mounted(){
@@ -202,20 +202,30 @@ export default{
     
     websocketonopen(){ //连接建立之后执行send方法发送数据 
       let userId = sessionStorage.getItem('stu_userId') 
-      let actions = {"userId":userId};
-      //this.websocketsend(JSON.stringify(actions));
+      let params = '{"userID":"'+userId+'","type":"'+0+'","data":{"user_id":"'+userId+'"}}';
+    
+      this.websocketsend(params);
     },
     websocketonerror(){//连接建立失败重连
       this.initWebSocket();
     },
     websocketonmessage(e){ //数据接收
      console.log(e)
+     
+      this.$message({
+          message: e.data,
+          type: 'success'
+        });
+     
     },
     websocketsend(Data){//数据发送
       this.websock.send(Data);
     },
     websocketclose(e){  //关闭
-      console.log('断开连接',e);
+    	let userId = sessionStorage.getItem('stu_userId') 
+    	let  params = '{"userID":"'+userId+'","type":"'+4+'","data":{"user_id":"'+userId+'"}}';
+      this.websocketsend(params);
+      console.log('22')
     },
 
 		//页面刚进来的时候默认第一个用户在线
@@ -647,9 +657,10 @@ export default{
 				clearTimeout(this.timer1); //关闭
 
 			}
+	  this.websocketclose();
    },
    destroyed() {
       window.onresize = null;
-      this.websock.close();
+      this.websocketclose();
     }
   }

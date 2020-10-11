@@ -104,7 +104,8 @@ export default{
         }
       })
     },
-    getData(){
+    getDataList(){
+    	console.log(123)
     	courseDatail().then(res=>{
     		var data2 = [];
     		let obj = res.data	
@@ -131,7 +132,7 @@ export default{
 		that.$nextTick(function(){
 			that.swiper();
 			that.getvisit();
-			that.getData();
+			that.getDataList();
 		})
 		window.onresize = () => {
       return (() => {

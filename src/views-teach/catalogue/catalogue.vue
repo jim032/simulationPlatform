@@ -29,7 +29,7 @@
 								<p class="pt">{{catlog2.title}}</p>
 							</div>	
 						</div>
-						<div class="pcat pcat-zdy cursorPoint" @click="linkCustCatalog" v-if="!isTab4">
+						<div class="pcat pcat-zdy cursorPoint" :style="model==2?'width:auto':''" @click="linkCustCatalog" v-if="!isTab4 || model==2">
 						   <img src="../../assets/teachImg/circle.png"/>
 							 <div class="intro">
 								 <img class="introIcon" src="../../assets/teachImg/cat_icon5.png" />
@@ -78,7 +78,9 @@
 		 		
 		 		isTab4:true,//判断当前自定义篇幅不存在为true,否则为false
 		 		
+		 		model:'',//当前登录的模式
 		 		
+		 		courseList:[]//自定义课程列表
 	 		}
 	 	},
 	 	filters:{
@@ -116,8 +118,6 @@
           		}
           	}
             
-            
-            console.log(temp)
             
           	for (let j = 0; j < temp.length; j++) {   	         
 	            if(temp[j].name=='启蒙篇'){
@@ -188,9 +188,11 @@
 	 		//获取自定义篇
 	 		getCustomize(){
 	 			let that = this;
-	 			getCourseClass().then(res=>{
+	 			let obj = {};
+	 			obj.type = that.model;
+	
+	 			getCourseClass(obj).then(res=>{
 	 				//console.log(res)
-	 				
 	 				if(res.code==200){
 //	 					console.log(res.data.length);
 	 					if(res.data.length>0){
@@ -215,7 +217,13 @@
 	 		},
 	 		//跳转到自定义篇
 	 		linkCustCatalog(){
-	 			this.$router.push({name:'customizeCatalogue'})
+	 			let that = this;
+	 			if(that.courseList.length>0){
+	 				that.$router.push({name:'customizeCatalogue'})
+	 			}else{
+	 				that.$toast('暂无多人模式课程',3000)
+	 			}
+	 			
 	 		},
 	 		//点击跳转控制台
 	 		linkConsole(){
@@ -226,7 +234,10 @@
 	 	},
 	 	mounted(){
 	 		this.getData();//获取课程目录
-	 		this.getCustomize();
+	 		this.model = sessionStorage.getItem('loginModal');
+	 		if(this.modal!=''){
+	 		   this.getCustomize();
+	 		}
 	 	}
 	 }
 </script>

@@ -5,7 +5,7 @@
 		<div class="mainContent">
 			 
 			 <div class="data-box">
-			 	 <div class="d-col d-box1" @click="showBlock" v-if="!showContent">
+			 	 <div class="d-col d-box1 cursorPoint" @click="showBlock" v-if="!showContent">
 			 	 	 <img src="../../assets/teachImg/block_icon.png"/>
 			 	 </div>
 			 	 <div class="d-col d-box2" v-if="showContent">

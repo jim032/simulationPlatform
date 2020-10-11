@@ -239,7 +239,7 @@
     -moz-transition: all .2s ease; /* Firefox 4 */
     -webkit-transition: all .2s ease; /* Safari 和 Chrome */
     -o-transition: all .2s ease; /* Opera */
-    -ms-transition: all .2s ease;}
+    -ms-transition: all .2s ease;cursor: pointer;}
    
    .showCatalog .menu{
    	opacity: 1;

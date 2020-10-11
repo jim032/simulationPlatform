@@ -189,7 +189,7 @@ export default{
             this.websock.close();
             this.websock=null;
           }
-          let userId = sessionStorage.getItem('stu_userId')
+          let userId = this.userId
           this.websock = new WebSocket(this.socketUrl+userId);
 		      this.websock.onmessage = this.websocketonmessage;
           this.websock.onopen = this.websocketonopen;
@@ -201,9 +201,8 @@ export default{
     },
     
     websocketonopen(){ //连接建立之后执行send方法发送数据 
-      let userId = sessionStorage.getItem('stu_userId') 
-      let params = '{"userID":"'+userId+'","type":"'+0+'","data":{"user_id":"'+userId+'"}}';
-    
+      let userId = this.userId
+      let params = '{"userID":"'+userId+'","type":"'+0+'","data":{"user_id":"'+userId+'"}}';    
       this.websocketsend(params);
     },
     websocketonerror(){//连接建立失败重连
@@ -222,10 +221,10 @@ export default{
       this.websock.send(Data);
     },
     websocketclose(e){  //关闭
-    	let userId = sessionStorage.getItem('stu_userId') 
+    	let userId = this.userId
     	let  params = '{"userID":"'+userId+'","type":"'+4+'","data":{"user_id":"'+userId+'"}}';
       this.websocketsend(params);
-      console.log('22')
+     
     },
 
 		//页面刚进来的时候默认第一个用户在线
@@ -250,6 +249,9 @@ export default{
 			    that.userList[index].type=2
 			    that.userList[index].userId = '0-' + that.onlineNumber
 			    that.onlineNumber = that.onlineNumber + 1;
+			    let userId = that.userId
+			    //let params =  '{"userID":"'+userId+'","type":"'+1+'","data":{"room_id":"'+roomid+'","class_id":"'+classid+'"}}';;    
+          //this.websocketsend(params);
 			    if(that.onlineNumber==4){
 			    	that.confirShow = true;
 			    }

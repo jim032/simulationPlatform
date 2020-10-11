@@ -26,12 +26,12 @@
 								</div>
 							</div>
 			  		 <div class="btnbox">
-			  		 	  <button class="btn" v-if="step==1" @click="surePasword">确定</button>
-			  		 	  <button class="btn" v-if="step==2 && hashProgress>=0 && hashProgress<100" @click="sureHash(1)">哈希计算</button>
-			  		 	  <button class="btn" v-if="step==2 && hashProgress==100" @click="surePath">下一步</button>
-			  		 	  <button class="btn" v-if="step==3 && hashProgress>=0 && hashProgress<100" @click="sureHash(2)">加密</button>
-			  		 	  <button class="btn" v-if="step==3 && hashProgress==100" @click="surefinsh">下一步</button>
-			  		 	   <button class="btn" v-if="step>=4"  @click="sureResult">我知道了</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==1" @click="surePasword">确定</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==2 && hashProgress>=0 && hashProgress<100" @click="sureHash(1)">哈希计算</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==2 && hashProgress==100" @click="surePath">下一步</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==3 && hashProgress>=0 && hashProgress<100" @click="sureHash(2)">加密</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==3 && hashProgress==100" @click="surefinsh">下一步</button>
+			  		 	   <button class="btn cursorPoint" v-if="step>=4"  @click="sureResult">我知道了</button>
 			  		 </div>
 			  	</div>
 			  </div>

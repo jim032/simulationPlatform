@@ -6,7 +6,7 @@
 		
 		<div class="mainBox">
 			 <div class="userinfo">
-			 	   <div class="d-user" @click="showUserInfo(userA,1)">
+			 	   <div class="d-user cursorPoint" @click="showUserInfo(userA,1)">
 			 	   	 <div class="d-icon"><img :src="iconUrl_1"/></div>
 			 	   	 <p class="d-name">用户A</p>
 			 	   </div>
@@ -14,7 +14,7 @@
 			 </div>
 			 
 			  <div class="userinfo1">
-			 	   <div class="d-user" @click="showUserInfo(userB,2)">
+			 	   <div class="d-user cursorPoint" @click="showUserInfo(userB,2)">
 			 	   	 <div class="d-icon"><img :src="iconUrl_2"/></div>
 			 	   	 <p class="d-name">用户B</p>
 			 	   </div>
@@ -22,7 +22,7 @@
 			 </div>
 			 
 			 <div class="userinfo2">
-			 	   <div class="d-user" @click="showUserInfo(userC,3)">
+			 	   <div class="d-user cursorPoint" @click="showUserInfo(userC,3)">
 			 	   	 <div class="d-icon"><img :src="iconUrl_3"/></div>
 			 	   	 <p class="d-name">用户C</p>
 			 	   </div>  

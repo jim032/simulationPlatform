@@ -3,7 +3,7 @@
 	
 	<div class="mainContent">
 		   <div class="operaBpox" >
-		   	  <div class="opr-col"  v-if="showNav" v-for="(item,index) in navList" :key="index" @click="functionStep(index+1)">
+		   	  <div class="opr-col cursorPoint"  v-if="showNav" v-for="(item,index) in navList" :key="index" @click="functionStep(index+1)">
 		   	  	 <div class="bg">
 		   	  	    <div class="o-icon"><img :src="item.icon"/></div>
 		   	  	    <p class="title">{{item.title}}</p>
@@ -71,8 +71,8 @@
 		   	  		  <a class="sback" @click="stepBack"></a> 
 		   	  		  <div class="o-box">
 		   	  		  	
-		   	  		  	 <div class="o-col" ><span class="s-search" @click="f_showSearch">查询病人</span></div>
-		   	  		  	 <div class="o-col" v-if="rgisteInfo.name=='' || cur_Hospital.islinked"><span class="s-sl" @click="LinkedForm" >上链</span></div>
+		   	  		  	 <div class="o-col" ><span class="s-search cursorPoint" @click="f_showSearch">查询病人</span></div>
+		   	  		  	 <div class="o-col" v-if="rgisteInfo.name=='' || cur_Hospital.islinked"><span class="s-sl cursorPoint" @click="LinkedForm" >上链</span></div>
 		   	  		  </div>
 		   	  	</div>
 		   	  </div>

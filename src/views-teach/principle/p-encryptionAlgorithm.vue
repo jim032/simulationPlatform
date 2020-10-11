@@ -33,7 +33,7 @@
 	   	  	 	  	 </div>
 	   	  	 	  	 <p class="resultmess" v-if="isEncryptionSuc">加密后内容为：{{encryptedContent.result}}</p>
 	   	  	 	  	 <div class="com-btnBox">
-	   	  	 	  	 	  <span class="com-btn" @click="sureContent">确定</span>
+	   	  	 	  	 	  <span class="com-btn cursorPoint" @click="sureContent">确定</span>
 	   	  	 	  	 </div>
 	   	  	 	  </div>
 	   	  	 </div>

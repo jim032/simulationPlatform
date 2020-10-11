@@ -3,7 +3,7 @@
 	
 	<div class="mainContent">
 		   <div class="operaBpox" >
-		   	  <div class="opr-col"  v-if="showNav" v-for="(item,index) in navList" :key="index" @click="functionStep(index+1)">
+		   	  <div class="opr-col cursorPoint"  v-if="showNav" v-for="(item,index) in navList" :key="index" @click="functionStep(index+1)">
 		   	  	 <div class="bg">
 		   	  	    <div class="o-icon"><img :src="item.icon"/></div>
 		   	  	    <p class="title">{{item.title}}</p>

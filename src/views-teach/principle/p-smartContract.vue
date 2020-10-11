@@ -68,7 +68,7 @@
 					</div>
 					
 					<div class="col">
-						<button class="cashBtn" @click.stop="chooseCompleted()">设置好了</button>
+						<button class="cashBtn cursorPoint" @click.stop="chooseCompleted()">设置好了</button>
 					</div>
 				</div>
 			</div>
@@ -113,7 +113,7 @@
 						</div>
 					</div>
 					<div class="col">
-						<button class="cashBtn"  @click.stop="submitTranfer()">确定转账</button>
+						<button class="cashBtn cursorPoint"  @click.stop="submitTranfer()">确定转账</button>
 					</div>
 				</div>
 			</div>

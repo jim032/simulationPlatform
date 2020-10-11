@@ -5,8 +5,8 @@
 			<div class="box_point" ref="box_point" :style="{'padding-top':top+'px'}">
 				<div class="pointBox clearfix" ref="pointBox">
 					<div class="pointDiv">
-						<div class="info info1" data-div='1' ref="info1" @click="showPointInfo(1)">
-							<div class="p_info">
+						<div class="info info1 " data-div='1' ref="info1" @click="showPointInfo(1)">
+							<div class="p_info cursorPoint">
 								<p class="pname">{{divInfo1.pointText}}</p>
 								<div class="picon" v-if="divInfo1.icon"><img :src="divInfo1.icon" /></div>
 								<div class="d_sta" v-if="divInfo1.nodeStatus">
@@ -26,13 +26,13 @@
 							</div>
 						</div>
 
-						<div class="sblock" v-if="divInfo1.prowidth==100" @click="showBlock(1)"> 创世<br>区块 </div>
-						<div class="sblock sblock1" v-if="divInfo1.broadcast==true" @click="showBlock(2)"> 区块1 </div>
+						<div class="sblock cursorPoint" v-if="divInfo1.prowidth==100" @click="showBlock(1)"> 创世<br>区块 </div>
+						<div class="sblock sblock1 cursorPoint" v-if="divInfo1.broadcast==true" @click="showBlock(2)"> 区块1 </div>
 					</div>
 
 					<div class="pointDiv">
 						<div class="info  info2" data-div='2' ref="info2" @click="showPointInfo(2)">
-							<div class="p_info">
+							<div class="p_info cursorPoint">
 								<p class="pname">{{divInfo2.pointText}}</p>
 								<div class="picon" v-if="divInfo2.icon"><img :src="divInfo2.icon" /></div>
 								<div class="d_sta" v-if="divInfo2.nodeStatus">
@@ -52,13 +52,13 @@
 							</div>
 						</div>
 
-						<div class="sblock" v-if="divInfo2.prowidth==100"  @click="showBlock(1)"> 创世<br>区块 </div>
-						<div class="sblock sblock1" v-if="divInfo2.broadcast==true" @click="showBlock(2)"> 区块1 </div>
+						<div class="sblock cursorPoint" v-if="divInfo2.prowidth==100"  @click="showBlock(1)"> 创世<br>区块 </div>
+						<div class="sblock sblock1 cursorPoint" v-if="divInfo2.broadcast==true" @click="showBlock(2)"> 区块1 </div>
 					</div>
 
 					<div class="pointDiv">
-						<div class="info  info3" data-div='3' ref="info3" @click="showPointInfo(3)">
-							<div class="p_info">
+						<div class="info  info3 " data-div='3' ref="info3" @click="showPointInfo(3)">
+							<div class="p_info cursorPoint">
 								<p class="pname">{{divInfo3.pointText}}</p>
 								<div class="picon" v-if="divInfo3.icon"><img :src="divInfo3.icon" /></div>
 								<div class="d_sta" v-if="divInfo3.nodeStatus">
@@ -78,13 +78,13 @@
 							</div>
 						</div>
 
-						<div class="sblock"  v-if="divInfo3.prowidth==100" @click="showBlock(1)"> 创世<br>区块 </div>
-						<div class="sblock sblock1" v-if="divInfo3.broadcast==true" @click="showBlock(2)"> 区块1 </div>
+						<div class="sblock cursorPoint"  v-if="divInfo3.prowidth==100" @click="showBlock(1)"> 创世<br>区块 </div>
+						<div class="sblock sblock1 cursorPoint" v-if="divInfo3.broadcast==true" @click="showBlock(2)"> 区块1 </div>
 					</div>
 
 					<div class="pointDiv">
-						<div class="info  info4" data-div='4' ref="info4" @click="showPointInfo(4)">
-							<div class="p_info">
+						<div class="info info4" data-div='4' ref="info4" @click="showPointInfo(4)">
+							<div class="p_info cursorPoint">
 								<p class="pname">{{divInfo4.pointText}}</p>
 								<div class="picon" v-if="divInfo4.icon"><img :src="divInfo4.icon" /></div>
 								<div class="d_sta" v-if="divInfo4.nodeStatus">
@@ -103,8 +103,8 @@
 								<span class="moneyIcon" :class="{'show':divInfo4.beat==true &&　step==4}"></span>
 							</div>
 						</div>
-						<div class="sblock" v-if="divInfo4.prowidth==100" @click="showBlock(1)">创世<br>区块</div>
-						<div class="sblock sblock1" v-if="divInfo4.broadcast==true" @click="showBlock(2)">区块1</div>
+						<div class="sblock cursorPoint" v-if="divInfo4.prowidth==100" @click="showBlock(1)">创世<br>区块</div>
+						<div class="sblock sblock1 cursorPoint" v-if="divInfo4.broadcast==true" @click="showBlock(2)">区块1</div>
 					</div>
 
 					<svg class="lineBox" id="lineBox" xmlns="http://www.w3.org/2000/svg" version="1.1" ref="lineBox"></svg>

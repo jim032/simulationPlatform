@@ -17,7 +17,7 @@
 						<div class="fz-icon" v-if="item.type==1"></div>
 						<img :src="item.onlineStatus?item.icon_1:item.icon" class="userIcon"  @click.stop="showPointInfo(item)"/>
 						<p class="userName">{{item.name}}</p>
-						<div class="btnbox" v-if="item.amount>0 &&　contractDeployment==true"><span class="button" @click.stop="showFb(item,index+1)">转账</span></div>
+						<div class="btnbox" v-if="item.amount>0 &&　coin_name!='' && userId==item.userId || item.type==2"><span class="button" @click.stop="showFb(item,index+1)">转账</span></div>
 					</div>
 
 				</div>

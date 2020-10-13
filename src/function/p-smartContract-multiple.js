@@ -248,16 +248,11 @@ export default{
       }
       //发币成功
       if(mess.code=='203' && mess.code){         
-        that.onlineList(mess,201); 
-        that.setShow = false;
-			  
-			  /*
-				clearTimeout(that.timer1);
-				
-				that.timer1 = setTimeout(function(){
-					 that.confirShow = true;
-				},500)
-				*/
+  
+        //that.setShow = false;
+			  that.issueCurrencyMess ='智能合约部署完成'
+			  that.issueCurrency(mess,203)
+
      }
       
      //转账成功
@@ -281,6 +276,39 @@ export default{
       this.websocketsend(params); 
     },
     
+    //发币操作效果
+    issueCurrency(mess,code){
+    	let that = this;
+    	that.isShowMess = true
+			that.isBlcok = true;
+    	let timer = setInterval(function(){
+     	  that.blockPro++;
+        if(that.blockPro==100){
+            clearInterval(timer)
+            that.operaInfo.mess = '当前合约正在部署中:'+that.blockPro+'%';
+            that.isBlcok = false;
+            clearTimeout(that.timer1);
+            /*
+					  that.timer1 = setTimeout(function(){
+							that.confirShow = true;
+						},500)
+						*/
+            that.top = that.top-40;
+						that.operaInfo.mess = that.issueCurrencyMess
+						that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
+						that.operaInfo.infolist.push('资产名称：'+that.coinName)
+						that.operaInfo.infolist.push('拥有者：'+that.onlineUserList[0].user_name)						
+						that.blockPro = 0;
+						//智能合约部署完成
+						that.contractDeployment = true;
+						that.onlineList(mess,code); 
+						sessionStorage.setItem('contractDeployment',true)
+						
+	      }else{
+						that.operaInfo.mess = '当前合约正在部署:'+that.blockPro+'%';
+			  }
+      },50)
+    },
     
     //转账的操作效果
     transferOperation(mess,code){
@@ -307,7 +335,7 @@ export default{
 		          that.operaInfo.mess = that.transMess;
 		          that.isBlcok = false;
 							that.blockPro = 0;						
-						  that.onlineList(mess,204); 
+						  that.onlineList(mess,code); 
 						  //that.time = new Date();
 					    //that.showAnimate(that.start,end)
 											
@@ -334,8 +362,6 @@ export default{
       that.onlineNumber = userList.length
       that.onlineUserList = userList; //当前在线list表赋值    
       that.coin_name = data.coin_name
-      
-    	console.log('代币名称'+data.coin_name);
     	for(var i = 0;i<userList.length;i++){ 
      	 	 that.userList[i].amount = userList[i].balance;
         	that.userList[i].type=userList[i].type
@@ -347,35 +373,29 @@ export default{
         	  that.initialOwner.name = userList[i].user_name
         	}
         	if(userList[i].user_id == that.userId){
-        		console.log('ok')
+        	
         		that.onlineName=userList[i].user_name
         	}
        }
       
     },
     
-    //房主权限判断
-    getAuthority(){
-    	let arr = that.userList;
-    	let that = this
+
+
+		poinfun(num){
+			let that = this;
+			if(num==1){				
+				//房主权限判断
+	    	let arr = that.userList;    	
 				that.transUserList= []; 
 				for(var j = 0; j < arr.length; j++) {
 				   if(arr[j].userId==that.userId){
 				   	  if( arr[j].type!=1){
 				   	  	this.$toast('您不是房主，无权限添加机器人！',3000);
 				   	  	return;
-				   	  }
-				   	
+				   	  }		   	
 				   }		  
 				}
-    },
-
-		poinfun(num){
-			let that = this;
-			if(num==1){
-				
-				//房主权限判断
-				that.getAuthority();
 				
 				if(that.onlineNumber==4){
 					that.$toast('当前小组人数已有4人，可直接设置币种',2000)
@@ -392,19 +412,31 @@ export default{
 			}
 
 			else if(num==2){
+				let that = this
+					//房主权限判断
+	    	let arr = that.userList;    	
+				that.transUserList= []; 
+				for(var j = 0; j < arr.length; j++) {
+				   if(arr[j].userId==that.userId){
+				   	  if( arr[j].type!=1){
+				   	  	this.$toast('您不是房主，无权设置币种！',3000);
+				   	  	return;
+				   	  }		   	
+				   }		  
+				}
+				
 				if (that.blockPro > 0){
 				   return
 			   }
-				if (that.coin_name!=''){
+				if(that.coin_name!='' || that.coinName!='' ){
 					that.$toast('币种已设置',2000)
 					return;
-				} 
+				}
 				if(that.onlineNumber<4){
 					that.$toast('小组人数达到4人，才可设置币种',2000)
 					return;
 				}			
-				//房主权限判断
-				that.getAuthority();
+			
 				
 				that.transUserList = that.userList
 				that.funNum = num;
@@ -412,46 +444,35 @@ export default{
 				
 			} 
 		else if (num==3 && !that.isBlcok && !that.contractDeployment){
-			if(that.coin_name==''){
+			let that = this
+			//房主权限判断
+    	let arr = that.userList;    	
+			that.transUserList= []; 
+			for(var j = 0; j < arr.length; j++) {
+			   if(arr[j].userId==that.userId){
+			   	  if( arr[j].type!=1){
+			   	  	this.$toast('您不是房主，无权限部署合约！',3000);
+			   	  	return;
+			   	  }		   	
+			   }		  
+			}
+			if (that.coin_name!=''){
+				this.$toast('合约部署已完成！',3000);
+				return;
+			}
+			if(that.coinName==''){
 				this.$toast('请先设置币种！',3000);
 				return;
 			}
-			//房主权限判断
-			that.getAuthority();
 			
-				that.funNum = num;
-	   		that.operaInfo.infolist = [];
-			if(that.coin_name!=''){
-				that.isBlcok = true;
+			
+
+			that.funNum = num;
+	   	that.operaInfo.infolist = [];
+			if(that.coinName!=''){				
+				let params = '{"userID":"'+that.userId+'","type":"'+2+'","data":{"room_id":"'+that.roomid+'","class_id":"'+that.classid+'","name":"'+that.coinName+'","amount":"'+that.moneyNumber+'"}}';
+        this.websocketsend(params);
 				//that.isShowBlock = false;
-				that.isShowMess = true
-				let timer = setInterval(function(){
-       	  that.blockPro++;
-          if(that.blockPro==100){
-	            clearInterval(timer)
-	            that.operaInfo.mess = '当前合约正在部署中:'+that.blockPro+'%';
-	            that.isBlcok = false;
-	            clearTimeout(that.timer1);
-	            /*
-						  that.timer1 = setTimeout(function(){
-								that.confirShow = true;
-							},500)
-							*/
-	            that.top = that.top-40;
-							that.operaInfo.mess = "当前合约部署完成"
-							that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
-							that.operaInfo.infolist.push('资产名称：'+that.coinName)
-							that.operaInfo.infolist.push('拥有者：'+that.onlineUserList[0].user_name)						
-							that.blockPro = 0;
-							//智能合约部署完成
-							that.contractDeployment = true;
-							
-							sessionStorage.setItem('contractDeployment',true)
-							
-		      }else{
-							that.operaInfo.mess = '当前合约正在部署:'+that.blockPro+'%';
-				  }
-        },50)
 			}   
 			}
 		},
@@ -736,9 +757,9 @@ export default{
 	  
 	  */
 	 
-	//设置币中
-  let params = '{"userID":"'+that.userId+'","type":"'+2+'","data":{"room_id":"'+that.roomid+'","class_id":"'+that.classid+'","name":"'+that.coinName+'","amount":"'+that.moneyNumber+'"}}';
-  this.websocketsend(params);
+	//设置币种
+	that.setShow = false;
+  
 	} 
 	  
  },

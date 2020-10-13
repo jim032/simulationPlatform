@@ -11,13 +11,15 @@ export default{
 		  menuText:'异常篇-重放攻击',
       iconUrl_1:require('../assets/teachImg/block_a.png'),//
 		  step:1,//当前步骤
-		  pageName:53,//
+		  pageName:53,//异常篇重放攻击
 		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
       D2:false,//D框
 
       wprogress:0, //打包的进度
       delayTimer:null,//延迟执行时间
-      lineDraw53Show: false
+      lineDraw53Show: false,
+      
+      singleStep:true,//单个步骤提示
 		}
 	},
 	components:{
@@ -25,7 +27,7 @@ export default{
 	},
 	computed: {
 		stepTips(){
-			return this.$store.state.ecc__stepTips
+			return this.$store.state.a_replayAttack
 		}
 	},
 	methods:{

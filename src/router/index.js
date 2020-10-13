@@ -61,12 +61,18 @@ export default new Router({
          path: '/perSet/changePaw',//个人设置
          name: 'changePaw',
          component: () =>import('@/views/user/set-changePaw'),
+         meta:{
+	      	direction:0
+	      }
        },
        {
          path: '/perSet/function',//个人设置
          name: 'function',
          component: () =>import('@/views/user/set-function'),
-        }
+         meta:{
+	      	direction:0
+	      }
+      }
       ],
       meta:{
       	direction:0

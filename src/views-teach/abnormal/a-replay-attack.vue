@@ -2,7 +2,7 @@
 	<div class="pageWrap eaWrap">
 		<!--中间hash算法内容布局-->
 		<div class="mainContent">
-      <div class="divList" v-if="step>=2  " style="margin-top: 25px">
+      <div class="divList divList-replay" v-if="step>=2  " style="margin-top: 25px">
         <div class="divTitle">
           硬分叉
         </div>
@@ -37,13 +37,15 @@
           <div class="divC3">78236468354</div>
           <div class="divC3">提现金额:20</div>
         </div>
+        <!--
         <div class="divTitle">
           A链
         </div>
+        -->
       </div>
       <div  v-if="step>=2  " class="divline2_2" ></div>
       <div  v-if="step>=4  " class="divline2_2_1" ></div>
-      <div class="divList" v-if="step>=2" style="margin-top:20px "  >
+      <div class="divList divList-replay" v-if="step>=2" style="margin-top:20px "  >
         <div class="divTitle" >
 
         </div>
@@ -74,9 +76,11 @@
           <div class="divC3">78236468354</div>
           <div class="divC3">提现金额:20</div>
         </div>
+        <!--
         <div class="divTitle">
           B链
         </div>
+        -->
       </div>
       <div  v-if="step>=2" class="divline4_1" ></div>
       <div  v-if="step>=2" class="divline3_2" ></div>
@@ -105,6 +109,7 @@
 	<!--右边步骤提示-->
 	<rightTips :step="step" :confirShow="confirShow" :stepTips="stepTips" :pageName="pageName" :D2="D2"
 		@tipSure="tipSure" @D2clickfinish="D2clickfinish" :lineDraw53Show="lineDraw53Show" :wprogress="wprogress"
+		:singleStep="singleStep"
 	>
 		
 	</rightTips>	
@@ -135,4 +140,5 @@
 		}
 	}
 }
+.divList-replay{width:960px;}
 </style>

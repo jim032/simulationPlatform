@@ -222,8 +222,10 @@ var store = new Vuex.Store({
 		],
 		//a-智能合约部署与漏洞
 		a_smartLoophole:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}],
+		//异常篇—-重放攻击
+		a_replayAttack:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}],
 		//异常-长程攻击
-		a_longRangAttack:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}]
+		a_longRangAttack:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}],
   },
   mutations: {
   

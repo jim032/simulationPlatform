@@ -144,7 +144,6 @@ export default{
 	  },
 	  //提示框确定
 	  surePrompt(num){
-	  		console.log(123)
 	  	this.isPrompt = false;
 	  }
 	},

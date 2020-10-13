@@ -104,7 +104,7 @@
           if(res.code==200){
           	let tmpArray = res.data;
           	let temp = [];
-          	console.log(tmpArray);
+//        	console.log(tmpArray);
           	for(let i=0;i<tmpArray.length;i++){
           		if(loginModal &&　loginModal==1 && tmpArray[i].id=="e72d3a24-f983-11ea-adc1-0242ac120002"){
           			//console.log('单人模式')

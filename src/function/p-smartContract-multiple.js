@@ -31,7 +31,7 @@ export default{
 	  	
 	  	step:1,
 	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~',infolist:[]},//底部传递的信息
-	  	
+	  	//当前页面展示的userList
 	    userList:[ //type:0普通用户   1房主  2机器人
 	       {
 		       icon:require('../assets/teachImg/icon_user1n.png'),
@@ -70,7 +70,7 @@ export default{
 		       type:'',
 	       }
 	    ],
-	    
+	    onlineUserList:[],//用户在线的userlist
 	    transferShow:false,//转账弹出框显示
 	    showUser:false,
 	    chooseUserObj:{
@@ -78,10 +78,7 @@ export default{
 	    	name:'',
 	    },//转账选择对象(id)
 	    
-	    setShow:false,//设置币种弹出框是否显示
-
-			hasSettedShowUser:false, //币种已设置完成
-      
+	    setShow:false,//设置币种弹出框是否显示      
       transUser:{},//当前谁转账,
        
 
@@ -113,8 +110,15 @@ export default{
 			time:'',//gif动画执行
 			
 			websock: null,
-			category_id:''
+			category_id:'',
 			
+			roomid:'',//房间号
+			classid:'',//班级id
+			
+			coin_name:'',//当前房间是否已经发布成功
+			initialOwner:{userId:'',name:''},//初始拥有者
+			
+			onlineName:'',//在线用户名称
 	  }
 	},
   components:{comHeader,comFooter,rightTips},
@@ -160,8 +164,8 @@ export default{
 	
 		this.$nextTick(() => {	  	
 	  	that.initHeight();
-	  	
-      that.userOnline();
+     // that.contractDeployment = sessionStorage.getItem('contractDeployment')?Boolean(sessionStorage.getItem('contractDeployment')):false
+     
 		})	
 	},
   
@@ -183,8 +187,7 @@ export default{
 		initWebSocket(){ //初始化weosocket
 			if(typeof(WebSocket) == "undefined") {
         that.$toast("您的浏览器不支持WebSocket",3000);
-      }else{
-      	 
+     }else{      	 
          if(this.websock!=null){
             this.websock.close();
             this.websock=null;
@@ -194,7 +197,7 @@ export default{
 		      this.websock.onmessage = this.websocketonmessage;
           this.websock.onopen = this.websocketonopen;
           this.websock.onerror = this.websocketonerror;
-          this.websock.onclose = this.websocketclose;
+          //this.websock.onclose = this.websocketclose;
       }
 		
      
@@ -205,56 +208,186 @@ export default{
       let params = '{"userID":"'+userId+'","type":"'+0+'","data":{"user_id":"'+userId+'"}}';    
       this.websocketsend(params);
     },
+    
+    //链接失败继续链接
     websocketonerror(){//连接建立失败重连
       this.initWebSocket();
     },
+    
+    //数据接收
     websocketonmessage(e){ //数据接收
-     console.log(e)
-     
-      this.$message({
-          message: e.data,
-          type: 'success'
-        });
-     
+    	console.log(e)
+    	
+     let mess =JSON.parse(e.data)
+     let that = this;
+ 
+   
+     //code：201表示加入消息  202退出成功  203代币发行成功  204转账成功  205添加机器人成功
+     if(mess.code=='201' && mess.code){         
+        that.onlineList(mess,201); 
+     }
+     //退出
+     if(mess.code=='202' && mess.code){ 
+       	let data = JSON.parse(mess.data)
+     	  let userList = data.userList;
+     	  let index = userList.length
+     	  for(var i=0;i<that.userList.length;i++){
+     	   	that.userList[i].onlineStatus=false
+     	   	that.userList[i].name = '用户'+(1+index)
+     	  }
+     	  that.onlineList(mess,202);
+      }
+      //加入机器人接收的消息
+      if(mess.code=='205' && mess.code){
+     	  that.onlineList(mess,205);     
+      }
+      //用户已添加
+      if(mess.code=='501' && mess.code){  
+      
+        that.onlineList(mess,501); 
+      }
+      //发币成功
+      if(mess.code=='203' && mess.code){         
+        that.onlineList(mess,201); 
+        that.setShow = false;
+			  
+			  /*
+				clearTimeout(that.timer1);
+				
+				that.timer1 = setTimeout(function(){
+					 that.confirShow = true;
+				},500)
+				*/
+     }
+      
+     //转账成功
+     if(mess.code=='204' && mess.code){
+     	 //转账成功首先那个
+       that.transMess = '转账事务打包成功'
+       that.transferOperation(mess,204)
+     	
+     }
+       
     },
-    websocketsend(Data){//数据发送
+    //数据发送
+    websocketsend(Data){
       this.websock.send(Data);
     },
-    websocketclose(e){  //关闭
+    //退出
+    websocketclose(e){
     	let userId = this.userId
-    	let  params = '{"userID":"'+userId+'","type":"'+4+'","data":{"user_id":"'+userId+'"}}';
-      this.websocketsend(params);
-     
+    	let that = this;
+    	let  params = '{"userID":"'+userId+'","type":"'+4+'","data":{"user_id":"'+userId+'","room_id":"'+that.roomid+'"}}';
+      this.websocketsend(params); 
+    },
+    
+    
+    //转账的操作效果
+    transferOperation(mess,code){
+    	  let that = this
+    	  let end ='';
+		    that.blockPro = 0;
+			  that.isBlcok = true;
+			  that.operaInfo.infolist = [];
+			  that.transferShow = false 
+			  //that.to_userId = that.chooseUserObj.id;
+			  let timer = setInterval(function(){
+		   	that.blockPro++;  
+		   	  if(that.blockPro==35){	
+		   	  	let arr = that.userList;
+						for(var j = 0; j < arr.length; j++) {
+						   if(that.to_userId==arr[j].userId){  	
+						   	end = j+1;
+						   }				  				
+						} 		
+		   	  }
+		   	  
+		      if(that.blockPro==100){
+		          clearInterval(timer)
+		          that.operaInfo.mess = that.transMess;
+		          that.isBlcok = false;
+							that.blockPro = 0;						
+						  that.onlineList(mess,204); 
+						  //that.time = new Date();
+					    //that.showAnimate(that.start,end)
+											
+		      }else{
+							that.operaInfo.mess = '转账事务打包中:'+that.blockPro+'%';
+				  }
+		    },50)
+	  } ,
+    //在线人数list赋值
+    onlineList(mess,code){
+    	if(code!=501){
+	    	this.$message({
+	      message: mess.message,
+	          type: 'success',
+	          duration:2000
+	      }); 
+     }
+     	let data = JSON.parse(mess.data)
+     	let userList = data.userList;
+    	let that = this;
+    	that.onlineNumber = userList.length;
+    	that.roomid = data.id ;
+      that.classid = data.class_id;
+      that.onlineNumber = userList.length
+      that.onlineUserList = userList; //当前在线list表赋值    
+      that.coin_name = data.coin_name
+      
+    	console.log('代币名称'+data.coin_name);
+    	for(var i = 0;i<userList.length;i++){ 
+     	 	 that.userList[i].amount = userList[i].balance;
+        	that.userList[i].type=userList[i].type
+        	that.userList[i].userId = userList[i].user_id
+        	that.userList[i].name = userList[i].user_name
+        	that.userList[i].onlineStatus = true;
+        	if(userList[i].type==1){
+        		that.initialOwner.userId = userList[i].user_id
+        	  that.initialOwner.name = userList[i].user_name
+        	}
+        	if(userList[i].user_id == that.userId){
+        		console.log('ok')
+        		that.onlineName=userList[i].user_name
+        	}
+       }
+      
+    },
+    
+    //房主权限判断
+    getAuthority(){
+    	let arr = that.userList;
+    	let that = this
+				that.transUserList= []; 
+				for(var j = 0; j < arr.length; j++) {
+				   if(arr[j].userId==that.userId){
+				   	  if( arr[j].type!=1){
+				   	  	this.$toast('您不是房主，无权限添加机器人！',3000);
+				   	  	return;
+				   	  }
+				   	
+				   }		  
+				}
     },
 
-		//页面刚进来的时候默认第一个用户在线
-		userOnline(){	
-			let that = this
-			that.userList[0].onlineStatus = true
-			that.userList[0].userId = that.userId;
-			that.userList[0].type=1
-			that.onlineNumber=1;
-			
-		},
-		
 		poinfun(num){
 			let that = this;
 			if(num==1){
+				
+				//房主权限判断
+				that.getAuthority();
+				
 				if(that.onlineNumber==4){
-					that.$toast('当前小组人数已经达到',2000)
+					that.$toast('当前小组人数已有4人，可直接设置币种',2000)
 				}else{
-					let index = that.onlineNumber
-					that.userList[index].onlineStatus = true
-					that.userList[index].name = '机器' + that.onlineNumber
-			    that.userList[index].type=2
-			    that.userList[index].userId = '0-' + that.onlineNumber
-			    that.onlineNumber = that.onlineNumber + 1;
-			    let userId = that.userId
-			    //let params =  '{"userID":"'+userId+'","type":"'+1+'","data":{"room_id":"'+roomid+'","class_id":"'+classid+'"}}';;    
-          //this.websocketsend(params);
-			    if(that.onlineNumber==4){
+			    let userId = that.userId;
+			    let params =  '{"userID":"'+userId+'","type":"'+1+'","data":{"room_id":"'+that.roomid+'","class_id":"'+that.classid+'"}}';;    
+          this.websocketsend(params);
+          /*
+			    if(that.onlineNumber==3){
 			    	that.confirShow = true;
 			    }
+			    */
 				}
 			}
 
@@ -262,7 +395,7 @@ export default{
 				if (that.blockPro > 0){
 				   return
 			   }
-				if (that.hasSettedShowUser){
+				if (that.coin_name!=''){
 					that.$toast('币种已设置',2000)
 					return;
 				} 
@@ -270,21 +403,8 @@ export default{
 					that.$toast('小组人数达到4人，才可设置币种',2000)
 					return;
 				}			
-				let arr = that.userList;
-				that.transUserList= []; 
-				for(var j = 0; j < arr.length; j++) {
-				   if(arr[j].userId==that.userId){
-				   	  if( arr[j].type!=1){
-				   	  	this.$toast('您不是房主，无权限设置币种！',3000);
-				   	  	return;
-				   	  }
-				   	
-				   }
-				   /*
-				   if(arr[j].onlineStatus){
-				   	that.transUserList.push(arr[j]);
-				   }*/
-				} 
+				//房主权限判断
+				that.getAuthority();
 				
 				that.transUserList = that.userList
 				that.funNum = num;
@@ -292,13 +412,16 @@ export default{
 				
 			} 
 		else if (num==3 && !that.isBlcok && !that.contractDeployment){
-			if(!that.hasSettedShowUser){
+			if(that.coin_name==''){
 				this.$toast('请先设置币种！',3000);
 				return;
 			}
+			//房主权限判断
+			that.getAuthority();
+			
 				that.funNum = num;
 	   		that.operaInfo.infolist = [];
-			if(that.hasSettedShowUser){
+			if(that.coin_name!=''){
 				that.isBlcok = true;
 				//that.isShowBlock = false;
 				that.isShowMess = true
@@ -309,18 +432,22 @@ export default{
 	            that.operaInfo.mess = '当前合约正在部署中:'+that.blockPro+'%';
 	            that.isBlcok = false;
 	            clearTimeout(that.timer1);
+	            /*
 						  that.timer1 = setTimeout(function(){
 								that.confirShow = true;
 							},500)
-	            //that.confirShow = true; 
+							*/
 	            that.top = that.top-40;
 							that.operaInfo.mess = "当前合约部署完成"
 							that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
 							that.operaInfo.infolist.push('资产名称：'+that.coinName)
-							that.operaInfo.infolist.push('拥有者：'+that.chooseUserObj.name)						
+							that.operaInfo.infolist.push('拥有者：'+that.onlineUserList[0].user_name)						
 							that.blockPro = 0;
 							//智能合约部署完成
 							that.contractDeployment = true;
+							
+							sessionStorage.setItem('contractDeployment',true)
+							
 		      }else{
 							that.operaInfo.mess = '当前合约正在部署:'+that.blockPro+'%';
 				  }
@@ -349,7 +476,7 @@ export default{
   //确定转账
   submitTranfer(){
      let that = this; 
-     let end ='';
+     
      if (that.transUser.amount < that.transAmout){
 			  that.$toast('余额不足')
 			return
@@ -359,55 +486,14 @@ export default{
 			return
 		}
 		
-		that.blockPro = 0;
-	  that.isBlcok = true;
-	  that.operaInfo.infolist = [];
-	  that.transferShow = false
-	  that.to_userId = that.chooseUserObj.id;
-	  let timer = setInterval(function(){
-   	that.blockPro++;
+		that.to_userId = that.chooseUserObj.id;
+	  console.log(that.from_userId);
+	  //发送转账请求
+	  let params = '{"userID":"'+that.userId+'","type":"'+3+'","data":{"room_id":"'+that.roomid+'","amount":"'+that.transAmout+'","from":"'+that.from_userId+'","to":"'+that.to_userId+'"}}';
+	  this.websocketsend(params);
+	  
+	  
     
-   	  if(that.blockPro==35){
-   	  	
-   	  	let arr = that.userList;
-				for(var j = 0; j < arr.length; j++) {
-				   if(that.to_userId==arr[j].userId){  
-				   		
-				   	end = j+1;
-				   }
-				   
-				   
-				   /*
-				   if(arr[j].onlineStatus){
-				   	that.transUserList.push(arr[j]);
-				   }*/
-				} 
-   	  	
-				that.time = new Date();
-				that.showAnimate(that.start,end)
-				
-   	  }
-   	  
-      if(that.blockPro==100){
-          clearInterval(timer)
-          that.operaInfo.mess = '转账事务打包完成';
-          that.isBlcok = false;
-					that.blockPro = 0;
-				 let arr = that.userList;
-				 that.userList[end-1].amount = parseInt(that.userList[end-1].amount) + parseInt(that.transAmout)
-				 for(var j = 0; j < arr.length; j++) {
-				   if(that.from_userId==arr[j].userId){  
-				   	
-				   	that.userList[j].amount = that.userList[j].amount-parseInt(that.transAmout)
-				   }
-				 }
-				
-					
-      }else{
-					that.operaInfo.mess = '转账事务打包中:'+that.blockPro+'%';
-		  }
-    },50)
-
 	  
   },  
   		
@@ -418,7 +504,11 @@ export default{
 		if (that.blockPro > 0){
 		   return
 	   }
-	  
+		console.log(obj.type)
+	  if(obj.userId!=that.userId && parseInt(obj.type)!=2){
+	  	this.$toast('您不是当前用户',2000)
+	  	return
+	  }
 	  that.chooseUserObj.id='';
 	  that.chooseUserObj.name='';
 	  that.showPic = false;
@@ -609,8 +699,8 @@ export default{
   	that.step = that.step +1;
   },
     
-    //设置币种
-	  chooseCompleted(){  
+  //设置币种
+	chooseCompleted(){  
 		let that = this
 		// that.funNum = 0;
 		if(that.coinName == ''){
@@ -621,21 +711,21 @@ export default{
 			that.$toast('币种数量不能为空且只能为数字',3000)
 			return
 		}
-		
+		/*
 		if(that.chooseUserObj.name == ''){
 			that.$toast('请选择初始拥有者',3000)
 			return
 		}
-		
-		let arr = that.userList;
-		
+		*/
+		/*let arr = that.userList;
 		for(var j = 0; j < arr.length; j++) {
 		   if(arr[j].userId==that.chooseUserObj.id){
 		   	 that.userList[j].amount = that.moneyNumber;
 		   }
 		} 
-		
-
+		*/
+   
+     /*
 		that.setShow = false;
 	  that.hasSettedShowUser = true;
 	  
@@ -643,9 +733,13 @@ export default{
 		that.timer1 = setTimeout(function(){
 			 that.confirShow = true;
 		},500)
-	  },
 	  
-	  
+	  */
+	 
+	//设置币中
+  let params = '{"userID":"'+that.userId+'","type":"'+2+'","data":{"room_id":"'+that.roomid+'","class_id":"'+that.classid+'","name":"'+that.coinName+'","amount":"'+that.moneyNumber+'"}}';
+  this.websocketsend(params);
+	} 
 	  
  },
   	
@@ -659,10 +753,11 @@ export default{
 				clearTimeout(this.timer1); //关闭
 
 			}
+	 
 	  this.websocketclose();
    },
    destroyed() {
       window.onresize = null;
-      this.websocketclose();
+     
     }
   }

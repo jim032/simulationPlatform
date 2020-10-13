@@ -14,7 +14,8 @@ export default{
 		  pageName:55,//异常-长程攻击
 		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
       D1:false,//提现金额对话框
-      inputMoney:0
+      inputMoney:0,
+      singleStep:true//单个步骤提示
 		}
 	},
 	components:{
@@ -22,7 +23,7 @@ export default{
 	},
 	computed: {
 		stepTips(){
-			return this.$store.state.ecc__stepTips
+			return this.$store.state.a_longRangAttack
 		}
 	},
 	methods:{

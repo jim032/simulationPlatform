@@ -255,7 +255,7 @@ export default new Router({
     },
    
     {
-      path: '/teach/smartContractLoophole/:id/:name?',//场景篇-智能合约漏洞
+      path: '/teach/smartContractLoophole/:id/:name?',//异常篇-智能合约漏洞
       name: 'smartContractLoophole',
       component: () =>import('@/views-teach/abnormal/a-smart-contract-loophole'),
       meta:{
@@ -263,7 +263,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/malleabilityAttack/:id/:name?',//场景篇-延展性攻击
+      path: '/teach/malleabilityAttack/:id/:name?',//异常篇-延展性攻击
       name: 'malleabilityAttack',
       component: () =>import('@/views-teach/abnormal/a-malleability-attack'),
       meta:{
@@ -271,7 +271,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/replayAttack/:id/:name?',//场景篇-重放攻击
+      path: '/teach/replayAttack/:id/:name?',//异常篇-重放攻击
       name: 'replayAttack',
       component: () =>import('@/views-teach/abnormal/a-replay-attack'),
       meta:{
@@ -279,7 +279,7 @@ export default new Router({
       }
     },
     {
-      path: '/teach/longRangeAttack/:id/:name?',//场景篇-长程攻击
+      path: '/teach/longRangeAttack/:id/:name?',//异常篇-长程攻击
       name: 'longRangeAttack',
       component: () =>import('@/views-teach/abnormal/a-long-range-attack'),
       meta:{

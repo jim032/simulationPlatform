@@ -3,18 +3,18 @@
 		<div class="consoleMain">	 
 			 <div class="consoleBox">
 			 	  <div class="command boxSizing" >
-			 	  	 <div class="tipsBox">
+			 	  	 <div class="tipsBox" >
 			 	  	 	  <p>请输入指令进行操作：</p>
-			 	  	 	 <p>tds newAccounts('password')：通过密码生成账号，password为参数</p>
-			 	  	 	  <p>tds getBalance('address')：通过地址查询余额，address为参数</p>
+			 	  	 	  <p @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds newAccounts('password')：通过密码生成账号，password为参数</p>
+			 	  	 	  <p @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds getBalance('address')：通过地址查询余额，address为参数</p>
 			 	  	 	  <p>
-			 	  	 	  	<span>tds height：查看当前区块高度</span>
-			 	  	 	  	<span>tds miner start：开启挖矿</span>
+			 	  	 	  	<span @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds height：查看当前区块高度</span>
+			 	  	 	  	<span @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds miner start：开启挖矿</span>
 			 	  	 	  </p>
 			 	  	 	  
 			 	  	 	  <p>
-			 	  	 	  	<span>tds accounts：所有账户列表</span>
-			 	  	 	  	<span>tds miner stop：关闭挖矿</span>
+			 	  	 	  	<span @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds accounts：所有账户列表</span>
+			 	  	 	  	<span @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds miner stop：关闭挖矿</span>
 			 	  	 	  </p>
 			 	  	 	  
 			 	  	 	 
@@ -77,7 +77,7 @@
  
  
  .tipsBox{border-bottom:2px dashed #fff; margin: 0 20px;font-size:16px;color:#fff; padding:10px 0;
-   p{padding:3px 0;}
+   p{padding:3px 4px;}
    p span{width:48%;display: inline-block;}
  }
  .blockList{text-align:left; position: absolute;width:96%;left:0px;bottom:30px; font-size: 0px;

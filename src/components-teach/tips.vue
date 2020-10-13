@@ -107,8 +107,8 @@
 		 </div>
 	  </template >
 	  
-	  <!--加密算法操作提示款-->
-	  <template v-if="pageName==6 || pageName==4">
+	  <!--加密算法操作提示框-->
+	  <template v-if="pageName==6 || pageName==4 || pageName==56">
 	  	 <div class="transbox" v-if="isPrompt" ></div>
 	  	 <div class="confirmBox promptBox" :class="{'show':isPrompt}">
 	  	 	  <p class="pintro">
@@ -390,20 +390,20 @@
 
 		<!--合约漏洞提现金额-->
 		<template v-if="pageName==56" >
-  <div class="transbox" v-if="D1" >
-  </div>
-  <div class="confirmBox fileConfirmBox eccConfirmBox" style="margin-top: -240px" :class="{'show':D1}">
-    <div class="c_box">
-      <div class="ecc-in">
-        <div class="e-in"><label style="left: -60px;">提现金额:</label><input placeholder="请输入转账金额"  maxlength="10"  value="1" readonly="true"/></div>
-      </div>
-      <div class="btnbox">
-        <a class="chooseBtn" @click="D1click">确定提现</a>
-      </div>
-    </div>
-    <div class="icon"></div>
-  </div>
-</template>
+			  <div class="transbox" v-if="D1" >
+			  </div>
+			  <div class="confirmBox fileConfirmBox eccConfirmBox" style="margin-top: -240px" :class="{'show':D1}">
+			    <div class="c_box">
+			      <div class="ecc-in" style="margin-top:40px;">
+			        <div class="e-in"><label style="left: -60px;">提现金额:</label><input placeholder="请输入转账金额"  maxlength="10"  value="1" readonly="true"/></div>
+			      </div>
+			      <div class="btnbox">
+			        <a class="chooseBtn" @click="D1click">确定提现</a>
+			      </div>
+			    </div>
+			    <div class="icon"></div>
+			  </div>
+		</template>
 
 	</div>
 </template>
@@ -777,9 +777,9 @@
                 that.confirmInfo = '文本1'+
                   '文本2。'
                 break;
-              case 4:
+              case 2:
                 that.tipTiltle = '请注意!'
-                that.confirmInfo = '由于没有进行校验，A用户发起的提现1元的操作导致月变成'+ that.inputMoney +'元。'
+                that.confirmInfo = '余额为0，提现合约没有进行校验，A用户发起的提现1元的操作导致余额变成'+ that.inputMoney +'元。'
                 break;
              /* case 5:
                 that.tipTiltle = '请注意!';

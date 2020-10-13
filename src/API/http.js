@@ -5,9 +5,9 @@ import store from '@/store/store'
 import router from '@/router/index'
 //自定义配置新建一个axios实例
 const http = axios.create({
-	// baseURL: 'http://47.96.19.10:8282',
-  baseURL: 'http://192.168.1.52:8282',
-	
+	//baseURL: 'http://47.96.19.10:8282',
+  //baseURL: 'http://192.168.1.52:8282',liu
+	baseURL: 'http://192.168.1.167:8080',
 
 	headers: {
 		'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -42,7 +42,7 @@ http.interceptors.request.use(function(config) {
 //添加响应拦截器
 http.interceptors.response.use(function(response) {
 
-	if (response.data.code == 400 || response.data.message == 'jwt is valid') {
+	if (response.data.code == 400 || response.data.message == 'jwt is valid') { 
       router.push({
         path: "/login",
         querry: { redirect: router.currentRoute.fullPath }//从哪个页面跳转

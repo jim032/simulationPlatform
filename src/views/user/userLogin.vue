@@ -74,7 +74,7 @@
 				modalTitle:'',
 				modalMess:'',
 				jwt:'',
-				loginType:store.loginType  //1表示学生登录  2表示教师登陆
+				loginType:1  //1表示学生登录  2表示教师登陆
 			}
 		},
 
@@ -140,13 +140,14 @@
 				let that = this
 			  obj.id = that.account;
 			  obj.password = that.password
+			  obj.loginType = that.loginType;
 			  login(obj).then(res=> {
 					if(res.code==200){
 
 						  let role_id = res.data.role_id
 						  let id = res.data.id
 	            if(role_id==3){
-	            	console.log(res.data.role_id)
+	            	//console.log(res.data.role_id)
 	            	sessionStorage.setItem('stu_userId',res.data.id)
 	              sessionStorage.setItem('stu_role_id',res.data.role_id);
 	              sessionStorage.setItem('loginModal',that.modalType);
@@ -189,12 +190,13 @@
 	 		},
 	 		linkFrontLogin(){
 	 			let that = this;
-		   	if(store.loginType==1){
-		   		store.loginType = 2
+		   	if(that.loginType==1){
 		   		that.loginType = 2
+		   		sessionStorage.setItem('loginType',2);
 		   	}else{
-		   		store.loginType = 1
+
 		   		that.loginType = 1
+		   		sessionStorage.setItem('loginType',1);
 		   	}
 
 		  }
@@ -202,6 +204,7 @@
 		},
 		mounted(){
 			window.addEventListener('keydown',this.keyDown);
+			this.loginType =sessionStorage.getItem('loginType')?sessionStorage.getItem('loginType'):1
 
 		},
 		destroyed(){

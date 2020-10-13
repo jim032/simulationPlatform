@@ -54,10 +54,17 @@
 		  clickMenu(){
 		 	  this.menuShow = !this.menuShow
 		  },
+		  getFocus(event){
+		  	 var el = event.currentTarget;
+		  	// event.stopPropagation()
+		    el.focus()
+		  },
 		  autoFocus () {
 	      $('#in').focus()
+	    },
+	   mouseLeave(){
+	    	$('#in').focus()
 	   },
-	   
 		  enter () {
 		  	let that = this;
 		  	let command_type = 0

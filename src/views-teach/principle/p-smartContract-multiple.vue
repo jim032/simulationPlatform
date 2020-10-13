@@ -4,7 +4,10 @@
     <div class="pointInfo" ref="pointInfo" :style="{'min-height':mainheight+'px'}">
         <div class="box_point" ref="box_point" :style="{'padding-top':top+'px'}">
 				<div class="pointBox clearfix " ref="pointBox">		
-					<p class="onlineUser">在线人数({{onlineNumber}}/4)</p>
+					
+					<p class="onlineUser">
+						在线人数({{onlineNumber}}/4)<br><span style="font-size:18px;">你好，{{onlineName}}</span>
+					</p>
 					<div class="s_linebox">	
 						
 					  <img class="i-img" :class="animateCss" :src="animateUrl+'?+' + time" v-if="showPic"/>
@@ -44,7 +47,8 @@
 						<p class="lab">初始拥有者：</p>
 						<div class="for_din">
 							<div class="dsel" >
-								<p @click.stop="showUser=!showUser">{{chooseUserObj.name==''?'初始拥有者':chooseUserObj.name}}</p>
+								<!--<p @click.stop="showUser=!showUser">{{chooseUserObj.name==''?'初始拥有者':chooseUserObj.name}}</p>-->
+								<p class="noselect">{{initialOwner.name}}</p>
 								<ul class="userList" v-if="showUser">
 									<li v-for="(item,index) in transUserList" @click.stop="chooseUser(item.userId,item.name)">{{item.name}}</li>
 								</ul>
@@ -71,7 +75,7 @@
 					<div class="col">
 						<p class="lab">币种信息：</p>
 						<div class="for_din">
-							<p class="ptext">{{coinName}}</p>
+							<p class="ptext">{{coin_name}}</p>
 						</div>
 					</div>
 					<div class="col">
@@ -146,7 +150,7 @@ position: absolute;width:100%;left:0px;top:0px}
 
 .fz-icon{width:64px;height: 52px;
 background:url(../../assets/teachImg/icon_tiara.png); position: absolute;left:50%;margin-left: -32px;top:-36px;;}
-
+.transFb .dsel p.noselect::after{border:0 none}
 
 </style>
 

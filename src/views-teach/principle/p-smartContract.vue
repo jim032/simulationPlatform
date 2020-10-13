@@ -59,7 +59,7 @@
 						<p class="lab">初始拥有者：</p>
 						<div class="for_din">
 							<div class="dsel" >
-								<p @click.stop="showUser=!showUser">{{chooseUserObj==''?'请选择初始拥有者':(chooseUserObj | userName)}}</p>
+								<p @click.stop="showUser=!showUser">{{chooseUserObj==''?'请选择初始拥有者':'用户'+chooseUserObj}}</p>
 								<ul class="userList" v-if="showUser">
 									<li v-for="(item,index) in userList" @click.stop="chooseUser(item.userId)">{{item.userName}}</li>
 								</ul>

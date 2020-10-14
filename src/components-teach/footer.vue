@@ -71,13 +71,11 @@
 			
 			<!---51%攻击-->
 			<template v-if="pageName==51 && isShowAmount==false">
-				<ul class="affairsList" v-if="step >= 2">
-      		 <li class="affairItem" v-for="(item,index) in tansferInfo" :key="index"
-      		 	@mouseenter="enter(index)" @mouseleave="leave()"
-      		 	>
+				<ul class="affairsList" v-if="transNumber>=1">
+      		 <li class="affairItem" v-for="(item,index) in tansferInfo" :key="index"@mouseenter="enter(index)" @mouseleave="leave()">
       		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{index+1}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
-              <div class="deltrans" v-if="index!=0 && (step == 4 || step == 11)"><a class="chooseBtn" @click="showdel(index)" >删除</a></div>
+              <div class="deltrans" v-if="tansferInfo.length>1 && step>=3"><a class="chooseBtn" @click="showdel(index)" >删除</a></div>
       		 </li>
       	</ul>
 		
@@ -140,6 +138,11 @@
 	    isShowAmount: {
 	      type:Boolean,
 	      default:false
+	    },
+	    //51%攻击转账次数
+	    transNumber:{
+	    	type:null,
+	    	default:0
 	    }
 		},
 		watch: {
@@ -149,6 +152,7 @@
 			}
 		},
 		methods: {
+			//51%攻击
       showdel(index) {
         let that = this;
         that.$emit('showdel', index)

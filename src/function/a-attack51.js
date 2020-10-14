@@ -10,6 +10,7 @@ export default{
 		  menuText:'异常篇-51%攻击',
 		  
 		  step:1,//当前步骤
+		  
 		  pageName:'51',
 
 		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
@@ -21,20 +22,30 @@ export default{
       iconUrl_2:require('../assets/teachImg/icon_user3.png'),//头像
       iconUrl_3:require('../assets/teachImg/icon_user4.png'),//头像
 
-      lineDraw51Show: false,
-      tansferInfo: [],
-      wprogress51:0, //打包的进度
+      lineDraw51Show: false, //51%攻击弹出框展示
+      tansferInfo: [], //转账事务列表
+      wprogress51:0, //打包的进度   
       delayTimer:null,//延迟执行时间
       isshowdel: -1, // 是否显示删除按钮
       upComputeUser: '',
       del51: -1,
-      balance: 850, // tips显示的余额
-      balance1: 850,
-      balance2: 850,
-      balance3: 850,
+    
       isShowAmount: false,
       
       transNumber:0,//转账次数
+      
+      userList:[
+        {name:'用户A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:850,isWarning:false,
+        warnIcon:require('../assets/teachImg/icon_user2_warning.png')},
+        {name:'用户B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:850,isWarning:false,
+        warnIcon:require('../assets/teachImg/icon_user3_warning.png')},
+        {name:'用户C',userId:'C',icon:require('../assets/teachImg/icon_user4.png'),balance:850,isWarning:false,
+        warnIcon:require('../assets/teachImg/icon_user4_warning.png')}
+      ],
+      delNumber:0,//事务删除个数
+      
+      isPack:false
+      
     }
 	},
 	components:{
@@ -54,28 +65,45 @@ export default{
 	  tipSure(){
 	  	let that = this
 	  	that.confirShow = false;
-	  	if(that.step==1){
-	  		that.step = that.step + 1;
-	  	}
+	  	//that.step = that.step + 1;	
 	  },
     //点击左边的三个工具箱
     poinfun(num){
       let that = this;
-      if(num==2  && that.tansferInfo.length>0 && that.step != 4 && (that.step<5 || that.step==11) ){
-        that.step = 3;
+      //转账
+      if(num==1&& that.step<=2){
+      	if(that.transNumber<3) {
+	        that.lineDraw51Show = true
+	        that.isShowAmount = false;
+	        that.funNum = num;
+	        if(that.transNumber==0){
+	        	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
+	        }else{
+	          	that.operaInfo.mess = ''
+	            that.operaInfo.infolist = [];
+	        }
+	
+	      }else{
+	      	that.$toast('转账最多可达3笔',3000)
+	      }
+      }
+      
+      //提升算力     
+      if(num==2  && that.tansferInfo.length>0 && that.step<=3){ 
         that.lineDraw51Show = true
         that.funNum = num;
+        that.step=3
       }
-      if(num==1 && (that.step<3 || that.step == 11) && that.transNumber<3) {
-        that.step = 2;
-        that.lineDraw51Show = true
-        that.isShowAmount = false;
-        that.funNum = num;
-        //that.operaInfo.mess = ''
-        //that.operaInfo.infolist = [];
-      }
-      if(num==3 && (that.step == 4 || that.step == 11)){
-        that.step = 4;
+
+      //打包      
+      if(num==3 && that.step == 4 && !that.isPack){
+       if(that.tansferInfo.length>1){
+       	 if(that.delNumber==0){
+       	 	this.$toast('打包前，至少删除一个事务',3000);
+       	 	return;
+       	 }
+       }
+        
         that.lineDraw51Show = true
         that.funNum = num;
         that.operaInfo.mess = ''
@@ -87,12 +115,14 @@ export default{
             that.delayTimer = setTimeout(function(){
               that.lineDraw51Show = false
               that.confirShow = true;
-              that.step = that.step + 1;
+              that.isPack = true;
+              that.step=12
             },500)
           }
         },50)
       }
     },
+    //提升算力确定
     sureUpCompute(upComputeUser) {
       let that = this;
       that.lineDraw51Show = false
@@ -100,49 +130,28 @@ export default{
       that.confirShow = true;
       that.upComputeUser = upComputeUser
       
-      if (that.upComputeUser == 'A') {
-        that.iconUrl_1 = require('../assets/teachImg/icon_user2_warning.png')
-      } else
-      if (that.upComputeUser == 'B') {
-        that.iconUrl_2 = require('../assets/teachImg/icon_user3_warning.png')
-      } else
-      if (that.upComputeUser == 'C') {
-        that.iconUrl_3 = require('../assets/teachImg/icon_user4_warning.png')
+      for(var i =0;i<that.userList.length;i++){
+      	if(that.upComputeUser==that.userList[i].userId){
+      		that.userList[i].isWarning=true;
+      	}
       }
+
     },
+    //转账
     sureTransfer(tansferInfo) {
       let that = this;
-      if (that.tansferInfo.length > 2) {
-        that.lineDraw51Show = false
-        return;
+      that.lineDraw51Show = false;
+      if(that.step==1){
+      	that.step=2
       }
-      that.lineDraw51Show = false
-      that.step = 2
       
-      if (tansferInfo.initiate == 'A') {
-        that.balance1 = that.balance1 - parseInt(tansferInfo.amount)
-        if (tansferInfo.object == 'B') {
-          that.balance2 = that.balance2 + parseInt(tansferInfo.amount)
-        } else if (tansferInfo.object == 'C') {
-          that.balance3 = that.balance3 + parseInt(tansferInfo.amount)
-        }
-        that.balance = that.balance1
-      } else if (tansferInfo.initiate == 'B') {
-        that.balance2 = that.balance2 - parseInt(tansferInfo.amount)
-        if (tansferInfo.object == 'A') {
-          that.balance1 = that.balance1 + parseInt(tansferInfo.amount)
-        } else if (tansferInfo.object == 'C') {
-          that.balance3 = that.balance3 + parseInt(tansferInfo.amount)
-        }
-        that.balance = that.balance2
-      } else if (tansferInfo.initiate == 'C') {
-        that.balance3 = that.balance3 - parseInt(tansferInfo.amount)
-        if (tansferInfo.object == 'A') {
-          that.balance1 = that.balance1 + parseInt(tansferInfo.amount)
-        } else if (tansferInfo.object == 'B') {
-          that.balance2 = that.balance2 + parseInt(tansferInfo.amount)
-        }
-        that.balance = that.balance3
+      for(var i=0;i<that.userList.length;i++){
+      	if(tansferInfo.initiate==that.userList[i].userId){
+      		that.userList[i].balance=that.userList[i].balance-parseInt(tansferInfo.amount);
+      	}
+      	if(tansferInfo.object==that.userList[i].userId){
+      		that.userList[i].balance=that.userList[i].balance+parseInt(tansferInfo.amount)
+      	}
       }
       that.tansferInfo.push({
         initiate: tansferInfo.initiate,
@@ -169,35 +178,19 @@ export default{
     showdel(index) {
       let that = this;
       that.del51 = index;
-      that.step = 11;
+      that.step = 11    
       that.lineDraw51Show = true;
     },
+    //事务删除
     del () {
 	    let that = this
       that.lineDraw51Show = false
-      if(that.tansferInfo[that.del51].initiate == 'A') {
-        that.balance1 = that.balance1 + parseInt(that.tansferInfo[that.del51].amount)
-        if(that.tansferInfo[that.del51].object == 'B'){
-          that.balance2 = that.balance2 - parseInt(that.tansferInfo[that.del51].amount)
-        } else if (that.tansferInfo[that.del51].object == 'C') {
-          that.balance3 = that.balance3 - parseInt(that.tansferInfo[that.del51].amount)
-        }
-      } else if (that.tansferInfo[that.del51].initiate == 'B') {
-        that.balance2 = that.balance2 + parseInt(that.tansferInfo[that.del51].amount)
-        if(that.tansferInfo[that.del51].object == 'A'){
-          that.balance1 = that.balance1 - parseInt(that.tansferInfo[that.del51].amount)
-        } else if (that.tansferInfo[that.del51].object == 'C') {
-          that.balance3 = that.balance3 - parseInt(that.tansferInfo[that.del51].amount)
-        }
-      } else if (that.tansferInfo[that.del51].initiate == 'C') {
-        that.balance3 = that.balance3 + parseInt(that.tansferInfo[that.del51].amount)
-        if(that.tansferInfo[that.del51].object == 'A'){
-          that.balance1 = that.balance1 - parseInt(that.tansferInfo[that.del51].amount)
-        } else if (that.tansferInfo[that.del51].object == 'B') {
-          that.balance2 = that.balance2 - parseInt(that.tansferInfo[that.del51].amount)
-        }
-      }
+      that.delNumber = that.delNumber+1;
       that.tansferInfo.splice(that.del51, 1)
+      if(that.tansferInfo.length>=1){
+      	 that.step = 4   
+      }
+      
     },
     canc() {
       let that = this
@@ -216,24 +209,14 @@ export default{
     showAmount(user) {
       let that = this;
       that.isShowAmount = true;
-      if (user == 1) {
-        that.balance = that.balance1;
-        that.operaInfo.mess = '当前余额为￥' + that.balance +'。'
-        that.operaInfo.infolist = [];
-      } else if(user == 2) {
-        that.balance = that.balance2;
-        that.operaInfo.mess = '当前余额为￥' + that.balance +'。'
-        that.operaInfo.infolist = [];
-      } else if(user == 3) {
-        that.balance = that.balance3;
-        that.operaInfo.mess = '当前余额为￥' + that.balance +'。'
-        that.operaInfo.infolist = [];
-      }
+      that.operaInfo.mess=user.name+','+'账户余额为'+user.balance
+      that.operaInfo.infolist = [];
+      
     },
     noShowAmount() {
       let that = this;
       
-      
+      that.lineDraw51Show = false
       if(that.tansferInfo.length==0){
       	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
         that.operaInfo.infolist = [];
@@ -248,18 +231,8 @@ export default{
     //点击透明区域隐藏
     hideLineDrawShow(){
     	 this.lineDraw51Show = false
-    },
-    
-    showUserAmount(user) {
-      let that = this;
-      if (user == 'A') {
-        that.balance = that.balance1;
-      } else if(user == 'B') {
-        that.balance = that.balance2;
-      } else if(user == 'C') {
-        that.balance = that.balance3;
-      }
     }
+
  	},
   mounted(){
     let that = this

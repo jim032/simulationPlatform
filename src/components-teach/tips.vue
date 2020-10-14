@@ -123,10 +123,9 @@
 	  </template>
 	  
 	  
-	  <!--转账-->
-    <template v-if="pageName==51  && step==2">
-      <div class="transbox" v-if="lineDraw51Show && step==2" @click="hideLineDrawShow">
-      </div>
+	  <!--51%攻击转账-->
+    <template v-if="pageName==51  && step<=2">
+      <div class="transbox" v-if="lineDraw51Show && step<=2" @click="hideLineDrawShow"></div>
       <div class="confirmBox fileConfirmBox confirmBox51" :class="{'show':lineDraw51Show}" style="width:350px;margin-left: -170px;margin-top: -200px;font-size: 18px">
         <div class="c_box">
           <div class="main_form">
@@ -140,10 +139,8 @@
               <span class="lab">转账发起：</span>
               <div class="lab_in">
                 <div style="margin: auto;padding: 0;width:150px">
-                  <i-select v-model="tansferInfo.initiate" @on-change="selectUser(tansferInfo.initiate)">
-                    <i-option :value="'A'">用户A</i-option>
-                    <i-option :value="'B'">用户B</i-option>
-                    <i-option :value="'C'">用户C</i-option>
+                  <i-select v-model="tansferInfo.initiate" @on-change="selectUser">
+                    <i-option v-for="(item,index) in userList" :value="item.userId" :key="index">{{item.name}}</i-option>
                   </i-select>
                 </div>
               </div>
@@ -153,9 +150,7 @@
               <div class="lab_in">
                 <div style="margin: auto;padding: 0;width:150px">
                   <i-select v-model="tansferInfo.object">
-                    <i-option :value="'A'">用户A</i-option>
-                    <i-option :value="'B'">用户B</i-option>
-                    <i-option :value="'C'">用户C</i-option>
+                     <i-option v-for="(item,index) in toList" :value="item.userId" :key="index">{{item.name}}</i-option>
                   </i-select>
                 </div>
               </div>
@@ -185,9 +180,7 @@
               <span class="lab" >提升对象：</span>
               <div class="lab_in">
                 <i-select style="width:150px" v-model="upComputeUser">
-                  <i-option :value="'A'">用户A</i-option>
-                  <i-option :value="'B'">用户B</i-option>
-                  <i-option :value="'C'">用户C</i-option>
+                  <i-option v-for="(item,index) in userList" :value="item.userId" :key="index">{{item.name}}</i-option>
                 </i-select>
               </div>
             </div>
@@ -234,10 +227,10 @@
       <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDraw51Show}">
         <div class="c_box">
           <p class="title">请注意</p>
-          <p>是否删除事务</p>
+          <p>是否删除该事务</p>
           <div class="btnbox">
-            <button class="chooseBtn" @click="del">确认</button>
-            <button class="chooseBtn" @click="canc">取消</button>
+            <a class="chooseBtn" @click="del">确认</a>
+            <a class="chooseBtn" @click="canc">取消</a>
           </div>
         </div>
         <div class="icon"></div>
@@ -427,8 +420,11 @@
           object: '',
           amount: ''
         },
-        upComputeUser: '没有人',
+        upComputeUser: '没有人', //提升算力对象
         editAmount: '',
+        
+        toList:[], //51%攻击可转对象list
+         balance: 0,
         
 			}
 		},
@@ -476,11 +472,16 @@
 			   	type:Boolean,
 			   	default:false
 			 },
-			 balance: 0,toEditAmount: '',
+			toEditAmount: '',
 			 // 51%攻击是否显示
        lineDraw51Show: {
          type:Boolean,
          default:false
+       },
+       //51攻击用户列表
+       userList:{
+       	type:null,
+       	default:[]
        },
       // 解析进度
        wprogress51:{
@@ -521,7 +522,7 @@
 		},
 		
 		watch:{
-			
+			 
 			 'a': function(val){
 					this.a = val.replace(/[^1-3]/g, '')
 					
@@ -530,6 +531,16 @@
         'b': function(val){
 					this.b = val.replace(/[^1-3]/g, '')
 				},
+				
+				//51%攻击
+				
+				'lineDraw51Show':function(){
+          this.tansferInfo.initiate='';
+          this.tansferInfo.object='';
+          this.tansferInfo.amount='';
+          this.balance=0
+			  },
+			  
 			
 			'confirShow':function(){
 				let that = this;	
@@ -672,19 +683,19 @@
 			 if(that.pageName == '51') {
           switch(that.step){
             case 1:
-              that.tipTiltle = '%51攻击的基本概念和危害'
-              that.confirmInfo = '%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害' +
-                '%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害'
+              that.tipTiltle = '51%攻击的基本概念和危害'
+              that.confirmInfo = '51%攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害51%攻击的基本概念和危害' +
+                '51%攻击的基本概念和危害51%攻击的基本概念和危害%51攻击的基本概念和危害'
               break;
             case 2:
-              that.tipTiltle = '%51攻击的基本概念和危害'
+              that.tipTiltle = '51%攻击的基本概念和危害'
               that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
               break;
             case 4:
               that.tipTiltle = '请注意'
               that.confirmInfo = '当前' + that.upComputeUser + '用户的算力值已达51%，已超过全网算力值的一半水平，用户' + that.upComputeUser + '已具备攻击区块链网络安全的功能'
               break;
-            case 5:
+            case 12:
               that.tipTitle = '结束'
               that.confirmInfo = '结束。'
               break;
@@ -867,14 +878,15 @@
           that.$toast('转账对象不能为空！',3000)
           return;
         }
-        if (that.tansferInfo.initiate == that.tansferInfo.object) {
-          that.$toast('不能向自己转账！',3000)
-          return;
-        }
+        if (that.tansferInfo.amount.match(/^-?[0-9]+$/) == null){
+					that.$toast('转账金额必须是数字')
+					return
+				}
         if (that.tansferInfo.amount == '' || that.tansferInfo.amount == 0) {
           that.$toast('请输入金额！',3000)
           return;
         }
+        
         if (that.tansferInfo.amount > that.balance) {
           that.$toast('转账金额不能大于余额！',3000)
           return;
@@ -943,9 +955,19 @@
         // }
         that.$emit('D2clickfinish');
       },
-      selectUser(user) {
+      
+      //点击转账对象下拉
+      selectUser(val) {
 			  let that = this;
-        that.$emit('showUserAmount',user);
+			  that.toList=[];
+			  for(var i = 0;i<that.userList.length;i++){
+			  	if(val==that.userList[i].userId){
+			  		that.balance = that.userList[i].balance
+			  	}
+			  	if(val!=that.userList[i].userId){
+			  		that.toList.push(that.userList[i]);
+			  	}
+			  }
       },
       upToEditAmount(value) {
         let that = this;
@@ -956,9 +978,14 @@
       //51%转账点击透明隐藏
       hideLineDrawShow(){
       	this.$emit('hideLineDrawShow');
-      }
+      },
+      
 			
+		},
+		mounted(){
+			this.toList = this.userList
 		}
+		
 		
 		
 	}

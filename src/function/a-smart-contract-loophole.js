@@ -90,7 +90,7 @@ export default{
       	that.inputMoney = 256- 1;
       	that.timer = setTimeout(function(){
 		      	that.confirShow = true
-		    },600)
+		    },800)
       }else{
       	that.inputMoney = that.inputMoney - 1;
       }

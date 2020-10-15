@@ -3,24 +3,12 @@
 		<!--中间hash算法内容布局-->
     <div class="mainContent" @click="noShowAmount()">
       <div class="mainBox">
-        <div class="userinfo">
-          <div class="d-user" @click.stop>
-            <div class="d-icon" @click="showAmount(1)"><img :src="iconUrl_1"/></div>
-            <p class="d-name">用户A</p>
+        <div class="userinfo" v-for="(item,index) in userList" :key="index">
+      		 <div class="d-user" @click.stop>
+            <div class="d-icon" @click="showUserAmount(item)"><img :src="item.icon"/></div>
+            <p class="d-name">{{item.name}}</p>
           </div>
-        </div>
-        <div class="userinfo1">
-          <div class="d-user" @click.stop>
-            <div class="d-icon" @click="showAmount(2)"><img :src="iconUrl_2"/></div>
-            <p class="d-name">用户B</p>
-          </div>
-        </div>
-        <div class="userinfo2">
-          <div class="d-user" @click.stop>
-            <div class="d-icon" @click="showAmount(3)"><img :src="iconUrl_3"/></div>
-            <p class="d-name">用户C</p>
-          </div>
-        </div>
+      	</div>
       </div>
     </div>
 		
@@ -43,16 +31,18 @@
 	<comHeader ref="header" :menuShow="menuShow" @clickMenu="clickMenu" :menuText="menuText"></comHeader>
 	<!--底部-->
 	<comFooter ref="bottom" :operaInfo="operaInfo"
-             :step="step" :tansferInfo="tansferInfo" :tansferInfoEdit="tansferInfoEdit"
-             :pageName="pageName" :isShowAmount="isShowAmount" :balance="balance">
-
+    :step="step" :tansferInfo="tansferInfo" 
+    :pageName="pageName" :isShowAmount="isShowAmount">
 	</comFooter>
 	<!--右边步骤提示-->
 	<rightTips :step="step" :confirShow="confirShow" :stepTips="stepTips" :pageName="pageName" :lineDrawMalleabilityShow="lineDrawMalleabilityShow"
-		@tipSure="tipSure" :singleStep="singleStep" :selectIndexDataM="selectIndexDataM" :balance="balance" :wprogressmalleability="wprogressmalleability"
+		@tipSure="tipSure" :singleStep="singleStep" :selectIndexDataM="selectIndexDataM"  :wprogressmalleability="wprogressmalleability"
     @sureEditAmount = "sureEditAmount"
-    @sureTransfer = "sureTransfer" @showUserAmount="showUserAmount"
+    @sureTransfer = "sureTransfer"
     @upToEditAmount="upToEditAmount" :toEditAmount="toEditAmount"
+    :userList="userList"
+    @hideLineDrawShow = "hideLineDrawShow"
+    :editNumber="editNumber"
 	>
 		
 	</rightTips>	

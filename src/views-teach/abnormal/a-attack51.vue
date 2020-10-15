@@ -10,27 +10,6 @@
             <p class="d-name">{{item.name}}</p>
           </div>
       	</div>
-      	
-      	<!--
-        <div class="userinfo">
-          <div class="d-user" @click.stop>
-            <div class="d-icon" @click="showAmount(1)"><img :src="iconUrl_1"/></div>
-            <p class="d-name">用户A</p>
-          </div>
-        </div>
-        <div class="userinfo1">
-          <div class="d-user" @click.stop>
-            <div class="d-icon" @click="showAmount(2)"><img :src="iconUrl_2"/></div>
-            <p class="d-name">用户B</p>
-          </div>
-        </div>
-        <div class="userinfo2">
-          <div class="d-user" @click.stop>
-            <div class="d-icon" @click="showAmount(3)"><img :src="iconUrl_3"/></div>
-            <p class="d-name">用户C</p>
-          </div>
-        </div>
-         -->
       </div>
      
 		</div>
@@ -55,16 +34,15 @@
 	<!--底部-->
 	<comFooter ref="bottom" :operaInfo="operaInfo"
      :step="step" :tansferInfo="tansferInfo" :isshowdel="isshowdel"
-     :pageName="pageName" :isShowAmount="isShowAmount" :balance="balance"
-      @showdel="showdel"  @enter="enter" @leave="leave" :transNumber="transNumber">
-     
+     :pageName="pageName" :isShowAmount="isShowAmount" 
+      @showdel="showdel"  @enter="enter" @leave="leave" :transNumber="transNumber">    
 	</comFooter>
 	<!--右边步骤提示-->
 	<rightTips :step="step" :confirShow="confirShow" :stepTips="stepTips" :pageName="pageName" :lineDraw51Show="lineDraw51Show"
 		@tipSure="tipSure" :singleStep="singleStep" :wprogress51="wprogress51" :upComputeUser="upComputeUser" 
     @sureUpCompute = "sureUpCompute" 
     @sureTransfer = "sureTransfer"
-    @sureBale = "sureBale" @del="del" @canc="canc" @showUserAmount="showUserAmount"
+    @sureBale = "sureBale" @del="del" @canc="canc"
     @hideLineDrawShow = "hideLineDrawShow"
     :userList="userList"
     

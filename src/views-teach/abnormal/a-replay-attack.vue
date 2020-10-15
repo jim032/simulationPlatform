@@ -127,16 +127,16 @@
 	.showBox1{background: url(../../assets/teachImg/tool21h.png);}
 	.showBox2{ background: url(../../assets/teachImg/tool22h.png);}
 	.tool1{
-		width:41px;height: 41px; background:0 none;
+		width:41px;height: 41px; background:0 none; left:55px; top:60px;
 		.tool_icon{
-			width: 41px;background:url(../../assets/teachImg/51_tx.png);left:31px
+			width:100%;height:100%;display:block; position: static;
+			background:url(../../assets/teachImg/51_tx.png);left:31px
 		}
 	}
 	.tool3{
-		width:41px;height: 41px;background:0 none;
+		width:41px;height: 41px;background:0 none;left:55px;bottom:60px;
 		.tool_icon{
-			width: 41px;background:url(../../assets/teachImg/icon_broadcast.png);
-			left:60px;bottom:60px;
+			width:100%;height:100%;display:block; position: static;background:url(../../assets/teachImg/icon_broadcast.png);
 		}
 	}
 }

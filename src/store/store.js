@@ -226,6 +226,8 @@ var store = new Vuex.Store({
 		a_replayAttack:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}],
 		//异常-长程攻击
 		a_longRangAttack:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}],
+		//异常-交易延展性
+		a_malleabilityAttack:[{step:1,infolist:['1、请点击页面内的转账按钮进行操作。','2、请注意页面内余额变化']}]
   },
   mutations: {
   

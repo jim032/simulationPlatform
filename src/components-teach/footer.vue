@@ -80,20 +80,23 @@
       	</ul>
 		
       </template>
-
+      <!--交易延展性攻击-->
       <template v-if="pageName==54 && isShowAmount==false">
       	<ul class="affairsList" v-if="step >= 2">
-      		 <li class="affairItem" v-for="(item,index) in tansferInfo" :key="index">
+      		 <li class="affairItem affairDefault" :class="{'red':item.isEdit}" v-for="(item,index) in tansferInfo" :key="index">
       		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{index+1}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
+              <div>事务id：{{item.id}}</div>
       		 </li>
       	</ul>
+      	<!--
       	<ul class="affairsList" v-if="tansferInfoEdit.length > 0">
       		 <li class="affairItem" v-for="(item,index) in tansferInfoEdit" :key="index">
       		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{tansferInfo.length+1}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
       		 </li>
       	</ul>
+      	-->
 
       </template>
 			
@@ -359,11 +362,12 @@
 /*50%攻击事务*/
 .affairsList{
 	.affairItem{
-		width: 120px;height: 100px;.borderRadius(2px,2px,2px,2px); margin-right: 0px;
+		width: 130px;height: 100px;.borderRadius(2px,2px,2px,2px); margin-right: 0px;
     background-color: white;border: 4px solid lightblue;margin-left: 25px;color: black;text-align:center;padding: 3px;
     cursor: pointer;display: inline-block;
     vertical-align: middle; position: relative;
     }
+  .affairItem.red{border: 4px solid red;}
   .deltrans{display:none;}
   .affairItem:hover .deltrans{background: rgba(255, 0, 0, 0.75); position: absolute;width:120px;height:100px;
   left:-4px;top:-4px; display: block;.borderRadius(2px,2px,2px,2px);}
@@ -371,6 +375,7 @@
   left:50%;margin-left:-44px;top:50%;margin-top:-15px; line-height: 30px;
   background:#fff;.borderRadius(5px,5px,5px,5px); overflow: hidden;
   }
+  .affairDefault{cursor: default;}
 }
 	
 	@media screen and (max-width:1440px) {

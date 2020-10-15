@@ -236,46 +236,43 @@
         <div class="icon"></div>
       </div>
     </template>
-    <!--转账-->
-    <template v-if="pageName==54  && step==2">
-      <div class="transbox" v-if="lineDrawMalleabilityShow && step==2">
+    
+    <!--交易延展性转账-->
+    <template v-if="pageName==54  && step<=2 && editNumber==0">
+      <div class="transbox" v-if="lineDrawMalleabilityShow && step==1" @click="hideLineDrawShow">
       </div>
-      <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDrawMalleabilityShow}" style="width:340px;margin-left: -170px;margin-top: -200px;font-size: 18px">
+      <div class="confirmBox fileConfirmBox confirmBox51 " :class="{'show':lineDrawMalleabilityShow}" style="width:340px;margin-left: -170px;margin-top: -200px;font-size: 18px">
         <div class="c_box">
           <div class="main_form">
-            <div class="cr_din" style="display: flex;margin-top: 20px">
-              <span class="lab" style="margin: auto;color: white">账户余额：</span>
-              <div style="margin: auto;padding: 0;color: white;width:150px">
+            <div class="cr_din">
+              <span class="lab">账户余额：</span>
+              <div  class="lab_in">
                 <span>￥{{balance}}</span>
               </div>
             </div>
-            <div class="cr_din" style="display: flex;margin-top: 20px">
-              <span class="lab" style="margin: auto;color: white">转账发起：</span>
-              <div style="margin: auto;padding: 0">
+            <div class="cr_din" >
+              <span class="lab">转账发起：</span>
+              <div class="lab_in">
                 <div style="margin: auto;padding: 0;width:150px">
-                  <i-select v-model="tansferInfo.initiate" @on-change="selectUser(tansferInfo.initiate)">
-                    <i-option :value="'A'">用户A</i-option>
-                    <i-option :value="'B'">用户B</i-option>
-                    <i-option :value="'C'">用户C</i-option>
+                  <i-select v-model="tansferInfo.initiate" @on-change="selectUser">
+                    <i-option v-for="(item,index) in userList" :value="item.userId" :key="index">{{item.name}}</i-option>
                   </i-select>
                 </div>
               </div>
             </div>
-            <div class="cr_din" style="display: flex;margin-top: 20px">
-              <span class="lab" style="margin: auto;color: white">转账对象：</span>
-              <div style="margin: auto;padding: 0">
+            <div class="cr_din">
+              <span class="lab">转账对象：</span>
+              <div class="lab_in">
                 <div style="margin: auto;padding: 0;width:150px">
                   <i-select v-model="tansferInfo.object">
-                    <i-option :value="'A'">用户A</i-option>
-                    <i-option :value="'B'">用户B</i-option>
-                    <i-option :value="'C'">用户C</i-option>
+                     <i-option v-for="(item,index) in toList" :value="item.userId" :key="index">{{item.name}}</i-option>
                   </i-select>
                 </div>
               </div>
             </div>
-            <div class="cr_din" style="display: flex;margin-top: 20px">
-              <span class="lab" style="margin: auto;color: white">转账金额：</span>
-              <div style="margin: auto;padding: 0">
+            <div class="cr_din" >
+              <span class="lab">转账金额：</span>
+              <div class="lab_in">
                 <div><i-input  placeholder="" v-model="tansferInfo.amount" style="width:150px"></i-input></div>
               </div>
             </div>
@@ -287,22 +284,20 @@
         <div class="icon"></div>
       </div>
     </template>
-    <!--修改-->
+    <!--交易延展性修改-->
     <template v-if="pageName==54  && step==3">
-      <div class="transbox" v-if="lineDrawMalleabilityShow && step==2">
+      <div class="transbox" v-if="lineDrawMalleabilityShow && step==3" @click="hideLineDrawShow">
       </div>
       <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDrawMalleabilityShow}" style="width:400px;margin-left: -170px;margin-top: -200px;font-size: 18px">
         <div class="c_box">
           <div style="margin: auto;width:80%">
-            <div class="cr_din" style="margin-top: 20px;color: white">
-              已截获到未打包到链中的事务
-            </div>
+            <div class="cr_din" style="margin-top: 20px;color: white"> 已截获到未打包到链中的事务 </div>
             <div class="cr_din" style="display: flex;margin-top: 20px">
               <span class="lab" style="margin: auto;color: white">选择事务：</span>
               <div style="margin: auto;padding: 0">
                 <div style="margin: auto;padding: 0;width:200px">
-                  <i-select v-model="selectIndexDataM.value" @on-change="upToEditAmount(selectIndexDataM.value)">
-                    <i-option v-for="item in selectIndexDataM" :value="item.value" :key="index">事务{{item.value}}</i-option>
+                  <i-select v-model="selectIndexData" @on-change="upToEditAmount">
+                    <i-option v-for="(item,index) in selectIndexDataM" :value="item.id" :key="index">事务{{index+1}}</i-option>
                   </i-select>
                 </div>
               </div>
@@ -310,7 +305,7 @@
             <div class="cr_din" style="display: flex;margin-top: 20px">
               <span class="lab" style="margin: auto;color: white">修改金额：</span>
               <div style="margin: auto;padding: 0;width:200px">
-                <input :placeholder="'只能将金额修改为' + toEditAmount" style="width:100%;border-radius: 5px" type="" v-model="editAmount"/>
+                <input class="a-mallattack-input" :placeholder="'只能将金额修改为' + toEditAmount" style="width:100%;border-radius: 5px" type="" v-model="editAmount"/>
               </div>
             </div>
           </div>
@@ -322,14 +317,12 @@
       </div>
     </template>
     <!--打包-->
-    <template v-if="pageName==54 && step == 5">
+    <template v-if="pageName==54 && step == 4">
       <div class="transbox" v-if="lineDrawMalleabilityShow">
       </div>
       <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDrawMalleabilityShow}">
         <div class="c_box">
-          <p class="pintro">
-            正在打包剩余事务
-          </p>
+          <p class="pintro">正在打包所有事务</p>
           <div class="progress" >
             <div class="curPro">
               <div class="proIcon" :style="{'width':wprogressmalleability+'%'}"></div>
@@ -342,15 +335,15 @@
         <div class="icon"></div>
       </div>
     </template >
-    <!--打包-->
+    
+    
+    <!--重放攻击打包-->
     <template v-if="pageName==53 && step == 5">
       <div class="transbox" v-if="lineDraw53Show">
       </div>
       <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
         <div class="c_box">
-          <p class="pintro">
-            正在打包剩余事务
-          </p>
+          <p class="pintro">正在旧链上产生的交易区块五放在新链上打包</p>
           <div class="progress" >
             <div class="curPro">
               <div class="proIcon" :style="{'width':wprogress+'%'}"></div>
@@ -367,7 +360,7 @@
 		  <div class="confirmBox fileConfirmBox eccConfirmBox" style="margin-top: -240px" :class="{'show':D2}">
 		    <div class="c_box">
 		      <div class="ecc-in">
-		        <div class="e-in"><label style="left: -60px;">提现对象:A链</label></div>
+		        <div class="e-in"><label style="left: -60px;">提现对象：旧链</label></div>
 		      </div>
 		      <div class="ecc-in">
 		
@@ -421,11 +414,11 @@
           amount: ''
         },
         upComputeUser: '没有人', //提升算力对象
-        editAmount: '',
+        editAmount: '', //异常篇-交易延展性攻击
         
         toList:[], //51%攻击可转对象list
-         balance: 0,
-        
+        balance: 0,
+        selectIndexData:'',//交易延展性当前修改的事务
 			}
 		},
 		//pageName为1表示当前页面是节点操作   2发币  3hash算法 4keyStore模拟  5椭圆线密码  2-4区块链+版权  
@@ -480,8 +473,10 @@
        },
        //51攻击用户列表
        userList:{
-       	type:null,
-       	default:[]
+       	type:Array,
+		    default:function(){
+            return []
+        }
        },
       // 解析进度
        wprogress51:{
@@ -493,8 +488,15 @@
         type:Boolean,
         default:false
       },
+      editNumber:{
+      	type:null,
+      	default:0
+      },
       selectIndexDataM: {
-		    value: ''
+		    type:Array,
+		    default:function(){
+            return []
+        }
       },
       //合约提现
       D1:{
@@ -532,9 +534,15 @@
 					this.b = val.replace(/[^1-3]/g, '')
 				},
 				
-				//51%攻击
-				
+				//51%攻击	
 				'lineDraw51Show':function(){
+          this.tansferInfo.initiate='';
+          this.tansferInfo.object='';
+          this.tansferInfo.amount='';
+          this.balance=0
+			  },
+			  //交易延展性
+			  'lineDrawMalleabilityShow':function(){
           this.tansferInfo.initiate='';
           this.tansferInfo.object='';
           this.tansferInfo.amount='';
@@ -713,9 +721,9 @@
               that.tipTiltle = '请注意'
               that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
               break;
-            case 5:
+            case 12:
               that.tipTitle = '结束'
-              that.confirmInfo = '结束，打包失败！'
+              that.confirmInfo = '结束，异常篇-交易延展性演示结束！'
               break;
           }
           return;
@@ -750,7 +758,7 @@
                 break;
               case 5:
                 that.tipTiltle = '请注意!'
-                that.confirmInfo = '当前把A链的提现区块再B链中广播'
+                that.confirmInfo = '当前把旧链的提现区块在新链中广播'
                 break;
               case 6:
                 that.tipTiltle = '请注意!';
@@ -909,7 +917,7 @@
       // 确认修改金额
       sureEditAmount() {
         let that = this;
-        if (this.selectIndexDataM.length < 1){
+        if (this.selectIndexData==''){
           that.$toast('请选择要修改的事务！',3000)
           return;
         }
@@ -917,7 +925,7 @@
           that.$toast('金额请按要求修改！',3000)
           return;
         }
-        that.$emit('sureEditAmount', that.selectIndexDataM.value)
+        that.$emit('sureEditAmount', that.selectIndexData)
       },
 			//椭圆线计算新点点击确认
 			surePoint(){
@@ -972,6 +980,7 @@
       upToEditAmount(value) {
         let that = this;
         that.$emit('upToEditAmount',value);
+        that.editAmount = '';
       },
       
       
@@ -997,5 +1006,6 @@
 </style>
 <style scoped lang='less'>
 	@import url("../assets/teachCss/tips.less");
-
+  .a-mallattack-input{border:0 none; outline:none;font-size:14px;
+  height: 30px;line-height: 30px; padding: 0 10px;}
 </style>

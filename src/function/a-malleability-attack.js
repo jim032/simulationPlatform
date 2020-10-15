@@ -1,6 +1,7 @@
 import comHeader from '@/components-teach/sheader';
 import comFooter from '@/components-teach/footer';
 import rightTips from '@/components-teach/tips';
+import {visitCourse} from '@/API/api-teach'
 export default{
 	data(){
 		return{
@@ -8,7 +9,7 @@ export default{
 		  showTool:false,//左侧工具箱是否显示		
 		  funNum:0,//左侧点击判断工具箱
 		  menuText:'异常篇-交易延展性',
-		  
+		  category_id:'',//课程id
 		  step:1,//当前步骤
 		  pageName:'54',
 
@@ -17,23 +18,27 @@ export default{
 		  
 		  confirShow:false,
 
-      iconUrl_1:require('../assets/teachImg/icon_user2.png'),//头像
-      iconUrl_2:require('../assets/teachImg/icon_user3.png'),//头像
-      iconUrl_3:require('../assets/teachImg/icon_user4.png'),//头像
-
-      lineDrawMalleabilityShow: false,
-      tansferInfo: [],
-      tansferInfoEdit: [],
+      lineDrawMalleabilityShow: false, //交易延展性交易框展示
+      
+      tansferInfo: [], //底部展示的事务列表
+      //tansferInfoEdit: [],
+      singleStep:true,//单个步骤提示
       wprogressmalleability:0, //打包的进度
       delayTimer:null,//延迟执行时间
       editAmount: 0.0,
-      selectIndexDataM: [],
-      balance: 850, // tips显示的余额
-      balance1: 850,
-      balance2: 850,
-      balance3: 850,
+      selectIndexDataM: [], //事务修改
+
       isShowAmount: false,
-      toEditAmount: ''
+      toEditAmount: '',
+      
+       userList:[
+        {name:'用户A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:850,},
+        {name:'用户B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:850,},
+        {name:'用户C',userId:'C',icon:require('../assets/teachImg/icon_user4.png'),balance:850,}
+      ],
+      transNumber:0,//转账次数
+      cureditIndex:'',//当前修改的是哪一个事务
+      editNumber:0,//修改次数
     }
 	},
 	components:{
@@ -41,10 +46,23 @@ export default{
 	},
 	computed: {
 		stepTips(){
-			return this.$store.state.ecc__stepTips
+			return this.$store.state.a_malleabilityAttack
 		}
 	},
 	methods:{
+		//知识点访问
+	  getvisit(){  
+		  let that = this
+		  let obj = {}
+		  obj.user_id = sessionStorage.getItem('stu_userId');
+		  obj.category_id = that.category_id
+		  visitCourse(obj).then(res=>{
+        if(res.code==200){   
+        }else{
+        	 that.$toast(res.message,3000)
+        }
+      })
+    },
 		//点击菜单图标
 	  clickMenu(){
 	 	  this.menuShow = !this.menuShow
@@ -53,156 +71,192 @@ export default{
 	  tipSure(){
 	  	let that = this
 	  	that.confirShow = false;
-	  	if(that.step==1){
+	  	/*if(that.step==1){
 	  		that.step = that.step + 1;
 	  	}
+	  	*/
 	  },
     //点击左边的三个工具箱
     poinfun(num){
       let that = this;
-      if(num==1 && that.step < 3 ){
-        that.lineDrawMalleabilityShow = true
+      
+ 
+       if(num==1&& that.step<=2){
+        if(that.transNumber<3) {
+	        that.lineDrawMalleabilityShow = true
         that.isShowAmount = false;
-        that.funNum = num;
-        that.operaInfo.mess = ''
-        that.operaInfo.infolist = [];
+	        that.funNum = num;
+	        if(that.transNumber==0){
+	        	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
+	        }else{
+	          	that.operaInfo.mess = ''
+	            that.operaInfo.infolist = [];
+	        }
+	
+	      }else{
+	      	that.$toast('转账事务已完成，请进行下一步操作',3000)
+	      }
+        
       }
-      console.log(that.step)
-      if(num==2 && that.step==2 && that.tansferInfo.length>0 ) {
-        that.step = 3
+      if(num==2 && that.step<=3 && that.tansferInfo.length>0 ) {
+        that.step=3
         that.lineDrawMalleabilityShow = true
         that.funNum = num;
         that.operaInfo.mess = ''
         that.operaInfo.infolist = [];
+        that.selectIndexDataM = [];
+        that.toEditAmount!='';
         for(let i = 0;i < that.tansferInfo.length;i ++) {
-          that.selectIndexDataM.push({value: i + 1})
+          that.selectIndexDataM.push(that.tansferInfo[i])
         }
       }
-      if(num==3 && that.step == 4){
-        that.step = that.step + 1
-        that.lineDrawMalleabilityShow = true
-        that.funNum = num;
-        that.operaInfo.mess = ''
-        that.operaInfo.infolist = [];
-        let timer = setInterval(function() {
-          that.wprogressmalleability++;
-          if(that.wprogressmalleability == 100) {
-            clearInterval(timer)
-            that.lineDrawMalleabilityShow = false
-            that.delayTimer = setTimeout(function(){
-              that.confirShow = true;
-            },500)
-          }
-        },50)
+      
+      if(num==3 && that.wprogressmalleability==0){
+      	if(that.tansferInfo.length==0){
+      		that.$toast('请先转账，生成事务',2000);
+      		return;
+      	}
+      	if(that.tansferInfo.length>0){
+      		if(that.editNumber==0){
+      			that.$toast('请先修改事务',2000);
+      			return;
+      		}else{
+      			that.step = 4
+		        that.lineDrawMalleabilityShow = true
+		        that.funNum = num;
+		        that.operaInfo.mess = ''
+		        that.operaInfo.infolist = [];
+		        let timer = setInterval(function() {
+		          that.wprogressmalleability++;
+		          if(that.wprogressmalleability == 100) {
+		            clearInterval(timer)
+		            that.step = 12
+		            that.lineDrawMalleabilityShow = false
+		            that.delayTimer = setTimeout(function(){
+		              that.confirShow = true;
+		            },500)
+		          }
+		        },50)
+		      }
+      	}
       }
+        
+      
+      
     },
-    sureEditAmount(index) {
+    //事务修改
+    sureEditAmount(id) {
       let that = this;
-      if(index > 0) {
-        that.tansferInfoEdit = [];
-        that.tansferInfoEdit.push({
-          initiate: that.tansferInfo[index-1].initiate,
-          object: that.tansferInfo[index-1].object,
-          amount: parseInt(that.tansferInfo[index-1].amount).toFixed(1)
-        })
+      for(var i =0;i<that.tansferInfo.length;i++){
+      	if(id==that.tansferInfo[i].id){
+      		that.tansferInfo[i].amount=parseInt(that.tansferInfo[i].amount).toFixed(1);
+      		that.tansferInfo[i].isEdit = true;
+      		that.tansferInfo[i].id="e"+that.tansferInfo[i].id
+      	}
       }
+     
       that.lineDrawMalleabilityShow = false
-      that.step = that.step + 1;
+      that.editNumber = that.editNumber+1;
+      if(that.tansferInfo.length==that.editNumber){
+      	 that.step = 4
+      }
+     
     },
+    //转账确定
     sureTransfer(tansferInfo) {
       let that = this;
-      if (that.tansferInfo.length > 2) {
-        that.lineDrawMalleabilityShow = false
-        return;
-      }
       that.lineDrawMalleabilityShow = false
-      that.step = 2
-      that.confirShow = true;
-      if (tansferInfo.initiate == 'A') {
-        that.balance1 = that.balance1 - parseInt(tansferInfo.amount)
-        if (tansferInfo.object == 'B') {
-          that.balance2 = that.balance2 + parseInt(tansferInfo.amount)
-        } else if (tansferInfo.object == 'C') {
-          that.balance3 = that.balance3 + parseInt(tansferInfo.amount)
-        }
-        that.balance = that.balance1
-      } else if (tansferInfo.initiate == 'B') {
-        that.balance2 = that.balance2 - parseInt(tansferInfo.amount)
-        if (tansferInfo.object == 'A') {
-          that.balance1 = that.balance1 + parseInt(tansferInfo.amount)
-        } else if (tansferInfo.object == 'C') {
-          that.balance3 = that.balance3 + parseInt(tansferInfo.amount)
-        }
-        that.balance = that.balance2
-      } else if (tansferInfo.initiate == 'C') {
-        that.balance3 = that.balance3 - parseInt(tansferInfo.amount)
-        if (tansferInfo.object == 'A') {
-          that.balance1 = that.balance1 + parseInt(tansferInfo.amount)
-        } else if (tansferInfo.object == 'B') {
-          that.balance2 = that.balance2 + parseInt(tansferInfo.amount)
-        }
-        that.balance = that.balance3
+      if(that.step==1){
+      	that.step=2
       }
+      for(var i=0;i<that.userList.length;i++){
+      	if(tansferInfo.initiate==that.userList[i].userId){
+      		that.userList[i].balance=that.userList[i].balance-parseInt(tansferInfo.amount);
+      	}
+      	if(tansferInfo.object==that.userList[i].userId){
+      		that.userList[i].balance=that.userList[i].balance+parseInt(tansferInfo.amount)
+      	}
+      }
+      
       that.tansferInfo.push({
         initiate: tansferInfo.initiate,
         object: tansferInfo.object,
-        amount: tansferInfo.amount
+        amount: tansferInfo.amount,
+        id:'1'+parseInt(that.transNumber+1),
+        isEdit:false
       })
-    },
-    del(index) {
-      let that = this;
-	    that.tansferInfo.splice(index)
-    },
-    enter(index) {
-      let that = this;
-      that.isshowdel = index;
-    },
-    leave() {
-      let that = this;
-      that.isshowdel = -1;
-    },
-    showAmount(user) {
-      let that = this;
-      that.isShowAmount = true;
-      if (user == 1) {
-        that.balance = that.balance1;
-        that.operaInfo.mess = '当前余额为￥' + that.balance +'。'
-        that.operaInfo.infolist = [];
-      } else if(user == 2) {
-        that.balance = that.balance2;
-        that.operaInfo.mess = '当前余额为￥' + that.balance +'。'
-        that.operaInfo.infolist = [];
-      } else if(user == 3) {
-        that.balance = that.balance3;
-        that.operaInfo.mess = '当前余额为￥' + that.balance +'。'
-        that.operaInfo.infolist = [];
+      that.transNumber = that.transNumber + 1;
+      if(that.transNumber==1){
+      	that.delayTimer = setTimeout(function(){
+	      	that.confirShow = true;
+	      },500)
       }
+      that.operaInfo.mess = ''
+      that.operaInfo.infolist = [];
     },
+    
+    
     noShowAmount() {
       let that = this;
       that.operaInfo.mess = ''
       that.operaInfo.infolist = [];
       that.isShowAmount = false;
+      that.lineDrawMalleabilityShow = false
+      if(that.tansferInfo.length==0){
+        that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
+      }
+    },
+    //点击透明区域隐藏
+    hideLineDrawShow(){
+    	 this.lineDrawMalleabilityShow = false
     },
     showUserAmount(user) {
       let that = this;
-      if (user == 'A') {
-        that.balance = that.balance1;
-      } else if(user == 'B') {
-        that.balance = that.balance2;
-      } else if(user == 'C') {
-        that.balance = that.balance3;
+      that.isShowAmount = true;
+      that.operaInfo.mess=user.name+','+'账户余额为'+user.balance;
+      that.operaInfo.infolist = [];
+      if(that.step==12){
+	      for(var i=0;i<that.tansferInfo.length;i++){
+	        if(user.userId==that.tansferInfo[i].initiate || user.userId==that.tansferInfo[i].object){
+	        	if(that.tansferInfo[i].isEdit==true){
+	        		that.operaInfo.infolist.push(that.tansferInfo[i].initiate+'给'+that.tansferInfo[i].object+'转账交易未完成')
+	        	}else{
+	        		that.operaInfo.infolist.push(that.tansferInfo[i].initiate+'给'+that.tansferInfo[i].object+'转账交易已完成')
+	        	}
+	        	
+	        }
+	
+	      }
       }
+      
     },
+    //修改选择事务，获取修改金额格式
     upToEditAmount(value) {
 	    let that = this;
-	    that.toEditAmount = parseInt(that.tansferInfo[value-1].amount).toFixed(1)
+
+	    for(var i=0;i<that.tansferInfo.length;i++){
+	    	if(that.tansferInfo[i].id==value){
+	    		 that.toEditAmount = parseInt(that.tansferInfo[i].amount).toFixed(1)
+	    		 that.cureditIndex = i;
+	    	}
+	    }
+	   
     }
  	},
   mounted(){
     let that = this
+     this.menuText = '异常篇-'+this.$route.params.name
+ 	  that.category_id = this.$route.params.id;
     that.$nextTick(() => {
-      that.confirShow = true
+      that.confirShow = true;
+       that.getvisit();
     })
+  },
+  beforeDestroy(){
+  	let that = this;
+  	if(that.delayTimer){
+  		 clearTimeout(that.delayTimer)
+  	}
+
   }
 }

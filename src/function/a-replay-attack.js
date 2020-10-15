@@ -1,6 +1,8 @@
 import comHeader from '@/components-teach/sheader';
 import comFooter from '@/components-teach/footer';
 import rightTips from '@/components-teach/tips';
+import {visitCourse} from '@/API/api-teach'
+
 export default{
 	data(){
 		return{
@@ -9,6 +11,7 @@ export default{
       confirShow:false,//右侧弹窗
 		  funNum:0,//左侧点击判断工具箱
 		  menuText:'异常篇-重放攻击',
+		  category_id:'',//课程id
       iconUrl_1:require('../assets/teachImg/block_a.png'),//
 		  step:1,//当前步骤
 		  pageName:53,//异常篇重放攻击
@@ -31,6 +34,19 @@ export default{
 		}
 	},
 	methods:{
+		//知识点访问
+	  getvisit(){  
+		  let that = this
+		  let obj = {}
+		  obj.user_id = sessionStorage.getItem('stu_userId');
+		  obj.category_id = that.category_id
+		  visitCourse(obj).then(res=>{
+        if(res.code==200){   
+        }else{
+        	 that.$toast(res.message,3000)
+        }
+      })
+    },
 		//点击菜单图标
 	  clickMenu(){
 	 	  this.menuShow = !this.menuShow
@@ -98,8 +114,11 @@ export default{
 	},
   mounted(){
   let that = this
+  this.menuText = '异常篇-'+this.$route.params.name
+ 	that.category_id = this.$route.params.id;
   that.$nextTick(() => {
-    that.confirShow = true
+    that.confirShow = true;
+    that.getvisit();
   })
 }
 }

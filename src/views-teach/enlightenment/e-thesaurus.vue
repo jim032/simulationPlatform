@@ -3,35 +3,32 @@
 	 	
 	 	<div class="e-mainbox">
 	 		<div class="e-swiperBox">
-	 		<div class="swiper-container thesaurus-swiper swiper-no-swiping">
-			    <div class="swiper-wrapper">
-			        <div class="swiper-slide turn-box turn-shadow" v-for="(item,index) in cateList" :key="index">
-			        	 <div class="slide-main front">
-			        	 	  <div class="tab-box">
-					        	 	  <div class="number">
-					        	 	  	{{index+1 | sortNumber}}
-					        	 	  	<span class="line"></span>
-					        	 	  </div>
-					        	 	  <p class="name">
-					        	 	  	 {{item.noun | ellipsis}} 
-					        	 	  	 
-					        	 	  </p>
+	 		<swiper class="swiper-container thesaurus-swiper swiper-no-swiping" :options="swiperOption">
+			  
+	        <div class="swiper-slide turn-box turn-shadow" v-for="(item,index) in cateList" :key="index">
+	        	 <div class="slide-main front">
+	        	 	  <div class="tab-box">
+			        	 	  <div class="number">
+			        	 	  	{{index+1 | sortNumber}}
+			        	 	  	<span class="line"></span>
 			        	 	  </div>
-			        	 </div>
-			        	 
-			        	 <div class="back">
-			        	 	  <div class="tab-box">
-			        	 	  	  <p class="intro">{{item.meaning}}</p>
-			        	 	  </div>
-			        	 	
-			        	 </div>
-			        	 
-			        </div>
-			        
-			    </div>
-
-			    
-			</div>
+			        	 	  <p class="name">
+			        	 	  	 {{item.noun | ellipsis}} 
+			        	 	  	 
+			        	 	  </p>
+	        	 	  </div>
+	        	 </div>
+	        	 
+	        	 <div class="slide-main back">
+	        	 	  <div class="tab-box">
+	        	 	  	  <p class="intro">{{item.meaning}}</p>
+	        	 	  </div>
+	        	 	
+	        	 </div>
+	        	 
+	        </div>
+   
+			</swiper>
 			 <div class="swiper-button-prev"slot="button-prev" v-show="prevnextShow"></div>
        <div class="swiper-button-next"slot="button-next" v-show="prevnextShow"></div>
 			</div>			   

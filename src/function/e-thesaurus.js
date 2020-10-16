@@ -1,8 +1,11 @@
 import comHeader from '@/components-teach/sheader';
+/*
 import Swiper , { Navigation, Pagination }from 'swiper';
-import {visitCourse,courseDatail} from '@/API/api-teach'
-
 Swiper.use([Navigation, Pagination]);
+*/
+import {visitCourse,courseDatail} from '@/API/api-teach'
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+
 export default{
 	data(){
 		return{
@@ -25,6 +28,27 @@ export default{
 	  category_id:'',
 	  cat_index:'',
      prevnextShow:false,
+     
+    swiperOption: {
+        slidesPerView:3,
+			  spaceBetween:50,
+			  
+        notNextTick: true,
+        autoplay:false,
+        // 显示分页
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true //允许分页点击跳转
+        },
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        // 设置点击箭头
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      }
+     
 		}
 		
 		
@@ -50,7 +74,7 @@ export default{
     
  },
 	components:{
-		comHeader,Swiper,Pagination
+		comHeader,swiper, swiperSlide
 	},
 	computed: {
 		 
@@ -132,7 +156,7 @@ export default{
 		that.category_id = this.$route.params.id;
 		
 		that.$nextTick(function(){
-			this.swiper();
+			//this.swiper();
 			that.getvisit();
 			that.getDataList();
 		})

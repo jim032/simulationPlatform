@@ -4,30 +4,28 @@
 	 	<div class="e-mainbox">
 	 		<div class="e-swiperBox">
 			<swiper class="swiper-container swiper-no-swiping"  ref="mySwiper" :options="swiperOption">
-			        <div class="swiper-slide turn-box turn-shadow" v-for="(item,index) in cateList" :key="index">
-			        	 <div class="slide-main front">
-			        	 	  <div class="tab-box">
-					        	 	  <div class="icon">
-					        	 	  	  <img :src="item.card_pic" />
-					        	 	  </div>
-					        	 	  <p class="name">{{item.section_title | ellipsis}}</p>
+	        <div class="swiper-slide turn-box turn-shadow" v-for="(item,index) in cateList" :key="index">
+	        	 <div class="slide-main front">
+	        	 	  <div class="tab-box">
+			        	 	  <div class="icon">
+			        	 	  	  <img :src="item.card_pic" />
 			        	 	  </div>
-			        	 </div>
-			        	 
-			        	 <div class="slide-main back">
-			        	 	  <div class="tab-box">
-			        	 	  	  <p class="name" v-for="(iitem,index) in item.section" :key="index" v-if="index<6">{{iitem}}</p>
-			        	 	  
-			        	 	      <div class="btnbox">
-			        	 	      	  <span class="btnDetail" @click="showDetail(item.specific_pic,item.section_title)">查看详情>></span>
-			        	 	      </div>
-			        	 	  </div>
-			        	 	
-			        	 </div>
-			        	 
-			        </div>
-
-			    
+			        	 	  <p class="name">{{item.section_title | ellipsis}}</p>
+	        	 	  </div>
+	        	 </div>
+	        	 
+	        	 <div class="slide-main back">
+	        	 	  <div class="tab-box">
+	        	 	  	  <p class="name" v-for="(iitem,index) in item.section" :key="index" v-if="index<6">{{iitem}}</p>
+	        	 	  
+	        	 	      <div class="btnbox">
+	        	 	      	  <span class="btnDetail" @click="showDetail(item.specific_pic,item.section_title)">查看详情>></span>
+	        	 	      </div>
+	        	 	  </div>
+	        	 	
+	        	 </div>
+	        	 
+	        </div>
 			</swiper>
 			<div class="swiper-button-prev" slot="button-prev" v-show="prevnextShow"></div>
       <div class="swiper-button-next" slot="button-next" v-show="prevnextShow"></div>

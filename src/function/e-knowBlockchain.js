@@ -1,7 +1,12 @@
 import comHeader from '@/components-teach/sheader';
+/*
 import Swiper , { Navigation, Pagination }from 'swiper';
-import {visitCourse,courseDatail} from '@/API/api-teach'
 Swiper.use([Navigation, Pagination]);
+*/
+import {visitCourse,courseDatail} from '@/API/api-teach'
+
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+//import "swiper/dist/css/swiper.css";
 export default{
 	data(){
 		return{
@@ -26,10 +31,32 @@ export default{
       specific_title:'',//点击查看详情的标题
       
       prevnextShow:false,//左右滑动按钮是否显示
+      swiperOption: {
+        slidesPerView:3,
+			  spaceBetween:50,
+			  
+        notNextTick: true,
+        autoplay:false,
+        // 显示分页
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true //允许分页点击跳转
+        },
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        // 设置点击箭头
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      }
       
 		}
 		
 	},
+	computed: {
+ 
+  },
 	created() {
     this.setDialogWidth()
   },
@@ -44,12 +71,10 @@ export default{
     }
  },
 	components:{
-		comHeader,Swiper,Pagination
+		comHeader,swiper,
+    swiperSlide
 	},
-	computed: {
-		 
-	},
-
+	
 	methods:{
 		//设置弹出框宽度
 	    setDialogWidth() {
@@ -130,7 +155,7 @@ export default{
 	  this.menuText = this.$route.params.pname+'-'+this.$route.params.name
 	  that.category_id = this.$route.params.id;
 		that.$nextTick(function(){
-			that.swiper();
+			//that.swiper();
 			that.getvisit();
 			that.getDataList();
 		})

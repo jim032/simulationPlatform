@@ -367,6 +367,10 @@
       this.onlineUsers();
       this.hardware();
       this.courseFrequency();
+      document.getElementsByTagName("body")[0].className="admin-body";
+		},
+		beforeDestroy(){
+			document.body.removeAttribute("class","admin-body");
 		}
 
 	}

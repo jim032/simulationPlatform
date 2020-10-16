@@ -39,7 +39,14 @@
 			linkrouter(path){
 				this.$router.push({name:path})
 			}
+		},
+		mounted(){
+			 document.getElementsByTagName("body")[0].className="admin-body";
+		},
+		beforeDestroy() {
+		 	 document.body.removeAttribute("class","admin-body");
 		}
+		
 	}
 </script>
 

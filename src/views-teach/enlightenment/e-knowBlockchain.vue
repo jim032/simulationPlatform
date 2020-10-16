@@ -3,8 +3,7 @@
 	 	
 	 	<div class="e-mainbox">
 	 		<div class="e-swiperBox">
-			<div class="swiper-container swiper-no-swiping" >
-			    <div class="swiper-wrapper">
+			<swiper class="swiper-container swiper-no-swiping"  ref="mySwiper" :options="swiperOption">
 			        <div class="swiper-slide turn-box turn-shadow" v-for="(item,index) in cateList" :key="index">
 			        	 <div class="slide-main front">
 			        	 	  <div class="tab-box">
@@ -15,7 +14,7 @@
 			        	 	  </div>
 			        	 </div>
 			        	 
-			        	 <div class="back">
+			        	 <div class="slide-main back">
 			        	 	  <div class="tab-box">
 			        	 	  	  <p class="name" v-for="(iitem,index) in item.section" :key="index" v-if="index<6">{{iitem}}</p>
 			        	 	  
@@ -27,10 +26,9 @@
 			        	 </div>
 			        	 
 			        </div>
-			        
-			    </div>
+
 			    
-			</div>
+			</swiper>
 			<div class="swiper-button-prev" slot="button-prev" v-show="prevnextShow"></div>
       <div class="swiper-button-next" slot="button-next" v-show="prevnextShow"></div>
 	    </div>

@@ -375,6 +375,7 @@
       uploadExcel(){
         window.location.href = this.getUrl;
       },
+      /*
       getJwt(){
         let id = sessionStorage.getItem('user_id');
         let obj={};
@@ -388,7 +389,7 @@
           }
         })
       },
-
+      */
       //学生信息修改
       editUserInfo(){
         let that = this;
@@ -501,7 +502,11 @@
       }
       */
       this.jwt = Cookies.get('jwt')
+      document.getElementsByTagName("body")[0].className="admin-body";
     },
+    beforeDestroy() {
+	    document.body.removeAttribute("class","admin-body");
+	  },
     destroyed() {
       window.onresize = null;
     }

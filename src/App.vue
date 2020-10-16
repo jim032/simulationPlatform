@@ -66,6 +66,7 @@ html,body{width:100%;height:100%;}
 
 @backgroundColor:#E6E9F0;
 
+.admin-body{background:#E6E9F0;}
 
 body{
 	background:@backgroundColor;

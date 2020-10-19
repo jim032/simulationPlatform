@@ -138,7 +138,7 @@ export default{
 	  surefContent(){
 	  	let that = this;
 	    
-	    console.log(that.step)
+	    //console.log(that.step)
 	  	if(that.step==2){
 	  		if(that.decryptText==''){
 	  			that.isPrompt = true;

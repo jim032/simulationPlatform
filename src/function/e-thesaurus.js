@@ -32,7 +32,7 @@ export default{
     swiperOption: {
         slidesPerView:3,
 			  spaceBetween:50,
-			  
+			   slidesPerGroup:3,
         notNextTick: true,
         autoplay:false,
         // 显示分页

@@ -10,6 +10,7 @@ import rightTips from '@/components-teach/tips';
 import common from '@/function/common';
 import {visitCourse} from '@/API/api-teach';
 export default{
+	inject:['reload'], //注入app的方法
 	data(){
 	  return{
 	  	
@@ -119,6 +120,9 @@ export default{
 			initialOwner:{userId:'',name:''},//初始拥有者
 			
 			onlineName:'',//在线用户名称
+			s_timer:null,
+		  
+		  getNumber:0,
 	  }
 	},
   components:{comHeader,comFooter,rightTips},
@@ -148,6 +152,9 @@ export default{
  created() {
     this.initWebSocket();
     this.userId = sessionStorage.getItem('stu_userId')
+    
+    
+    
   },
   mounted(){
 		 	let that = this;
@@ -164,8 +171,6 @@ export default{
 	
 		this.$nextTick(() => {	  	
 	  	that.initHeight();
-     // that.contractDeployment = sessionStorage.getItem('contractDeployment')?Boolean(sessionStorage.getItem('contractDeployment')):false
-     
 		})	
 	},
   
@@ -185,7 +190,8 @@ export default{
     },
 		//初始化socket
 		initWebSocket(){ //初始化weosocket
-			if(typeof(WebSocket) == "undefined") {
+     let that = this
+		 if(typeof(WebSocket) == "undefined") {
         that.$toast("您的浏览器不支持WebSocket",3000);
      }else{      	 
          if(this.websock!=null){
@@ -199,28 +205,43 @@ export default{
           this.websock.onerror = this.websocketonerror;
           //this.websock.onclose = this.websocketclose;
       }
-		
-     
+      
+      this.timer = setInterval(function(){
+      	let userId = sessionStorage.getItem('stu_userId');
+        let params = '{"userID":"'+userId+'","type":"'+5+'","data":{"user_id":"'+userId+'"}}';           
+        that.websocketsend(params); 
+      }, 10000);
+
     },
     
     websocketonopen(){ //连接建立之后执行send方法发送数据 
       let userId = this.userId
       let params = '{"userID":"'+userId+'","type":"'+0+'","data":{"user_id":"'+userId+'"}}';    
+
       this.websocketsend(params);
     },
     
     //链接失败继续链接
     websocketonerror(){//连接建立失败重连
+    	//this.reload();
+    	if(this.getNumber==3){
+    		let that = this;   		   	
+  				sessionStorage.removeItem('stu_userId')
+	    		sessionStorage.removeItem('stu_role_id')
+	    		sessionStorage.removeItem('loginModal');
+					that.$router.push({'path':'/login'})
+    	
+    	}
       this.initWebSocket();
     },
     
     //数据接收
     websocketonmessage(e){ //数据接收
-    	console.log(e)
-    	
+ 
      let mess =JSON.parse(e.data)
      let that = this;
- 
+     
+     console.log(e)
    
      //code：201表示加入消息  202退出成功  203代币发行成功  204转账成功  205添加机器人成功
      if(mess.code=='201' && mess.code){         
@@ -234,6 +255,7 @@ export default{
      	  for(var i=0;i<that.userList.length;i++){
      	   	that.userList[i].onlineStatus=false
      	   	that.userList[i].name = '用户'+(1+index)
+     	   	that.userList[i].amount = 0;
      	  }
      	  that.onlineList(mess,202);
       }
@@ -266,7 +288,9 @@ export default{
     },
     //数据发送
     websocketsend(Data){
-      this.websock.send(Data);
+    	 console.log('123')
+       this.websock.send(Data);
+     
     },
     //退出
     websocketclose(e){
@@ -498,6 +522,8 @@ export default{
   submitTranfer(){
      let that = this; 
      
+     
+    
      if (that.transUser.amount < that.transAmout){
 			  that.$toast('余额不足')
 			return
@@ -508,9 +534,9 @@ export default{
 		}
 		
 		that.to_userId = that.chooseUserObj.id;
-	  console.log(that.from_userId);
+
 	  //发送转账请求
-	  let params = '{"userID":"'+that.userId+'","type":"'+3+'","data":{"room_id":"'+that.roomid+'","amount":"'+that.transAmout+'","from":"'+that.from_userId+'","to":"'+that.to_userId+'"}}';
+	  let params = '{"userID":"'+that.userId+'","type":"'+3+'","data":{"room_id":"'+that.roomid+'","amount":"'+that.transAmout+'","from":"'+that.from_userId+'","to":"'+that.to_userId+'","class_id":"'+that.classid+'"}}';
 	  this.websocketsend(params);
 	  
 	  
@@ -525,7 +551,7 @@ export default{
 		if (that.blockPro > 0){
 		   return
 	   }
-		console.log(obj.type)
+		
 	  if(obj.userId!=that.userId && parseInt(obj.type)!=2){
 	  	this.$toast('您不是当前用户',2000)
 	  	return
@@ -774,10 +800,11 @@ export default{
 				clearTimeout(this.timer1); //关闭
 
 			}
-	 
+	  console.log('beforeDestroy')
 	  this.websocketclose();
    },
    destroyed() {
+   	console.log('destroyed')
       window.onresize = null;
      
     }

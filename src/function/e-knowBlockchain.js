@@ -33,6 +33,7 @@ export default{
       prevnextShow:false,//左右滑动按钮是否显示
       swiperOption: {
         slidesPerView:3,
+        slidesPerGroup:3,
 			  spaceBetween:50,
 			  
         notNextTick: true,

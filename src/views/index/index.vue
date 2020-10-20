@@ -50,7 +50,11 @@
 								</div>
 								<h3>课程访问次数</h3>
 							</div>
-							<el-table class="customer-table total-table" header-row-class-name="tab-th" cell-class-name="tab-td" :row-class-name="tableRowClassName" ref="multipleTable" :data="operaRecord" tooltip-effect="dark" style="width: 100%">
+							<el-table class="customer-table total-table" 
+								header-row-class-name="tab-th" cell-class-name="tab-td" 
+								:row-class-name="tableRowClassName" ref="multipleTable" :data="operaRecord" 
+								tooltip-effect="dark" style="width: 100%"  height="336"
+								>
 
 								<el-table-column prop="created_at" label="时间"> </el-table-column>
 								<el-table-column prop="category_name_chs" label="知识点"> </el-table-column>
@@ -75,7 +79,7 @@
 						<div class="title"><span>在线人数：{{onlineNumber}}<span id="online"></span></span>在线人数</div>
 						<el-table class="customer-table total-table online-table"
 							header-row-class-name="tab-th" cell-class-name="tab-td"
-							:row-class-name="tableRowClassName" ref="multipleTable"
+							:row-class-name="tableRowClassName" ref="multipleTable" height="504"
 							:data="onLineList" tooltip-effect="dark" style="width: 100%">
                 <el-table-column prop="grade_name" label="年级"> </el-table-column>
 								<el-table-column prop="class_name" label="班级"> </el-table-column>

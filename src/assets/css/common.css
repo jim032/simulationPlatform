@@ -1,5 +1,10 @@
 /*表格样式*/
-.customer-table{height:500px; overflow-y: auto;}
+.mmain_per .customer-table{height:500px; overflow-y: auto;}
+.mainbox .el-table:before{background:0 none;}
+
+
+.listMain-number {}
+
 .tab-th th>.cell{font-size:20px;color:#000; font-weight: normal; padding-left: 14px; white-space: nowrap;}
 .tab-td .cell{font-size: 16px; color: #666; white-space:nowrap}
 .tab-td {border:0 none;}

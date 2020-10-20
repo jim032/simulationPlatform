@@ -21,6 +21,7 @@
                     :data="dataList"
                     tooltip-effect="dark"
                     style="width: 100%"
+                    height="500"
                     @selection-change="handleSelectionChange">
             <el-table-column type="selection"  label="全选" width='110'> </el-table-column>
             <el-table-column prop="user_id" label="学号" >  </el-table-column>

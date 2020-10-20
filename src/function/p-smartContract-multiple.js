@@ -123,6 +123,9 @@ export default{
 			s_timer:null,
 		  
 		  getNumber:0,
+		  
+		  timer:null,
+		  timer2:null,
 	  }
 	},
   components:{comHeader,comFooter,rightTips},
@@ -171,6 +174,23 @@ export default{
 	
 		this.$nextTick(() => {	  	
 	  	that.initHeight();
+	  	this.timer = setInterval(function(){
+      	let userId = sessionStorage.getItem('stu_userId');
+        let params = '{"userID":"'+userId+'","type":"'+5+'","data":{"user_id":"'+userId+'"}}';           
+        that.websocketsend(params); 
+        
+      }, 10000);
+      this.timer2 = setInterval(function(){
+        that.getNumber++;
+        if(that.getNumber==22){
+     		   	
+  			  sessionStorage.removeItem('stu_userId')
+	    	  sessionStorage.removeItem('stu_role_id')
+	    	  sessionStorage.removeItem('loginModal');
+				  that.$router.push({'path':'/login'})
+    	    clearInterval(that.timer2); //关闭
+        }
+      },1000);
 		})	
 	},
   
@@ -206,11 +226,7 @@ export default{
           //this.websock.onclose = this.websocketclose;
       }
       
-      this.timer = setInterval(function(){
-      	let userId = sessionStorage.getItem('stu_userId');
-        let params = '{"userID":"'+userId+'","type":"'+5+'","data":{"user_id":"'+userId+'"}}';           
-        that.websocketsend(params); 
-      }, 10000);
+      
 
     },
     
@@ -224,24 +240,17 @@ export default{
     //链接失败继续链接
     websocketonerror(){//连接建立失败重连
     	//this.reload();
-    	if(this.getNumber==3){
-    		let that = this;   		   	
-  				sessionStorage.removeItem('stu_userId')
-	    		sessionStorage.removeItem('stu_role_id')
-	    		sessionStorage.removeItem('loginModal');
-					that.$router.push({'path':'/login'})
-    	
-    	}
       this.initWebSocket();
     },
     
     //数据接收
     websocketonmessage(e){ //数据接收
- 
+     
+    
      let mess =JSON.parse(e.data)
      let that = this;
-     
-     console.log(e)
+     that.getNumber = 0;
+     //console.log(e)
    
      //code：201表示加入消息  202退出成功  203代币发行成功  204转账成功  205添加机器人成功
      if(mess.code=='201' && mess.code){         
@@ -288,7 +297,7 @@ export default{
     },
     //数据发送
     websocketsend(Data){
-    	 console.log('123')
+    	
        this.websock.send(Data);
      
     },
@@ -798,13 +807,12 @@ export default{
 	   }
 	   if(this.timer1) {　　
 				clearTimeout(this.timer1); //关闭
-
+        clearInterval(this.timer2); //关闭
 			}
-	  console.log('beforeDestroy')
+	
 	  this.websocketclose();
    },
    destroyed() {
-   	console.log('destroyed')
       window.onresize = null;
      
     }

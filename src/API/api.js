@@ -37,14 +37,14 @@ var hardware = function(data){
 
 //课程访问频率
 var courseFrequency = function(data){
-  return axios.get('/get_visit_course_frequency?per_page='+data.per_page+'&page='+data.page+'&category_name='+data.category_name+'&start='+data.dateRangeStart+'&end='+data.dateRangeEnd)
+  return axios.get(encodeURI('/get_visit_course_frequency?per_page='+data.per_page+'&page='+data.page+'&category_name='+data.category_name+'&start='+data.dateRangeStart+'&end='+data.dateRangeEnd))
 }
 
 
 
 //查询学生信息
 var search_user = function(data){
-	return axios.get('/search_user?per_page='+data.per_page+'&page='+data.page+'&search='+data.search)
+	return axios.get(encodeURI('/search_user?per_page='+data.per_page+'&page='+data.page+'&search='+data.search))
 }
 
 //获取凭证jwt

@@ -157,6 +157,7 @@ export default{
       that.D2=false
       that.operaInfo.mess='';
       if(that.transNumber==3){
+      	
       	that.delayTimer = setTimeout(function(){
 	      	that.confirShow = true; 
 	      	that.step = that.step+1;

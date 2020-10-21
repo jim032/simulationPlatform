@@ -1,6 +1,6 @@
 <template>
 	<div class="staDiv bottomDiv">
-		<div class="stabox">
+		<div class="stabox" :class="{'attackStabox':pageName==51}">
 			<p class="pt" >{{operaInfo.mess}}</p>
 			<template v-if="(pageName==2 || pageName=='2-multiple')"> 
 				<div class="progress" v-if="isBlcok">
@@ -71,32 +71,56 @@
 			
 			<!---51%攻击-->
 			<template v-if="pageName==51 && isShowAmount==false">
-				<ul class="affairsList" v-if="transNumber>=1">
-      		 <li class="affairItem" v-for="(item,index) in tansferInfo" :key="index"@mouseenter="enter(index)" @mouseleave="leave()">
-      		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{index+1}}</div>
+				<div class="bottomMess" v-if="isShowAmount==false && transNumber>=1">
+				 	  <span class="span1">未打包的事务</span><span class="span2">已被打包的事务</span>
+				</div>
+				<ul class="affairsList affairsList51" v-if="transNumber>=1">
+      		 <li class="affairItem" :class="{'affairItem-blocked':step==12}" v-for="(item,index) in tansferInfo" :key="index"@mouseenter="enter(index)" @mouseleave="leave()">
+      		 	 <div class="affairName">事务{{index+1}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
-              <div class="deltrans" v-if="tansferInfo.length>1 && step>=3"><a class="chooseBtn" @click="showdel(index)" >删除</a></div>
+              <div class="deltrans" v-if="tansferInfo.length>1 && step>=3 && step!=12"><a class="chooseBtn" @click="showdel(index)" >删除</a></div>
       		 </li>
       	</ul>
 		
       </template>
       <!--交易延展性攻击-->
       <template v-if="pageName==54 && isShowAmount==false">
-      	<ul class="affairsList" v-if="step >= 2">
-      		 <li class="affairItem affairDefault" :class="{'red':item.isEdit}" v-for="(item,index) in tansferInfo" :key="index">
-      		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{index+1}}</div>
+      	<div class="bottomMess malleBottomMess" v-if="isShowAmount==false && step >= 2">
+				 	  <span class="span1">未打包的区块</span><span class="span2">已打包的区块</span>
+				 	  <span class="span3">已修改未打包区块</span><span class="span4">已修改已打包区块</span>
+				</div>
+      	<ul class="affairsList malle-affairsList" v-if="step >= 2">
+      		 <li class="affairItem affairDefault " :class="{'finshAffair':step==12 && !item.isEdit}" v-for="(item,index) in tansferInfo" :key="index">
+      		 	 <div  class="affairName">{{item.name}}</div>
+              <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
+              <div>事务id：{{item.id}}</div>
+      		 </li>
+      		 <li class="affairItem editAffairItem" :class="{'finshAffair':step==12}" v-for="(item,index1) in tansferInfoEdit" :key="item.id" v-if="tansferInfoEdit.length > 0">
+      		 	 <div class="affairName">{{item.name}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
               <div>事务id：{{item.id}}</div>
       		 </li>
       	</ul>
-      	<!--
-      	<ul class="affairsList" v-if="tansferInfoEdit.length > 0">
-      		 <li class="affairItem" v-for="(item,index) in tansferInfoEdit" :key="index">
-      		 	 <div style="text-align: center;font-weight:bold;font-size: 25px">事务{{tansferInfo.length+1}}</div>
+      
+
+      </template>
+      
+      <!--重放攻击-->
+      
+      <template v-if="pageName==53 && tansferInfo.length>0">
+      	<div class="bottomMess malleBottomMess" >
+				 	  <span class="span1">未打包的区块</span>
+				 	  <span class="span3">已修改未打包区块</span><span class="span4">已修改已打包区块</span>
+				</div>
+      	<ul class="affairsList replay-affairsList" >
+      		 <li class="affairItem affairDefault " :class="{'redAffair':step==3,'finshAffair':step==4}" v-for="(item,index) in tansferInfo" :key="index">
+      		 	 <div class="affairName" style="margin-top: 10px;">区块{{index+1}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
+             
       		 </li>
+      		
       	</ul>
-      	-->
+      
 
       </template>
 			
@@ -360,24 +384,79 @@
 	}
 
 /*50%攻击事务*/
+
 .affairsList{
 	.affairItem{
-		width: 130px;height: 100px;.borderRadius(2px,2px,2px,2px); margin-right: 0px;
-    background-color: white;border: 4px solid lightblue;margin-left: 25px;color: black;text-align:center;padding: 3px;
+		width: 130px;height:100px;.borderRadius(3px,3px,3px,3px); margin-right: 0px;
+    background-color: white;border: 4px dashed #5175f9;margin-left: 25px;color: black;text-align:center;padding: 3px;
     cursor: pointer;display: inline-block;
     vertical-align: middle; position: relative;
     }
-  .affairItem.red{border: 4px solid red;}
+  .affairItem-blocked{border: 4px solid #5175f9;}
+  
   .deltrans{display:none;}
-  .affairItem:hover .deltrans{background: rgba(255, 0, 0, 0.75); position: absolute;width:120px;height:100px;
+  .affairItem:hover .deltrans{background: rgba(255, 0, 0, 0.75); position: absolute;width:130px;height:100px;
   left:-4px;top:-4px; display: block;.borderRadius(2px,2px,2px,2px);}
   .chooseBtn{width:85px;height:30px; display: block; position: absolute;
   left:50%;margin-left:-44px;top:50%;margin-top:-15px; line-height: 30px;
   background:#fff;.borderRadius(5px,5px,5px,5px); overflow: hidden;
   }
   .affairDefault{cursor: default;}
-}
+  .affairName{
+		text-align: center;font-weight:bold;font-size:20px;
+	}
 	
+	.editAffairItem{border: 4px dashed red;}
+	
+	.affairItem.finshAffair{border: 4px solid #5175f9;}
+	.editAffairItem.finshAffair{border: 4px solid red;}
+	
+}
+
+.affairsList51{
+	.affairItem{
+		height: 88px;
+	}
+	.affairItem:hover .deltrans{
+		height:88px;
+	}
+	.affairName{
+		 margin-top:8px;
+	}
+}
+
+/*底部提醒*/
+.bottomMess{
+	text-align: center; font-size:18px;color:#fff; padding-bottom:10px;
+	span{display:inline-block; margin: 0 50px;}
+	.span1{background: url(../assets/teachImg/att1.png) left center no-repeat;
+	 padding-left: 34px;}
+	.span2{
+		background: url(../assets/teachImg/att4.png) left center no-repeat;
+	 padding-left: 34px;
+	}
+	.span3{
+		background: url(../assets/teachImg/att3.png) left center no-repeat;
+	 padding-left: 34px;
+	}
+	.span4{
+		background: url(../assets/teachImg/att2.png) left center no-repeat;
+	 padding-left: 34px;
+	}
+}
+/*延展性*/
+.malleBottomMess.bottomMess{
+	span{margin: 0 10px; font-size:16px;}
+}
+.malle-affairsList{
+	li{font-size:17px;}
+}
+.replay-affairsList{
+	.affairItem.finshAffair{border: 4px solid red;}
+	.affairItem.redAffair{border: 4px dashed red;}
+}
+
+
 	@media screen and (max-width:1440px) {
 		.bottomDiv .pt {
 			font-size: 18px;
@@ -392,6 +471,10 @@
 			.stabox {
 				height: 128px;
 			}
+			.attackStabox{
+				height:168px;
+			}
+			
 		}
 	}
 	

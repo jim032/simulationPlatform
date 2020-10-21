@@ -36,11 +36,11 @@ export default{
       transNumber:0,//转账次数
       
       userList:[
-        {name:'用户A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:850,isWarning:false,
+        {name:'矿工A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:850,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user2_warning.png')},
-        {name:'用户B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:850,isWarning:false,
+        {name:'矿工B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:850,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user3_warning.png')},
-        {name:'用户C',userId:'C',icon:require('../assets/teachImg/icon_user4.png'),balance:850,isWarning:false,
+        {name:'矿工C',userId:'C',icon:require('../assets/teachImg/icon_user4.png'),balance:850,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user4_warning.png')}
       ],
       delNumber:0,//事务删除个数
@@ -103,12 +103,18 @@ export default{
 	      }
       }
       
-      //提升算力     
-      if(num==2  && that.tansferInfo.length>0 && that.step<=3){ 
-        that.lineDraw51Show = true
-        that.funNum = num;
-        that.step=3
+      if(num==2){
+      	if(that.transNumber<3){
+      		that.$toast('转账必须达到3笔',3000);
+      		return;
+      	}
+      	if(that.tansferInfo.length>0 && that.step<=3){
+      		that.lineDraw51Show = true
+	        that.funNum = num;
+	        that.step=3
+      	}
       }
+      
 
       //打包      
       if(num==3 && that.step == 4 && !that.isPack){
@@ -174,7 +180,7 @@ export default{
         amount: tansferInfo.amount
       })
       that.transNumber = that.transNumber + 1;
-      if(that.transNumber==1){
+      if(that.transNumber==3){
       	that.delayTimer = setTimeout(function(){
 	      	that.confirShow = true;
 	      },500)
@@ -203,7 +209,10 @@ export default{
       that.delNumber = that.delNumber+1;
       that.tansferInfo.splice(that.del51, 1)
       if(that.tansferInfo.length>=1){
-      	 that.step = 4   
+      	 
+      	 that.delayTimer = setTimeout(function(){
+	      	that.step = 4 
+	      },500)
       }
       
     },
@@ -260,7 +269,7 @@ export default{
   },
   beforeDestroy() {
 	   if(this.delayTimer) {
-		　　clearInterval(this.delayTimer); //关闭
+		　　clearTimeout(this.delayTimer); //关闭
 		 }
 	 
    }

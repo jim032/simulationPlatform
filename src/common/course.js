@@ -169,7 +169,7 @@ export default {
       if (this.newClassName == '') {
         that.errorMess = '请输入课程名称'
         return;
-      } else {
+      }else {
         let obj = {};
         obj.user_id = that.$store.state.userId || sessionStorage.getItem('user_id');
         obj.course_name = that.newClassName;

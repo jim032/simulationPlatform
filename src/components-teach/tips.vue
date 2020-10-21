@@ -293,17 +293,17 @@
           <div style="margin: auto;width:80%">
             <div class="cr_din" style="margin-top: 20px;color: white"> 已截获到未打包到链中的事务 </div>
             <div class="cr_din" style="display: flex;margin-top: 20px">
-              <span class="lab" style="margin: auto;color: white">选择事务：</span>
+              <span class="lab" style="line-height: 32px;color:#fff">选择事务：</span>
               <div style="margin: auto;padding: 0">
                 <div style="margin: auto;padding: 0;width:200px">
                   <i-select v-model="selectIndexData" @on-change="upToEditAmount">
-                    <i-option v-for="(item,index) in selectIndexDataM" :value="item.id" :key="index">事务{{index+1}}</i-option>
+                    <i-option v-for="(item,index) in selectIndexDataM" :value="item.id" :key="index" v-if="!item.isEdit">事务{{index+1}}</i-option>
                   </i-select>
                 </div>
               </div>
             </div>
             <div class="cr_din" style="display: flex;margin-top: 20px">
-              <span class="lab" style="margin: auto;color: white">修改金额：</span>
+              <span class="lab" style="line-height: 32px;color:#fff">修改金额：</span>
               <div style="margin: auto;padding: 0;width:200px">
                 <input class="a-mallattack-input" :placeholder="'只能将金额修改为' + toEditAmount" style="width:100%;border-radius: 5px" type="" v-model="editAmount"/>
               </div>
@@ -322,7 +322,7 @@
       </div>
       <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDrawMalleabilityShow}">
         <div class="c_box">
-          <p class="pintro">正在打包所有事务</p>
+          <p class="pintro">原转账数据与修改过后的数据，正在竞争打包进入区块！</p>
           <div class="progress" >
             <div class="curPro">
               <div class="proIcon" :style="{'width':wprogressmalleability+'%'}"></div>
@@ -337,13 +337,29 @@
     </template >
     
     
-    <!--重放攻击打包-->
-    <template v-if="pageName==53 && step == 5">
+    <!--重放攻击截获-->
+    <template v-if="pageName==53 && step==2">
       <div class="transbox" v-if="lineDraw53Show">
       </div>
       <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
         <div class="c_box">
-          <p class="pintro">正在旧链上产生的交易区块五放在新链上打包</p>
+          <p class="pintro">请注意，黑客正在攻击未打包进链的区块</p>
+          <div class="progress" >
+            <div class="curPro">
+              <div class="proIcon" :style="{'width':wprogress+'%'}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template >
+    <!--重放攻击-->
+    <template v-if="pageName==53 && step==3">
+      <div class="transbox" v-if="lineDraw53Show">
+      </div>
+      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
+        <div class="c_box">
+          <p class="pintro">正在打包区块</p>
           <div class="progress" >
             <div class="curPro">
               <div class="proIcon" :style="{'width':wprogress+'%'}"></div>
@@ -355,16 +371,21 @@
     </template >
 	  <!--重放攻击-->
 		<template v-if="pageName==53">
-		  <div class="transbox" v-if="D2" >
+		  <div class="transbox" v-if="D2"  @click="hideTrans">
 		  </div>
-		  <div class="confirmBox fileConfirmBox eccConfirmBox" style="margin-top: -240px" :class="{'show':D2}">
+		  <div class="confirmBox fileConfirmBox eccConfirmBox a-replay-attack" style="margin-top: -240px" :class="{'show':D2}">
 		    <div class="c_box">
 		      <div class="ecc-in">
-		        <div class="e-in"><label style="left: -60px;">提现对象：旧链</label></div>
+		        <div class="e-in"><span>转账发起：用户1</span></div>
 		      </div>
 		      <div class="ecc-in">
-		
-		        <div class="e-in"><label style="left: -60px;">提现金额:</label><input placeholder="请输入转账金额"  maxlength="10" value="20" readonly="true" /></div>
+		        <div class="e-in"><span>转账对象：用户2</span></div>
+		      </div>
+		      <div class="ecc-in">
+		        <div class="e-in"><span>转账金额:</span><input placeholder="请输入转账金额"  maxlength="3" v-model="aa_vaule"  @change="validateNum($event)"/></div>
+		      </div>
+		      <div class="ecc-in">
+		        <div class="e-in"><span>转账发起余额：∞</span></div>
 		      </div>
 		      <div class="btnbox">
 		        <a class="chooseBtn" @click="D2click">确定转账</a>
@@ -419,6 +440,7 @@
         toList:[], //51%攻击可转对象list
         balance: 0,
         selectIndexData:'',//交易延展性当前修改的事务
+        aa_vaule:'',//重放攻击转账金额
 			}
 		},
 		//pageName为1表示当前页面是节点操作   2发币  3hash算法 4keyStore模拟  5椭圆线密码  2-4区块链+版权  
@@ -525,31 +547,35 @@
 		
 		watch:{
 			 
-			 'a': function(val){
-					this.a = val.replace(/[^1-3]/g, '')
-					
-				},
-        
-        'b': function(val){
-					this.b = val.replace(/[^1-3]/g, '')
-				},
+		 'a': function(val){
+				this.a = val.replace(/[^1-3]/g, '')
 				
-				//51%攻击	
-				'lineDraw51Show':function(){
-          this.tansferInfo.initiate='';
-          this.tansferInfo.object='';
-          this.tansferInfo.amount='';
-          this.balance=0
-			  },
-			  //交易延展性
-			  'lineDrawMalleabilityShow':function(){
-          this.tansferInfo.initiate='';
-          this.tansferInfo.object='';
-          this.tansferInfo.amount='';
-          this.balance=0
-			  },
-			  
+			},
+      
+      'b': function(val){
+				this.b = val.replace(/[^1-3]/g, '')
+			},
 			
+			//51%攻击	
+			'lineDraw51Show':function(){
+        this.tansferInfo.initiate='';
+        this.tansferInfo.object='';
+        this.tansferInfo.amount='';
+        this.balance=0
+		  },
+		  //交易延展性
+		  'lineDrawMalleabilityShow':function(){
+        this.tansferInfo.initiate='';
+        this.tansferInfo.object='';
+        this.tansferInfo.amount='';
+        this.balance=0
+		  },
+		  //重放攻击
+		  'D2':function(){
+		  	this.aa_vaule='';
+		  },
+			  
+
 			'confirShow':function(){
 				let that = this;	
 				if(that.pageName=='1'){ 	 
@@ -756,13 +782,17 @@
                 that.confirmInfo = '文本1'+
                   '文本2。'
                 break;
-              case 5:
+              case 2:
                 that.tipTiltle = '请注意!'
-                that.confirmInfo = '当前把旧链的提现区块在新链中广播'
+                that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
                 break;
-              case 6:
+              case 3:
                 that.tipTiltle = '请注意!';
-                that.confirmInfo = '发起了一次20的提现，因为重放攻击获得了40。'
+                that.confirmInfo = '黑客已将原数据修改成功'
+                break;
+              case 4:
+                that.tipTiltle = '请注意!';
+                that.confirmInfo = '重放攻击已结束的危害性'
                 break;
             }
             return;
@@ -820,6 +850,7 @@
 				this.$emit('attackMode',num)
 				this.isAttack = num;
 			},
+			
 			//椭圆线密码学显示划线
 			showLine(){
 				let that = this;
@@ -886,14 +917,15 @@
           that.$toast('转账对象不能为空！',3000)
           return;
         }
-        if (that.tansferInfo.amount.match(/^-?[0-9]+$/) == null){
-					that.$toast('转账金额必须是数字')
-					return
-				}
-        if (that.tansferInfo.amount == '' || that.tansferInfo.amount == 0) {
-          that.$toast('请输入金额！',3000)
+         if (that.tansferInfo.amount == '' || that.tansferInfo.amount == 0) {
+          that.$toast('请输入金额必须是正整数！',3000)
           return;
         }
+        if (that.tansferInfo.amount.match(/^-?[0-9]+$/) == null){
+					that.$toast('转账金额必须是正整数')
+					return
+				}
+       
         
         if (that.tansferInfo.amount > that.balance) {
           that.$toast('转账金额不能大于余额！',3000)
@@ -945,6 +977,24 @@
 				}
 				
 			},
+			//重放攻击点击透明区域隐藏
+			hideTrans(){
+				this.$emit('hideTrans');
+			},
+			
+			//重放攻击金额验证
+			validateNum(value) { //验证只能填入数字
+	    var reg = /(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)/
+	     //验证警戒值
+	    if(this.aa_vaule!='' && this.aa_vaule != undefined){
+	    	if (!reg.test(this.aa_vaule)) {
+	        this.$toast('请输入正整数',2000)
+	        this.aa_vaule='';
+	        return ;
+	    	}
+	  	}
+     },
+			
       D1click(){
         let that = this;
         // console.log(that.inputMoney)
@@ -954,14 +1004,18 @@
         // }
         that.$emit('D1clickfinish');
       },
+      //重放攻击确认转账
       D2click(){
-        let that = this;
-        // console.log(that.inputMoney)
-        // if(that.inputMoney == '' || that.inputMoney == undefined){
-        //   that.$toast('请输入提现金额',2000)
-        //   return;
-        // }
-        that.$emit('D2clickfinish');
+        let that = this;  
+        if(this.aa_vaule==''){
+        	 this.$toast('请输入转账金额',2000)
+        	 return;
+        }
+        if(this.aa_vaule==0){
+        	this.$toast('请输入3位正整数余额',2000)
+        	return;
+        }
+        that.$emit('D2clickfinish',this.aa_vaule);
       },
       
       //点击转账对象下拉

@@ -146,7 +146,8 @@ export default{
 	  //点击当前操作状态
 	  functionStep(num){
 	  	let that = this;
-	  
+	    
+
 	  	//点一个点击的医院，默认用户对该医院进行授权
       switch(parseInt(num)){
       	case 1: 
@@ -190,7 +191,7 @@ export default{
 	  //点击查询，弹出查询框
 	  f_showSearch(){
 	  	let that = this;
-	  	console.log('123:'+that.rgisteInfo.affairHash)
+	  	//console.log('123:'+that.rgisteInfo.affairHash)
 	  	if(that.rgisteInfo.affairHash==''){
 	  		that.$toast('暂无病人信息，请先上链病人信息',3000);
 	  		return;
@@ -287,23 +288,24 @@ export default{
 	  	 let  that = this
 	  	 that.showNav = true;
 	  	 that.chainFinsh = false;
+
 	  	 if(that.curHospital==1){
 	  	  	that.rgisteInfo.blockHeight = '68'
 	  			that.rgisteInfo.blocHash = 'd5asw5e4qw512das2d6we99q7e54f3a5s14a32f2eqw5e';	  		
 	  			that.hospitalA.authorized = true;
-	  			return;
+	  			
 	  	 }
 	  	 if(that.curHospital==2){
 	  	  	that.rgisteInfo.blockHeight = '68'
 	  			that.rgisteInfo.blocHash = 'd5asw5e4qw512das2d6we99q7e54f3a5s14a32f2eqw5e';
-	  			that.hospitalA.authorized = true;
-	  			return;
+	  			that.hospitalB.authorized = true;
+	  		
 	  	 }
 	  	 if(that.curHospital==3){
 	  	  	that.rgisteInfo.blockHeight = '68'
 	  			that.rgisteInfo.blocHash = 'd5asw5e4qw512das2d6we99q7e54f3a5s14a32f2eqw5e';	  			
-	  			that.hospitalA.authorized = true;
-	  			return;
+	  			that.hospitalC.authorized = true;
+	  		
 	  	 }
 	  	 
 	  	
@@ -319,6 +321,7 @@ export default{
 	  	
 	  	if(that.searchText.replace(/\s*/g,'')!=that.rgisteInfo.affairHash){
 	  		that.$toast('请输入正确的hash',3000)
+	  		return;
 	  	}
 	  	that.showResult = true
 	  	that.showNav = false

@@ -23,23 +23,23 @@
                     style="width: 100%"
                     height="500"
                     @selection-change="handleSelectionChange">
-            <el-table-column type="selection"  label="全选" width='110'> </el-table-column>
-            <el-table-column prop="user_id" label="学号" >  </el-table-column>
-            <el-table-column prop="name" label="姓名" >  </el-table-column>
-            <el-table-column prop="identification_number" label="证件号码">  </el-table-column>
-            <el-table-column label="性别" width="90" >
+            <el-table-column type="selection"  label="全选" width='100'> </el-table-column>
+            <el-table-column prop="user_id" label="学号" align="center">  </el-table-column>
+            <el-table-column prop="name" label="姓名" align="center">  </el-table-column>
+            <el-table-column prop="identification_number" label="证件号码" align="center">  </el-table-column>
+            <el-table-column label="性别" width="90" align="center">
               <template slot-scope="scope">{{ scope.row.gender==0?'男':'女' }}</template>
             </el-table-column>
-            <el-table-column prop="phone" label="电话" > </el-table-column>
-            <el-table-column prop="department" label="院系" show-overflow-tooltip> </el-table-column>
-            <el-table-column prop="major" label="专业" show-overflow-tooltip>
+            <el-table-column prop="phone" label="电话" align="center"> </el-table-column>
+            <el-table-column prop="department" label="院系" show-overflow-tooltip align="center"> </el-table-column>
+            <el-table-column prop="major" label="专业" show-overflow-tooltip align="center">
             </el-table-column>
-            <el-table-column prop="grade" label="年级" width="90"></el-table-column>
-            <el-table-column prop="classes" label="班级" width='90'></el-table-column>
+            <el-table-column prop="grade" label="年级" width="90" align="center"></el-table-column>
+            <el-table-column prop="classes" label="班级" width='90' align="center"></el-table-column>
             <el-table-column
 
               label="操作"
-              width="120">
+              width="140" align="center">
               <template slot-scope="scope">
 
                 <a type="text" class="tab-edit" @click="editInfo(scope.row)">修改信息</a>

@@ -72,6 +72,7 @@
 		  		return;
 		  	}
 		  	let command = that.command
+		  	//console.log(that.command);
 		  	if (command.indexOf('newAccounts') != -1) {
 		  		let command_start = command.substring(0, 17)
 		  		let command_end = command.substring(command.length-2, command.length)

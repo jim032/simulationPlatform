@@ -21,7 +21,7 @@ export default{
       lineDrawMalleabilityShow: false, //交易延展性交易框展示
       
       tansferInfo: [], //底部展示的事务列表
-      //tansferInfoEdit: [],
+      tansferInfoEdit: [],
       singleStep:true,//单个步骤提示
       wprogressmalleability:0, //打包的进度
       delayTimer:null,//延迟执行时间
@@ -82,34 +82,41 @@ export default{
       
  
        if(num==1&& that.step<=2){
-        if(that.transNumber<3) {
+        if(that.transNumber<2) {
 	        that.lineDrawMalleabilityShow = true
-        that.isShowAmount = false;
-	        that.funNum = num;
-	        if(that.transNumber==0){
-	        	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
-	        }else{
-	          	that.operaInfo.mess = ''
-	            that.operaInfo.infolist = [];
-	        }
+	        that.isShowAmount = false;
+		        that.funNum = num;
+		        if(that.transNumber==0){
+		        	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
+		        }else{
+		          	that.operaInfo.mess = ''
+		            that.operaInfo.infolist = [];
+		        }
 	
 	      }else{
 	      	that.$toast('转账事务已完成，请进行下一步操作',3000)
 	      }
         
       }
-      if(num==2 && that.step<=3 && that.tansferInfo.length>0 ) {
-        that.step=3
-        that.lineDrawMalleabilityShow = true
-        that.funNum = num;
-        that.operaInfo.mess = ''
-        that.operaInfo.infolist = [];
-        that.selectIndexDataM = [];
-        that.toEditAmount!='';
-        for(let i = 0;i < that.tansferInfo.length;i ++) {
-          that.selectIndexDataM.push(that.tansferInfo[i])
-        }
+      if(num==2){
+      	if(that.transNumber<2){
+      		that.$toast('转账必须达到2笔',3000);
+      		return;
+      	}
+      	if(that.step<=3 && that.tansferInfo.length>0){
+      		that.step=3
+	        that.lineDrawMalleabilityShow = true
+	        that.funNum = num;
+	        that.operaInfo.mess = ''
+	        that.operaInfo.infolist = [];
+	        that.selectIndexDataM = [];
+	        that.toEditAmount!='';
+	        for(let i = 0;i < that.tansferInfo.length;i ++) {
+	          that.selectIndexDataM.push(that.tansferInfo[i])
+	        }
+      	}
       }
+
       
       if(num==3 && that.wprogressmalleability==0){
       	if(that.tansferInfo.length==0){
@@ -148,13 +155,19 @@ export default{
     sureEditAmount(id) {
       let that = this;
       for(var i =0;i<that.tansferInfo.length;i++){
-      	if(id==that.tansferInfo[i].id){
-      		that.tansferInfo[i].amount=parseInt(that.tansferInfo[i].amount).toFixed(1);
+      	if(id==that.tansferInfo[i].id){    		
+   
       		that.tansferInfo[i].isEdit = true;
-      		that.tansferInfo[i].id="e"+that.tansferInfo[i].id
+          let temp = {};
+      		temp = JSON.parse(JSON.stringify(that.tansferInfo[i]));
+      		temp.id = "e"+that.tansferInfo[i].id
+      		temp.amount = parseInt(that.tansferInfo[i].amount).toFixed(1);
+      		that.tansferInfoEdit.push(temp)
       	}
+      	
+      	//console.log(that.tansferInfo[i]);
+      	
       }
-     
       that.lineDrawMalleabilityShow = false
       that.editNumber = that.editNumber+1;
       if(that.tansferInfo.length==that.editNumber){
@@ -183,10 +196,11 @@ export default{
         object: tansferInfo.object,
         amount: tansferInfo.amount,
         id:'1'+parseInt(that.transNumber+1),
-        isEdit:false
+        isEdit:false,  
+        name:'事务'+parseInt(that.transNumber+1)
       })
       that.transNumber = that.transNumber + 1;
-      if(that.transNumber==1){
+      if(that.transNumber==2){
       	that.delayTimer = setTimeout(function(){
 	      	that.confirShow = true;
 	      },500)

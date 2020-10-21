@@ -38,7 +38,7 @@
 			editPass(){
 				let that = this
 				let obj = {};
-				obj.id = that.$store.state.userId || sessionStorage.getItem('userId');
+				obj.id = that.$store.state.userId || sessionStorage.getItem('user_id');
 				obj.password = that.ruleForm2.password;
 				obj.newPassword = that.ruleForm2.newPassword;
 				

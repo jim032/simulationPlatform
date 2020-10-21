@@ -56,9 +56,9 @@
 								tooltip-effect="dark" style="width: 100%"  height="336"
 								>
 
-								<el-table-column prop="created_at" label="时间"> </el-table-column>
-								<el-table-column prop="category_name_chs" label="知识点"> </el-table-column>
-								<el-table-column prop="frequency" label="访问次数"></el-table-column>
+								<el-table-column prop="created_at" label="时间" align="center"> </el-table-column>
+								<el-table-column prop="category_name_chs" label="知识点" align="center"> </el-table-column>
+								<el-table-column prop="frequency" label="访问次数" align="center"></el-table-column>
 
 							</el-table>
 							<div class="tab-operation">
@@ -81,9 +81,9 @@
 							header-row-class-name="tab-th" cell-class-name="tab-td"
 							:row-class-name="tableRowClassName" ref="multipleTable" height="504"
 							:data="onLineList" tooltip-effect="dark" style="width: 100%">
-                <el-table-column prop="grade_name" label="年级"> </el-table-column>
-								<el-table-column prop="class_name" label="班级"> </el-table-column>
-								<el-table-column prop="name" label="姓名"> </el-table-column>
+                <el-table-column prop="grade_name" label="年级" align="center"> </el-table-column>
+								<el-table-column prop="class_name" label="班级" align="center"> </el-table-column>
+								<el-table-column prop="name" label="姓名" align="center"> </el-table-column>
 
 
             </el-table>

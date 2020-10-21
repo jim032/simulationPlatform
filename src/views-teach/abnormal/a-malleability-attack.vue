@@ -31,7 +31,7 @@
 	<comHeader ref="header" :menuShow="menuShow" @clickMenu="clickMenu" :menuText="menuText"></comHeader>
 	<!--底部-->
 	<comFooter ref="bottom" :operaInfo="operaInfo"
-    :step="step" :tansferInfo="tansferInfo" 
+    :step="step" :tansferInfo="tansferInfo" :tansferInfoEdit="tansferInfoEdit"
     :pageName="pageName" :isShowAmount="isShowAmount">
 	</comFooter>
 	<!--右边步骤提示-->

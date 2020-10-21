@@ -74,7 +74,7 @@
 		  title="创建课程"
 		  :visible.sync="dialogVisible"
 		  width="460px">
-		  <div class="inName"><input placeholder="请输入课程名称" v-model="newClassName"/></div>
+		  <div class="inName"><input placeholder="请输入课程名称" v-model="newClassName" maxlength="12"/></div>
 		  <p class="errorMess" v-if="errorMess!=''">请输入课程名称</p>
 		  <span slot="footer" class="dialog-footer">
 		    <el-button @click="dialogVisible = false">取 消</el-button>

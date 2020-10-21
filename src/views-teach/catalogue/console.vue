@@ -5,7 +5,7 @@
 			 	  <div class="command boxSizing" >
 			 	  	 <div class="tipsBox" >
 			 	  	 	  <p>请输入指令进行操作：</p>
-			 	  	 	  <p @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds newAccounts('password')：通过密码生成账号，password为参数</p>
+			 	  	 	  <p @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds newAccounts('password')：通过密码生成地址，password为参数</p>
 			 	  	 	  <p @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds getBalance('address')：通过地址查询余额，address为参数</p>
 			 	  	 	  <p>
 			 	  	 	  	<span @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds height：查看当前区块高度</span>

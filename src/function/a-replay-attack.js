@@ -23,6 +23,17 @@ export default{
       lineDraw53Show: false,
       
       singleStep:true,//单个步骤提示
+      
+      userList:[
+        {name:'用户A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:0,isWarning:false,
+        warnIcon:require('../assets/teachImg/icon_user2_warning.png')},
+        {name:'用户B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:0,isWarning:false,
+        warnIcon:require('../assets/teachImg/icon_user3_warning.png')},
+        {name:'黑客',userId:'3',icon:require('../assets/teachImg/icon_user4_warning.png'),balance:0,isWarning:false,
+        warnIcon:require('../assets/teachImg/icon_user4_warning.png')}
+      ],
+      transNumber:0,//转账次数
+      tansferInfo:[],//转账区块
 		}
 	},
 	components:{
@@ -55,6 +66,7 @@ export default{
 	  tipSure(){
 	  	let that = this
 	  	that.confirShow = false;
+	  	/*
 	  	if(that.step==1){
 	  		that.step = that.step + 1;
 	  	}
@@ -64,51 +76,93 @@ export default{
           that.confirShow = true
         },1000)
       }
-	  	// if(that.step==4){
-      //   that.step = that.step + 1;
-      //   that.delayTimer = setTimeout(function(){
-      //     that.confirShow = true
-      //   },1000)
-      // }
+      */
+	  	
 	  },
     //点击左边的三个工具箱
     poinfun(num){
       //num==2测速
       let that = this;
-      if(num==1  && that.step==2 ){
-        that.funNum = num;
-        that.D2=true;
-        that.step = that.step + 1;
+      if(num==1){
+      	if(that.transNumber>=3){
+      		return that.$toast('转账最多可达3笔',3000)
+      	}      	
+    		that.funNum = num;
+        that.D2=true; 
       }
-      if(num==2 && that.step==4 ){
+      
+      if(num==2 ){
+      	if(that.transNumber<3){
+      		return that.$toast('转账次数必须达到3笔',3000)
+      	}  	
         that.funNum = num;
-        that.step = that.step + 1;
         that.lineDraw53Show = true;
+        
         let timer = setInterval(function() {
           that.wprogress++;
           if(that.wprogress == 100) {
             clearInterval(timer)
             that.delayTimer = setTimeout(function(){
-              that.lineDraw53Show = false;
+             that.lineDraw53Show = false;
+            },200)
+            that.delayTimer = setTimeout(function(){
               that.confirShow = true;
-            },500)
+              that.step= that.step+1;
+            },800)
+          }
+        },50)
+      }
+      if(num==3&&that.step==3){
+      	that.funNum = num;
+        that.lineDraw53Show = true;
+        that.wprogress = 0
+        let timer = setInterval(function() {
+          that.wprogress++;
+          if(that.wprogress == 100) {
+            clearInterval(timer)
+            that.delayTimer = setTimeout(function(){
+             that.lineDraw53Show = false;
+            },200)
+            that.delayTimer = setTimeout(function(){
+              that.confirShow = true;
+              that.step= that.step+1;
+            },800)
           }
         },50)
       }
 
     },
+    //透明区域隐藏
+    hideTrans(){
+    	this.D2=false
+    },
+    
+    
     gotoStep(num){
       let that = this;
       that.step = that.step + 1;
       that.confirShow = true
     },
-    //
-    D2clickfinish(){
+    
+    //确定转账
+    D2clickfinish(amount){
       let that = this;
-      that.step = that.step + 1;
-      that.confirShow = false
+      that.userList[1].balance = that.userList[1].balance + amount;      
+      that.tansferInfo.push({
+        initiate: 'A',
+        object: 'B',
+        amount: amount
+      })
+      that.transNumber = that.transNumber + 1;
       that.D2=false
-      //增加新的区块
+      that.operaInfo.mess='';
+      if(that.transNumber==3){
+      	that.delayTimer = setTimeout(function(){
+	      	that.confirShow = true; 
+	      	that.step = that.step+1;
+	      },600)
+      }
+      
 
     }
 	},

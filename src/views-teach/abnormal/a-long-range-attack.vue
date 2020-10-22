@@ -8,7 +8,7 @@
         <div class="divList" >
         	<div class="divList-box">
             
-            <div class="divA" v-for="(item,index) in AchainList" :key="index" 
+            <div class="divA" :class="{'firstDivA':index==0 || index==AchainList.length-5}" v-for="(item,index) in AchainList" :key="index" 
             	v-if="(AchainList.length>5 && index>=AchainList.length-5) || AchainList.length<=5"
             >
               <div class="divC1" v-if="index==0">
@@ -20,7 +20,7 @@
               
               <div class="divC1" v-if="index!=0">
               	<div class="tabcel">
-              	 {{item.name}}
+              	   <p class="blockname">{{'区块'+index}}</p>
               	</div>
               </div>
               
@@ -34,7 +34,7 @@
         <div class="divList attackList"  v-if="attackList.length>0">
         	<div class="divList-box">
            
-            <div class="divA" v-for="(item,index) in attackList" :key="index" 
+            <div class="divA" :class="{'firstDivA':index==0}" v-for="(item,index) in attackList" :key="index" 
             	v-if="(attackList.length>5 && index>=attackList.length-5) || attackList.length<=5"
             > 
               <div class="divC1">

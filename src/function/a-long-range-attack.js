@@ -26,8 +26,8 @@ export default{
       curheight:0,
       spaceTimer:null,
       
-      attackTimer:null
-      
+      attackTimer:null,
+      attackNumber:0,
 		}
 	},
 	components:{
@@ -45,8 +45,14 @@ export default{
 			let that = this;
 			that.spaceTimer=setInterval(function(){
 				that.curheight++;
+
 				that.AchainList.push({height:that.curheight,name:'区块'})
-				that.chainNuber =  that.AchainList.length-1
+				that.chainNuber =  that.AchainList.length-1;
+				if(that.curheight==3){
+					clearInterval(that.spaceTimer);
+					that.step=2;
+					that.confirShow = true
+				}
 			},10000)
 		},
 		
@@ -71,9 +77,12 @@ export default{
 	  tipSure(){
 	  	let that = this
 	  	that.confirShow = false;
+	  	
 	  	if(that.step==1){
 	  		that.getBlockList()
 	  	}
+	  	
+	  	
 	  	/*
 	  	if(that.step==1){
 	  		that.step = that.step + 1;
@@ -94,16 +103,23 @@ export default{
        that.funNum = num;
       
       if(num==1){
+      	if(that.AchainList.length<2){
+      		return that.$toast("创世区块不可攻击",2000)
+      	}
       	let attHeight =that.curheight	
-      	that.attackList.push({name:'区块',height:attHeight})
+      	that.attackNumber = that.chainNuber
+      	that.attackList.push({name:'区块'+that.attackNumber,height:attHeight})
       	that.attackTimer=setInterval(function(){
-					that.attackList.push({name:'区块',height:attHeight+1})		
-			},8000)
+      		that.attackNumber++;
+					that.attackList.push({name:'区块'+that.attackNumber,height:attHeight+1})		
+			 },8000)
+      	that.getBlockList();
+      	that.step=3;
       	
       }
       if(num==2 ){
-        if(that.step<2){
-        	that.$toast("请先点击攻击",2000)
+        if(that.step<3){
+        	return that.$toast("请先点击攻击",2000)
         }
         //that.step = that.step + 1;
         //that.confirShow = true

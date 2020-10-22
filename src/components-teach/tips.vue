@@ -806,9 +806,9 @@
                 that.confirmInfo = '文本1'+
                   '文本2。'
                 break;
-              case 3:
+              case 2:
                 that.tipTiltle = '请注意!'
-                that.confirmInfo = 'B链速度超过A链，B链将取代A链成为主链。'
+                that.confirmInfo = 'A链已出部分区块，可点击左侧工具箱的攻击按钮开始下一步的操作！'
                 break;
               case 4:
                 that.tipTiltle = '请注意!';

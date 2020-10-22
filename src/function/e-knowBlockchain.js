@@ -131,7 +131,7 @@ export default{
       })
     },
     getDataList(){
-    	console.log(123)
+    	//console.log(123)
     	courseDatail().then(res=>{
     		var data2 = [];
     		let obj = res.data	

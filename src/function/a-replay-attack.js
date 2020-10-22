@@ -100,14 +100,17 @@ export default{
         
         let timer = setInterval(function() {
           that.wprogress++;
+         
           if(that.wprogress == 100) {
             clearInterval(timer)
-            that.delayTimer = setTimeout(function(){
              that.lineDraw53Show = false;
-            },200)
+            that.delayTimer = setTimeout(function(){
+            
+              that.step= that.step+1;
+            },300)
             that.delayTimer = setTimeout(function(){
               that.confirShow = true;
-              that.step= that.step+1;
+         
             },800)
           }
         },50)
@@ -157,10 +160,13 @@ export default{
       that.D2=false
       that.operaInfo.mess='';
       if(that.transNumber==3){
+    		that.delayTimer = setTimeout(function(){
+    			that.step = that.step+1;
+    		},300)
       	
       	that.delayTimer = setTimeout(function(){
 	      	that.confirShow = true; 
-	      	that.step = that.step+1;
+	      	
 	      },600)
       }
       

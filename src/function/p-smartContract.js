@@ -224,8 +224,12 @@ export default{
 			  that.toast('余额不足')
 			return
 		}
-		if (transferAmount.match(/^-?[0-9]+$/) == null){
-			that.toast('转账金额必须是数字')
+		if (transferAmount.match(/^[0-9]+$/) == null){
+			that.toast('转账金额必须是正整数')
+			return
+		}
+		if(transferAmount==0){
+			that.toast('转账金额必须是正整数')
 			return
 		}
 		

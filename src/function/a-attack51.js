@@ -86,11 +86,12 @@ export default{
     poinfun(num){
       let that = this;
       //转账
+      that.funNum = num;
       if(num==1&& that.step<=2){
       	if(that.transNumber<3) {
 	        that.lineDraw51Show = true
 	        that.isShowAmount = false;
-	        that.funNum = num;
+	        
 	        if(that.transNumber==0){
 	        	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
 	        }else{
@@ -110,7 +111,7 @@ export default{
       	}
       	if(that.tansferInfo.length>0 && that.step<=3){
       		that.lineDraw51Show = true
-	        that.funNum = num;
+	        //that.funNum = num;
 	        that.step=3
       	}
       }
@@ -124,9 +125,10 @@ export default{
        	 	return;
        	 }
        }
+  
         
         that.lineDraw51Show = true
-        that.funNum = num;
+        //that.funNum = num;
         that.operaInfo.mess = ''
         that.operaInfo.infolist = [];
         let timer = setInterval(function() {

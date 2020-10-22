@@ -343,7 +343,7 @@
       </div>
       <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
         <div class="c_box">
-          <p class="pintro">请注意，黑客正在攻击未打包进链的区块</p>
+          <p class="pintro">请注意，黑客正在攻击未打包进链的事务</p>
           <div class="progress" >
             <div class="curPro">
               <div class="proIcon" :style="{'width':wprogress+'%'}"></div>
@@ -359,7 +359,7 @@
       </div>
       <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
         <div class="c_box">
-          <p class="pintro">正在打包区块</p>
+          <p class="pintro">正在打包事务</p>
           <div class="progress" >
             <div class="curPro">
               <div class="proIcon" :style="{'width':wprogress+'%'}"></div>
@@ -784,13 +784,13 @@
                 break;
               case 2:
                 that.tipTiltle = '请注意!'
-                that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
+                that.confirmInfo = '转账已发起成功，但事务还未被打包到链中。'
                 break;
               case 3:
                 that.tipTiltle = '请注意!';
                 that.confirmInfo = '黑客已将原数据修改成功'
                 break;
-              case 4:
+              case 12:
                 that.tipTiltle = '请注意!';
                 that.confirmInfo = '重放攻击已结束的危害性'
                 break;

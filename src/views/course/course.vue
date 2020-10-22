@@ -34,7 +34,7 @@
     					 	   	 	  <div class="info">
     					 	   	 	  	      <span class="icon-del" @click="deleteCourse(item.course_id)"></span>
     					 	   	 	  	 <div class="i-info">
-		    					 	   	 	  	 <div class="name"><p class="line1">{{item.course_name}}</p><span class="icon-edit" @click="modifyCourseName(item.course_id)"></span></div>
+		    					 	   	 	  	 <div class="name"><p class="line1">{{item.course_name}}</p><span class="icon-edit" @click="modifyCourseName(item,item.course_id)"></span></div>
 		    					 	   	 	  	 <p class="perNumber"><span>人数：{{item.numbers}}人</span></p>
 		    					 	   	 	  	 <el-select class="cour-select" v-model="item.class" clearable placeholder="请选择班级"  @change="changeClass($event,item.course_id)">
 														    <el-option
@@ -52,7 +52,7 @@
     					 	   	 </li>
     					 	   </ul>
     					 	   <div class="page-block course-page">
-    					 	   	<span class="btnAdd" @click="dialogVisible=true;newClassName=''">创建课程</span>
+    					 	   	<span class="btnAdd" @click="dialogVisible=true;newClassName='';errorMess=''">创建课程</span>
 								    <el-pagination
 								      @current-change="handleCurrentChange"
 								      :current-page.sync="currentPage"

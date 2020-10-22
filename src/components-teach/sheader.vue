@@ -66,8 +66,7 @@
     		this.$emit('clickMenu')
     	},
     	back(){
-    		if(this.$route.query.level && this.$route.query.level==1){
-    			
+    		if(this.$route.query.level && this.$route.query.level==1){	
     		  this.$router.push({name:'catalogue'})
     		}
     		else{
@@ -108,14 +107,17 @@
 	 		  //初始区块链
 	 		  if(text=='a3c5cdfe-f984-11ea-adc1-0242ac120002'){
 	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
+	 		  	 that.Pagereload();
 	 		  }
 	 		  //区块链的分类
 	 		  if(text=='b6251572-f984-11ea-adc1-0242ac120002'){
 	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
+	 		  	 that.Pagereload();
 	 		  }
 	 		  //区块链经典产品
 	 		  if(text=='c11f35ca-f984-11ea-adc1-0242ac120002'){
 	 		  	 that.$router.push({name:'knowBlockchain',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
+	 		  	 that.Pagereload();
 	 		  }
 	 		  //区块链的发展
 	 		  if(text=='a0681f36-f984-11ea-adc1-0242ac120002'){

@@ -126,7 +126,7 @@ export default {
     chooseCourse(index, obj) {
       let that = this
       that.curcourse = index
-
+      that.currentPage= 1
 
     },
 
@@ -136,8 +136,10 @@ export default {
     },
 
     //修改课程名称
-    modifyCourseName(course_id) {
+    modifyCourseName(obj,course_id) {
       this.update_course_id = course_id;
+      this.updateClassName = obj.course_name;
+  
       this.updatedialogVisible = true
     },
 

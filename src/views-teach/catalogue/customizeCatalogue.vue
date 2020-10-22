@@ -23,7 +23,7 @@
 					<div class="scataList">
 						 <ul >
 						 	<li class="sitem" v-for="(item,index) in cataList" :key="index" >
-						 		<p :class="{'arrow':item.category_list && item.category_list.length}" @click="linkRouter(item,item.course_name)"><span class="snum">0{{index+1}}</span>{{item.course_name}}</p>
+						 		<p :class="{'arrow':item.category_list && item.category_list.length}" @click="linkRouter(item,item.course_name)"><span class="snum">{{index+1 | catIndex}}</span>{{item.course_name}}</p>
 						 	  <div class="listbox" v-if="item.ishow">
 						 	 	  <span class="ii-item" v-for="(iitem,index) in item.category_list" @click="linkRouter(iitem,item.course_name)">{{iitem.category_name_en}}</span> 
 						 	 	</div>
@@ -51,6 +51,17 @@ export default{
 			iconSrc:'',
 		}
 	},
+	filters:{
+			catIndex: function (val) {
+				let str = ''
+				if(val<9){
+					str=0+val
+				}else{
+					str=val
+				}
+			  return str
+			}
+		},
 	methods:{
 		
 		//获取目录

@@ -86,8 +86,8 @@
       <!--交易延展性攻击-->
       <template v-if="pageName==54 && isShowAmount==false">
       	<div class="bottomMess malleBottomMess" v-if="isShowAmount==false && step >= 2">
-				 	  <span class="span1">未打包的区块</span><span class="span2">已打包的区块</span>
-				 	  <span class="span3">已修改未打包区块</span><span class="span4">已修改已打包区块</span>
+				 	  <span class="span1">未打包的事务</span><span class="span2">已打包的事务</span>
+				 	  <span class="span3">已修改未打包事务</span><span class="span4">已修改已打包事务</span>
 				</div>
       	<ul class="affairsList malle-affairsList" v-if="step >= 2">
       		 <li class="affairItem affairDefault " :class="{'finshAffair':step==12 && !item.isEdit}" v-for="(item,index) in tansferInfo" :key="index">
@@ -109,12 +109,12 @@
       
       <template v-if="pageName==53 && tansferInfo.length>0">
       	<div class="bottomMess malleBottomMess" >
-				 	  <span class="span1">未打包的区块</span>
-				 	  <span class="span3">已修改未打包区块</span><span class="span4">已修改已打包区块</span>
+				 	  <span class="span1">未打包的事务</span>
+				 	  <span class="span3">已修改未打包事务</span><span class="span4">已修改已打包事务</span>
 				</div>
       	<ul class="affairsList replay-affairsList" >
       		 <li class="affairItem affairDefault " :class="{'redAffair':step==3,'finshAffair':step==4}" v-for="(item,index) in tansferInfo" :key="index">
-      		 	 <div class="affairName" style="margin-top: 10px;">区块{{index+1}}</div>
+      		 	 <div class="affairName" style="margin-top: 10px;">事务{{index+1}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
              
       		 </li>

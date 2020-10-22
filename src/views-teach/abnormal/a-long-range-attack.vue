@@ -4,82 +4,52 @@
 		<div class="mainContent">
 
       <div class="mainBox">
-
-        <div class="divList" v-if="step==2 ||step==3">
-            <div class="divTitle">
-
+      	<!--A链-->
+        <div class="divList" >
+        	<div class="divList-box">
+            
+            <div class="divA" v-for="(item,index) in AchainList" :key="index" 
+            	v-if="(AchainList.length>5 && index>=AchainList.length-5) || AchainList.length<=5"
+            >
+              <div class="divC1" v-if="index==0">
+              	<div class="tabcel">
+	              	 	<p>创世</p>
+	              	 	<p>区块</p>
+              	</div>
+              </div>
+              
+              <div class="divC1" v-if="index!=0">
+              	<div class="tabcel">
+              	 {{item.name}}
+              	</div>
+              </div>
+              
             </div>
-            <div class="divA" >
-              <div class="divC1">创世区块</div>
-              <div class="divC2">当前哈希：</div>
-              <div class="divC3">78236468354</div>
-            </div>
-            <div class="divA" >
-              <div class="divC1">区块一</div>
-              <div class="divC2">当前哈希：</div>
-              <div class="divC3">78236468354</div>
-            </div>
-            <div class="divA" >
-              <div class="divC1">区块二</div>
-              <div class="divC2">当前哈希：</div>
-              <div class="divC3">78236468354</div>
-            </div>
-            <div class="divA" >
-              <div class="divC1">区块三</div>
-              <div class="divC2">当前哈希：</div>
-              <div class="divC3">78236468354</div>
-            </div>
-            <div class="divA" >
-              <div class="divC1">区块四</div>
-              <div class="divC2">当前哈希：</div>
-              <div class="divC3">78236468354</div>
-            </div>
-          <div class="divTitle">
-            A链
+            <div class="divTitle">A链(10s)</div>
           </div>
-          </div>
-        <div  v-if="step==2 ||step==3" class="divline1" ></div>
-        <div class="divList" v-if="step==2 ||step==3" style="margin-top: 25px">
-          <div class="divTitle">
-
-          </div>
-          <div style="width: 98px;height: 98px;margin-left: 25px;padding: 3px" >
-
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块一</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块二</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块三</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块四</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块五</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块六</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divTitle">
-            B链
-          </div>
+          
+          <div class="along-line divline1" :style="{width:chainNuber<5?(150*chainNuber+'px'):'480px;'}"></div>
         </div>
+        <!--B链-->
+        <div class="divList attackList"  v-if="attackList.length>0">
+        	<div class="divList-box">
+           
+            <div class="divA" v-for="(item,index) in attackList" :key="index" 
+            	v-if="(attackList.length>5 && index>=attackList.length-5) || attackList.length<=5"
+            > 
+              <div class="divC1">
+              	<div class="tabcel">
+              	 {{item.name}}
+              	</div>
+              </div>
+              
+            </div>
+            <div class="divTitle">B链(8s)</div>
+          </div>
+          
+           <!--<div class="along-line divline1" :style="{width:chainNuber<5?(150*chainNuber+'px'):'480px;'}"></div>-->
+        </div>
+        
         <div  v-if="step==2 ||step==3" class="divline2" ></div>
         <div  v-if="step==2 ||step==3" class="divline3"></div>
         <div class="divList" v-if="step==4"  >
@@ -124,22 +94,30 @@
         </div>
         <div  v-if="step==4" class="divline4" ></div>
 
-        <div class="userinfo" v-if="step==2 || step==3" style="text-align: center;">
-          <div class="d-user">
-            <div class="el-button" style="color: blue" @click="poinfun(2)">测速</div>
-          </div>
-        </div>
       </div>
 
 
 		</div>
 		
 	<!--左侧拖拽工具箱-->
-	 <div class="leftTool">
-		<div class="showbox" :class="{'showTool':showTool}">
-			<!--<div class="tool1" :class="{'animaImg2':funNum==1}" ><span class="tool_icon" ></span></div>-->
-			<!--<div class="tool2" :class="{'animaImg2':funNum==2}" ><span class="tool_icon"  @click.stop="poinfun(2)">测速</span></div>-->
-			<!--<div class="tool3" :class="{'animaImg3':funNum==3}"><span class="tool_icon" ></span></div>-->
+	<div class="leftTool symmetryTool">
+		<div class="showbox" :class="{'showTool':showTool,'showBox1':funNum==1,'showBox2':funNum==2}" >
+			<div class="tool1" @click.stop="poinfun(1)">
+				 <span class="tool_icon" >
+				 	  <p class="n_ltips">攻击</p>
+			   </span>
+			</div>
+			<div class="tool2" style="display: none;" >
+				<span class="tool_icon">
+					
+		   	</span>
+			</div>
+			<div class="tool3" @click.stop="poinfun(2)">
+				<span class="tool_icon"  >
+					<p class="n_ltips">覆盖</p>
+				</span>
+				
+			</div>
 		</div>
 		<div class="icon" @click.stop="showTool=!showTool;menuShow = false"><span></span></div>
 	</div>
@@ -162,8 +140,13 @@
 <script src="../../function/a-long-range-attack.js">
 </script>
 
-<style scoped="" lang="less">
+<style scoped lang="less">
 @import url("../../assets/teachCss/abnormal.less");
+	@import url("../../assets/teachCss/p-encryptionAlgorithm.less");
+	.tool1 .tool_icon{background:url(../../assets/teachImg/icon_attack.png);
+	background-size: contain;-webkit-background-size: contain;}
+	.tool1,.tool3{background:0 none;}
+	.tool3 .tool_icon{background:url(../../assets/teachImg/icon_cover.png);background-size: contain;-webkit-background-size: contain;}
 </style>
 <!--<style>-->
   <!--.divList{-->

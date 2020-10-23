@@ -812,8 +812,13 @@
                 break;
               case 4:
                 that.tipTiltle = '请注意!';
-                that.confirmInfo = '长程攻击已结束，可点击右上方的重置或者返回。'
+                that.confirmInfo = '由于B链的出块速度大于A链的出块速度，B链覆盖A链'
                 break;
+              case 5:
+                that.tipTiltle = '请注意!';
+                that.confirmInfo = '至此，长程攻击的模拟已结束'
+                break;
+                
             }
             return;
           }

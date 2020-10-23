@@ -19,15 +19,27 @@ export default{
       inputMoney:0,
       singleStep:true,//单个步骤提示
       
-      AchainList:[{name:'创世区块',height:0}],
-      attackList:[],
-      chainNuber:0,
-      showAchainList:[],
-      curheight:0,
-      spaceTimer:null,
+      AchainList:[{name:'创世区块',height:0}],//A链
+      attackList:[],//B链
+      chainNuber:0,//A链
+      mergedChainList:[],//合并链
       
-      attackTimer:null,
+      curheight:0,
+      spaceTimer:null, //A链定时器
+      
+      attackTimer:null,//B链定时器
       attackNumber:0,
+      
+      attack_Number:0,//攻击的初始增长
+      delaytimer:null,//延迟时间
+      
+      isAttacked:false,
+      isCovered:false,
+      
+      click_attackNumber:0,//点击攻击的位置
+      
+      
+
 		}
 	},
 	components:{
@@ -45,13 +57,16 @@ export default{
 			let that = this;
 			that.spaceTimer=setInterval(function(){
 				that.curheight++;
-
 				that.AchainList.push({height:that.curheight,name:'区块'})
 				that.chainNuber =  that.AchainList.length-1;
-				if(that.curheight==3){
+				if(that.curheight==2){
 					clearInterval(that.spaceTimer);
-					that.step=2;
-					that.confirShow = true
+					if(that.isAttacked){
+					   that.confirShow = true
+					}
+				}
+				if(that.curheight==6){
+					clearInterval(that.spaceTimer);
 				}
 			},10000)
 		},
@@ -81,51 +96,82 @@ export default{
 	  	if(that.step==1){
 	  		that.getBlockList()
 	  	}
-	  	
-	  	
-	  	/*
-	  	if(that.step==1){
-	  		that.step = that.step + 1;
+	  	if(that.step==4){
+	  		that.step= that.step+1
+	  		that.mergedChainList = that.attackList;
+	  		//console.log(that.click_attackNumber)
+	  		if(that.click_attackNumber==1){
+	  			that.mergedChainList.unshift({name:'创世区块',height:0}) 
+	  		}else{
+	  			
+	  			that.mergedChainList.unshift({name:'区块1',height:1})
+          that.mergedChainList.unshift({name:'创世区块',height:0}) 
+	  		}
+
+       if(that.mergedChainList.length==7){
+       	  that.delaytimer =setTimeout(function(){
+       	  	that.confirShow=true
+       	  },2000)
+      		
+      	}
 	  	}
-      if(that.step==3){
-        that.step = that.step + 1;
-        that.delayTimer = setTimeout(function(){
-          that.confirShow = true
-        },1000)
-      }*/
-     
+	  	
 
 	  },
     //点击左边的三个工具箱
     poinfun(num){
       //num==2测速
       let that = this;
-       that.funNum = num;
+      that.funNum = num;
       
+      /*攻击*/
       if(num==1){
       	if(that.AchainList.length<2){
       		return that.$toast("创世区块不可攻击",2000)
       	}
+      	if(that.isAttacked){
+      		return that.$toast("已攻击",2000)
+      	}
+      	if(that.isCovered){
+      	 	return that.$toast("长程攻击模拟已结束",2000)
+      	 }
+      	that.step=3;
+      	that.isAttacked=true
+      	that.getBlockList();
       	let attHeight =that.curheight	
       	that.attackNumber = that.chainNuber
+      	that.click_attackNumber  = that.chainNuber
       	that.attackList.push({name:'区块'+that.attackNumber,height:attHeight})
       	that.attackTimer=setInterval(function(){
-      		that.attackNumber++;
-					that.attackList.push({name:'区块'+that.attackNumber,height:attHeight+1})		
+      		that.attack_Number++;
+      	
+      		if(that.attackList.length==4){
+      			clearInterval(that.attackTimer)
+      			if(that.mergedChainList.length==6){
+      				that.confirShow=true
+      			}
+      		}
+					that.attackList.push({name:'区块'+parseInt(that.attackNumber+that.attack_Number),height:attHeight+1})	
+					
+					
 			 },8000)
-      	that.getBlockList();
-      	that.step=3;
       	
       }
-      if(num==2 ){
-        if(that.step<3){
-        	return that.$toast("请先点击攻击",2000)
-        }
-        //that.step = that.step + 1;
-        //that.confirShow = true
+      /*覆盖*/
+      if(num==2){
+      	 if(!that.isAttacked){
+      	 	return that.$toast("请先点击攻击",2000)
+      	 }
+      	 if(that.isCovered){
+      	 	return that.$toast("长程攻击模拟已结束",2000)
+      	 }else{
+      	 	 that.step=4
+           that.confirShow=true
+      	 	 that.isCovered=true;
+      	 }
       }
-
-
+      
+      
     },
     //提现金额提交完成
     D1clickfinish(){
@@ -137,12 +183,22 @@ export default{
     }
 	},
   mounted(){
-  let that = this
-  this.menuText = '异常篇-'+this.$route.params.name
- 	that.category_id = this.$route.params.id;
-  that.$nextTick(() => {
-    that.confirShow = true;
-    that.getvisit();
-  })
-}
+	  let that = this
+	  this.menuText = '异常篇-'+this.$route.params.name
+	 	that.category_id = this.$route.params.id;
+	  that.$nextTick(() => {
+	    that.confirShow = true;
+	    that.getvisit();
+	    clearInterval(this.attackTimer);
+	    clearInterval(this.spaceTimer);
+	  })
+  },
+  beforeDestroy() {    //页面关闭时清除定时器  
+	  clearInterval(this.attackTimer);
+	  clearInterval(this.spaceTimer);
+	  if(this.delaytimer){
+	  	clearTimeout(this.delaytimer)
+	  }
+	},
+	  
 }

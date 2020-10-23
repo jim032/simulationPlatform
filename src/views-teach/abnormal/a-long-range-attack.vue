@@ -5,11 +5,11 @@
 
       <div class="mainBox">
       	<!--A链-->
-        <div class="divList" >
+        <div class="divList" v-if="step!=5">
         	<div class="divList-box">
             
-            <div class="divA" :class="{'firstDivA':index==0 || index==AchainList.length-5}" v-for="(item,index) in AchainList" :key="index" 
-            	v-if="(AchainList.length>5 && index>=AchainList.length-5) || AchainList.length<=5"
+            <div class="divA" :class="{'firstDivA':index==0 || index==AchainList.length-6}" v-for="(item,index) in AchainList" :key="index" 
+            	v-if="(AchainList.length>7 && index>=AchainList.length-7) || AchainList.length<=7"
             >
               <div class="divC1" v-if="index==0">
               	<div class="tabcel">
@@ -23,18 +23,18 @@
               	   <p class="blockname">{{'区块'+index}}</p>
               	</div>
               </div>
-              
+              <div class="lineBorder" v-if="index>0"></div>
             </div>
             <div class="divTitle">A链(10s)</div>
           </div>
           
-          <div class="along-line divline1" :style="{width:chainNuber<5?(150*chainNuber+'px'):'480px;'}"></div>
+          <!--<div class="along-line divline1" :style="{width:chainNuber<7?(120*chainNuber+'px'):'480px;'}"></div>-->
         </div>
         <!--B链-->
-        <div class="divList attackList"  v-if="attackList.length>0">
+        <div class="divList attackList"  v-if="attackList.length>0 &&　step!=5">
         	<div class="divList-box">
            
-            <div class="divA" :class="{'firstDivA':index==0}" v-for="(item,index) in attackList" :key="index" 
+            <div class="divA" :class="{'firstDivA':index==0,'firstDivA1':click_attackNumber==1 && index==0}" v-for="(item,index) in attackList" :key="index" 
             	v-if="(attackList.length>5 && index>=attackList.length-5) || attackList.length<=5"
             > 
               <div class="divC1">
@@ -42,63 +42,37 @@
               	 {{item.name}}
               	</div>
               </div>
-              
+              <div class="lineBorderH" v-if="index==0"></div>
+              <div class="lineBorder" v-if="index>0"></div>
             </div>
             <div class="divTitle">B链(8s)</div>
           </div>
           
            <!--<div class="along-line divline1" :style="{width:chainNuber<5?(150*chainNuber+'px'):'480px;'}"></div>-->
         </div>
-        
-        <div  v-if="step==2 ||step==3" class="divline2" ></div>
-        <div  v-if="step==2 ||step==3" class="divline3"></div>
-        <div class="divList" v-if="step==4"  >
-          <div class="divTitle">
-            B链
-          </div>
-          <div class="divA" >
-            <div class="divC1">创世区块</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块一</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块二</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块三</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块四</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块五</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-          <div class="divB" >
-            <div class="divC1">区块六</div>
-            <div class="divC2">当前哈希：</div>
-            <div class="divC3">78236468354</div>
-          </div>
-        </div>
-        <div  v-if="step==4" class="divline4" ></div>
-
-      </div>
-
+       
+        <!--覆盖A链的B链-->
+			 <div class="divList mergedChainList"  v-if="mergedChainList.length>0 && step==5">
+	      	<div class="divList-box">
+	         <div class="divTitle">B链</div>
+	          <div class="divA" :class="{'warnChian':index>1,'firstDivA':index==0}"  v-for="(item,index) in mergedChainList" :key="index" 
+	          
+	          > 
+	            <div class="divC1">
+	            	<div class="tabcel">
+	            	 {{item.name}}
+	            	</div>
+	            </div>
+	            <div class="lineBorder" v-if="index>0"></div>
+	          </div>
+	          
+	        </div>
+	        
+	        
+	      </div>
 
 		</div>
-		
+  </div>	
 	<!--左侧拖拽工具箱-->
 	<div class="leftTool symmetryTool">
 		<div class="showbox" :class="{'showTool':showTool,'showBox1':funNum==1,'showBox2':funNum==2}" >
@@ -129,7 +103,7 @@
 	</comFooter>
 	<!--右边步骤提示-->
 	<rightTips :step="step" :confirShow="confirShow" :stepTips="stepTips" :pageName="pageName" 
-		@tipSure="tipSure"
+		@tipSure="tipSure" :singleStep="singleStep"
 	>
 		
 	</rightTips>	

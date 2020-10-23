@@ -24,7 +24,7 @@ var courseDatail = function(data){
 
 //自定义篇章
 var getCourseClass = function(data){
-	return axios.get('/course_have_classes?type='+data.type)	
+	return axios.get('/course_have_classes?type='+data.type+'&per_page='+data.per_page+'&page='+data.page)
 }
 
 

@@ -225,9 +225,14 @@ var store = new Vuex.Store({
 		//异常篇—-重放攻击
 		a_replayAttack:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}],
 		//异常-长程攻击
-		a_longRangAttack:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}],
+		a_longRangAttack:[{step:1,infolist:[
+		  	'1、页面A链出块速度10s，A链开始出块时，可点击攻击图标进行攻击',
+		    '2、攻击之后A链会生成一条新的链出块速度8s',
+		    '3、点击覆盖图标、出块速度快的链会覆盖出块速度慢的链'
+		  ]}],
 		//异常-交易延展性
-		a_malleabilityAttack:[{step:1,infolist:['1、请点击页面内的转账按钮进行操作。','2、请注意页面内余额变化']}]
+		a_malleabilityAttack:[{step:1,infolist:['1、请点击页面内的转账按钮进行操作。','2、请注意页面内余额变化']}],
+
   },
   mutations: {
   

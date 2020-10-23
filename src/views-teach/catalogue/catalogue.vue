@@ -190,14 +190,15 @@
 	 			let that = this;
 	 			let obj = {};
 	 			obj.type = that.model;
-	
+	      obj.page = 0;
+	      obj.per_page = 6
 	 			getCourseClass(obj).then(res=>{
 	 				//console.log(res)
 	 				if(res.code==200){
 //	 					console.log(res.data.length);
-	 					if(res.data.length>0){
+	 					if(res.data.content && res.data.content.length){
 		 					this.isTab4 = false
-		 					this.courseList = res.data
+		 					this.courseList = res.data.content
 		 				}
 	        }else{
 	        	 that.$toast(res.message,3000)

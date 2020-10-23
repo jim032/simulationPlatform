@@ -28,8 +28,12 @@
 						 	 	  <span class="ii-item" v-for="(iitem,index) in item.category_list" @click="linkRouter(iitem,item.course_name)">{{iitem.category_name_en}}</span> 
 						 	 	</div>
 						 	</li>
-
+      
 						 </ul>
+						 <div class="btnbox">
+						   <button class="btnPage" v-if="curPage>0" @click="prevPage">上一页</button>
+						   <button class="btnPage" v-if="totalPages>2 &&　curPage!=totalPages" @click="nextPage">下一页</button>
+						 </div>
 					</div>
 					
 			 </div>
@@ -39,7 +43,8 @@
 </template>
 
 <script >
-import {getCourseClass} from '@/API/api-teach'
+import {getCourseClass} from '@/API/api-teach';
+let that;
 export default{
 	data(){
 		return{	
@@ -49,47 +54,81 @@ export default{
 			courName:'',
 			
 			iconSrc:'',
+			curPage:0,//分页的当前页
+			per_page:5,//当前每页的数据
+			
+			totalPages:0,//总共页数
 		}
+	},
+	beforeCreate(){
+		that = this;
 	},
 	filters:{
 			catIndex: function (val) {
 				let str = ''
-				if(val<9){
-					str=0+val
+				let value = val
+		   
+			  value=parseInt(value+that.curPage*that.per_page)
+		
+				if(value<9){
+					str=0+value
 				}else{
-					str=val
+					str=value
 				}
 			  return str
 			}
 		},
 	methods:{
 		
+		
 		//获取目录
-	 		getData(){
-	 			let that = this;
-	 			//that.courseId = this.$route.params.id
-	 			//that.courName = this.$route.params.name
-        that.courName = '自定义篇'
-        that.iconSrc=require('../../assets/teachImg/cat_icon5.png')
-
-	 			let obj = {};
-	 			obj.type = sessionStorage.getItem('loginModal');
-	 			getCourseClass(obj).then(res=>{
+ 		getData(){
+ 			let that = this;
+ 			//that.courseId = this.$route.params.id
+ 			//that.courName = this.$route.params.name
+      that.courName = '自定义篇'
+      that.iconSrc=require('../../assets/teachImg/cat_icon5.png')
+      that.getCourseList();
+ 			
+ 		},
+	 	//获取下一页
+	 	nextPage(){
+	 		let that = this;
+	 		that.curPage = that.curPage+1;
+	 		that.cataList = []
+	 		that.getCourseList();
+	 	},
+	 	//获取上一页
+	 	prevPage(){
+	 		let that = this;
+	 		that.curPage = that.curPage-1;
+	 		that.cataList = []
+	 		that.getCourseList();
+	 	},
+	 	
+	 	//获取自定义课程列表
+	 	getCourseList(){
+	 		let that = this;
+	 		let obj = {};
+ 			obj.type = sessionStorage.getItem('loginModal');
+ 			obj.page = that.curPage;
+      obj.per_page = that.per_page;
+ 			getCourseClass(obj).then(res=>{
           if(res.code==200){
-          	that.cataList = res.data;
+          	that.cataList = res.data.content;
           	for(var i =0;i<that.cataList.length;i++){
           		if(that.cataList[i].category_list!=null){
           			this.$set(that.cataList[i],'ishow',false)	
           		}	
           	}
-            
+            that.totalPages = res.data.totalPages
 //          console.log(that.cataList);
             
           }else{
           	 that.$toast(res.message,3000)
-          }
-        })
-	 		},
+        }
+      })
+	 	},
 		
 		goBack(){
 			this.$router.go(-1);
@@ -231,5 +270,13 @@ export default{
 <style scoped lang="less">
 @import url("../../assets/teachCss/style.less");
 @import url("../../assets/teachCss/subCatalogue.less");
-
+.btnbox{
+	text-align: center; 
+	.btnPage{
+	border: none;
+	background-color: transparent;
+	outline: none; font-size:18px; color: #fff;margin:0 30px;cursor: pointer;
+	}
+	
+}
 </style>

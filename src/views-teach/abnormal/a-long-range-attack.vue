@@ -35,7 +35,7 @@
         	<div class="divList-box">
            
             <div class="divA" :class="{'firstDivA':index==0,'firstDivA1':click_attackNumber==1 && index==0}" v-for="(item,index) in attackList" :key="index" 
-            	v-if="(attackList.length>5 && index>=attackList.length-5) || attackList.length<=5"
+            	
             > 
               <div class="divC1">
               	<div class="tabcel">
@@ -55,7 +55,7 @@
 			 <div class="divList mergedChainList"  v-if="mergedChainList.length>0 && step==5">
 	      	<div class="divList-box">
 	         <div class="divTitle">B链</div>
-	          <div class="divA" :class="{'warnChian':index>1,'firstDivA':index==0}"  v-for="(item,index) in mergedChainList" :key="index" 
+	          <div class="divA" :class="{'warnChian':index>1 || (click_attackNumber==1 && index>0),'firstDivA':index==0}"  v-for="(item,index) in mergedChainList" :key="index" 
 	          
 	          > 
 	            <div class="divC1">

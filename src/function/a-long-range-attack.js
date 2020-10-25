@@ -19,13 +19,14 @@ export default{
       inputMoney:0,
       singleStep:true,//单个步骤提示
       
-      AchainList:[{name:'创世区块',height:0}],//A链
+      AchainList:[{name:'创世区块',height:1}],//A链
       attackList:[],//B链
       chainNuber:0,//A链
       mergedChainList:[],//合并链
       
       curheight:0,
       spaceTimer:null, //A链定时器
+      spaceTimer1:null,//A链被攻击之后的定时器
       
       attackTimer:null,//B链定时器
       attackNumber:0,
@@ -37,9 +38,8 @@ export default{
       isCovered:false,
       
       click_attackNumber:0,//点击攻击的位置
-      
-      
-
+      cz_type: 5,
+     
 		}
 	},
 	components:{
@@ -53,24 +53,36 @@ export default{
 	methods:{
 		
 		//页面刚进来点击我知道了区块产生
-		getBlockList(){
+		getBlockList(type){
 			let that = this;
-			that.spaceTimer=setInterval(function(){
-				that.curheight++;
-				that.AchainList.push({height:that.curheight,name:'区块'})
-				that.chainNuber =  that.AchainList.length-1;
-				if(that.curheight==2){
-					clearInterval(that.spaceTimer);
-					if(that.isAttacked){
-					   that.confirShow = true
+			if (type == 1) {//初始化
+				that.spaceTimer=setInterval(function(){
+					that.curheight++;
+					that.chainNuber++;
+					that.AchainList.push({height:that.curheight,name:'区块'})
+					if(that.curheight==2){
+						clearInterval(that.spaceTimer);
+						if(!that.isAttacked){
+						   that.confirShow = true
+						}
 					}
-				}
-				if(that.curheight==6){
-					clearInterval(that.spaceTimer);
-				}
-			},10000)
+					if(that.curheight==6){
+						clearInterval(that.spaceTimer);
+					}
+				},2000)
+			} else {//攻击
+				clearInterval(that.spaceTimer);
+				that.spaceTimer=setInterval(function(){
+					that.curheight++;
+					that.chainNuber++;
+					that.AchainList.push({height:that.curheight,name:'区块'})
+					if(that.curheight==6){
+						clearInterval(that.spaceTimer);
+					}
+				},2000)
+			}
 		},
-		
+
 		//知识点访问
 	  getvisit(){  
 		  let that = this
@@ -93,13 +105,16 @@ export default{
 	  	let that = this
 	  	that.confirShow = false;
 	  	
+	  	
 	  	if(that.step==1){
-	  		that.getBlockList()
+	  		if(that.isAttacked || that.curheight==0){  			
+	  			that.getBlockList(1)
+	  		}		
 	  	}
 	  	if(that.step==4){
 	  		that.step= that.step+1
+	  		console.log(that.attackList)
 	  		that.mergedChainList = that.attackList;
-	  		//console.log(that.click_attackNumber)
 	  		if(that.click_attackNumber==1){
 	  			that.mergedChainList.unshift({name:'创世区块',height:0}) 
 	  		}else{
@@ -126,6 +141,7 @@ export default{
       
       /*攻击*/
       if(num==1){
+      	//that.spaceTimer=null;
       	if(that.AchainList.length<2){
       		return that.$toast("创世区块不可攻击",2000)
       	}
@@ -137,24 +153,31 @@ export default{
       	 }
       	that.step=3;
       	that.isAttacked=true
-      	that.getBlockList();
+      	that.getBlockList(2);
+      	
       	let attHeight =that.curheight	
       	that.attackNumber = that.chainNuber
-      	that.click_attackNumber  = that.chainNuber
+      	that.click_attackNumber = that.chainNuber
       	that.attackList.push({name:'区块'+that.attackNumber,height:attHeight})
       	that.attackTimer=setInterval(function(){
-      		that.attack_Number++;
-      	
-      		if(that.attackList.length==4){
-      			clearInterval(that.attackTimer)
-      			if(that.mergedChainList.length==6){
-      				that.confirShow=true
-      			}
+      		that.attack_Number++;     	
+      		if(that.click_attackNumber==1){
+      			if(that.attackList.length==that.cz_type){
+	      			clearInterval(that.attackTimer)
+	      			if(that.mergedChainList.length==7){
+	      				that.confirShow=true
+	      			}
+	      		}
+      		}else{
+      			if(that.attackList.length==4){
+	      			clearInterval(that.attackTimer)
+	      			if(that.mergedChainList.length==7){
+	      				that.confirShow=true
+	      			}
+	      		}
       		}
 					that.attackList.push({name:'区块'+parseInt(that.attackNumber+that.attack_Number),height:attHeight+1})	
-					
-					
-			 },8000)
+			 },1000)
       	
       }
       /*覆盖*/
@@ -168,6 +191,12 @@ export default{
       	 	 that.step=4
            that.confirShow=true
       	 	 that.isCovered=true;
+      	 	 that.cz_type = 6//针对覆盖的情况设置判断长度为6 (165行代码判断处)
+      	 	 if(that.mergedChainList.length==7){
+      	 	 		clearInterval(that.attackTimer)
+      	 	 		that.confirShow=true
+      			
+	      	 }
       	 }
       }
       
@@ -189,8 +218,7 @@ export default{
 	  that.$nextTick(() => {
 	    that.confirShow = true;
 	    that.getvisit();
-	    clearInterval(this.attackTimer);
-	    clearInterval(this.spaceTimer);
+	  
 	  })
   },
   beforeDestroy() {    //页面关闭时清除定时器  

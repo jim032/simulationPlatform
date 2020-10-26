@@ -468,22 +468,25 @@
           let obj ={};
           obj.user_id_list = user_id_list;
           
-          /*整页删除判断*/
-          if(user_id_list.length==that.dataList.length){   	
-        		if(that.currentPage==that.totalPages-1){
-        			that.currentPage= (that.currentPage>1?parseInt(that.currentPage-1):that.currentPage)
-        		}
-          		
-          }
+          
+        
           
           delete_user(JSON.stringify(obj)).then(res=>{
             if(res.code==200){
+            	/*整页删除判断*/       
+		          if(user_id_list.length==that.dataList.length){           	
+		        		if(that.currentPage==that.totalPages){	
+		        			that.currentPage= (that.currentPage>1?parseInt(that.currentPage-1):that.currentPage)
+		      
+		        		}
+		          		
+		          }
               that.search_user();
             }else{
               this.$toast(res.message,2000)
             }
           })
-
+      
 
         }).catch(() => {
           /*

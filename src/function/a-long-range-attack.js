@@ -55,32 +55,24 @@ export default{
 		//页面刚进来点击我知道了区块产生
 		getBlockList(type){
 			let that = this;
-			if (type == 1) {//初始化
-				that.spaceTimer=setInterval(function(){
-					that.curheight++;
-					that.chainNuber++;
-					that.AchainList.push({height:that.curheight,name:'区块'})
-					if(that.curheight==2){
-						clearInterval(that.spaceTimer);
-						if(!that.isAttacked){
-						   that.confirShow = true
-						}
+			that.spaceTimer=setInterval(function(){
+				that.curheight++;
+				that.chainNuber++;
+				that.AchainList.push({height:that.curheight,name:'区块'})
+			//	console.log('定时器主体')
+				if(that.curheight==2 && !that.isAttacked){
+					clearInterval(that.spaceTimer);
+					//console.log('清除1');
+					if(!that.isAttacked){
+					   that.confirShow = true
 					}
-					if(that.curheight==6){
-						clearInterval(that.spaceTimer);
-					}
-				},2000)
-			} else {//攻击
-				clearInterval(that.spaceTimer);
-				that.spaceTimer=setInterval(function(){
-					that.curheight++;
-					that.chainNuber++;
-					that.AchainList.push({height:that.curheight,name:'区块'})
-					if(that.curheight==6){
-						clearInterval(that.spaceTimer);
-					}
-				},2000)
-			}
+				}
+				if(that.curheight==6){
+					clearInterval(that.spaceTimer);
+					//console.log('清除2');
+				}
+			},10000)
+	
 		},
 
 		//知识点访问
@@ -108,12 +100,11 @@ export default{
 	  	
 	  	if(that.step==1){
 	  		if(that.isAttacked || that.curheight==0){  			
-	  			that.getBlockList(1)
+	  			that.getBlockList()
 	  		}		
 	  	}
 	  	if(that.step==4){
 	  		that.step= that.step+1
-	  		console.log(that.attackList)
 	  		that.mergedChainList = that.attackList;
 	  		if(that.click_attackNumber==1){
 	  			that.mergedChainList.unshift({name:'创世区块',height:0}) 
@@ -152,8 +143,9 @@ export default{
       	 	return that.$toast("长程攻击模拟已结束",2000)
       	 }
       	that.step=3;
+      	clearInterval(that.spaceTimer);
       	that.isAttacked=true
-      	that.getBlockList(2);
+      	that.getBlockList();
       	
       	let attHeight =that.curheight	
       	that.attackNumber = that.chainNuber
@@ -162,22 +154,19 @@ export default{
       	that.attackTimer=setInterval(function(){
       		that.attack_Number++;     	
       		if(that.click_attackNumber==1){
-      			if(that.attackList.length==that.cz_type){
-	      			clearInterval(that.attackTimer)
-	      			if(that.mergedChainList.length==7){
-	      				that.confirShow=true
-	      			}
-	      		}
+      			if(that.attack_Number==5){
+      				clearInterval(that.attackTimer)
+      				that.confirShow=true
+      			}
       		}else{
-      			if(that.attackList.length==4){
-	      			clearInterval(that.attackTimer)
-	      			if(that.mergedChainList.length==7){
-	      				that.confirShow=true
-	      			}
-	      		}
+	      		if(that.attack_Number==4){
+      				clearInterval(that.attackTimer)
+      				//that.confirShow=true
+      			}
+	      		
       		}
 					that.attackList.push({name:'区块'+parseInt(that.attackNumber+that.attack_Number),height:attHeight+1})	
-			 },1000)
+			 },8000)
       	
       }
       /*覆盖*/
@@ -191,7 +180,7 @@ export default{
       	 	 that.step=4
            that.confirShow=true
       	 	 that.isCovered=true;
-      	 	 that.cz_type = 6//针对覆盖的情况设置判断长度为6 (165行代码判断处)
+      	 	 //that.cz_type = 6//针对覆盖的情况设置判断长度为6 (165行代码判断处)
       	 	 if(that.mergedChainList.length==7){
       	 	 		clearInterval(that.attackTimer)
       	 	 		that.confirShow=true

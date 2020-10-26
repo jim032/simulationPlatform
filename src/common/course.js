@@ -101,7 +101,7 @@ export default {
 
     /*当前页改变的时候触发*/
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+     // console.log(`当前页: ${val}`);
       let that = this;
       that.currentPage = val;
       that.getCourse();
@@ -132,7 +132,8 @@ export default {
 
     //创建课程
     createCourse() {
-      this.dialogVisible = true
+      this.dialogVisible = true;
+      this.newClassName=''
     },
 
     //修改课程名称
@@ -185,6 +186,7 @@ export default {
         addCourse(JSON.stringify(obj)).then(res => {
           if (res.code == 200) {
           	this.dialogVisible = false;
+          	//this.newClassName='';
             this.getCourse();
           } else {
             that.$toast(res.message, 3000)
@@ -280,9 +282,14 @@ export default {
         let obj = {};
         obj.user_id = that.$store.state.userId || sessionStorage.getItem('user_id');
         obj.course_id = course_id;
+    
+         if(that.courseList.length==1){
+         	 that.currentPage = that.currentPage>1?that.currentPage-1:that.currentPage
+         }
         deleteCourse(obj).then(res => {
           if (res.code == 200) {
 //          console.log(obj.user_id);
+           
             that.getCourse();
           } else {
             this.$toast(res.message, 2000)

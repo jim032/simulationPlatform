@@ -25,7 +25,7 @@ Vue.use(ViewUI)
 Vue.use(ElementUI)
 
 import router from './router'
-
+ //字体样式
 
 // 全局路由导航拦截
 router.beforeEach((to, from, next) => {	  

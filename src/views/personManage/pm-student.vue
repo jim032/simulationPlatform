@@ -191,8 +191,8 @@
 
         per_page:10,
         currentPage:1,//表示当前分页
-        totalElements:0,
-
+        totalElements:0, //一共多少页
+        totalPages:0,//总条数totalPages
         searchText:'',
         isSearch:false,
         jwt:'',
@@ -358,6 +358,7 @@
           if(res.code==200){
             this.dataList = res.data.content
             that.totalElements = res.data.totalElements
+            that.totalPages = res.data.totalPages
             if(res.data.content.length==0){
             	that.showUpload=true;
             }
@@ -466,6 +467,15 @@
           }
           let obj ={};
           obj.user_id_list = user_id_list;
+          
+          /*整页删除判断*/
+          if(user_id_list.length==that.dataList.length){   	
+        		if(that.currentPage==that.totalPages-1){
+        			that.currentPage= (that.currentPage>1?parseInt(that.currentPage-1):that.currentPage)
+        		}
+          		
+          }
+          
           delete_user(JSON.stringify(obj)).then(res=>{
             if(res.code==200){
               that.search_user();

@@ -246,7 +246,7 @@ export default{
     //数据接收
     websocketonmessage(e){ //数据接收
      
-    
+     //console.log(e)
      let mess =JSON.parse(e.data)
      let that = this;
      that.getNumber = 0;
@@ -683,13 +683,10 @@ export default{
     //点击信息展示
    showPointInfo(obj){
 	   let that = this;
-	   if (that.blockPro > 0){
-		   return
+	   if (that.coin_name==''){
+		   return this.$toast('智能合约部署未完成',2000)
 	   }
-	   //表示智能合约部署完成
-	   if(!that.contractDeployment){
-	   	return
-	   }
+	 
 	   that.isShowBlock = false
 	   that.isShowMess = true
 	

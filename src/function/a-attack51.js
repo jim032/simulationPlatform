@@ -117,17 +117,28 @@ export default{
       }
       
 
-      //打包      
-      if(num==3 && that.step == 4 && !that.isPack){
-       if(that.tansferInfo.length>1){
+      //打包     
+      if(num==3){
+      	if(that.transNumber<3){
+      		that.$toast('转账必须达到3笔',3000);
+      		return;
+      	}
+      	if(that.step<3){
+      		that.$toast('请先提升算力',3000);
+      		return;
+      	}
+      	if(that.tansferInfo.length>1){
        	 if(that.delNumber==0){
        	 	this.$toast('打包前，至少删除一个事务',3000);
        	 	return;
        	 }
-       }
-  
-        
-        that.lineDraw51Show = true
+        }
+      	if(that.isPack){
+      		this.$toast('当前事务已打包',3000);
+       	 	return;
+      	}
+      	
+      	that.lineDraw51Show = true
         //that.funNum = num;
         that.operaInfo.mess = ''
         that.operaInfo.infolist = [];
@@ -143,7 +154,9 @@ export default{
             },500)
           }
         },50)
+      	
       }
+  
     },
     //提升算力确定
     sureUpCompute(upComputeUser) {

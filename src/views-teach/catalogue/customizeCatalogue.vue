@@ -31,8 +31,8 @@
       
 						 </ul>
 						 <div class="btnbox">
-						   <button class="btnPage" v-if="curPage>0" @click="prevPage">上一页</button>
-						   <button class="btnPage" v-if="totalPages>2 &&　curPage!=totalPages" @click="nextPage">下一页</button>
+						   <button class="btnPage" v-if="curPage>0 && cataList.length" @click="prevPage">上一页</button>
+						   <button class="btnPage" v-if="totalPages>1 &&　curPage!=totalPages-1 && cataList.length" @click="nextPage">下一页</button>
 						 </div>
 					</div>
 					
@@ -276,6 +276,7 @@ export default{
 	border: none;
 	background-color: transparent;
 	outline: none; font-size:18px; color: #fff;margin:0 30px;cursor: pointer;
+	
 	}
 	
 }

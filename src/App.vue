@@ -45,21 +45,16 @@ export default {
 
 
 <style lang="less">
-
-@font-face {
-  font-family: "SourceHanSansCN-Regular";
-  src: url("assets/fonts/SourceHanSansCN-Regular.woff2") format("woff2"),
-       url("assets/fonts/SourceHanSansCN-Regular.woff") format("woff"),
-       url("assets/fonts/SourceHanSansCN-Regular.ttf") format("truetype"),
-       url("assets/fonts/SourceHanSansCN-Regular.eot") format("embedded-opentype"),
-       url("assets/fonts/SourceHanSansCN-Regular.svg") format("svg");
-}
+	@import url("assets/fonts/Source-Han-Sans-CN-Regular.css");
 
 #app {
-  font-family: 'SourceHanSansCN-Regular', Helvetica, Arial, sans-serif !important;
+
+  font-family: 'Source-Han-Sans-CN-Regular', Helvetica,"Hiragino Sans GB", Arial, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width:100%;height: 100%;
+ 
+  font-weight: normal; font-style: normal;
   
 }
 html,body{width:100%;height:100%;}

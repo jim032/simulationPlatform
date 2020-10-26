@@ -34,6 +34,8 @@ export default{
       ],
       transNumber:0,//转账次数
       tansferInfo:[],//转账区块
+      isPack:false,//是否已打包
+      isIntercept:false,//是否已接获
 		}
 	},
 	components:{
@@ -83,19 +85,25 @@ export default{
     poinfun(num){
       //num==2测速
       let that = this;
+      
+      that.funNum = num;
+      
       if(num==1){
       	if(that.transNumber>=3){
       		return that.$toast('转账最多可达3笔',3000)
       	}      	
-    		that.funNum = num;
         that.D2=true; 
       }
       
       if(num==2 ){
       	if(that.transNumber<3){
       		return that.$toast('转账次数必须达到3笔',3000)
-      	}  	
-        that.funNum = num;
+      	} 
+      	if(that.isIntercept){
+      		return that.$toast('数据已被截获',3000)
+      	}
+      	
+
         that.lineDraw53Show = true;
         
         let timer = setInterval(function() {
@@ -104,6 +112,7 @@ export default{
           if(that.wprogress == 100) {
             clearInterval(timer)
              that.lineDraw53Show = false;
+             that.isIntercept = true;
             that.delayTimer = setTimeout(function(){
             
               that.step= that.step+1;
@@ -115,20 +124,32 @@ export default{
           }
         },50)
       }
-      if(num==3&&that.step==3){
-      	that.funNum = num;
+      if(num==3){
+      	if(that.transNumber<3){
+      		return that.$toast('转账次数必须达到3笔',3000)
+      	} 
+      	if(!that.isIntercept){
+      	
+      	  return that.$toast('请先点击截获',3000)
+      
+      	}
+      	if(that.isPack){
+      		 return that.$toast('事务已打包',3000)
+      	}
+    
         that.lineDraw53Show = true;
         that.wprogress = 0
         let timer = setInterval(function() {
           that.wprogress++;
           if(that.wprogress == 100) {
             clearInterval(timer)
+            that.isPack=true
             that.delayTimer = setTimeout(function(){
              that.lineDraw53Show = false;
             },200)
             that.delayTimer = setTimeout(function(){
               that.confirShow = true;
-              that.step= that.step+1;
+              that.step= 12;
             },800)
           }
         },50)

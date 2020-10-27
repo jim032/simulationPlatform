@@ -50,9 +50,9 @@
 								</div>
 								<h3>课程访问次数</h3>
 							</div>
-							<el-table class="customer-table total-table" 
-								header-row-class-name="tab-th" cell-class-name="tab-td" 
-								:row-class-name="tableRowClassName" ref="multipleTable" :data="operaRecord" 
+							<el-table class="customer-table total-table"
+								header-row-class-name="tab-th" cell-class-name="tab-td"
+								:row-class-name="tableRowClassName" ref="multipleTable" :data="operaRecord"
 								tooltip-effect="dark" style="width: 100%"  height="336"
 								>
 
@@ -181,7 +181,7 @@
 				dateRange:'',
 				searchInput:'',//输入知识点检查
 				onlineNumber:'',
-				
+
 				startTime:'', //知识点访问开始时间
 				endTime:''//知识点访问结束时间
 			}
@@ -199,7 +199,7 @@
 		},
 		computed: {},
 		methods: {
-      
+
       //点击日期
       dateSearch(value){
         let that = this
@@ -211,24 +211,24 @@
         obj.category_name = that.searchInput.replace(/\s*/g,'');
         obj.dateRangeStart=value[0];
         obj.dateRangeEnd=value[1]
-        
-        courseFrequency(obj).then(res=> {
-          if(res.code==200){
-            for(let i = 0 ;i < res.data.content.length; i++){
-              let time  = res.data.content[i].created_at.toString().replace('T',' ');
-              res.data.content[i].created_at = time.substring(0,19);
-            }
-            let that = this;
-            that.totalCourse = res.data.totalElements;
-            let operaRecord = res.data.content;
-            this.operaRecord=operaRecord;
-          }else{
-            that.$toast(res.message,3000)
-          }
-        })
-        
+
+        // courseFrequency(obj).then(res=> {
+        //   if(res.code==200){
+        //     for(let i = 0 ;i < res.data.content.length; i++){
+        //       let time  = res.data.content[i].created_at.toString().replace('T',' ');
+        //       res.data.content[i].created_at = time.substring(0,19);
+        //     }
+        //     let that = this;
+        //     that.totalCourse = res.data.totalElements;
+        //     let operaRecord = res.data.content;
+        //     this.operaRecord=operaRecord;
+        //   }else{
+        //     that.$toast(res.message,3000)
+        //   }
+        // })
+
       },
-      
+
 	    online(){
 	    	let that = this;
         online().then(res=> {
@@ -278,7 +278,8 @@
       	obj.per_page = that.coursePageSize;
       	obj.page = that.currentPage-1;
         obj.category_name = that.searchInput.replace(/\s*/g,'');
-        if(that.dateRange !== '') {
+        console.log(that.dateRange)
+        if(that.dateRange !== null) {
           /*let time = that.dateRange.toString().split(",");
           let start = new Date(time[0]);
           let yS = start.getFullYear();
@@ -295,14 +296,14 @@
           dE = dE < 10 ? ('0' + dE) : dE;
           obj.dateRangeEnd = yE+'-'+mE+'-'+dE;
           */
-          
+
           obj.dateRangeStart = that.startTime
-          obj.dateRangeEnd = that.endTime         
+          obj.dateRangeEnd = that.endTime
         }else{
           obj.dateRangeStart='';
           obj.dateRangeEnd='';
         }
-        
+
         courseFrequency(obj).then(res=> {
           if(res.code==200){
             for(let i = 0 ;i < res.data.content.length; i++){

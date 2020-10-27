@@ -107,8 +107,8 @@
 		 </div>
 	  </template >
 	  
-	  <!--加密算法操作提示框-->
-	  <template v-if="pageName==6 || pageName==4 || pageName==56">
+	  <!--加密算法操作提示框异常篇52软分叉，56智能合约,57硬分叉-->
+	  <template v-if="pageName==6 || pageName==4 || pageName==56 || pageName==52 || pageName==57">
 	  	 <div class="transbox" v-if="isPrompt" ></div>
 	  	 <div class="confirmBox promptBox" :class="{'show':isPrompt}">
 	  	 	  <p class="pintro">
@@ -754,22 +754,38 @@
           }
           return;
         }
+        //52软分叉
         if(that.pageName == '52'){
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '软分叉与硬分叉的基本概念及特点：'
+                that.tipTiltle = '软分叉的基本概念及特点：'
                 that.confirmInfo = '文本1'+
                   '文本2。'
                 break;
-              case 3:
+              default:
                 that.tipTiltle = '请注意!'
-                that.confirmInfo = '由于社区条件不统一，发生了链分叉'
+                that.confirmInfo = '软分叉模拟已结束，可点击右上方的重置或者返回。'
                 break;
-              case 4:
-                that.tipTiltle = '请注意!';
-                that.confirmInfo = '软分叉与硬分叉已结束，可点击右上方的重置或者返回。'
+             
+            }
+            return;
+          }
+        }
+        //57硬分叉
+        if(that.pageName == '57'){
+          if(that.confirShow == true){
+            switch(that.step){
+              case 1:
+                that.tipTiltle = '硬分叉的基本概念及特点：'
+                that.confirmInfo = '文本1'+
+                  '文本2。'
                 break;
+              default:
+                that.tipTiltle = '请注意!'
+                that.confirmInfo = '软分叉模拟已结束，可点击右上方的重置或者返回。'
+                break;
+             
             }
             return;
           }

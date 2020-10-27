@@ -293,9 +293,17 @@ export default new Router({
       }
     },
     {
-      path: '/teach/softHardFork/:id/:name?', //场景篇-软硬分叉
-      name: 'softHardFork',
-      component: () =>import('@/views-teach/abnormal/a-soft-hard-fork'),
+      path: '/teach/softFork/:id/:name?', //场景篇-软分叉
+      name: 'softFork',
+      component: () =>import('@/views-teach/abnormal/a-soft-fork'),
+      meta:{
+        direction:1
+      }
+    },
+    {
+      path: '/teach/hardFork/:id/:name?', //场景篇-硬分叉
+      name: 'hardFork',
+      component: () =>import('@/views-teach/abnormal/a-hard-fork'),
       meta:{
         direction:1
       }

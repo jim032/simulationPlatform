@@ -96,7 +96,12 @@ export default{
 	 		},
 		
 		goBack(){
-			this.$router.go(-1);
+			if (window.history.length <= 1) {
+         this.$router.push({ path: "/" });
+         return false;
+      } else {
+         this.$router.go(-1);
+      }
 		},
 		linkRouter(obj,index){
 			let that = this;
@@ -186,10 +191,14 @@ export default{
 			 				that.$router.push({name:'51attack',params:{id:obj.id,name:tmp.replace(/%/g, '')}})	
 			 			}
 			 		 
-				 	
+				 	  //软分叉
 				 		if(text=='16cc493a-f98b-11ea-adc1-0242ac120002'){
-	              that.$router.push({name:'softHardFork',params:{id:obj.id,name:obj.name}})
+	              that.$router.push({name:'softFork',params:{id:obj.id,name:obj.name}})
 	            }
+				 	  //硬分叉
+				 		if(text=='af63aaa3-2c63-f61e-d805-74b7d80c01ee'){
+	              that.$router.push({name:'hardFork',params:{id:obj.id,name:obj.name}})
+	          }
 				 		//重放攻击
 				 		if(text=='1c6ddc1e-f98b-11ea-adc1-0242ac120002'){
 	              that.$router.push({name:'replayAttack',params:{id:obj.id,name:obj.name}})

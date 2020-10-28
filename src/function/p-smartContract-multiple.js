@@ -126,6 +126,7 @@ export default{
 		  
 		  timer:null,
 		  timer2:null,
+		  showReset:false,//头部的重置按钮是否显示
 	  }
 	},
   components:{comHeader,comFooter,rightTips},

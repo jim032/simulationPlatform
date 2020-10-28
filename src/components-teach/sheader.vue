@@ -26,7 +26,7 @@
 		<div class="funbox">
 			<div class="hed-fun-box" :class="{'fadeIn':isOperate}">
 				<a class="btn btn_console" v-if="consoleShow"><span></span><em>控制台</em></a>
-				<a class="btn btn_reset" @click="Pagereload " v-if="courseId!=1"><span></span><em>重置</em></a>
+				<a class="btn btn_reset" @click="Pagereload " v-if="courseId!=1 && showReset==true"><span></span><em>重置</em></a>
 				<a class="btn btn_back" @click="back"><span></span><em>返回</em></a>
 			</div>
 			<a class="arrow" @click="isOperate=!isOperate"></a>
@@ -57,6 +57,10 @@
     	courseId:{
     		type:null,
     		default:'',
+    	},
+    	showReset:{
+    		type:null,
+    		default:true,
     	}
     },
   

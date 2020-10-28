@@ -124,7 +124,12 @@
 		<div class="icon" @click.stop="showTool=!showTool;menuShow = false"><span></span></div>
 	</div>
 	
-    <comHeader ref="header" :menuShow="menuShow" @clickMenu="clickMenu" :consoleShow="consoleShow" :menuText="menuText"></comHeader>
+    <comHeader ref="header" 
+    	 :menuShow="menuShow" @clickMenu="clickMenu" :consoleShow="consoleShow" :menuText="menuText"
+    	 :showReset="showReset"
+    	 >
+    	
+    </comHeader>
     <!--右边步骤提示-->
     <comFooter ref="bottom" :pageName="pageName" :operaInfo="operaInfo" :blockPro="blockPro" :isBlcok="isBlcok" :step="step" ></comFooter>
 	<rightTips :step="step" :confirShow="confirShow" :stepTips="stepTips" :pageName="pageName" @tipSure="tipSure" :winNum="winNum"></rightTips>	

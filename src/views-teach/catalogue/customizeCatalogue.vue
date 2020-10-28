@@ -30,9 +30,18 @@
 						 	</li>
       
 						 </ul>
-						 <div class="btnbox">
-						   <button class="btnPage" v-if="curPage>0 && cataList.length" @click="prevPage">上一页</button>
-						   <button class="btnPage" v-if="totalPages>1 &&　curPage!=totalPages-1 && cataList.length" @click="nextPage">下一页</button>
+						 <div class="btnbox cutomCatBtnBox" v-if="totalPages>1">
+						   <el-pagination :background="false"
+						      
+						      @current-change="handleCurrentChange"
+						      :current-page.sync="curPage"
+						     
+						      :page-size="per_page"
+						      layout="prev, pager, next"
+						      :page-count=5
+						 
+						      :total="totalElements">
+						    </el-pagination>
 						 </div>
 					</div>
 					
@@ -54,10 +63,11 @@ export default{
 			courName:'',
 			
 			iconSrc:'',
-			curPage:0,//分页的当前页
+			curPage:1,//分页的当前页
 			per_page:5,//当前每页的数据
 			
 			totalPages:0,//总共页数
+			totalElements:0//总条数
 		}
 	},
 	beforeCreate(){
@@ -68,7 +78,7 @@ export default{
 				let str = ''
 				let value = val
 		   
-			  value=parseInt(value+that.curPage*that.per_page)
+			  value=parseInt(value+(that.curPage-1)*that.per_page)
 		
 				if(value<9){
 					str=0+value
@@ -91,27 +101,20 @@ export default{
       that.getCourseList();
  			
  		},
-	 	//获取下一页
-	 	nextPage(){
-	 		let that = this;
-	 		that.curPage = that.curPage+1;
-	 		that.cataList = []
-	 		that.getCourseList();
-	 	},
-	 	//获取上一页
-	 	prevPage(){
-	 		let that = this;
-	 		that.curPage = that.curPage-1;
-	 		that.cataList = []
-	 		that.getCourseList();
-	 	},
+ 		//点击分页
+ 		handleCurrentChange(val){
+ 			that.curPage = val;
+ 			 that.getCourseList();
+ 		},
 	 	
 	 	//获取自定义课程列表
 	 	getCourseList(){
 	 		let that = this;
 	 		let obj = {};
  			obj.type = sessionStorage.getItem('loginModal');
- 			obj.page = that.curPage;
+ 			obj.page = that.curPage-1;
+ 			//console.log(that.curPage);
+ 			that.cataList=[];
       obj.per_page = that.per_page;
  			getCourseClass(obj).then(res=>{
           if(res.code==200){
@@ -122,6 +125,7 @@ export default{
           		}	
           	}
             that.totalPages = res.data.totalPages
+            that.totalElements = res.data.totalElements
 //          console.log(that.cataList);
             
           }else{
@@ -225,16 +229,21 @@ export default{
 			 			//51%攻击
 			 		 if(text=='12d4a962-f98b-11ea-adc1-0242ac120002'){
 			 		  
-			 				that.$router.push({name:'51attack',params:{id:obj.id,name:name.replace(/%/g, '')}})	
+			 				that.$router.push({name:'51attack',params:{id:text,name:name.replace(/%/g, '')}})	
 			 			}
 			 		 
-				 	
+				 		//软分叉
 				 		if(text=='16cc493a-f98b-11ea-adc1-0242ac120002'){
-	              that.$router.push({name:'softHardFork',params:{id:text,name:name}})
+	              that.$router.push({name:'softFork',params:{id:text,name:name}})
 	            }
+				 	  //硬分叉
+				 		if(text=='af63aaa3-2c63-f61e-d805-74b7d80c01ee'){
+	              that.$router.push({name:'hardFork',params:{id:text,name:name}})
+	          }
+				 		
 				 		//重放攻击
 				 		if(text=='1c6ddc1e-f98b-11ea-adc1-0242ac120002'){
-	              that.$router.push({name:'replayAttack',params:{iid:text,name:name}})
+	              that.$router.push({name:'replayAttack',params:{id:text,name:name}})
 	            }
 				 	  //延展性攻击
 				 		if(text=='1f4dd650-f98b-11ea-adc1-0242ac120002'){
@@ -280,4 +289,18 @@ export default{
 	}
 	
 }
+</style>
+<style lang="less">
+	.cutomCatBtnBox 
+	{
+		.el-pager li{ background:0 none; color:#fff;font-size:18px;}
+		.el-pager li.active{color:#999;}
+		.el-pager li:hover{background: 0 none; }
+		.el-pagination .btn-next, .el-pagination .btn-prev{background:0 none; color:#fff; }
+		.el-pagination .btn-next .el-icon, .el-pagination .btn-prev .el-icon{font-size:18px;}
+		.el-pagination button:disabled{color:#999;}
+		.el-pagination button:hover .el-icon{color:#fff;}
+	}
+	.cutomSubcatWrap .scataList{height: 720px; position: relative;}
+	.cutomCatBtnBox{position: absolute;bottom: 0px;left:260px;}
 </style>

@@ -108,12 +108,12 @@
       <!--重放攻击-->
       
       <template v-if="pageName==53 && tansferInfo.length>0">
-      	<div class="bottomMess malleBottomMess" >
+      	<div class="bottomMess malleBottomMess " >
 				 	  <span class="span1">未打包的事务</span>
 				 	  <span class="span3">已修改未打包事务</span><span class="span4">已修改已打包事务</span>
 				</div>
       	<ul class="affairsList replay-affairsList" >
-      		 <li class="affairItem affairDefault " :class="{'redAffair':step==3,'finshAffair':step==4}" v-for="(item,index) in tansferInfo" :key="index">
+      		 <li class="affairItem affairDefault " :class="{'redAffair':step==3,'finshAffair':step==12}" v-for="(item,index) in tansferInfo" :key="index">
       		 	 <div class="affairName" style="margin-top: 10px;">事务{{index+1}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
              
@@ -452,6 +452,7 @@
 	li{font-size:17px;}
 }
 .replay-affairsList{
+	.affairItem{height:90px;}
 	.affairItem.finshAffair{border: 4px solid red;}
 	.affairItem.redAffair{border: 4px dashed red;}
 }

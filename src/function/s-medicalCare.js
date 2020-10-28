@@ -141,7 +141,11 @@ export default{
 	  	//that.step = that.step +1;
 	  	that.confirShow = false;
 	  	that.showNav = true;
-	  	that.showResult =false
+	  	if(that.showResult){
+	  			that.showResult =true
+	  			that.showNav = false;
+	  	}
+	  
 	  },
 	  //点击当前操作状态
 	  functionStep(num){
@@ -219,7 +223,11 @@ export default{
 	  //点击用户对医院权限控制
 	  hauthorize(num){
 	  	let that = this;
-	  	switch(parseInt(num)){
+	  	if(that.rgisteInfo.name==''){
+	  		return that.$toast("请先点击医院，病人信息上链！",2000)
+	  	}
+	  	switch
+	  	(parseInt(num)){
 	  		case 1:
 	  		  that.hospitalA.authorized = !that.hospitalA.authorized
 	  		  that.showAuthorize = false;

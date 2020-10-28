@@ -938,6 +938,10 @@
           that.$toast('转账对象不能为空！',3000)
           return;
         }
+        if(that.tansferInfo.amount<0){
+        	 that.$toast('请输入金额必须是正整数！',3000)
+          return;
+        }
          if (that.tansferInfo.amount == '' || that.tansferInfo.amount == 0) {
           that.$toast('请输入金额必须是正整数！',3000)
           return;
@@ -1034,6 +1038,10 @@
         }
         if(this.aa_vaule==0){
         	this.$toast('请输入3位正整数余额',2000)
+        	return;
+        }
+        if(this.aa_vaule<0){
+        	this.$toast('转账金额必须是正整数',2000)
         	return;
         }
         that.$emit('D2clickfinish',this.aa_vaule);

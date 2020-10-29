@@ -69,14 +69,14 @@
      box-sizing: border-box; 
       }
       
-      .icon-del{width:30px;height: 30px;display: block; position: absolute; right:10px; top:10px;
-        background: url(../img/cour_del.png) center no-repeat; background-size:24px; -webkit-background-size:24px;
+      .icon-del{width:26px;height: 26px;display: block; position: absolute; right:10px; top:10px; cursor:pointer;
+        background: url(../img/cour_del.png) center no-repeat; background-size:20px; -webkit-background-size:20px;
       }
       .icon-edit{width:20px;height: 20px; display: inline-block; vertical-align:middle; background: url(../img/cour_edit.png) center no-repeat; 
       background-size:14px 16px; -webkit-background-size:14px 16px;
       margin-left:10px; cursor: pointer;}
       
-      .i-info{position: absolute;width:100%;left:0px;top:50%;-webkit-transform:translateY(-50%);
+      .i-info{position: absolute;width:100%;left:0px;top:51%;-webkit-transform:translateY(-50%);
       -moz-transform: translateY(-50%);
      -ms-transform:  translateY(-50%);
      transform: translateY(-50%); text-align: center;}
@@ -95,8 +95,18 @@
       }
    }
    
+   .cour-class{font-size:16px; margin-top:8px;padding: 0 10px;
+   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
    
-   
+   //.cour-class-box{position: absolute; width:90%;left:5%; bottom:0px;}
+   .chose-box{padding-top: 10px;}
+   .chose-class{font-size:18px; border: 1px solid #3182FF; background:0 none; outline: none;
+   font-size:16px;color:#3182FF; width:70%; margin: 0 auto; padding: 5px 0; cursor: pointer;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    .borderRadius(5px,5px,5px,5px)
+   }
+   .no-class{padding: 24px 0;}
+
    
 }
 
@@ -111,7 +121,8 @@
    text-align: center;line-height: 35px;.borderRadius(15px,15px,15px,15px);left:30px;margin: 0 auto;
    cursor: default;}
    .teaclass{/*float: right; margin-right: 50px;*/ padding:20px 0; text-align: center;}
-   
+   .fist-select-class{margin-top:30px;}
+   .n-select-class{ margin-top:6px; padding: 6px 0;}
 
 }
 .group-table{max-height: 480px;}

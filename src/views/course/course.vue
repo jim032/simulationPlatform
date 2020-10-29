@@ -32,11 +32,23 @@
     					 	   <ul class="ul-course">
     					 	   	 <li v-for="(item,index) in courseList">
     					 	   	 	  <div class="info">
-    					 	   	 	  	      <span class="icon-del" @click="deleteCourse(item.course_id)"></span>
+    					 	   	 	  	  <span class="icon-del" @click="deleteCourse(item.course_id)" ></span>
     					 	   	 	  	 <div class="i-info">
 		    					 	   	 	  	 <div class="name"><p class="line1">{{item.course_name}}</p><span class="icon-edit" @click="modifyCourseName(item,item.course_id)"></span></div>
-		    					 	   	 	  	 <p class="perNumber"><span>人数：{{item.numbers}}人</span></p>
-		    					 	   	 	  	 <el-select class="cour-select" v-model="item.class" clearable placeholder="请选择班级"  @change="changeClass($event,item.course_id)">
+		    					 	   	 	  	 <div :class="{'no-class':!item.classes_list.length}"><p class="perNumber"><span>人数：{{item.numbers?item.numbers:0}}人</span></p></div>
+		    					 	   	 	  	 <div class="cour-class-box">
+				    					 	   	 	  	 <p class="cour-class" v-if="item.classes_list.length">
+				    					 	   	 	  	 	{{item.classes_list[0].department}}{{item.classes_list[0].major}}
+				    					 	   	 	  	 </p>
+				    					 	   	 	  	 <p class="cour-class" v-if="item.classes_list.length">
+				    					 	   	 	  	 	{{item.classes_list[0].grade_name}}
+				    					 	   	 	  	 </p>
+		    					 	   	 	  	 </div>
+		    					 	   	 	  	 <div class="chose-box">
+		    					 	   	 	  	   <button class="chose-class" @click="showClass(item.course_id)">{{item.classes_list.length?item.classes_list[0].class_name:'请选择班级'}}</button>
+		    					 	   	 	  	 </div>
+		    					 	   	 	  	 
+		    					 	   	 	  	<!-- <el-select class="cour-select" v-model="item.class" clearable placeholder="请选择班级"  @change="changeClass($event,item.course_id)">
 														    <el-option
 														      v-for="item in teaClassList"
 														      :key="item.class_id"
@@ -44,10 +56,12 @@
 														      :value="item.class_id">
 														    </el-option>
 														  </el-select>
+														  -->
 		    					 	   	 	  	 <!--
 		    					 	   	 	  	 <span class="btn" v-if="item.type==2" @click="groupVisible=true">分组</span>
 		    					 	   	 	  	 -->
     					 	   	 	  	 </div>
+
     					 	   	 	  </div>
     					 	   	 </li>
     					 	   </ul>
@@ -101,20 +115,52 @@
     	width='460px'
     	 >
        <div class="group-dialog-title clearfix" slot="title">
-       	  <h3>课程分组</h3>
+       	  <h3>绑定班级</h3>
        </div>
-       <div class="teaclass">
-       	  <el-select v-model="teacurClass" clearable placeholder="请选择班级">
+       <div class="teaclass n-select-class fist-select-class">
+       	  <el-select v-model="department" clearable placeholder="请选择院系" @change="selectDepartment">
 				    <el-option
-				      v-for="item in teaClassList"
-				      :key="item.id"
-				      :label="item.label"
-				      :value="item.id">
+				      v-for="(item,index) in departmentList"
+				      :key="index"
+				      :label="item"
+				      :value="item">
 				    </el-option>
 				  </el-select>
 			  </div>
+			  <div class="teaclass n-select-class" v-if="department!=''">
+       	  <el-select v-model="major" clearable placeholder="请选择专业" @change="selectMajor">
+				    <el-option
+				      v-for="(item,index) in majorList"
+				      :key="index"
+				      :label="item.major_name"
+				      :value="item.major_name">
+				    </el-option>
+				  </el-select>
+			  </div>
+			  <div class="teaclass n-select-class" v-if="major!=''">
+       	  <el-select v-model="grade_name" clearable placeholder="请选择年级" @change="selectGrade">
+				    <el-option
+				      v-for="(item,index) in grade_nameList"
+				      :key="index"
+				      :label="item.grade_name"
+				      :value="item.grade_name">
+				    </el-option>
+				  </el-select>
+			  </div>
+			  
+			  <div class="teaclass n-select-class" v-if="grade_name!=''">
+       	  <el-select v-model="class_name" clearable placeholder="请选择班级" @change="selectClass">
+				    <el-option
+				      v-for="(item,index) in classList"
+				      :key="index"
+				      :label="item.class_name"
+				      :value="item.class_id">
+				    </el-option>
+				  </el-select>
+			  </div>
+			  
        <div slot="footer">
-       	  <span class="surebtn" @click="groupVisible=false">确认分组</span>
+       	  <span class="surebtn" @click="sureBindClass">确认</span>
        </div>
     </el-dialog>
 

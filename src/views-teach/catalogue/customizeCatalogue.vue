@@ -21,15 +21,17 @@
 					</div>
 					
 					<div class="scataList">
-						 <ul >
-						 	<li class="sitem" v-for="(item,index) in cataList" :key="index" >
-						 		<p :class="{'arrow':item.category_list && item.category_list.length}" @click="linkRouter(item,item.course_name)"><span class="snum">{{index+1 | catIndex}}</span>{{item.course_name}}</p>
-						 	  <div class="listbox" v-if="item.ishow">
-						 	 	  <span class="ii-item" v-for="(iitem,index) in item.category_list" @click="linkRouter(iitem,item.course_name)">{{iitem.category_name_en}}</span> 
-						 	 	</div>
-						 	</li>
-      
-						 </ul>
+						 <div class="scat-table">
+								 <ul >
+								 	<li class="sitem" v-for="(item,index) in cataList" :key="index" >
+								 		<p :class="{'arrow':item.category_list && item.category_list.length}" @click="linkRouter(item,item.course_name)"><span class="snum">{{index+1 | catIndex}}</span>{{item.course_name}}</p>
+								 	  <div class="listbox" v-if="item.ishow">
+								 	 	  <span class="ii-item" v-for="(iitem,index) in item.category_list" @click="linkRouter(iitem,item.course_name)">{{iitem.category_name_en}}</span> 
+								 	 	</div>
+								 	</li>
+		      
+								 </ul>
+						 </div>
 						 <div class="btnbox cutomCatBtnBox" v-if="totalPages>1">
 						   <el-pagination :background="false"
 						      
@@ -303,4 +305,10 @@ export default{
 	}
 	.cutomSubcatWrap .scataList{height: 720px; position: relative;}
 	.cutomCatBtnBox{position: absolute;bottom: 0px;left:260px;}
+	
+	.scat-table{ 
+		display: table; height: 100%;
+		ul{display: table-cell;vertical-align: middle; height: 100%;}
+	}
+	
 </style>

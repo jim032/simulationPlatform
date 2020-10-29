@@ -37,14 +37,15 @@ var hardware = function(data){
 
 //课程访问频率
 var courseFrequency = function(data){
-  return axios.get(encodeURI('/get_visit_course_frequency?per_page='+data.per_page+'&page='+data.page+'&category_name='+data.category_name+'&start='+data.dateRangeStart+'&end='+data.dateRangeEnd))
+	//console.log(data)
+  return axios.get('/get_visit_course_frequency?per_page='+data.per_page+'&page='+data.page+'&start='+data.dateRangeStart+'&end='+data.dateRangeEnd+'&category_name='+data.category_name)
 }
 
 
 
 //查询学生信息
 var search_user = function(data){
-	return axios.get(encodeURI('/search_user?per_page='+data.per_page+'&page='+data.page+'&search='+data.search))
+	return axios.get('/search_user?per_page='+data.per_page+'&page='+data.page+'&search='+data.search)
 }
 
 //获取凭证jwt
@@ -104,11 +105,16 @@ var bindCourseClasses =function(data){
   return axios.post('/bind_course_classes',data,{headers: {'Content-Type':'application/json'}})
 }
 
+/*查询专业列表查询*/
+var search_classes =function(data){
+	return axios.get('/search_classes?department='+data.department+'&major='+data.major+'&grade_name='+data.grade_name)
+}
+
 
 export{
 	login,updateUser,createToken,online,onlineUsers,hardware,courseFrequency,search_user,jwt,modify_user,
 	delete_user,categoryTree,logout,updateUserPassword,addCourse,course,modifyCourseName,deleteCourse,classes,
-  bindCourseClasses
+  bindCourseClasses,search_classes
 }
 
 function getJson (data) {

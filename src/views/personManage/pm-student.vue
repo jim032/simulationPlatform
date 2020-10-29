@@ -309,7 +309,8 @@
       editPassword(obj){
         let that = this;
         that.resetDialog = true;
-
+        that.confirmMewPas='';
+        that.newPas='';
         that.userInfo =  Object.assign({}, obj)
 
       },
@@ -352,7 +353,7 @@
         let obj = {};
         obj.per_page = that.per_page;
         obj.page = that.currentPage-1;
-        obj.search = that.searchText.replace(/\s*/g,'');
+        obj.search = that.searchText.replace(/\s*/g,'').replace(/\%/g,"%25").replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");
         search_user(obj).then(res=> {
           //console.log(res)
           if(res.code==200){
@@ -395,6 +396,15 @@
       //学生信息修改
       editUserInfo(){
         let that = this;
+        if(that.userInfo.name==''){
+        	return that.$toast('学生姓名不可为空',2000)
+        }
+        if(that.userInfo.identification_number==''){
+        	return that.$toast('学生身份证号不可为空',2000)
+        }
+        if(that.userInfo.phone==''){
+        	return that.$toast('学生电话不可为空',2000)
+        }
         modify_user(JSON.stringify(that.userInfo)).then(res=>{
           if(res.code==200){
             that.editDialog = false;

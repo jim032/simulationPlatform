@@ -1,6 +1,6 @@
 import comheader from '@/components/sheader';
 import tree from '@/components/tree';
-import {categoryTree, addCourse, course, modifyCourseName, deleteCourse, classes, bindCourseClasses} from '@/API/api'
+import {categoryTree, addCourse, course, modifyCourseName, deleteCourse, classes, bindCourseClasses,search_classes} from '@/API/api'
 
 export default {
   data() {
@@ -41,6 +41,19 @@ export default {
       categories: [],
       numbers: '',
       courseIndex:null,
+      //班级绑定
+      department:'',
+      departmentList:[],//院系列表
+      major:'',//专业
+      majorList:[],//专业列表
+      grade_name:'',
+      grade_nameList:[],//年级列表
+      class_name:'',//班级名称
+      classList:[],//班级列表
+      
+      classTreeList:[],//获取院系，专业，年级，班级列表
+      bindCourseId:'', //当前需要绑定课程id
+      bindClassID:'',//当前课程所选的绑定班级id
     }
   },
   components: {
@@ -98,7 +111,119 @@ export default {
       })
     },
 
+   //点击班级弹窗口
+   showClass(id){
+   	 let that = this ;
+   	 that.bindCourseId = id;
+   	 that.groupVisible=true;
+   	 that.department ='';
+   	 that.major='';
+   	 that.grade_name='';
+   	 let obj = {};
+   	 obj.department='';
+   	 obj.major='';
+   	 obj.grade_name='';
+   	 that.departmentList = [];
+   	 classes(obj).then(res=>{
+   	 	if (res.code == 200) {
+   	 		 that.classTreeList = res.data;
+   	 		 let tmp = res.data;
+   	 		 for(var i =0;i<tmp.length;i++){
+   	 		 	that.departmentList.push(tmp[i].department_name)
+   	 		 }
+   	 		 //that.departmentList = res.data
+   	 	}else {
+          that.$toast(res.message, 3000)
+        }
+   	 })
+   },
+   //选择院系
+   selectDepartment(value){
+   	 let that = this ;
+   	 let obj = {}
+   	 that.major=''
+   	 obj.department=value
+   	 obj.major=''
+   	 obj.grade_name=''
+   	 let tmp = that.classTreeList
+   	 for(var i=0;i<tmp.length;i++){
+   	 	if(that.department==tmp[i].department_name){
+   	 		 that.majorList = tmp[i].majors
+   	 	}
+   	 	
+   	 }
 
+   },
+   //选择专业
+   selectMajor(value){
+   	 let that = this ;
+   	 let obj = {}
+   	 that.grade_name=''
+   	 that.major=value;
+   	 obj.major=value
+   	 obj.department=that.department
+   	 obj.grade_name=''
+   	 let tmp = that.majorList
+   	 for(var i=0;i<tmp.length;i++){
+   	 	if(that.major==tmp[i].major_name){
+   	 		 that.grade_nameList = tmp[i].grades
+   	 	}
+   	 	
+   	 }
+   },
+   //选择年级
+   selectGrade(value){
+   	let that = this ;
+   	 let obj = {}
+   	 that.class_name=''
+   	 that.grade_name = value
+   	 obj.department=that.department
+   	 obj.major=that.major
+   	 obj.grade_name=value
+   	 let tmp = that.grade_nameList
+   	 for(var i=0;i<tmp.length;i++){
+   	 	if(that.grade_name==tmp[i].grade_name){
+   	 		 that.classList = tmp[i].classes
+   	 	}
+   	 	
+   	 }
+   },
+   selectClass(value){
+   	 //console.log(value)
+   	 let that = this
+   	 that.bindClassID = value;
+   },
+   //绑定班级点击确认
+   sureBindClass(){
+   	 let that = this;
+   	 if(that.department==''){
+   	 	return this.$toast('请选择院系',2000)
+   	 }
+   	 if(that.major==''){
+   	 	return this.$toast('请选择专业',2000)
+   	 }
+   	 if(that.grade_name==''){
+   	 	return this.$toast('请选择年级',2000)
+   	 }
+   	 if(that.bindClassID==''){
+   	 	return this.$toast('请选择班级',2000)
+   	 }
+   	 that.groupVisible=false;
+   	 let obj1 = {};
+      obj1.user_id = sessionStorage.getItem('user_id');
+      obj1.course_id = that.bindCourseId;
+      obj1.classes = [];
+      obj1.classes.push(that.bindClassID);
+      bindCourseClasses(obj1).then(res => {
+        if (res.code == 200){
+        	
+        	that.getCourse();	
+        } else {
+          that.$toast(res.message, 3000)
+        }
+      })
+   },
+   
     /*当前页改变的时候触发*/
     handleCurrentChange(val) {
      // console.log(`当前页: ${val}`);
@@ -140,7 +265,7 @@ export default {
     modifyCourseName(obj,course_id) {
       this.update_course_id = course_id;
       this.updateClassName = obj.course_name;
-  
+      this.errorMess='';
       this.updatedialogVisible = true
     },
 
@@ -173,6 +298,7 @@ export default {
         that.errorMess = '请输入课程名称'
         return;
       }else {
+      	this.dialogVisible = false;
         let obj = {};
         obj.user_id = that.$store.state.userId || sessionStorage.getItem('user_id');
         obj.course_name = that.newClassName;
@@ -185,7 +311,7 @@ export default {
         }
         addCourse(JSON.stringify(obj)).then(res => {
           if (res.code == 200) {
-          	this.dialogVisible = false;
+          	
           	//this.newClassName='';
             this.getCourse();
           } else {
@@ -512,7 +638,7 @@ export default {
     //获取课程列表
     that.getCategory();
     that.getCourse();
-    that.getClasses();
+    //that.getClasses();
 
 
   },

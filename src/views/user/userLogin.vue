@@ -152,7 +152,7 @@
 	              sessionStorage.setItem('stu_role_id',res.data.role_id);
 	              sessionStorage.setItem('loginModal',that.modalType);
 	              //sessionStorage.setItem('custom_course_size',res.data.custom_course_size)
-	            	this.$router.replace({name:'catalogue'})
+	            	this.$router.replace({name:'catalogue'}).catch(err=>err)
 	            
 	            }else{
 	            	sessionStorage.setItem('user_id',res.data.id)

@@ -205,27 +205,28 @@
         let that = this
       	that.startTime = value[0];
       	that.endTime = value[1]
-      	let obj = {}
-        obj.per_page = that.coursePageSize;
-      	obj.page = that.currentPage-1;
-        obj.category_name = that.searchInput.replace(/\s*/g,'');
-        obj.dateRangeStart=value[0];
+ 
+//      let obj = {}
+//      obj.per_page = that.coursePageSize;
+//    	obj.page = that.currentPage-1;
+//      obj.category_name = that.searchInput.replace(/\s*/g,'');
+       /* obj.dateRangeStart=value[0];
         obj.dateRangeEnd=value[1]
 
-        // courseFrequency(obj).then(res=> {
-        //   if(res.code==200){
-        //     for(let i = 0 ;i < res.data.content.length; i++){
-        //       let time  = res.data.content[i].created_at.toString().replace('T',' ');
-        //       res.data.content[i].created_at = time.substring(0,19);
-        //     }
-        //     let that = this;
-        //     that.totalCourse = res.data.totalElements;
-        //     let operaRecord = res.data.content;
-        //     this.operaRecord=operaRecord;
-        //   }else{
-        //     that.$toast(res.message,3000)
-        //   }
-        // })
+       courseFrequency(obj).then(res=> {
+         if(res.code==200){
+           for(let i = 0 ;i < res.data.content.length; i++){
+             let time  = res.data.content[i].created_at.toString().replace('T',' ');
+             res.data.content[i].created_at = time.substring(0,19);
+           }
+           let that = this;
+           that.totalCourse = res.data.totalElements;
+           let operaRecord = res.data.content;
+           this.operaRecord=operaRecord;
+         }else{
+           that.$toast(res.message,3000)
+         }
+       })*/
 
       },
 
@@ -277,8 +278,9 @@
       	let obj = {};
       	obj.per_page = that.coursePageSize;
       	obj.page = that.currentPage-1;
-        obj.category_name = that.searchInput.replace(/\s*/g,'');
-        console.log(that.dateRange)
+        
+        let temp = that.searchInput
+        obj.category_name = temp.replace(/\s*/g,'').replace(/\%/g,"%25").replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");
         if(that.dateRange !== null) {
           /*let time = that.dateRange.toString().split(",");
           let start = new Date(time[0]);
@@ -304,6 +306,7 @@
           obj.dateRangeEnd='';
         }
 
+     
         courseFrequency(obj).then(res=> {
           if(res.code==200){
             for(let i = 0 ;i < res.data.content.length; i++){

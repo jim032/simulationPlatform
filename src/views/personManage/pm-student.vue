@@ -203,8 +203,10 @@
         }, {
           value: '1',
           label: '女'
-        }]
+        }],
+        multipleSelection:[]//多选
       }
+     
     },
     computed: {
       getUrl(){
@@ -460,9 +462,11 @@
       },
       //用户删除
       deleteUser(){
-
-
-
+       
+       if(this.multipleSelection.length==0 && this.multipleSelection){
+       	return this.$toast('还未勾选学生列表',2000)
+       }
+       
         this.$confirm('是否确认删除学生?', '确认', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -477,10 +481,6 @@
           }
           let obj ={};
           obj.user_id_list = user_id_list;
-          
-          
-        
-          
           delete_user(JSON.stringify(obj)).then(res=>{
             if(res.code==200){
             	/*整页删除判断*/       

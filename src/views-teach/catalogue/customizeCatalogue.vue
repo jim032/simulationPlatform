@@ -20,7 +20,7 @@
 							</div>
 					</div>
 					
-					<div class="scataList">
+					<div class="scataList customCataList">
 						 <div class="scat-table">
 								 <ul >
 								 	<li class="sitem" v-for="(item,index) in cataList" :key="index" >
@@ -262,6 +262,11 @@ export default{
 			 			
 			 			
 				}else{
+					let tmp = that.cataList
+					for(var i=0;i<tmp.length;i++){
+						//console.log(tmp[i].ishow)
+						this.$set(that.cataList[i],'ishow',false)
+					}
 					this.$set(obj,'ishow',!obj.ishow)
 				}
 		
@@ -303,7 +308,8 @@ export default{
 		.el-pagination button:disabled{color:#999;}
 		.el-pagination button:hover .el-icon{color:#fff;}
 	}
-	.cutomSubcatWrap .scataList{height: 720px; position: relative;}
+
+ .cutomSubcatWrap .scataList{height: 720px; position: relative;}
 	.cutomCatBtnBox{position: absolute;bottom: 0px;left:260px;}
 	
 	.scat-table{ 
@@ -311,4 +317,12 @@ export default{
 		ul{display: table-cell;vertical-align: middle; height: 100%;}
 	}
 	
+	
+</style>
+<style scoped lang="less">
+
+	
+	.customCataList{
+		ul li.sitem{min-height: 90px;}
+	}
 </style>

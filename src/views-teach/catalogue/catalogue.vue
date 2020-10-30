@@ -147,13 +147,16 @@
 	 		
 	 		//退出
     	signOut(){   		
-    		let that = this;   		
-    		logout().then(res=>{
+    		let that = this;
+    		let obj ={};
+    		obj.user_id = sessionStorage.getItem('stu_userId')
+    		logout(obj).then(res=>{
     			if(res.code==200){
     				sessionStorage.removeItem('stu_userId')
 		    		sessionStorage.removeItem('stu_role_id')
 		    		sessionStorage.removeItem('loginModal');
-		        Cookies.remove('stu_jwt');
+		        //Cookies.remove('stu_jwt');
+		        sessionStorage.removeItem('stu_jwt')
 						that.$router.push({'path':'/login'})
     			}else{
             that.$toast(res.message,3000)

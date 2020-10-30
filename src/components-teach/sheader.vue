@@ -91,12 +91,16 @@
     		//console.log(this.$router)
 	 			let that = this;
 	 			let obj = {};
-	 			obj.type = 0 ,//type为0表示中文名
+	 			obj.type = 0;//type为0表示中文名
+	 			let loginModal = sessionStorage.getItem('loginModal');
 	 			pcategoryTree(obj).then(res=>{
           if(res.code==200){
           	//console.log(res)
-          	if(res.data[0].children){
+          	if(res.data[0].children && loginModal==1){
           		that.cataList = res.data[0].children
+          	}
+          	if(res.data[1].children && loginModal==2){
+          		that.cataList = res.data[1].children
           	}
           	
           }else{
@@ -109,7 +113,7 @@
 			let that = this;
 			let text = obj.id
 	
-				
+	
 		   		//名词库
 				if(text=='e8d78d7e-f984-11ea-adc1-0242ac120002'){
 	 			   that.$router.push({name:'thesaurus',params:{id:obj.id,name:obj.name,pname:pname},query:{level:1}})
@@ -142,14 +146,16 @@
 	 			if(text=='08a7ce0c-f985-11ea-adc1-0242ac120002'){
 	 			   that.$router.push({name:'dataStructure',params:{id:obj.id,name:obj.name},query:{level:1}})
 	 			}
+	 		 //单人发币模式
 				if(text=='0f2f5394-f985-11ea-adc1-0242ac120002'){			 				
 	 				let loginModal = sessionStorage.getItem('loginModal');
-	 				if(loginModal==1){
 	 					that.$router.push({name:'smartContract',params:{id:obj.id,name:obj.name},query:{level:1}})
-	 				}else{
-	 					that.$router.push({name:'multipleSmartContract',params:{id:obj.id,name:obj.name},query:{level:1}})	
-	 				}	
 	 			} 
+	 			//多人发币模式
+	 			if(text=='0f2f5388-f985-11ea-adc1-0242ac120002'){
+	 				
+	 				that.$router.push({name:'multipleSmartContract',params:{id:obj.id,name:obj.name},query:{level:1}})
+	 			}
 	 			if(text=='152eeb56-f985-11ea-adc1-0242ac120002'){
 	 				that.$router.push({name:'hashAlgorithm',params:{id:obj.id,name:obj.name},query:{level:1}})	
 	 			} 
@@ -305,7 +311,7 @@
   	.icolbox::after{content: '|';}
   	.icolbox:last-child::after{content:'';}
   	.scol{ padding: 0 8px; white-space: nowrap; display: inline-block;
-  	height: 12px;line-height: 12px;}
+  	height:30px;line-height:30px; cursor: pointer; cursor: hand; cursor: -ms-hand;}
   	.colbox:last-child .scol{border:0 none}
   	.scol.noBorder{border:0 none;padding-right: 0px;}
   	/*.iscol::after{content:'、';}

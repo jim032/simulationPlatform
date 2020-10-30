@@ -13,7 +13,7 @@
 			 	  	 	  </p>
 			 	  	 	  
 			 	  	 	  <p>
-			 	  	 	  	<span @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds accounts：所有账户列表</span>
+			 	  	 	  	<span @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds accounts：所有地址列表</span>
 			 	  	 	  	<span @mouseleave="mouseLeave" @click.stop="getFocus($event)">tds miner stop：关闭挖矿</span>
 			 	  	 	  </p>
 			 	  	 	  

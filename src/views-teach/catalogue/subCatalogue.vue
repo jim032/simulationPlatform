@@ -218,6 +218,11 @@ export default{
 			 			
 			 			
 				}else{
+					let tmp = that.cataList
+					for(var i=0;i<tmp.length;i++){
+						//console.log(tmp[i].ishow)
+						this.$set(that.cataList[i],'ishow',false)
+					}
 					this.$set(obj,'ishow',!obj.ishow)
 				}
 			}

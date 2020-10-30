@@ -7,7 +7,7 @@
 					<h3 class="sysTitle">仿真教学后台管理平台</h3>
 				</div>
 				<div class="h_info">
-					<a class="aPreview">预览</a>
+					<a class="aPreview" @click="preView">预览</a>
 					<div class="loginRole" @click="linkPerCenter"><p class="role-sel">你好,{{roleId =='1'?'管理员':'老师'}}</p></div>
 					<a class="exit" @click="signOut">退出</a>
 				</div>
@@ -69,11 +69,14 @@ export default{
     	//退出
     	signOut(){
     		let that = this;
-    		logout().then(res=>{
+    		let obj ={};
+    		obj.user_id = sessionStorage.getItem('user_id')
+    		logout(obj).then(res=>{
     			if(res.code==200){
     				sessionStorage.removeItem('user_id')
 		    		sessionStorage.removeItem('role_id')
-		        Cookies.remove('jwt');
+		    		sessionStorage.removeItem('jwt')
+		        //Cookies.remove('jwt');
 						that.$router.push({'path':'/login'})
     			}else{
             that.$toast(res.message,3000)
@@ -82,7 +85,14 @@ export default{
 
 
 
+    	},
+    	
+    	//预览
+    	preView(){
+    		let that = this;
+    		that.$router.push({'path':'/login',query:{isPreview:true}})
     	}
+    	
     }
 }
 </script>

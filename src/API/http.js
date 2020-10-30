@@ -8,7 +8,7 @@ const http = axios.create({
 	//baseURL: 'http://47.96.19.10:8282',
   //baseURL: 'http://192.168.1.52:8282',liu
 	//baseURL: 'http://192.168.1.167:8080',//统
-	baseURL:'http://47.96.19.10:8282',
+	baseURL:'http://47.96.19.10:8282',//服务器
 
 	headers: {
 		'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -28,13 +28,14 @@ http.interceptors.request.use(function(config) {
   let stu_role_id = sessionStorage.getItem('stu_role_id')
   
 	if(role_id!=null && (role_id==1 ||　role_id==2)){
-		config.headers.Authorization = Cookies.get('jwt')
+		config.headers.Authorization = sessionStorage.getItem('jwt')
 	}
 
 	if(stu_role_id!=null && stu_role_id==3) {
-		config.headers.Authorization = Cookies.get('stu_jwt')
+		config.headers.Authorization = sessionStorage.getItem('stu_jwt')
 	}
-
+ 
+ 
 	//对响应数据做点什么
 	return config;
 
@@ -42,7 +43,6 @@ http.interceptors.request.use(function(config) {
 
 //添加响应拦截器
 http.interceptors.response.use(function(response) {
-
 	if (response.data.code == 400 || response.data.message == 'jwt is valid') { 
       router.push({
         path: "/login",

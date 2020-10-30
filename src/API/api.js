@@ -13,6 +13,7 @@ var login = function (data) {
 
 //用户退出登录
 var logout = function (data) {
+
 	return axios.post('/logout', getJson(data))
 }
 //用户密码修改

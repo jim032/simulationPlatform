@@ -74,7 +74,9 @@
 				modalTitle:'',
 				modalMess:'',
 				jwt:'',
-				loginType:1  //1表示学生登录  2表示教师登陆
+				loginType:1,//1表示学生登录  2表示教师登陆
+				
+				ispreview:false//是否老师预览
 			}
 		},
 
@@ -140,10 +142,27 @@
 				let that = this
 			  obj.id = that.account;
 			  obj.password = that.password
-			  obj.loginType = that.loginType;
+			  obj.loginType = that.loginType;//1学生登录 2老师登陆  3老师预览登陆
+			  if(this.ispreview){
+			  	 obj.loginType = 3
+			  }else{
+			  	 obj.loginType = that.loginType;//1学生登录 2老师登陆  3老师预览登陆
+			  }
 			  login(obj).then(res=> {
 					if(res.code==200){
-
+             if(this.ispreview){
+             	let role_id = res.data.role_id
+						  let id = res.data.id
+	          
+	            	//console.log(res.data.role_id)
+	            	sessionStorage.setItem('stu_userId',res.data.id)
+	              sessionStorage.setItem('stu_role_id',res.data.role_id);
+	              sessionStorage.setItem('loginModal',that.modalType);
+	              //sessionStorage.setItem('custom_course_size',res.data.custom_course_size)
+	            	this.$router.replace({name:'catalogue'}).catch(err=>err)
+	         
+             }
+             else{
 						  let role_id = res.data.role_id
 						  let id = res.data.id
 	            if(role_id==3){
@@ -160,7 +179,7 @@
 	            	this.$router.replace({name:'index'})
 	          
 	            }
-
+            }
 					}else{
 						that.$toast(res.message,3000)
 					}
@@ -171,22 +190,33 @@
 	 			//let id = sessionStorage.getItem(id);
 	 			let obj={};
 	 			obj.id=id
-	 			 jwt(JSON.stringify(obj)).then(res=> {
-	 				if(res.code==200){
-	            this.jwt = res.data.jwt
-	            if(this.loginType==1){
-	            	
-	              Cookies.set('stu_jwt', res.data.jwt, { expires:1 });
-	              this.userLogin();
-	            }else{
-	          
-	            	Cookies.set('jwt', res.data.jwt, { expires:1 });
-	            	 this.userLogin();
-	            }
-	          }else{
-	            this.$toast(res.message,2000)
-	          }
-	 			})
+	 			if(this.loginType==1){
+	 				jwt(JSON.stringify(obj)).then(res=> {
+		 				if(res.code==200){
+		            //this.jwt = res.data.jwt
+		            //Cookies.set('stu_jwt', res.data.jwt, { expires:1});
+		            sessionStorage.setItem('stu_jwt',res.data.jwt);
+		            this.userLogin(); 
+		          }else{
+		            this.$toast(res.message,2000)
+		          }
+		 			})
+	 			}else{
+	 				
+	 				jwt(JSON.stringify(obj)).then(res=> {
+		 				if(res.code==200){
+		            //this.jwt = res.data.jwt
+		            //Cookies.set('jwt', res.data.jwt, { expires:1});
+		             sessionStorage.setItem('jwt',res.data.jwt);
+		            this.userLogin();
+		          }else{
+		            this.$toast(res.message,2000)
+		          }
+		 			})
+	 				
+	 			
+	 			}
+	 			 
 
 	 		},
 	 		linkFrontLogin(){
@@ -195,7 +225,6 @@
 		   		that.loginType = 2
 		   		sessionStorage.setItem('loginType',2);
 		   	}else{
-
 		   		that.loginType = 1
 		   		sessionStorage.setItem('loginType',1);
 		   	}
@@ -206,7 +235,16 @@
 		mounted(){
 			window.addEventListener('keydown',this.keyDown);
 			this.loginType =sessionStorage.getItem('loginType')?sessionStorage.getItem('loginType'):1
-
+			
+		
+			this.ispreview = this.$route.query.isPreview?this.$route.query.isPreview:false
+			if(this.ispreview){
+				this.loginType = 1
+				sessionStorage.setItem('loginType',1)
+			}else{
+				this.loginType =sessionStorage.getItem('loginType')?sessionStorage.getItem('loginType'):1
+			}
+			
 		},
 		destroyed(){
       window.removeEventListener('keydown',this.keyDown,false);

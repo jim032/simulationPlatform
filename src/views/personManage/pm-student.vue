@@ -257,7 +257,11 @@
             if(response.code==200){
               this.search_user();
             }else{
-              this.$toast(response.message,3000)
+            	if(response.message=='jwt is valid'){
+		        		this.$router.push({path:'/login'})
+		        	}else{
+		        	  this.$toast(response.message,3000)
+		        	}
             }
             if (newFile.xhr) {
               //  Get the response status code
@@ -333,6 +337,7 @@
       handleCurrentChange(val) {
         let that = this;
         that.currentPage =val
+ 
         that.search_user();
       },
 
@@ -353,15 +358,17 @@
       search_user(){
         let that = this;
         let obj = {};
+      
         obj.per_page = that.per_page;
         obj.page = that.currentPage-1;
-        obj.search = that.searchText.replace(/\s*/g,'').replace(/\%/g,"%25").replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");
+        obj.search = that.searchText.replace(/\s*/g,'').replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");
         search_user(obj).then(res=> {
           //console.log(res)
           if(res.code==200){
             this.dataList = res.data.content
             that.totalElements = res.data.totalElements
-            that.totalPages = res.data.totalPages
+            that.totalPages = res.data.totalPages;
+    
             if(res.data.content.length==0){
             	that.showUpload=true;
             }
@@ -374,6 +381,7 @@
       //根据搜索文字搜索用户
       searchUser(){
         let that = this;
+          that.currentPage=1
         that.search_user();
         that.isSearch = true
       },
@@ -525,7 +533,7 @@
         this.getJwt()
       }
       */
-      this.jwt = Cookies.get('jwt')
+      this.jwt = sessionStorage.getItem('jwt')
       document.getElementsByTagName("body")[0].className="admin-body";
     },
     beforeDestroy() {

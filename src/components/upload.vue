@@ -117,7 +117,12 @@ export default{
 		        if(response.code==200){
 		        	 this.$emit('inputFile')
 		        }else{
-		        	this.$toast(response.message,3000)
+		        	
+		        	if(response.message=='jwt is valid'){
+		        		this.$router.push({path:'/login'})
+		        	}else{
+		        	  this.$toast(response.message,3000)
+		        	}
 		        }
 		        if (newFile.xhr) {
 		          //  Get the response status code
@@ -135,7 +140,7 @@ export default{
  			 jwt(JSON.stringify(obj)).then(res=> {
  				if(res.code==200){
             this.jwt = res.data.jwt
-            Cookies.set('jwt', res.data.jwt, { expires:1 });
+           sessionStorage.setItem('jwt',res.data.jwt);
           }else{
             this.$toast(res.message,2000)
           }
@@ -145,11 +150,12 @@ export default{
 
  	},
  	mounted(){
- 		if(!Cookies.get('jwt')){
+ 		if(!sessionStorage.getItem('jwt')){
     		this.getJwt();
     }else{
-    	this.jwt = Cookies.get('jwt')
+    	this.jwt = sessionStorage.getItem('jwt')
     }
+   
 
  	}
  }

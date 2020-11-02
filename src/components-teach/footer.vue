@@ -1,6 +1,6 @@
 <template>
 	<div class="staDiv bottomDiv">
-		<div class="stabox" :class="{'attackStabox':pageName==51}">
+		<div class="stabox" :class="{'attackStabox':pageName==51,'replay-staBox':pageName==53}">
 			<p class="pt" >{{operaInfo.mess}}</p>
 			<template v-if="(pageName==2 || pageName=='2-multiple')"> 
 				<div class="progress" v-if="isBlcok">
@@ -107,18 +107,59 @@
       
       <!--重放攻击-->
       
-      <template v-if="pageName==53 && tansferInfo.length>0">
+      <template v-if="pageName==53">
+      	
       	<div class="bottomMess malleBottomMess " >
 				 	  <span class="span1">未打包的事务</span>
 				 	  <span class="span3">已修改未打包事务</span><span class="span4">已修改已打包事务</span>
 				</div>
-      	<ul class="affairsList replay-affairsList" >
-      		 <li class="affairItem affairDefault " :class="{'redAffair':step==3,'finshAffair':step==12}" v-for="(item,index) in tansferInfo" :key="index">
-      		 	 <div class="affairName" style="margin-top: 10px;">事务{{index+1}}</div>
-              <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
-             
+				
+      	<ul class="affairsList replay-affairsList A-replay-affairsList" >
+      		 <li class="r-chainName">
+      		 	 A
+      		 </li>
+      		 <li class="affairItem blockItem finshAffair"  v-for="(item,index) in AChainList" :key="index">
+      		 	 <div class="blockItem-box"  >
+      		 	    <div class="item-box">{{item.name}}</div>
+      		 	 </div>
+              <!--<div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>-->
+             <div class="lineBorder" v-if="index>0"></div>
+      		 </li>
+            <li class="affairItem blockItem" :class="{'finshAffair':step==12}" v-for="(item,index) in tansferInfo" :key="'info2'+index" v-if="step>=3">
+      		 	 <div class="blockItem-box">
+      		 	    <div class="item-box">
+      		 	    	 <div class="affairName">{{item.initiate}}给{{item.object}}</div>
+                   <div >转账{{item.amount}}</div>
+      		 	    </div>
+      		 	 </div>
+              <!--<div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>-->
+             <div class="lineBorder" ></div>
       		 </li>
       		
+      	</ul>
+      	<ul class="affairsList replay-affairsList B-replay-affairsList">
+      		<li class="r-chainName">
+      		 	 B
+      		 </li>
+      		<li class="affairItem blockItem finshAffair" :class="{'b-first':index==0}" v-for="(item,index) in BChainList" :key="index">
+      		 	 <div class="blockItem-box">
+      		 	 	 <div class="item-box">{{item.name}}</div>
+      		 	 </div>
+      		 	 <div class="lineBorder" v-if="index>0"></div>
+              <!--<div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>-->
+             <div class="lineBorderH" v-if="index==0"></div>
+             <div class="lineBorder lineBorderV" v-if="index==0"></div>
+      		 </li>
+      		 <li class="affairItem blockItem"  :class="{'finshAffair':step==12}" v-for="(item,index) in tansferInfo" :key="'info2'+index" v-if="step>=5">
+      		 	 <div class="blockItem-box"  >
+      		 	    <div class="item-box">
+      		 	    	 <div class="affairName">{{item.initiate}}给{{item.object}}</div>
+                   <div >转账{{item.amount}}</div>
+      		 	    </div>
+      		 	 </div>
+              <!--<div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>-->
+             <div class="lineBorder" ></div>
+      		 </li>
       	</ul>
       
 
@@ -170,6 +211,18 @@
 	    transNumber:{
 	    	type:null,
 	    	default:0
+	    },
+	    AChainList:{
+	    	type:Array,
+		    default:function(){
+            return []
+        }
+	    },
+	    BChainList:{
+	    	type:Array,
+		    default:function(){
+            return []
+        }
 	    }
 		},
 		watch: {
@@ -451,10 +504,34 @@
 .malle-affairsList{
 	li{font-size:17px;}
 }
-.replay-affairsList{
-	.affairItem{height:90px;}
-	.affairItem.finshAffair{border: 4px solid red;}
-	.affairItem.redAffair{border: 4px dashed red;}
+
+/*重放攻击*/
+.replay-staBox{padding:20px 0;}
+.bottomDiv .replay-affairsList{
+
+	ul{width: 100%;}
+	.blockItem{height:60px;width:66px;margin-left:32px; position: relative;}
+	.lineBorder{width:32px;height: 4px;position: absolute;background:#fff;left:-36px;top:50%;margin-top: -4px; z-index: 1;}
+.lineBorderH{width:4px;height:78px;position: absolute;
+left:50%;margin-left:-50px;top:-52px; background:#fff;z-index:1}
+
+	.blockItem-box{display: table;width:100%; height: 100%;}
+	.blockItem.finshAffair{border:4px solid #5175f9}
+	
+	.item-box{display: table-cell;width:100%;height: 100%; vertical-align: middle; font-size: 14px;;}
+	.r-chainName{margin-right: 0px; font-size:24px;margin-left: 70px;}
+	
+	.b-first{margin-left:226px;}
+	
+	.lineBorderV{width:16px;left:-20px}
+	.affairName{font-size:16px; font-weight:normal;}
+	
+}
+.bottomDiv .A-replay-affairsList{margin-top:10px;}
+.bottomDiv .B-replay-affairsList{
+	margin-top: 15px;
+  .blockItem{border: 4px dashed red;}
+  .blockItem.finshAffair{border: 4px solid red;}
 }
 
 

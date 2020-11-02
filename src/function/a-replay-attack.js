@@ -15,7 +15,7 @@ export default{
       iconUrl_1:require('../assets/teachImg/block_a.png'),//
 		  step:1,//当前步骤
 		  pageName:53,//异常篇重放攻击
-		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+		  operaInfo:{mess:'',infolist:[]},//底部传递的信息
       D2:false,//D框
 
       wprogress:0, //打包的进度
@@ -36,6 +36,13 @@ export default{
       tansferInfo:[],//转账区块
       isPack:false,//是否已打包
       isIntercept:false,//是否已接获
+      broadcastNumber:0,//广播次数
+      AChainList:[
+        {'name':'区块1'},{'name':'区块2'},{'name':'区块3'},{'name':'区块4'},{'name':'区块5'}
+      ],
+      BChainList:[
+      	 {'name':'区块3'},{'name':'区块4'},{'name':'区块5'}
+      ]
 		}
 	},
 	components:{
@@ -85,36 +92,40 @@ export default{
     poinfun(num){
       //num==2测速
       let that = this;
-      
-      that.funNum = num;
+      　　
+       that.funNum = num;
       
       if(num==1){
-      	if(that.transNumber>=3){
-      		return that.$toast('转账最多可达3笔',3000)
+      	if(that.transNumber>=1){
+      		return that.$toast('已转账',3000)
       	}      	
         that.D2=true; 
       }
-      
+    
       if(num==2 ){
-      	if(that.transNumber<3){
-      		return that.$toast('转账次数必须达到3笔',3000)
+     
+      	if(that.transNumber<1){
+      		return that.$toast('必须有一笔转账',3000)
       	} 
-      	if(that.isIntercept){
-      		return that.$toast('数据已被截获',3000)
+      	if(that.broadcastNumber==2){
+      		return that.$toast('已广播',3000)
+      	}
+      	if(that.broadcastNumber==2 && that.isIntercept){
+      		return that.$toast('已广播',3000)
+      	}
+      	if(that.broadcastNumber==1 && that.step==3){
+      		return that.$toast('已广播',3000)
       	}
       	
-
         that.lineDraw53Show = true;
-        
+        that.wprogress=0
+        that.broadcastNumber = that.broadcastNumber+1
         let timer = setInterval(function() {
           that.wprogress++;
-         
           if(that.wprogress == 100) {
             clearInterval(timer)
              that.lineDraw53Show = false;
-             that.isIntercept = true;
-            that.delayTimer = setTimeout(function(){
-            
+            that.delayTimer = setTimeout(function(){           
               that.step= that.step+1;
             },300)
             that.delayTimer = setTimeout(function(){
@@ -124,32 +135,77 @@ export default{
           }
         },50)
       }
-      if(num==3){
-      	if(that.transNumber<3){
-      		return that.$toast('转账次数必须达到3笔',3000)
-      	} 
-      	if(!that.isIntercept){
-      	
-      	  return that.$toast('请先点击截获',3000)
-      
-      	}
-      	if(that.isPack){
-      		 return that.$toast('事务已打包',3000)
-      	}
     
-        that.lineDraw53Show = true;
-        that.wprogress = 0
+      if(num==3){
+       	if(that.transNumber<1){
+      		return that.$toast('必须有一笔转账',3000)
+      	}
+       	if(that.broadcastNumber<1){
+      		return that.$toast('请先点击广播',3000)
+      	}
+       	if(that.isIntercept){ 		 
+      		return that.$toast('已截获',3000)
+      	}
+      	if(that.broadcastNumber==2){
+      		return that.$toast('已广播',3000)
+      	}
+      	
+      	that.lineDraw53Show = true;
+        that.wprogress=0
+ 
         let timer = setInterval(function() {
           that.wprogress++;
+         
           if(that.wprogress == 100) {
             clearInterval(timer)
-            that.isPack=true
-            that.delayTimer = setTimeout(function(){
              that.lineDraw53Show = false;
-            },200)
+            that.delayTimer = setTimeout(function(){
+              that.isIntercept =true
+              that.step= that.step+1;
+            },300)
             that.delayTimer = setTimeout(function(){
               that.confirShow = true;
-              that.step= 12;
+         
+            },800)
+          }
+        },50)
+      }
+  
+      if(num==4){
+      	if(that.transNumber<1){
+      		return that.$toast('必须有一笔转账',3000)
+      	}
+      	if(that.broadcastNumber=1 && !that.isIntercept){
+      		return that.$toast('请先点击截获',3000)
+      	}
+      	if(that.broadcastNumber=2 && that.step==4){
+      		return that.$toast('请先对截获事务进行广播',3000)
+      	}
+       	if(!that.isIntercept){
+      		return that.$toast('请先点击截获',3000)
+      	}
+       	
+       	if(that.isPack){ 		 
+      		return that.$toast('已打包',3000)
+      	}
+
+      	
+      	that.lineDraw53Show = true;
+        that.wprogress=0
+ 
+        let timer = setInterval(function() {
+          that.wprogress++;
+         
+          if(that.wprogress == 100) {
+            clearInterval(timer)
+             that.lineDraw53Show = false;
+            that.delayTimer = setTimeout(function(){
+              that.isPack =true
+              that.step = 12
+            },300)
+            that.delayTimer = setTimeout(function(){
+              that.confirShow = true;
+         
             },800)
           }
         },50)
@@ -180,7 +236,7 @@ export default{
       that.transNumber = that.transNumber + 1;
       that.D2=false
       that.operaInfo.mess='';
-      if(that.transNumber==3){
+      if(that.transNumber==1){
     		that.delayTimer = setTimeout(function(){
     			that.step = that.step+1;
     		},300)

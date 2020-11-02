@@ -242,6 +242,7 @@
 	 		if(this.modal!=''){
 	 		   this.getCustomize();
 	 		}
+	 		//console.log(sessionStorage.getItem('stu_userId'))
 	 	}
 	 }
 </script>

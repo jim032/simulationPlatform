@@ -336,14 +336,13 @@
       </div>
     </template >
     
-    
-    <!--重放攻击截获-->
-    <template v-if="pageName==53 && step==2">
+    <!--重放攻击广播-->
+     <template v-if="pageName==53 && (broadcastNumber==1 &&　step==2)　||　(broadcastNumber==2 &&　step==4)">
       <div class="transbox" v-if="lineDraw53Show">
       </div>
       <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
         <div class="c_box">
-          <p class="pintro">请注意，黑客正在攻击未打包进链的事务</p>
+          <p class="pintro">{{step==2?'用户A给用户B的转账正在广播':'当前把黑客截取事务在B链中广播'}}</p>
           <div class="progress" >
             <div class="curPro">
               <div class="proIcon" :style="{'width':wprogress+'%'}"></div>
@@ -353,8 +352,24 @@
         <div class="icon"></div>
       </div>
     </template >
-    <!--重放攻击-->
-    <template v-if="pageName==53 && step==3">
+    <!--重放攻击截获-->
+    <template v-if="pageName==53 &&　step==3">
+      <div class="transbox" v-if="lineDraw53Show">
+      </div>
+      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
+        <div class="c_box">
+          <p class="pintro">请注意，黑客正在截获未打包进链的事务</p>
+          <div class="progress" >
+            <div class="curPro">
+              <div class="proIcon" :style="{'width':wprogress+'%'}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="icon"></div>
+      </div>
+    </template >
+    <!--重放攻击打包-->
+    <template v-if="pageName==53 && step==5">
       <div class="transbox" v-if="lineDraw53Show">
       </div>
       <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
@@ -541,7 +556,19 @@
       wprogressmalleability:{
         type:null,
         default:0
+      },
+      //重放攻击广播次数
+      broadcastNumber:{
+        type:null,
+        default:0
+      },
+      //是否截获
+      
+      isIntercept:{
+        type:null,
+        default:false
       }
+      
 			
 		},
 		
@@ -800,15 +827,23 @@
                 break;
               case 2:
                 that.tipTiltle = '请注意!'
-                that.confirmInfo = '转账已发起成功，但事务还未被打包到链中。'
+                that.confirmInfo = '转账发起已成功，请点击广播按钮进行广播。'
                 break;
               case 3:
+                that.tipTiltle = '请注意!'
+                that.confirmInfo = '用户A给用户B的转账在A链中广播，但事务还未被打包到链中。'
+                break;
+              case 4:
                 that.tipTiltle = '请注意!';
-                that.confirmInfo = '黑客已将原数据修改成功'
+                that.confirmInfo = '黑客已成功截取！'
+                break;
+              case 5:
+                that.tipTiltle = '请注意!';
+                that.confirmInfo = '黑客把截取的事务在B链中广播！'
                 break;
               case 12:
                 that.tipTiltle = '请注意!';
-                that.confirmInfo = '重放攻击已结束的危害性'
+                that.confirmInfo = '由于A和B是硬分叉，所以校验的方法是一致的，都可以被A和B打包进区块'
                 break;
             }
             return;

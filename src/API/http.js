@@ -34,7 +34,7 @@ http.interceptors.request.use(function(config) {
 	if(stu_role_id!=null && stu_role_id==3) {
 		config.headers.Authorization = sessionStorage.getItem('stu_jwt')
 	}
- 
+  config.url = config.url + (config.url.indexOf('?') > 0 ? '&' : '?') + `cb=${new Date().getTime()}`;
  
 	//对响应数据做点什么
 	return config;

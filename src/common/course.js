@@ -377,6 +377,7 @@ export default {
       course(obj).then(res => {
         if (res.code == 200) {
           that.courseList = res.data.content;
+          
           for (let i = 0; i < res.data.content.length; i++) {
             if (res.data.content[i].classes_list.length > 0) {
               let tmp = res.data.content[i].classes_list;
@@ -408,14 +409,14 @@ export default {
         let obj = {};
         obj.user_id = that.$store.state.userId || sessionStorage.getItem('user_id');
         obj.course_id = course_id;
-    
+         
          if(that.courseList.length==1){
          	 that.currentPage = that.currentPage>1?that.currentPage-1:that.currentPage
          }
         deleteCourse(obj).then(res => {
           if (res.code == 200) {
 //          console.log(obj.user_id);
-           
+          
             that.getCourse();
           } else {
             this.$toast(res.message, 2000)

@@ -3,7 +3,7 @@
 import 'babel-polyfill';
 import Vue from 'vue'
 import App from './App'
-
+import 'es6-promise/auto'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 

@@ -203,8 +203,10 @@
       //点击日期
       dateSearch(value){
         let that = this
-      	that.startTime = value[0];
-      	that.endTime = value[1]
+        if(value){
+          that.startTime = value[0];
+	      	that.endTime = value[1]
+      	}
  
 //      let obj = {}
 //      obj.per_page = that.coursePageSize;
@@ -280,7 +282,7 @@
       	obj.page = that.currentPage-1;
         
         let temp = that.searchInput
-        obj.category_name = temp.replace(/\s*/g,'').replace(/\%/g,"%25").replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");
+        obj.category_name = temp.replace(/\s*/g,'').replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");
         if(that.dateRange !== null) {
           /*let time = that.dateRange.toString().split(",");
           let start = new Date(time[0]);

@@ -152,15 +152,14 @@
 					if(res.code==200){
              if(this.ispreview){
              	let role_id = res.data.role_id
-						  let id = res.data.id
-	          
+						  let id = res.data.id	          
 	            	//console.log(res.data.role_id)
-	            	sessionStorage.setItem('stu_userId',res.data.id)
-	              sessionStorage.setItem('stu_role_id',res.data.role_id);
-	              sessionStorage.setItem('loginModal',that.modalType);
-	              //sessionStorage.setItem('custom_course_size',res.data.custom_course_size)
-	            	this.$router.replace({name:'catalogue'}).catch(err=>err)
-	         
+            	sessionStorage.setItem('stu_userId',res.data.id)
+              sessionStorage.setItem('stu_role_id',res.data.role_id);
+              sessionStorage.setItem('loginModal',that.modalType);
+              //sessionStorage.setItem('custom_course_size',res.data.custom_course_size)
+            	this.$router.replace({name:'catalogue'}).catch(err=>err)
+	              
              }
              else{
 						  let role_id = res.data.role_id
@@ -176,7 +175,7 @@
 	            }else{
 	            	sessionStorage.setItem('user_id',res.data.id)
 	              sessionStorage.setItem('role_id',res.data.role_id);
-	            	this.$router.replace({name:'index'})
+	            	this.$router.replace({name:'index'}).catch(err=>err)
 	          
 	            }
             }

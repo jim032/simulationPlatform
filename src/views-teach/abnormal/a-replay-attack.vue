@@ -1,5 +1,5 @@
 <template>
-	<div class="pageWrap eaWrap">
+	<div class="pageWrap eaWrap replay_wrap">
 		<!--中间hash算法内容布局-->
 		<div class="mainContent">
       <div class="mainBox" >
@@ -17,28 +17,39 @@
 	<!--左侧拖拽工具箱-->
 	 <div class="leftTool">
 		<div class="showbox" :class="{'showTool':showTool}">
-			<div class="tool1" :class="{'animaImg1':funNum==1}">
+			<div class="tool1" :class="{'animaImg11':funNum==1}">
 				<span class="tool_icon" @click.stop="poinfun(1)"><p class="n_ltips">转账</p></span>
 			</div>
-			<div class="tool2" :class="{'animaImg2':funNum==2}">
-				<span class="tool_icon" @click.stop="poinfun(2)"><p class="n_ltips">截获</p></span>
+			
+			<div class="tool2" :class="{'animaImg22':funNum==2}">
+				<span class="tool_icon" @click.stop="poinfun(2)"><p class="n_ltips">广播</p></span>
 			</div>
-			<div class="tool3" :class="{'animaImg3':funNum==3}">
-				<span class="tool_icon" @click.stop="poinfun(3)"><p class="n_ltips">打包</p></span>
+			
+      		
+			<div class="tool3" :class="{'animaImg33':funNum==3}">
+				<span class="tool_icon" @click.stop="poinfun(3)"><p class="n_ltips">截获</p></span>
 			</div>
+			
+			<div class="tool4" :class="{'animaImg44':funNum==4}">
+				<span class="tool_icon" @click.stop="poinfun(4)"><p class="n_ltips">打包</p></span>
+			</div>
+			
 		</div>
+	
 		<div class="icon" @click.stop="showTool=!showTool;menuShow = false"><span></span></div>
 	</div>
 	<!----头部-->
 	<comHeader ref="header" :menuShow="menuShow" @clickMenu="clickMenu" :menuText="menuText"></comHeader>
 	<!--底部-->
-	<comFooter ref="bottom" :operaInfo="operaInfo" :pageName="pageName" :tansferInfo="tansferInfo" :step="step">
+	<comFooter ref="bottom" :operaInfo="operaInfo" :pageName="pageName" :tansferInfo="tansferInfo" :step="step"
+	  :AChainList="AChainList"	:BChainList="BChainList"
+	>
 
 	</comFooter>
 	<!--右边步骤提示-->
 	<rightTips :step="step" :confirShow="confirShow" :stepTips="stepTips" :pageName="pageName" :D2="D2"
 		@tipSure="tipSure" @D2clickfinish="D2clickfinish" :lineDraw53Show="lineDraw53Show" :wprogress="wprogress"
-		:singleStep="singleStep" @hideTrans="hideTrans" 
+		:singleStep="singleStep" @hideTrans="hideTrans" :broadcastNumber="broadcastNumber" :isIntercept="isIntercept"
 	>
 		
 	</rightTips>	
@@ -51,7 +62,8 @@
 
 <style scoped lang="less">
 
+
 @import url("../../assets/teachCss/a-attack51.less");
-.tool2 .tool_icon{background:url(../../assets/teachImg/icon_intercept.png) center no-repeat;}
-.tool2 .n_ltips{top:25px;right:36px;}
+@import url("../../assets/teachCss/replay-attack.less");
+.replay_wrap{padding-bottom: 266px;;}
 </style>

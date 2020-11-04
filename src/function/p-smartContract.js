@@ -170,7 +170,7 @@ export default{
 							that.operaInfo.mess = "当前合约部署完成"
 							that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
 							that.operaInfo.infolist.push('资产名称：'+that.coinName)
-							that.operaInfo.infolist.push('创建者：'+'用户'+that.chooseUserObj)
+							that.operaInfo.infolist.push('初始拥有者：'+'用户'+that.chooseUserObj)
 							that.$set(that.divInfo1,'operable',1)
    	   	    	that.$set(that.divInfo2,'operable',1)
    	   	    	that.$set(that.divInfo3,'operable',1)

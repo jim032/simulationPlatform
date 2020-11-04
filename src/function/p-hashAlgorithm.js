@@ -35,7 +35,8 @@ export default{
 	    consoleShow:true,//头部控制台是否显示
 	    
 	    menuText:'区块链密码学-哈希算法',
-	    category_id:''
+	    category_id:'',
+	  
 	    
 		}
 	},
@@ -79,12 +80,14 @@ export default{
 						that.isBlcok = false;
 						that.delayTimer = setTimeout(function(){
 							that.confirShow = true;
+							
 						},500)
 						
 			   	}
 				},50)		
 			}
-			if(num==2 && that.step==2 && that.isAttack==0) {
+			if(num==2 && that.step==2 && that.isAttack==0　) {
+	
 				that.isShowAttack = true;
 				that.funNum = num;
 			}

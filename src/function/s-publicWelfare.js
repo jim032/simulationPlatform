@@ -30,8 +30,8 @@ export default{
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成
-	    resultMess:'恭喜您！版权存证上链成功！下面是您的上链哈希，您可通过查证处查询：',//点击存证上链之后的提示信息
-	    resultMess1:'恭喜您！版权存证上链成功！下面是您的上链哈希：',
+	    resultMess:'恭喜您！捐赠信息登记上链成功！下面是您的上链哈希，您可通过点击受益人查询：',//点击存证上链之后的提示信息
+	    resultMess1:'恭喜您！红十字会存证上链成功！下面是您的上链哈希：',
 	    goodList:[
 	      {value:'1',label: '防毒面具'},
 	      {value:'2',label: '口罩'},

@@ -26,8 +26,8 @@ export default{
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成
-	    resultMess:'恭喜您！版权存证上链成功！下面是您的上链哈希，您可通过查证处查询：',
-	    resultMess1:'恭喜您！版权存证上链成功！下面是您的上链哈希：',
+	    resultMess:'恭喜您！供应商信息登记上链成功！下面是您的上链哈希，您可通过点击银行查询：',
+	    resultMess1:'恭喜您！核心企业佐证上链成功！下面是您的上链哈希：',
 	    //登记人
 	    rgisteInfo:{
 	    	bussinessName:'',//企业名称

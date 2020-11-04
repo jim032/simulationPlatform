@@ -12,7 +12,34 @@
 			  </div>
 			  <div class="operBox">
 			  	<div class="ioperBox">
-			  		 <p>{{operaTips.mess}}</p>
+			  		 <p>{{operaTips.mess}}
+			  		   	<el-tooltip class="item" effect="light" content='' placement="top-start" v-if="step>=4">
+	                 <div slot="content">
+	                  	{</br>
+	                  	  &nbsp;&nbsp;"address":"WX13f2BUuMRWfSsd49EUB7khmAcrZaWh42ns",</br>
+	                  		&nbsp;&nbsp;"kdfparams":{</br>
+	                  		&nbsp;&nbsp;&nbsp;&nbsp;"salt":"3f78d45853cea5733fbba35bcf293f7622876f121e90ab24be0043fef6475047",</br>
+	                  		&nbsp;&nbsp;&nbsp;&nbsp;"memoryCost":20480,</br>
+	                  		&nbsp;&nbsp;&nbsp;&nbsp;"parallelism":2,</br>
+	                  		&nbsp;&nbsp;&nbsp;&nbsp;"timeCost":4</br>
+	                  	  &nbsp;&nbsp;},</br>
+	                  	 &nbsp;&nbsp;"id":"5d024e76-77a1-4d49-a9be-54538530d488",</br>
+	                  	 &nbsp;&nbsp;"kdf":"argon2id",</br>
+	                  	 &nbsp;&nbsp;"version":"2",</br>
+	                  	 &nbsp;&nbsp;"mac":"4ea737543ce3349b24b470e902db6a0caead8abad3e8371c8d99ed6a22253cdc",</br>
+	                  	 &nbsp;&nbsp;"crypto":{</br>
+	                  		&nbsp;&nbsp;&nbsp;&nbsp;"cipher":"aes-256-ctr",</br>
+	                  		&nbsp;&nbsp;&nbsp;&nbsp;"ciphertext":"0ff1bee4a2b5d03d0160cb6eb561b1d039a249e86ccaa6d914416e1228c7be84",</br>
+	                  		&nbsp;&nbsp;&nbsp;&nbsp;"cipherparams":{</br>
+	                  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"iv":"f9eeed3e3e545f036c057501e1deb827"</br>
+	                  	 &nbsp;&nbsp;&nbsp;&nbsp;}</br>
+	                    &nbsp;&nbsp;}</br>
+	                  }
+	                 	
+	                 </div>
+	                 <span class="see-keystore">(查看keyStore)</span>
+	              </el-tooltip>
+			  		 </p>
 			  		 <p v-for="(item,index) in operaTips.info">{{item}}</p>
 			  		 <div class="din" v-if="step==1">
 			  		 	 <input placeholder="请在此输入密码" type="password" autocomplete="off" v-model="ipassword"/>
@@ -25,6 +52,7 @@
 									<div class="proIcon" :style="{'width':hashProgress+'%'}"></div>
 								</div>
 							</div>
+
 			  		 <div class="btnbox">
 			  		 	  <button class="btn cursorPoint" v-if="step==1" @click="surePasword">确定</button>
 			  		 	  <button class="btn cursorPoint" v-if="step==2 && hashProgress>=0 && hashProgress<100" @click="sureHash(1)">哈希计算</button>
@@ -71,5 +99,5 @@
 <script src="../../function/p-keyStore.js"></script>
 <style scoped lang="less">
 	@import url("../../assets/teachCss/p-keyStore.less");
-	
+	.see-keystore{font-size:16px;color: #fff;}
 </style>

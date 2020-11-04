@@ -44,7 +44,7 @@
 	  <template v-if="pageName==5">
 	  	 <div class="transbox" v-if="lineDrawShow">    
 	     </div>
-	     <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDrawShow}">
+	     <div class="confirmBox fileConfirmBox eccConfirmBox n-eccConfirmBox_1" :class="{'show':lineDrawShow}">
 			 	  <div class="c_box">
 		  	 	  <p class="title">椭圆线方程曲线：y²=x²+ax+b</p>
 		  	 	  <p class="c_mess">(通过下方输入不同的a，b值生成不同的椭圆线）</p>
@@ -65,7 +65,7 @@
 	  <template v-if="pageName==5">
 	  	 <div class="transbox" v-if="lineFinsh">    
 	     </div>
-	     <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineFinsh}">
+	     <div class="confirmBox fileConfirmBox eccConfirmBox n-eccConfirmBox_2" :class="{'show':lineFinsh}">
 			 	  <div class="c_box">
 		  	 	  <p class="title result_title">假设我们现在有个点为（3，4），我们通过点的加法计算对这个点 进行10次相加计算获得新的点（9，6），如下图所示：</p>		  	 	  
 		  	 	  <div class="ec-img result-img"><img src="../assets/ecc/result.jpg"/></div>
@@ -203,7 +203,7 @@
     <template v-if="pageName==51 && step == 4">
       <div class="transbox" v-if="lineDraw51Show">
       </div>
-      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw51Show}">
+      <div class="confirmBox fileConfirmBox parseconfirmbox " :class="{'show':lineDraw51Show}">
         <div class="c_box">
           <p class="pintro">
             正在打包剩余事务
@@ -340,7 +340,7 @@
      <template v-if="pageName==53 && (broadcastNumber==1 &&　step==2)　||　(broadcastNumber==2 &&　step==4)">
       <div class="transbox" v-if="lineDraw53Show">
       </div>
-      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
+      <div class="confirmBox fileConfirmBox parseconfirmbox replay-confirmBox " :class="{'show':lineDraw53Show}">
         <div class="c_box">
           <p class="pintro">{{step==2?'用户A给用户B的转账正在广播':'当前把黑客截取事务在B链中广播'}}</p>
           <div class="progress" >
@@ -356,7 +356,7 @@
     <template v-if="pageName==53 &&　step==3">
       <div class="transbox" v-if="lineDraw53Show">
       </div>
-      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
+      <div class="confirmBox fileConfirmBox parseconfirmbox replay-confirmBox" :class="{'show':lineDraw53Show}">
         <div class="c_box">
           <p class="pintro">请注意，黑客正在截获未打包进链的事务</p>
           <div class="progress" >
@@ -372,7 +372,7 @@
     <template v-if="pageName==53 && step==5">
       <div class="transbox" v-if="lineDraw53Show">
       </div>
-      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDraw53Show}">
+      <div class="confirmBox fileConfirmBox parseconfirmbox replay-confirmBox" :class="{'show':lineDraw53Show}">
         <div class="c_box">
           <p class="pintro">正在打包事务</p>
           <div class="progress" >

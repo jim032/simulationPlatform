@@ -21,7 +21,7 @@
 .customer-table td, .customer-table th{height:50px;}
 
 /*分页样式*/
-.tab-operation{text-align: right; padding: 0 50px 0 35px; padding-bottom: 20px;}
+.tab-operation{text-align: right; padding: 0 30px 0 20px; padding-bottom: 20px;}
 .tab-operation .btn-box{float: left;}
 .page-block{display: inline-block; vertical-align: middle; margin-top: 15px;;}
 .page-block .el-pager li{min-width:30px;border-radius:5px;-webkit-border-radius:5px; margin: 0 4px;color:#7c7c7c;

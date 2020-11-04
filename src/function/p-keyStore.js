@@ -23,8 +23,8 @@ export default{
 	    progressMess:'哈希生成',
 	    /*页面中间操作框信息*/
 	    operaTips:{
-	    	mess:'此处已有一串私钥与一串随机生成的随即盐，请在下方方框内随意输入一段密码：',
-	    	info:['私钥：3215e12qwe5qwe5d1a2sd1f12dsg2dgs5fwe6r6we5r','随机盐：XXXXXXXXXXXXXXXXXXXX']
+	    	mess:'此处已有一串私钥与一串随机生成的随机盐，请在下方方框内随意输入一段密码：',
+	    	info:['私钥：3215e12qwe5qwe5d1a2sd1f12dsg2dgs5fwe6r6we5r','随机盐：3f78d45833f293f7622876f121e90ab24be0043fef6475047']
 	    },
 	    /*操作步骤*/
 	   operaStep:['输入密码','哈希计算','对称加密','加密完成'],
@@ -86,7 +86,7 @@ export default{
 	  		this.step = that.step+1;
 	  		that.operaTips.mess='我们通过随机生成的盐与步骤一输入的密码相结合，并通过哈希计算 生成一串密钥：'
 	      that.operaTips.info =[];
-	      that.operaTips.info.push('随机盐：XXXXXXXXXXXXXXXXXXXX')
+	      that.operaTips.info.push('随机盐：3f78d45833f293f7622876f121e90ab24be0043fef6475047')
 	      that.operaTips.info.push('密码:'+that.ipassword)
 	      that.isShowProgress = true;
 	  	}
@@ -111,8 +111,8 @@ export default{
 	  	this.step = that.step+1;
 	  	that.operaTips.mess='我们已通过步骤二的随机盐与密码，哈希计算之后得到了一串密钥， 我们将通过密钥把私钥进行加密处理：'
 	    that.operaTips.info =[];
-	    that.operaTips.info.push('密钥：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-	    that.operaTips.info.push('私钥：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+	    that.operaTips.info.push('密钥：7eecd8beca1f6528c48efc8b7e5396b1132af8409a0f')
+	    that.operaTips.info.push('私钥：3215e12qwe5qwe5d1a2sd1f12dsg2dgs5fwe6r6we5r')
 	    that.isShowProgress = true;
 	    that.hashProgress = 0;
 	    that.progressMess='密钥加密'
@@ -121,10 +121,10 @@ export default{
 	  surefinsh(){
 	  	let that = this
 	  	that.step = that.step+1;
-	  	that.operaTips.mess='已使用步骤二获得的密钥通过对称加密将私钥进行了加密保护，生成的新字符串即为keystore：'
+	  	that.operaTips.mess='已使用步骤二获得的密钥通过对称加密将私钥进行了加密保护，生成的新字符串即为keystore'
 	    that.operaTips.info =[];
-	    that.operaTips.info.push('keystore：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-	    that.operaTips.info.push('由此可知，keystore其实是利用对称加密对私钥进行加密保护的一种 形式，特点文本特点文本特点文本特点文本特点文本特点文本特点文 特点文本特点文本特点文本特点文本。')
+	    
+	    that.operaTips.info.push('由此可知，keystore其实是利用对称加密对私钥进行加密保护的一种 形式')
 	    that.isShowProgress = false;
 	  },
 	  //点击我知道了页面弹窗

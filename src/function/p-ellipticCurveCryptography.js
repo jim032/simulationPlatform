@@ -13,6 +13,7 @@ export default{
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
 
+	  
 	  	
 	  	confirShow:false,//右侧弹出框是否显示
 	  	pageName:5,//代表页面是哈希算法页面
@@ -56,7 +57,10 @@ export default{
 	     
 	    },
 	    menuText:'区块链密码学-椭圆线密码算法',
-	    category_id:''
+	    category_id:'',
+	    
+	    isHashFinsh:false,//判断哈希是否生产
+	    clickParse:false,//椭圆线算法是否可点击
 		}
 		
 		
@@ -91,8 +95,9 @@ export default{
 			if(num==1 && that.step==1 ){
 				that.lineDrawShow = true
 				that.funNum = num;
+				that.isHashFinsh=true
 			}
-			if(num==2 && that.step==2) {
+			if(num==2 && that.step==2 &&　that.clickParse) {
 				that.isParse = true
 				that.funNum = num;
 				let timer = setInterval(function() {
@@ -103,18 +108,14 @@ export default{
 					that.delayTimer = setTimeout(function(){
 						that.fileFinsh = true;
 					},1500)
-					
+					/*
 					if(that.wprogress == 70){
-						that.operaInfo.mess = '用户B已通过椭圆线密码生成公钥以及私钥';
-							that.operaInfo.infolist=[];
-						that.operaInfo.infolist.push('公钥：'+that.userB.publicKey);
-				    that.operaInfo.infolist.push('私钥：'+that.userB.privateKey);
-				    that.operaInfo.infolist.push('并且A用户与C用户已收到B用户公布出来的公钥。')
+					  
 				    
-					}
+					}*/
 					if(that.wprogress == 100) {
 						clearInterval(timer)
-						that.isFail= true;
+	  		    
 			   	}
 				},50)	
 			}
@@ -126,7 +127,7 @@ export default{
 					if(that.wprogress == 100) {
 						clearInterval(timer)
 						that.operaInfo.infolist=[];
-					  that.operaInfo.mess = 'B用户已成功收到从A用户发送的文件，中途C用户试图通过B用户的公钥来解析文件但失败。';
+					  //that.operaInfo.mess = 'B用户已成功收到从A用户发送的文件，中途C用户试图通过B用户的公钥来解析文件但失败。';
 			   	}
 				},50)
 			}
@@ -141,6 +142,15 @@ export default{
 	  tipSure(){
 	  	let that = this
 	  	that.confirShow = false;
+	  	if(that.isHashFinsh && that.step==2){
+	  		that.operaInfo.mess = '用户B已通过椭圆线密码生成公钥以及私钥';
+				that.operaInfo.infolist=[];
+				that.operaInfo.infolist.push('公钥：'+that.userB.publicKey);
+		    that.operaInfo.infolist.push('私钥：'+that.userB.privateKey);
+		    that.operaInfo.infolist.push('并且A用户与C用户已收到B用户公布出来的公钥。')
+		    that.clickParse = true
+	  	}
+	  	
 	  },
 	  
 	  //椭圆线a,b值输入点击确定
@@ -151,8 +161,10 @@ export default{
 	  surePoint(){
 	  	let that = this;
 	  	that.step = that.step + 1;
+	 
 	  	that.delayTimer = setTimeout(function(){
-	  	that.confirShow = true
+	  	that.confirShow = true;
+	  	
 	  	},1000)
 	  },
 	  
@@ -162,6 +174,11 @@ export default{
 	  	that.step = that.step + 1;
 	  	that.isParse = false;
 	  	that.wprogress = 0;
+	  	//console.log('123')
+	  	if(that.fileFinsh){
+	  		that.operaInfo.infolist=[]; 
+				that.operaInfo.mess = '用户B已成功收到从A用户发送的数据，并通过自己的私钥解析成功。';
+	  	}
 	  	if(that.step==4){
 	  		
 	  		that.delayTimer = setTimeout(function(){

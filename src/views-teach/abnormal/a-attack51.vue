@@ -6,7 +6,12 @@
       	
       	<div class="userinfo" v-for="(item,index) in userList" :key="index">
       		 <div class="d-user" @click.stop>
-            <div class="d-icon" @click="showAmount(item)"><img :src="item.isWarning?item.warnIcon:item.icon"/></div>
+            <div class="d-icon" >
+            	<img :src="item.isWarning?item.warnIcon:item.icon" @click="showAmount(item)"/>
+            	 <el-tooltip class="item" effect="light" content="已收到转账记录，但钱未到账" placement="right-start" v-if="item.isAva">
+						      <div class="icon-quest"><img src="../../assets/teachImg/icon_question.png"/></div>
+						    </el-tooltip>
+            </div>
             <p class="d-name">{{item.name}}</p>
           </div>
       	</div>
@@ -45,6 +50,8 @@
     @sureBale = "sureBale" @del="del" @canc="canc"
     @hideLineDrawShow = "hideLineDrawShow"
     :userList="userList"
+    :isShowDelete="isShowDelete"
+    :D1="D1"
     
 	>
 		
@@ -59,4 +66,6 @@
 <style scoped="" lang="less">
 @import url("../../assets/teachCss/a-attack51.less");
 .eaWrap .mainContent .d-user{margin: 0 auto;}
+.d-icon{position: relative;}
+.icon-quest{position: absolute; right:26px;top:0px}
 </style>

@@ -124,7 +124,7 @@ export default{
 	  	that.operaTips.mess='已使用步骤二获得的密钥通过对称加密将私钥进行了加密保护，生成的新字符串即为keystore'
 	    that.operaTips.info =[];
 	    
-	    that.operaTips.info.push('由此可知，keystore其实是利用对称加密对私钥进行加密保护的一种 形式')
+	    that.operaTips.info.push('由此可知，keystore其实是利用对称加密对私钥进行加密保护的一种形式')
 	    that.isShowProgress = false;
 	  },
 	  //点击我知道了页面弹窗

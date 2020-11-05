@@ -63,7 +63,7 @@ export default{
       return value;
     },
     sortNumber:function(value){
-    	if(value<9){
+    	if(value<10){
     		return '0'+value
     	}else{
     		return value;

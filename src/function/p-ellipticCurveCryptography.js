@@ -108,11 +108,11 @@ export default{
 					that.delayTimer = setTimeout(function(){
 						that.fileFinsh = true;
 					},1500)
-					/*
+					
 					if(that.wprogress == 70){
 					  
 				    
-					}*/
+					}
 					if(that.wprogress == 100) {
 						clearInterval(timer)
 	  		    
@@ -127,7 +127,7 @@ export default{
 					if(that.wprogress == 100) {
 						clearInterval(timer)
 						that.operaInfo.infolist=[];
-					  //that.operaInfo.mess = 'B用户已成功收到从A用户发送的文件，中途C用户试图通过B用户的公钥来解析文件但失败。';
+					  that.operaInfo.mess = '用户B已成功收到从A用户发送的数据，并通过自己的私钥解析成功。';
 			   	}
 				},50)
 			}
@@ -175,9 +175,9 @@ export default{
 	  	that.isParse = false;
 	  	that.wprogress = 0;
 	  	//console.log('123')
-	  	if(that.fileFinsh){
+	  	if(that.fileFinsh && that.step==3){
 	  		that.operaInfo.infolist=[]; 
-				that.operaInfo.mess = '用户B已成功收到从A用户发送的数据，并通过自己的私钥解析成功。';
+				that.operaInfo.mess = '用户B已成功收到从A用户发送的数据，中途用户C试图通过用户B的公钥来解析数据但失败。';
 	  	}
 	  	if(that.step==4){
 	  		

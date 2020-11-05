@@ -43,6 +43,7 @@
     :userList="userList"
     @hideLineDrawShow = "hideLineDrawShow"
     :editNumber="editNumber"
+    :D1="D1"
 	>
 		
 	</rightTips>	

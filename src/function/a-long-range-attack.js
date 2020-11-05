@@ -62,6 +62,7 @@ export default{
 			//	console.log('定时器主体')
 				if(that.curheight==2 && !that.isAttacked){
 					clearInterval(that.spaceTimer);
+					that.step=2;
 					//console.log('清除1');
 					if(!that.isAttacked){
 					   that.confirShow = true
@@ -161,7 +162,7 @@ export default{
       		}else{
 	      		if(that.attack_Number==4){
       				clearInterval(that.attackTimer)
-      				//that.confirShow=true
+      				that.confirShow=true
       			}
 	      		
       		}

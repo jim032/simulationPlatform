@@ -227,6 +227,12 @@ background:#fff;line-height:40px;text-align: center; color:#446EDE; font-size: 1
 .c_box{height: 100%;}
 }
 
+.a-51parseconfirmbox{
+    height: 200px; margin-top:-100px;
+    .c_box{height: 100%;}
+}
+
+
 /*重放攻击*/
 .replay-confirmBox{height:300px;;}
 .a-replay-attack{
@@ -236,6 +242,11 @@ background:#fff;line-height:40px;text-align: center; color:#446EDE; font-size: 1
     .ecc-in .e-in input{width:60%; margin-left:10px; vertical-align: top;
     padding: 0 6px;
     }
+}
+/*交易延展性*/
+.a-ma-confirmBox{
+    height: 450px; margin-top: -225px;
+    p{font-size: 18px;}
 }
 
  @media screen and (max-width:1440px) {
@@ -251,14 +262,20 @@ background:#fff;line-height:40px;text-align: center; color:#446EDE; font-size: 1
  }
  
   @media screen and (max-width:1200px) {
-    .confirmBox{width:60%;margin-left:-30%; min-height:250px;margin-top: -150px; padding-bottom: 30px;  
+    .confirmBox{width:60%;margin-left:-30%; min-height:250px;margin-top: -200px; padding-bottom: 30px;  
       .c_box{padding-bottom:40px;}
+      p{font-size:16px;}
     }
-    .confirmBox .icon{top:-20px;left:-20px}
+
+    .confirmBox .icon{top:-20px;left:-20px;width:60px; height: 60px;}
     
     /**/
     .eccConfirmBox{height: 500px;margin-top:-250px;}
     
+    /*延展性攻击事务修改*/
+    .am-affair-ConfirmBox{height: 321px;
+       .c_box{height: auto;}
+    }
     .sureBtn{position: static; margin: 0 auto; } 
-    
+        .a-ma-confirmBox{margin-top: -225px;}
   }

@@ -14,7 +14,7 @@
 	  	<!--<a class="btn_next"></a>-->
 	  </div>
 	  <div class="transbox" v-if="confirShow"></div>
-	  <div class="confirmBox " :class="{'show':confirShow}">
+	  <div class="confirmBox " :class="{'show':confirShow,'a-ma-confirmBox':pageName==54 && step==1}">
 	  	
 	  	<div class="c_box">
 	  		<p class="title">{{tipTiltle}}</p>
@@ -67,7 +67,7 @@
 	     </div>
 	     <div class="confirmBox fileConfirmBox eccConfirmBox n-eccConfirmBox_2" :class="{'show':lineFinsh}">
 			 	  <div class="c_box">
-		  	 	  <p class="title result_title">假设我们现在有个点为（3，4），我们通过点的加法计算对这个点 进行10次相加计算获得新的点（9，6），如下图所示：</p>		  	 	  
+		  	 	  <p class="title result_title">假设我们现在有个点为（3，4），我们通过点的加法计算对这个点进行10次相加计算获得新的点（9，6），如下图所示：</p>		  	 	  
 		  	 	  <div class="ec-img result-img"><img src="../assets/ecc/result.jpg"/></div>
 		  	 	  <p class="c_mess result_mess">通过点的加法计算，我们可以得知，相加的次数为私钥，获得的新点为公钥：</p>
 		  	 	  <p class="c_mess result_mess">私钥：d2qwe3q1we25q1we3q2w12fas5f14dgf51wer2w1erew</p>
@@ -124,15 +124,22 @@
 	  
 	  
 	  <!--51%攻击转账-->
-    <template v-if="pageName==51  && step<=2">
+    <template v-if="pageName==51  && step==1">
       <div class="transbox" v-if="lineDraw51Show && step<=2" @click="hideLineDrawShow"></div>
-      <div class="confirmBox fileConfirmBox confirmBox51" :class="{'show':lineDraw51Show}" style="width:350px;margin-left: -170px;margin-top: -200px;font-size: 18px">
+      <div class="confirmBox fileConfirmBox confirmBox51"  :class="{'show':lineDraw51Show}" 
+      	style="width:350px;height:380px;margin-left: -170px;margin-top: -200px;font-size: 18px">
         <div class="c_box">
           <div class="main_form">
             <div class="cr_din">
               <span class="lab">账户余额：</span>
               <div  class="lab_in">
                 <span>￥{{balance}}</span>
+              </div>
+            </div>
+           <div class="cr_din">
+              <span class="lab">可用余额：</span>
+              <div class="lab_in">
+                <span>￥{{useBalance}}</span>
               </div>
             </div>
             <div class="cr_din" >
@@ -163,14 +170,14 @@
             </div>
           </div>
           <div class="btnbox">
-            <a class="chooseBtn" @click="sureTransfer">确定转账</a>
+            <a class="chooseBtn" @click="sureTransfer(1)">确定转账</a>
           </div>
         </div>
         <div class="icon"></div>
       </div>
     </template>
     <!--提升算力-->
-    <template v-if="pageName==51  && step==3">
+    <template v-if="pageName==51  && step==2">
       <div class="transbox" v-if="lineDraw51Show">
       </div>
       <div class="confirmBox fileConfirmBox confirmBox51" :class="{'show':lineDraw51Show}" style="width:340px;margin-left: -170px;margin-top: -200px;font-size: 18px">
@@ -200,10 +207,10 @@
       </div>
     </template>
     <!--打包-->
-    <template v-if="pageName==51 && step == 4">
+    <template v-if="pageName==51 && step == 3 &&　!isShowDelete">
       <div class="transbox" v-if="lineDraw51Show">
       </div>
-      <div class="confirmBox fileConfirmBox parseconfirmbox " :class="{'show':lineDraw51Show}">
+      <div class="confirmBox fileConfirmBox parseconfirmbox a-51parseconfirmbox " :class="{'show':lineDraw51Show}">
         <div class="c_box">
           <p class="pintro">
             正在打包剩余事务
@@ -221,10 +228,10 @@
       </div>
     </template >
     <!--删除提示-->
-    <template v-if="pageName==51 && step == 11">
-      <div class="transbox" v-if="lineDraw51Show && step==11">
+    <template v-if="pageName==51 && isShowDelete">
+      <div class="transbox" v-if="lineDraw51Show ">
       </div>
-      <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDraw51Show}">
+      <div class="confirmBox fileConfirmBox eccConfirmBox block-51Confirmbox" :class="{'show':lineDraw51Show}">
         <div class="c_box">
           <p class="title">请注意</p>
           <p>是否删除该事务</p>
@@ -238,7 +245,7 @@
     </template>
     
     <!--交易延展性转账-->
-    <template v-if="pageName==54  && step<=2 && editNumber==0">
+    <template v-if="pageName==54  && step<=2 && editNumber==0 &&　!D1">
       <div class="transbox" v-if="lineDrawMalleabilityShow && step==1" @click="hideLineDrawShow">
       </div>
       <div class="confirmBox fileConfirmBox confirmBox51 " :class="{'show':lineDrawMalleabilityShow}" style="width:340px;margin-left: -170px;margin-top: -200px;font-size: 18px">
@@ -278,17 +285,19 @@
             </div>
           </div>
           <div class="btnbox">
-            <a class="chooseBtn" @click="sureTransfer">确定转账</a>
+            <a class="chooseBtn" @click="sureTransfer(2)">确定转账</a>
           </div>
         </div>
         <div class="icon"></div>
       </div>
     </template>
     <!--交易延展性修改-->
-    <template v-if="pageName==54  && step==3">
+    <template v-if="pageName==54  && D1 &&　step<4">
       <div class="transbox" v-if="lineDrawMalleabilityShow && step==3" @click="hideLineDrawShow">
       </div>
-      <div class="confirmBox fileConfirmBox eccConfirmBox" :class="{'show':lineDrawMalleabilityShow}" style="width:400px;margin-left: -170px;margin-top: -200px;font-size: 18px">
+      <div class="confirmBox fileConfirmBox eccConfirmBox am-affair-ConfirmBox" 
+      	:class="{'show':lineDrawMalleabilityShow}" 
+      	style="width:400px;margin-left: -170px;margin-top: -200px;font-size: 18px; height: 350px;">
         <div class="c_box">
           <div style="margin: auto;width:80%">
             <div class="cr_din" style="margin-top: 20px;color: white"> 已截获到未打包到链中的事务 </div>
@@ -320,7 +329,9 @@
     <template v-if="pageName==54 && step == 4">
       <div class="transbox" v-if="lineDrawMalleabilityShow">
       </div>
-      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDrawMalleabilityShow}">
+      <div class="confirmBox fileConfirmBox parseconfirmbox" :class="{'show':lineDrawMalleabilityShow}"
+      	 style="height: 280px;"
+      	>
         <div class="c_box">
           <p class="pintro">原转账数据与修改过后的数据，正在竞争打包进入区块！</p>
           <div class="progress" >
@@ -440,7 +451,7 @@
 			  
 			  a:'',//椭圆线a的值
 			  b:'',//椭圆线b的值
-			  abimg:require('@/assets/ecc/11.jpg'),//根据a、b生成的椭圆线
+			  abimg:require('../assets/ecc/11.jpg'),//根据a、b生成的椭圆线
 			  lineFinsh:false,//椭圆线是否生成
 			   /*51%攻击*/
         computevalue: 0, //算力值
@@ -453,7 +464,8 @@
         editAmount: '', //异常篇-交易延展性攻击
         
         toList:[], //51%攻击可转对象list
-        balance: 0,
+        balance: 0,//账户余额
+        useBalance:0, //可用余额
         selectIndexData:'',//交易延展性当前修改的事务
         aa_vaule:'',//重放攻击转账金额
 			}
@@ -519,6 +531,10 @@
        wprogress51:{
          type:null,
          default:0
+       },
+       isShowDelete:{
+       	type:null,
+        default:false
        },
       // 延展性攻击
       lineDrawMalleabilityShow: {
@@ -589,6 +605,7 @@
         this.tansferInfo.object='';
         this.tansferInfo.amount='';
         this.balance=0
+        this.useBalance=0
 		  },
 		  //交易延展性
 		  'lineDrawMalleabilityShow':function(){
@@ -678,12 +695,12 @@
 			 	if(that.confirShow == true){
 				 	 switch(that.step){
 					   case 1:
-					    that.tipTiltle = '椭圆线密码学的基本概念和特点：'
+					    that.tipTiltle = '椭圆线密码学的基本概念和特点'
 					   	that.confirmInfo = '椭圆曲线密码学是基于椭圆曲线数学的一种建立公开密钥加密的算法，属于非对称加密算法，'+
 					   	  '需要两个密钥——公开密钥和私有密钥。在区块链中利用椭圆曲线生成公私钥较为方便，处理速度快，且安全性较高。'
 					   	break;
 					   case 2:
-					      that.tipTiltle = '请注意!'
+					      that.tipTiltle = '请注意'
 					      that.confirmInfo = '用户B已成功通过椭圆线密码算法生成公钥与私钥，并将公钥公布出去。'
 					    break;
 					   	case 4:
@@ -742,23 +759,34 @@
 				}
 			 
 			 if(that.pageName == '51') {
+			 	 //console.log(that.step)
           switch(that.step){
             case 1:
-              that.tipTiltle = '51%攻击的基本概念和危害'
-              that.confirmInfo = '51%攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害51%攻击的基本概念和危害' +
-                '51%攻击的基本概念和危害51%攻击的基本概念和危害%51攻击的基本概念和危害'
+              //表示转账发起的弹出框
+              //console.log(that.D1+'1233')
+              if(that.D1){
+              	that.tipTiltle = '请注意'
+                that.confirmInfo = '转账交易已发起，区块正在等待被打包，尚未进入主链。'
+              }else{
+              	that.tipTiltle = '51%攻击的基本概念和危害'
+                that.confirmInfo = '所谓51%算力攻击，是指当一笔交易已经发生但仍处于内存池中等待被打包，即尚未被记入到主链中去的时候，'+
+               '攻击者利用自己的优势算力占据打包权并篡改区块链上的记录，从而达到撤销已付款交易的目的。'+
+               '算力攻击一旦发生，人们对区块链网络的信心就会降至冰点，区块链货币的币值将受到重创。'
+              }
+              
               break;
             case 2:
-              that.tipTiltle = '51%攻击的基本概念和危害'
-              that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
+              that.tipTiltle = '请注意'
+              that.confirmInfo = '当前' + that.upComputeUser + '用户的算力值已达51%，已超过全网算力值的一半水平，即表明用户' + that.upComputeUser + '已具备攻击区块链网络安全的功能'
               break;
             case 4:
-              that.tipTiltle = '请注意'
-              that.confirmInfo = '当前' + that.upComputeUser + '用户的算力值已达51%，已超过全网算力值的一半水平，用户' + that.upComputeUser + '已具备攻击区块链网络安全的功能'
+              
               break;
             case 12:
-              that.tipTitle = '结束'
-              that.confirmInfo = '结束。'
+              that.tipTitle = ''
+              that.confirmInfo = '51%攻击是可能发生的，但从经济收益的角度来说，占据优势算力是需要付出巨大代价的，'+
+                '一旦发起攻击则会造成币值暴跌，最后很可能得不偿失。所以现实中发生的可能性并不高。'+
+                '至此，51%攻击的攻击过程已模拟完毕，点击右上角重置按钮可再次体验哦。'
               break;
           }
           return;
@@ -767,16 +795,20 @@
           switch(that.step){
             case 1:
               that.tipTiltle = '交易延展性的基本概念及危害性'
-              that.confirmInfo = '%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害' +
-                '%51攻击的基本概念和危害%51攻击的基本概念和危害%51攻击的基本概念和危害'
+              that.confirmInfo = '交易延展性源于比特币源代码中的一个错误。这个错误，可以在不改变交易输出或交易内容的情况下更改交易ID。'+
+              '这个错误意味着在交易被矿工写入区块之前，交易签名可以被更改。'+
+              '换句话说，也就是一笔未被确认的比特币交易，有可能被黑客造出两笔合法的交易。'+
+              '虽然，矿机最终只会确认一笔交易，而且交易的输出保持不变，你的比特币还是会转给预期的收款人。但是交易ID变动会导致后续的'+
+              '哈希值都完全改变。黑客可利用交易延展性对交易所进行攻击。曾经最大的比特币交易所——Mt.Gox宣布倒闭的部分原因就是延展性攻击'
               break;
             case 2:
               that.tipTiltle = '请注意'
               that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
               break;
             case 12:
-              that.tipTitle = '结束'
-              that.confirmInfo = '结束，异常篇-交易延展性演示结束！'
+              that.tipTitle = '请注意'
+              that.confirmInfo = '打包结束，修改过后的数据代替原转账数据被打包进链，金额实际已到账。但由于交易ID发生'+
+               '改变，所以被修改的交易事务无法查询到，交易结果显示为“交易未完成”。'
               break;
           }
           return;
@@ -786,9 +818,9 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '软分叉的基本概念及特点：'
-                that.confirmInfo = '文本1'+
-                  '文本2。'
+                that.tipTiltle = '软分叉的基本概念及特点'
+                that.confirmInfo = '分叉指的是区块链在进行升级时发生了意见分歧，从而导致区块链分叉。根据分叉后新旧节点的相互兼容性，又分为硬分叉和软分叉。'+
+                '若旧节点不能发现新协议的变化，从而继续接受新节点用新协议所挖出的区块，这种情况就称为软分叉。'
                 break;
               default:
                 that.tipTiltle = '请注意!'
@@ -804,13 +836,13 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '硬分叉的基本概念及特点：'
-                that.confirmInfo = '文本1'+
-                  '文本2。'
+                that.tipTiltle = '硬分叉的基本概念及特点'
+                that.confirmInfo = '分叉指的是区块链在进行升级时发生了意见分歧，从而导致区块链分叉。根据分叉后新旧节点的相互兼容性，又分为硬分叉和软分叉。'+
+                '当系统中出现了新版本的软件，并且和之前的版本软件不能兼容，旧节点无法接受新节点挖出的全部或部分区块，导致同时出现两条链，这种情况称为硬分叉。'
                 break;
               default:
                 that.tipTiltle = '请注意!'
-                that.confirmInfo = '软分叉模拟已结束，可点击右上方的重置或者返回。'
+                that.confirmInfo = '硬分叉模拟已结束，可点击右上方的重置或者返回。'
                 break;
              
             }
@@ -821,9 +853,11 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '重放攻击的基本概念及特点：'
-                that.confirmInfo = '文本1'+
-                  '文本2。'
+                that.tipTiltle = '重放攻击的基本概念及特点'
+                that.confirmInfo = '重放，顾名思义就是重复播放的意思。重放攻击又称重播攻击、回放攻击，指攻击者发送一个目的主机已接收过的数据包，'+
+                '来达到欺骗系统的目的。在区块链技术中，重放攻击通常出现在区块链硬分叉的时候。由于硬分叉的两条链，'+
+                '它们的地址和私钥生产的算法相同，交易格式也完全相同，因此导致在其中一条链上的交易在另一条链上很可能是完全合法的。'+
+                '在其中一条链上发起的交易再到另一条链上去重新广播，可能也会得到确认，这就是区块链的重放攻击。'
                 break;
               case 2:
                 that.tipTiltle = '请注意!'
@@ -835,27 +869,31 @@
                 break;
               case 4:
                 that.tipTiltle = '请注意!';
-                that.confirmInfo = '黑客已成功截取！'
+                that.confirmInfo = '黑客已成功截获用户A给B的转账事务！'
                 break;
               case 5:
                 that.tipTiltle = '请注意!';
-                that.confirmInfo = '黑客把截取的事务在B链中广播！'
+                that.confirmInfo = '黑客已将用户A给用户B的转账事务截获并在B链中广播！'
                 break;
               case 12:
                 that.tipTiltle = '请注意!';
-                that.confirmInfo = '由于A和B是硬分叉，所以校验的方法是一致的，都可以被A和B打包进区块'
+                that.confirmInfo = ' 由于B链是由A链硬分叉之后生成的，所以校验的方法是一致的，因为重放攻击的特性，'+
+                '原转账事务与黑客截获到B链广播的事务都能被打包接收，这也导致了发起一笔转账事务由于重放攻击后，被转出了两笔钱。'
                 break;
             }
             return;
           }
         }
         if(that.pageName == '55'){
+     
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '长程攻击的基本概念及危害性：'
-                that.confirmInfo = '文本1'+
-                  '文本2。'
+                that.tipTiltle = '长程攻击的基本概念及危害性'
+                that.confirmInfo = '长程攻击是指攻击者创建了一条从创世区块开始的长区块链分支，并试图替换掉当前的合法主'+
+                  '链。该分支上可能存有和主链不同的交易和区块，所以这种攻击又被称替换历史攻击或历史覆写攻击。'+
+                  '恶意攻击者可以购买大量代币余额私钥，这些代币余额已经在验证过程中被使用了。接下来，恶'+
+                  '意攻击者可以使用这个代币余额生成一个区块链替代历史，从而基于权益证明让他们获得更多激励。'
                 break;
               case 2:
                 that.tipTiltle = '请注意!'
@@ -878,9 +916,11 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '合约漏洞的基本概念及危害性：'
-                that.confirmInfo = '文本1'+
-                  '文本2。'
+                that.tipTiltle = '合约漏洞的基本概念及危害性'
+                that.confirmInfo = '智能合约本质是一段运行在区块链网络中的代码，它完成用户所赋予的业务逻辑。但是我们知道，'+
+                  '只要是由人编写的程序，就一定会出现错误和缺陷。本场景以常见的编程陷阱——整数溢出漏洞为例。'+
+                  '计算机中整数都有一个宽度，因此它有一个可以表示的最大值。当保存一个超过最大值的数时，'+
+                  '就会发生整数溢出。如果不去解决溢出的情况，就会造成数据的不准确和智能合约的输出错误。'
                 break;
               case 2:
                 that.tipTiltle = '请注意!'
@@ -963,7 +1003,8 @@
       },
       
       // 转账
-      sureTransfer() {
+      sureTransfer(num) {
+      	
         let that = this;
         if (that.tansferInfo.initiate == '') {
           that.$toast('转账发起人不能为空！',3000)
@@ -986,11 +1027,18 @@
 					return
 				}
        
-        
-        if (that.tansferInfo.amount > that.balance) {
-          that.$toast('转账金额不能大于余额！',3000)
-          return;
+        if(num==1){
+        	 if (that.tansferInfo.amount > that.useBalance) {
+		          that.$toast('转账金额不能大于可用余额！',3000)
+		          return;
+		        }
+          }else{
+        	 if (that.tansferInfo.amount > that.balance) {
+		          that.$toast('转账金额不能大于余额！',3000)
+		          return;
+		        }
         }
+       
         that.$emit('sureTransfer',that.tansferInfo)
       },
       // 打包
@@ -1089,6 +1137,7 @@
 			  for(var i = 0;i<that.userList.length;i++){
 			  	if(val==that.userList[i].userId){
 			  		that.balance = that.userList[i].balance
+			  		that.useBalance = that.userList[i].useBalance
 			  	}
 			  	if(val!=that.userList[i].userId){
 			  		that.toList.push(that.userList[i]);

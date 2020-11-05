@@ -14,7 +14,7 @@ export default{
 		  pageName:'54',
 
 		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
-		  singleStep:true,//单步骤提示
+		
 		  
 		  confirShow:false,
 
@@ -22,7 +22,7 @@ export default{
       
       tansferInfo: [], //底部展示的事务列表
       tansferInfoEdit: [],
-      singleStep:true,//单个步骤提示
+      singleStep:false,//单个步骤提示
       wprogressmalleability:0, //打包的进度
       delayTimer:null,//延迟执行时间
       editAmount: 0.0,
@@ -39,6 +39,7 @@ export default{
       transNumber:0,//转账次数
       cureditIndex:'',//当前修改的是哪一个事务
       editNumber:0,//修改次数
+      D1:false,//转账是否显示
     }
 	},
 	components:{
@@ -103,8 +104,12 @@ export default{
       		that.$toast('转账必须达到2笔',3000);
       		return;
       	}
+      	if(that.tansferInfo.length==that.editNumber){
+      	 	that.$toast('转账事务都已修改',3000);
+      		return;
+        }
       	if(that.step<=3 && that.tansferInfo.length>0){
-      		that.step=3
+      		that.D1=true
 	        that.lineDrawMalleabilityShow = true
 	        that.funNum = num;
 	        that.operaInfo.mess = ''
@@ -168,20 +173,22 @@ export default{
       	//console.log(that.tansferInfo[i]);
       	
       }
+     that.step=3
       that.lineDrawMalleabilityShow = false
       that.editNumber = that.editNumber+1;
+      /*
       if(that.tansferInfo.length==that.editNumber){
       	 that.step = 4
       }
+      */
+    
      
     },
     //转账确定
     sureTransfer(tansferInfo) {
       let that = this;
       that.lineDrawMalleabilityShow = false
-      if(that.step==1){
-      	that.step=2
-      }
+
       for(var i=0;i<that.userList.length;i++){
       	if(tansferInfo.initiate==that.userList[i].userId){
       		that.userList[i].balance=that.userList[i].balance-parseInt(tansferInfo.amount);
@@ -190,7 +197,7 @@ export default{
       		that.userList[i].balance=that.userList[i].balance+parseInt(tansferInfo.amount)
       	}
       }
-      
+      that.isShowAmount = false;
       that.tansferInfo.push({
         initiate: tansferInfo.initiate,
         object: tansferInfo.object,
@@ -201,6 +208,7 @@ export default{
       })
       that.transNumber = that.transNumber + 1;
       if(that.transNumber==2){
+      	that.step=2
       	that.delayTimer = setTimeout(function(){
 	      	that.confirShow = true;
 	      },500)

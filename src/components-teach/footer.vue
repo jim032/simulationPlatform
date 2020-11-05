@@ -72,24 +72,24 @@
 			<!---51%攻击-->
 			<template v-if="pageName==51 && isShowAmount==false">
 				<div class="bottomMess" v-if="isShowAmount==false && transNumber>=1">
-				 	  <span class="span1">未打包的事务</span><span class="span2">已被打包的事务</span>
+				 	  <span class="span1">未打包的事务</span><span class="span2">已被打包的事务</span><span class="span3">已被删除事务</span>
 				</div>
 				<ul class="affairsList affairsList51" v-if="transNumber>=1">
-      		 <li class="affairItem" :class="{'affairItem-blocked':step==12}" v-for="(item,index) in tansferInfo" :key="index"@mouseenter="enter(index)" @mouseleave="leave()">
+      		 <li class="affairItem " :class="{'affairItem-blocked':step==12,'deleteAffairItem':item.isDelete}" v-for="(item,index) in tansferInfo" :key="index"@mouseenter="enter(index)" @mouseleave="leave()">
       		 	 <div class="affairName">事务{{index+1}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
-              <div class="deltrans" v-if="tansferInfo.length>1 && step>=3 && step!=12"><a class="chooseBtn" @click="showdel(index)" >删除</a></div>
+              <div class="deltrans" v-if="tansferInfo.length>1 && step>=3 && step!=12 && !item.isDelete"><a class="chooseBtn" @click="showdel(index)" >删除</a></div>
       		 </li>
       	</ul>
 		
       </template>
       <!--交易延展性攻击-->
       <template v-if="pageName==54 && isShowAmount==false">
-      	<div class="bottomMess malleBottomMess" v-if="isShowAmount==false && step >= 2">
+      	<div class="bottomMess malleBottomMess" v-if="isShowAmount==false && tansferInfo.length > 0">
 				 	  <span class="span1">未打包的事务</span><span class="span2">已打包的事务</span>
 				 	  <span class="span3">已修改未打包事务</span><span class="span4">已修改已打包事务</span>
 				</div>
-      	<ul class="affairsList malle-affairsList" v-if="step >= 2">
+      	<ul class="affairsList malle-affairsList" >
       		 <li class="affairItem affairDefault " :class="{'finshAffair':step==12 && !item.isEdit}" v-for="(item,index) in tansferInfo" :key="index">
       		 	 <div  class="affairName">{{item.name}}</div>
               <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
@@ -446,6 +446,7 @@
     vertical-align: middle; position: relative;
     }
   .affairItem-blocked{border: 4px solid #5175f9;}
+  .deleteAffairItem{border:4px dashed red}
   
   .deltrans{display:none;}
   .affairItem:hover .deltrans{background: rgba(255, 0, 0, 0.75); position: absolute;width:130px;height:100px;
@@ -481,7 +482,7 @@
 /*底部提醒*/
 .bottomMess{
 	text-align: center; font-size:18px;color:#fff; padding-bottom:10px;
-	span{display:inline-block; margin: 0 50px;}
+	span{display:inline-block; margin: 0 20px;}
 	.span1{background: url(../assets/teachImg/att1.png) left center no-repeat;
 	 padding-left: 34px;}
 	.span2{

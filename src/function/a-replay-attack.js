@@ -22,7 +22,7 @@ export default{
       delayTimer:null,//延迟执行时间
       lineDraw53Show: false,
       
-      singleStep:true,//单个步骤提示
+      singleStep:false,//单个步骤提示
       
       userList:[
         {name:'用户A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:0,isWarning:false,

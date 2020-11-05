@@ -29,7 +29,8 @@
 	   	  	 	  	 	 
 	   	  	 	  	 </p>
 	   	  	 	  	 <div class="pawin">
-	   	  	 	  	 	 <input placeholder=""  type="" v-model="encryptionText"/>
+	   	  	 	  	 	 <input placeholder=""  type="" v-model="encryptionText" v-if="!isEncryptionSuc"/>
+	   	  	 	  	 	 <input placeholder="" readonly  type="" v-model="encryptionText" v-if="isEncryptionSuc"/>
 	   	  	 	  	 </div>
 	   	  	 	  	 <p class="resultmess" v-if="isEncryptionSuc">加密后内容为：{{encryptedContent.result}}</p>
 	   	  	 	  	 <div class="com-btnBox">
@@ -48,9 +49,10 @@
 	   	  	 	  	 	 
 	   	  	 	  	 </p>
 	   	  	 	  	 <div class="pawin">
-	   	  	 	  	 	 <input placeholder=""  type="" v-model="decryptText"/>
+	   	  	 	  	 	 <input placeholder=""　  type="" v-model="decryptText" v-if="!isDecryptSuc"/>
+	   	  	 	  	 	 <input placeholder="" readonly  type="" v-model="decryptText" v-if="isDecryptSuc"/>
 	   	  	 	  	 </div>
-	   	  	 	  	 <p class="resultmess" v-if="isDecryptSuc">解密密后内容为：{{encryptedContent.text}}</p>
+	   	  	 	  	 <p class="resultmess" v-if="isDecryptSuc">解密后内容为：{{encryptedContent.text}}</p>
 	   	  	 	  	 <div class="com-btnBox">
 	   	  	 	  	 	  <span class="com-btn" @click="surefContent">确定</span>
 	   	  	 	  	 </div>

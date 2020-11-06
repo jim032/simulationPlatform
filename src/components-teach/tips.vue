@@ -425,7 +425,7 @@
 		<template v-if="pageName==56" >
 			  <div class="transbox" v-if="D1" >
 			  </div>
-			  <div class="confirmBox fileConfirmBox eccConfirmBox" style="margin-top: -240px" :class="{'show':D1}">
+			  <div class="confirmBox fileConfirmBox eccConfirmBox" style="margin-top: -240px;height: 300px" :class="{'show':D1}">
 			    <div class="c_box">
 			      <div class="ecc-in" style="margin-top:40px;">
 			        <div class="e-in"><label style="left: -60px;">提现金额:</label><input placeholder="请输入转账金额"  maxlength="10"  value="1" readonly="true"/></div>
@@ -670,7 +670,7 @@
 					   	break;
 					   case 2:
 					    that.tipTiltle = '请注意'; 
-					   	that.confirmInfo = this.isAttack==1?'“文件A”在传送的过程中遭到了来自用户C的攻击，文件已被篡改！':'“文件A”传输成功，中途没有遭受攻击！'
+					   	that.confirmInfo = this.isAttack==1?'“文件A”在传送的过程中遭到了来自用户C的攻击！':'“文件A”传输成功，中途没有遭受攻击！'
 					   	break;
 					   	case 3:
 					    that.tipTiltle = '';
@@ -980,14 +980,7 @@
 			sureParse(){
 				this.$emit('sureParse');
 			},
-			surePrompt(){
-				if(this.isRight){
-					this.$emit('surePrompt',1);
-				}else{
-					this.$emit('surePrompt',0);	
-				}
-				
-			},
+		
 			// 提升算力点击确定
       sureUpCompute() {
         let that = this;

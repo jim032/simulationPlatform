@@ -4,7 +4,7 @@ Vue.use(Vuex)
 var store = new Vuex.Store({
 	state: {
   	
-  	socketUrl:'ws://192.168.1.167:8080/webSocket/',
+  	socketUrl:'ws://192.168.1.167:8081/webSocket/',
 
   	 //节点未开始提示
   	node_noStart:'您还未拖动节点',
@@ -214,7 +214,7 @@ var store = new Vuex.Store({
 		a_51attack:[
 		  {step:1,infolist:[
 		  	'1、分别点击A、B、C三位矿工的头像，从底部状态栏查看他们的初始余额。',
-		  	'2、点击左侧工具箱的转账按钮，最多可连续发起三笔转账交易。',
+		  	'2、点击左侧工具箱的转账按钮，连续发起三笔转账交易。',
 		  	'3、再次点击矿工A、B、C，从底部状态栏查看余额变化。',		  	
 		    ]
 		  },

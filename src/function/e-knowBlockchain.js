@@ -81,7 +81,7 @@ export default{
 	    setDialogWidth() {
 
 	      var val = document.body.clientWidth
-	      const def = 700 // 默认宽度
+	      const def = 900 // 默认宽度
 	      if (val < def) {
 	        this.dialogWidth =  '80%'
 	      } else {
@@ -137,7 +137,8 @@ export default{
     		let obj = res.data	
 				let name = this.$route.params.name
 				let pname = this.$route.params.pname
-    	  this.cateList = obj[pname][name].sections
+    	  this.cateList = obj[pname][name].sections;
+   
     	  if(this.cateList.length>3){
     	  	this.prevnextShow = true;
     	  }

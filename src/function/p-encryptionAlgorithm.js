@@ -30,6 +30,8 @@ export default{
 	    
 	    isEncryption:false,//是否加密 
 	    isDecrypt:false,//是否解密
+	    
+	    
 	    encryptionText:'',//输入的加密内容
 	    decryptText:'',//输入的解密内容
 	    promptText:'',
@@ -76,10 +78,15 @@ export default{
 				that.isEncryption = true
 				that.funNum = 1
 			}
-			if(num==2 && that.step==2 ) {
-				that.isEncryption = false
-				that.isDecrypt = true;
-				that.funNum = 2
+			if(num==2 ) {
+				
+				if(!that.isEncryptionSuc){
+					return this.$toast('请先加密',2000)
+				}else{				
+					that.isEncryption = false
+					that.isDecrypt = true;
+					that.funNum = 2
+				}
 			}
 			
 		},
@@ -104,7 +111,7 @@ export default{
 	  sureContent(){
 	  	let  that = this;
 	  	that.isRight = false;
-	  	//num==1表示加密内容确定，num==2表示解密内容确定
+	  	
 	  	if(that.step==1){
 	  		if(that.encryptionText==''){
 	  			that.isPrompt = true;
@@ -119,7 +126,7 @@ export default{
 	  		
 	  		that.isPrompt = true;
 	  		that.promptText = '加密内容正确'
-	
+	  	
 	  		that.isRight = true;
 	  	}
 	  	
@@ -129,6 +136,7 @@ export default{
 	  			that.isPrompt = true;
 	  			that.promptText = '加密已结束，请点击右侧的解密按钮进行解密'
 	  			that.isRight = false;
+	  			
 	  			return;
 	  		}
 	  	}
@@ -137,8 +145,7 @@ export default{
 	  //解密内容输入确定
 	  surefContent(){
 	  	let that = this;
-	    
-	    //console.log(that.step)
+	 
 	  	if(that.step==2){
 	  		if(that.decryptText==''){
 	  			that.isPrompt = true;
@@ -147,16 +154,20 @@ export default{
 	  		}
 	  		if(that.decryptText!=that.encryptedContent.text){
 	  			that.isPrompt = true;
-	  			that.promptText = '解密内容错误，请重新输入'
+	  			that.promptText = '解密内容错误，请重新输入';
+	  			that.isRight = false;
 	  			return;
 	  		}	  			  		
-	  	
+	  	  
+	
 	  	  that.isPrompt = true;
 	  		that.promptText = '解密内容正确'
 	  		that.isRight = true;
+	  		//that.decryptText1 = that.decryptText
+	  		//that.isDecryptSuc = true
 	  	}
 	  	if(that.step==3){
-	  		if(that.isEncryptionSuc ==true){	
+	  		if(that.isEncryptionSuc){	
 	  			that.isPrompt = false;
 	  			that.promptText = ''
 	  			that.isRight = false;
@@ -169,9 +180,9 @@ export default{
 	  
 	  //提示框点击确定
 	  surePrompt(num){
-	  	//num传1表示输入正确   //num传1表示输入错误
+	  
 	  	let that = this;
-	  	
+
 	  	if(that.isRight==true){
 		  	if(num==1 && that.step==1){
 		  		that.isEncryptionSuc = true
@@ -179,10 +190,11 @@ export default{
 		  			that.step = that.step+1
 		  		return;
 		  	}
+	
 		  	if(num==1 && that.step==2 ){
 		  		that.isDecryptSuc = true
 		  		that.isPrompt = false;
-		  			that.step = that.step+1
+		  		that.step = that.step+1
 		  		return;
 		  	}
 		  	 

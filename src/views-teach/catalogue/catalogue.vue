@@ -202,6 +202,7 @@
 	 					if(res.data.content && res.data.content.length){
 		 					this.isTab4 = false
 		 					this.courseList = res.data.content
+		 				  this.getData();//获取课程目录
 		 				}
 	        }else{
 	        	 that.$toast(res.message,3000)
@@ -237,7 +238,7 @@
 	 	
 	 	},
 	 	mounted(){
-	 		this.getData();//获取课程目录
+	 	
 	 		this.model = sessionStorage.getItem('loginModal');
 	 		if(this.modal!=''){
 	 		   this.getCustomize();

@@ -187,8 +187,8 @@ export default{
 			 			
 			 			//51%攻击
 			 		 if(text=='12d4a962-f98b-11ea-adc1-0242ac120002'){
-			 		   let tmp = obj.name;
-			 				that.$router.push({name:'51attack',params:{id:obj.id,name:tmp.replace(/%/g, '')}})	
+			 		   let tmp = obj.name;//.replace(/%/g, '')
+			 				that.$router.push({name:'51attack',params:{id:obj.id,name:tmp}})	
 			 			}
 			 		 
 				 	  //软分叉

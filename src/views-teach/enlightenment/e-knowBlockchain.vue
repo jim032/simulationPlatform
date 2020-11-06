@@ -34,9 +34,10 @@
 			<!----头部-->
 		<comHeader ref="header" :courseId="courseId" :menuShow="menuShow" @clickMenu="clickMenu" :menuText="menuText"></comHeader>
 		
-		
+			  <!--:title="specific_title"-->
 		<el-dialog
-		  :title="specific_title"
+	
+		  title=" "
 		  :visible.sync="centerDialogVisible"
 		 :width="dialogWidth" class="dialog-detail"
 		  center>

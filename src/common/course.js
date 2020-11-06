@@ -119,6 +119,7 @@ export default {
    	 that.department ='';
    	 that.major='';
    	 that.grade_name='';
+   	 that.class_name='';
    	 let obj = {};
    	 obj.department='';
    	 obj.major='';
@@ -141,10 +142,13 @@ export default {
    selectDepartment(value){
    	 let that = this ;
    	 let obj = {}
-   	 that.major=''
+   	 that.major='';
+   	 that.grade_name='';
+   	 that.class_name='';
    	 obj.department=value
    	 obj.major=''
    	 obj.grade_name=''
+   	 obj.class_name='';
    	 let tmp = that.classTreeList
    	 for(var i=0;i<tmp.length;i++){
    	 	if(that.department==tmp[i].department_name){
@@ -175,7 +179,7 @@ export default {
    selectGrade(value){
    	let that = this ;
    	 let obj = {}
-   	 that.class_name=''
+   	 that.class_name='';
    	 that.grade_name = value
    	 obj.department=that.department
    	 obj.major=that.major

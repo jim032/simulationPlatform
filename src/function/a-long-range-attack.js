@@ -127,7 +127,7 @@ export default{
 	  },
     //点击左边的三个工具箱
     poinfun(num){
-      //num==2测速
+   
       let that = this;
       that.funNum = num;
       
@@ -157,12 +157,14 @@ export default{
       		if(that.click_attackNumber==1){
       			if(that.attack_Number==5){
       				clearInterval(that.attackTimer)
-      				that.confirShow=true
+      				if(that.isCovered){
+      			   	that.confirShow=true;
+      				}
       			}
       		}else{
 	      		if(that.attack_Number==4){
       				clearInterval(that.attackTimer)
-      				that.confirShow=true
+      				//that.confirShow=true
       			}
 	      		
       		}
@@ -179,14 +181,24 @@ export default{
       	 	return that.$toast("长程攻击模拟已结束",2000)
       	 }else{
       	 	 that.step=4
-           that.confirShow=true
+      	 	 
+      	 	 console.log( that.step=4);
+      	 	 if(that.click_attackNumber==1 && that.attack_Number!=6){
+      	 	 	
+      	 	 	 that.confirShow=true
+      	 	 }
+      	 	 if(that.click_attackNumber==2 && that.attack_Number!=5){
+      	 	 	 that.confirShow=true
+      	 	 }
+          
       	 	 that.isCovered=true;
       	 	 //that.cz_type = 6//针对覆盖的情况设置判断长度为6 (165行代码判断处)
       	 	 if(that.mergedChainList.length==7){
       	 	 		clearInterval(that.attackTimer)
       	 	 		that.confirShow=true
-      			
+      		
 	      	 }
+      	 	 	 
       	 }
       }
       

@@ -57,7 +57,7 @@
 					</div>
 					
 					<div class="col">
-						<button class="cashBtn" @click.stop="chooseCompleted()">设置好了</button>
+						<button class="cashBtn" @click.stop="chooseCompleted()">发币</button>
 					</div>
 				</div>
 			</div>

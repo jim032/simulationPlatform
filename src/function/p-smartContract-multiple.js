@@ -157,6 +157,7 @@ export default{
     this.initWebSocket();
     this.userId = sessionStorage.getItem('stu_userId')
     
+   // console.log(this.userId);
     
     
   },
@@ -181,6 +182,7 @@ export default{
         that.websocketsend(params); 
         
       }, 10000);
+     
       this.timer2 = setInterval(function(){
         that.getNumber++;
         if(that.getNumber==22){
@@ -192,6 +194,7 @@ export default{
     	    clearInterval(that.timer2); //关闭
         }
       },1000);
+      
 		})	
 	},
   
@@ -219,12 +222,14 @@ export default{
             this.websock.close();
             this.websock=null;
           }
-          let userId = this.userId
+          let userId =sessionStorage.getItem('stu_userId');
+       
           this.websock = new WebSocket(this.socketUrl+userId);
 		      this.websock.onmessage = this.websocketonmessage;
           this.websock.onopen = this.websocketonopen;
           this.websock.onerror = this.websocketonerror;
           //this.websock.onclose = this.websocketclose;
+          //console.log('initWebsocket')
       }
       
       
@@ -237,7 +242,20 @@ export default{
 
       this.websocketsend(params);
     },
+
     
+   waitForConnection(callback, interval) {
+     let that = this
+	    if (that.websock.readyState === 1) {
+	        callback();
+	    } else {
+	  
+	        // optional: implement backoff for interval here
+	        that.timer1 = setTimeout(function () {
+	            that.waitForConnection(callback, interval);
+	        }, interval);
+	    }
+   },
     //链接失败继续链接
     websocketonerror(){//连接建立失败重连
     	//this.reload();
@@ -248,58 +266,78 @@ export default{
     websocketonmessage(e){ //数据接收
      
      //console.log(e)
-     let mess =JSON.parse(e.data)
-     let that = this;
+     let that = this
+     let data = e.data
+     let mess =null;
+     if(data.indexOf('{')!=-1){
+     	mess=JSON.parse(data)
+     }else{
+     	mess=e.data
+     
+     }
+     
+    
      that.getNumber = 0;
      //console.log(e)
    
      //code：201表示加入消息  202退出成功  203代币发行成功  204转账成功  205添加机器人成功
-     if(mess.code=='201' && mess.code){         
-        that.onlineList(mess,201); 
-     }
-     //退出
-     if(mess.code=='202' && mess.code){ 
-       	let data = JSON.parse(mess.data)
-     	  let userList = data.userList;
-     	  let index = userList.length
-     	  for(var i=0;i<that.userList.length;i++){
-     	   	that.userList[i].onlineStatus=false
-     	   	that.userList[i].name = '用户'+(1+index)
-     	   	that.userList[i].amount = 0;
-     	  }
-     	  that.onlineList(mess,202);
-      }
-      //加入机器人接收的消息
-      if(mess.code=='205' && mess.code){
-     	  that.onlineList(mess,205);     
-      }
-      //用户已添加
-      if(mess.code=='501' && mess.code){  
-      
-        that.onlineList(mess,501); 
-      }
-      //发币成功
-      if(mess.code=='203' && mess.code){         
-  
-        //that.setShow = false;
-			  that.issueCurrencyMess ='智能合约部署完成'
-			  that.issueCurrency(mess,203)
 
+     if(mess.code!=null){
+     	  if(mess.code=='201' && mess.code){         
+		        that.onlineList(mess,201); 
+		     }
+		     //退出
+		     if(mess.code=='202' && mess.code){ 
+		       	let data = JSON.parse(mess.data)
+		     	  let userList = data.userList;
+		     	  let index = userList.length
+		     	  for(var i=0;i<that.userList.length;i++){
+		     	   	that.userList[i].onlineStatus=false
+		     	   	that.userList[i].name = '用户'+(1+index)
+		     	   	that.userList[i].amount = 0;
+		     	  }
+		     	  that.onlineList(mess,202);
+		      }
+		      //加入机器人接收的消息
+		      if(mess.code=='205' && mess.code){
+		     	  that.onlineList(mess,205);     
+		      }
+		      //用户已添加
+		      if(mess.code=='501' && mess.code){  
+		      
+		        that.onlineList(mess,501); 
+		      }
+		      //发币成功
+		      if(mess.code=='203' && mess.code){         
+		  
+		        //that.setShow = false;
+					  that.issueCurrencyMess ='智能合约部署完成'
+					  that.issueCurrency(mess,203)
+		
+		     }
+		      
+		     //转账成功
+		     if(mess.code=='204' && mess.code){
+		     	 //转账成功首先那个
+		       that.transMess = '转账事务打包成功'
+		       that.transferOperation(mess,204)
+		     	
+		     }
      }
-      
-     //转账成功
-     if(mess.code=='204' && mess.code){
-     	 //转账成功首先那个
-       that.transMess = '转账事务打包成功'
-       that.transferOperation(mess,204)
-     	
-     }
+     
        
     },
     //数据发送
     websocketsend(Data){
-    	
-       this.websock.send(Data);
+    	let that = this
+      that.waitForConnection(function () {
+	      that.websock.send(Data);
+	       //console.log('send')
+	        if (typeof callback !== 'undefined') {
+	          callback();
+	        }
+	    }, 1000);
+       
      
     },
     //退出
@@ -328,14 +366,18 @@ export default{
 						},500)
 						*/
             that.top = that.top-40;
-						that.operaInfo.mess = that.issueCurrencyMess
-						that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
-						that.operaInfo.infolist.push('资产名称：'+that.coinName)
-						that.operaInfo.infolist.push('拥有者：'+that.onlineUserList[0].user_name)						
-						that.blockPro = 0;
+						that.operaInfo.mess = that.issueCurrencyMess;
+						//console.log(mess);
+						
 						//智能合约部署完成
 						that.contractDeployment = true;
 						that.onlineList(mess,code); 
+						that.operaInfo.infolist = [];
+						that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
+						let temp =that.coinName==''?that.coin_name:that.coinName
+						that.operaInfo.infolist.push('资产名称：'+temp)
+						that.operaInfo.infolist.push('拥有者：'+that.onlineUserList[0].user_name)						
+						that.blockPro = 0;
 						sessionStorage.setItem('contractDeployment',true)
 						
 	      }else{

@@ -273,6 +273,18 @@ export default{
       that.confirShow = true;
        that.getvisit();
     })
+    
+    document.onkeydown = function (e) {
+		var ev = e || window.event // 获取event对象
+		var obj = ev.target || ev.srcElement // 获取事件源
+	    var readOnly = obj.readOnly || obj.getAttribute('readonly')
+	    if (ev.keyCode === 8) { // 等于8则是退格键被按下
+	   		if (condition) { // 在这里可以对屏蔽条件进行进一步限制
+	          return false
+	        }
+	    }
+	}
+    
   },
   beforeDestroy(){
   	let that = this;

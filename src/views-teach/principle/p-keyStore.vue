@@ -42,7 +42,7 @@
 			  		 </p>
 			  		 <p v-for="(item,index) in operaTips.info">{{item}}</p>
 			  		 <div class="din" v-if="step==1">
-			  		 	 <input placeholder="请在此输入密码" type="password" autocomplete="off" v-model="ipassword"/>
+			  		 	 <input placeholder="请在此输入密码" type="password" autocomplete="off" v-model="ipassword" maxlength='20'/>
 			  		 </div>
 			  		  <p class="progressMess" v-if="step==2 || step==3">
 			  		  	 {{progressMess}} {{(hashProgress!=100)?hashProgress+'%':''}}

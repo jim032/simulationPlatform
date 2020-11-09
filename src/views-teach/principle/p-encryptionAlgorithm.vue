@@ -30,7 +30,10 @@
 	   	  	 	  	 </p>
 	   	  	 	  	 <div class="pawin">
 	   	  	 	  	 	 <div v-if="!isEncryptionSuc"><input type="text" v-model="encryptionText" /></div>
-	   	  	 	  	 	 <div v-if="isEncryptionSuc"><input readonly  type="text" v-model="encryptionText" /></div>
+	   	  	 	  	 	 <div v-if="isEncryptionSuc">
+	   	  	 	  	 	 	  
+	   	  	 	  	 	 	  <p class="p-result">{{encryptionText}}</p>
+	   	  	 	  	 	 </div>
 	   	  	 	  	 </div>
 	   	  	 	  	 <p class="resultmess" v-if="isEncryptionSuc">加密后内容为：{{encryptedContent.result}}</p>
 	   	  	 	  	 <div class="com-btnBox">
@@ -50,7 +53,9 @@
 	   	  	 	  	 </p>
 	   	  	 	  	 <div class="pawin">
 	   	  	 	  	 	 <div v-if="!isDecryptSuc"><input  type="text" v-model="decryptText" /></div>
-	   	  	 	  	 	 <div v-if="isDecryptSuc"><input readonly  type="text" v-model="decryptText" /></div>
+	   	  	 	  	 	 <div v-if="isDecryptSuc">
+	   	  	 	  	 	 	<p class="p-result">{{decryptText}}</p>
+	   	  	 	  	 	 </div>
 	   	  	 	  	 </div>
 	   	  	 	  	 <p class="resultmess" v-if="isDecryptSuc">解密后内容为：{{encryptedContent.text}}</p>
 	   	  	 	  	 <div class="com-btnBox">
@@ -108,4 +113,17 @@
 
 <style scoped lang="less">
 	@import url("../../assets/teachCss/p-encryptionAlgorithm.less");
+	.p-result{padding: 0 20px; background:#fff; text-align: left; color: #444;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -ms-border-radius: 5px 5px 5px 5px;
+    -o-border-radius: 5px 5px 5px 5px;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;}
 </style>

@@ -155,11 +155,8 @@ export default{
   },
  created() {
     this.initWebSocket();
-    this.userId = sessionStorage.getItem('stu_userId')
-    
-   // console.log(this.userId);
-    
-    
+    this.userId = sessionStorage.getItem('stu_userId')    
+   // console.log(this.userId);       
   },
   mounted(){
 		 	let that = this;
@@ -178,15 +175,21 @@ export default{
 	  	that.initHeight();
 	  	this.timer = setInterval(function(){
       	let userId = sessionStorage.getItem('stu_userId');
-        let params = '{"userID":"'+userId+'","type":"'+5+'","data":{"user_id":"'+userId+'"}}';           
+
+        let params = '{"userID":"'+userId+'","type":"'+5+'","data":{"user_id":"'+userId+'"}}';
         that.websocketsend(params); 
+    
         
       }, 10000);
      
       this.timer2 = setInterval(function(){
         that.getNumber++;
-        if(that.getNumber==22){
-     		   	
+        let userId = sessionStorage.getItem('stu_userId');
+        if(userId==null){
+          that.$router.push({'path':'/login'})	
+        }
+        console.log(userId);
+        if(that.getNumber==32){   	
   			  sessionStorage.removeItem('stu_userId')
 	    	  sessionStorage.removeItem('stu_role_id')
 	    	  sessionStorage.removeItem('loginModal');
@@ -237,9 +240,9 @@ export default{
     },
     
     websocketonopen(){ //连接建立之后执行send方法发送数据 
-      let userId = this.userId
+     
+      let userId =sessionStorage.getItem('stu_userId');
       let params = '{"userID":"'+userId+'","type":"'+0+'","data":{"user_id":"'+userId+'"}}';    
-
       this.websocketsend(params);
     },
 
@@ -276,6 +279,7 @@ export default{
      
      }
      
+     console.log(e)
     
      that.getNumber = 0;
      //console.log(e)

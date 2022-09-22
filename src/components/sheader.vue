@@ -4,19 +4,19 @@
 			<div class="h_top">
 				<div class="sysName">
 					<div class="logo"><img src="../assets/img/logo.png"/></div>
-					<h3 class="sysTitle">仿真教学后台管理平台</h3>
+					<h3 class="sysTitle">Simulation teaching background management platform</h3>
 				</div>
 				<div class="h_info">
-					<a class="aPreview" @click="preView">预览</a>
-					<div class="loginRole" @click="linkPerCenter"><p class="role-sel">你好,{{roleId =='1'?'管理员':'老师'}}</p></div>
-					<a class="exit" @click="signOut">退出</a>
+					<a class="aPreview" @click="preView">preview</a>
+					<div class="loginRole" @click="linkPerCenter"><p class="role-sel">Hello,{{roleId =='1'?'administrators':'teacher'}}</p></div>
+					<a class="exit" @click="signOut">sign out</a>
 				</div>
 			</div>
 			<ul class="nav">
-				<li class="curItem" :class="{'cur':pageNum==1}" @click="linkRoute(1)">数据统计</li>
-				<li class="curItem" :class="{'cur':pageNum==2}" @click="linkRoute(2)">人员管理</li>
+				<li class="curItem" :class="{'cur':pageNum==1}" @click="linkRoute(1)">data statistics</li>
+				<li class="curItem" :class="{'cur':pageNum==2}" @click="linkRoute(2)">Personnel management</li>
 				<!--<li class="curItem" :class="{'cur':pageNum==3}" @click="linkRoute(3)">自定义课程</li>-->
-				<li class="curItem" :class="{'cur':pageNum==3}" @click="linkRoute(3)">课程管理</li>
+				<li class="curItem" :class="{'cur':pageNum==3}" @click="linkRoute(3)">course management</li>
 			</ul>
 		</div>
 	</div>

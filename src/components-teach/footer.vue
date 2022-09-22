@@ -14,8 +14,8 @@
 				<li v-for="(item,index) in operaInfo.infolist ">{{item}}</li>
 			</ul>
 			<template v-if="pageName==1">
-				<p class="protext" v-if="isBlcok && step==2">正在进行节点难度计算：{{blockPro}}%</p>
-			  <p class="protext" v-if="isBlcok && step==3 ">节点正在进行打包广播操作：{{blockPro}}%</p>
+				<p class="protext" v-if="isBlcok && step==2">Node difficulty calculation in progress：{{blockPro}}%</p>
+			  <p class="protext" v-if="isBlcok && step==3 ">The node is in the process of packaging broadcast operation：{{blockPro}}%</p>
 			  <div class="progress" v-if="isBlcok">
 				<div class="curPro">
 					<div class="proIcon" :style="{'width':blockPro+'%'}"></div>
@@ -24,8 +24,8 @@
 			</template>
 			
 			<template v-if="pageName==3">	
-			<p class="protext" v-if="isBlcok && step==1">hash值正在生成：{{blockPro}}%</p>
-			<p class="protext" v-if="isBlcok && (step==31 ||step==33)">正在通过梅克尔树生成hash并校验：{{blockPro}}%</p>
+			<p class="protext" v-if="isBlcok && step==1">Hash value generating：{{blockPro}}%</p>
+			<p class="protext" v-if="isBlcok && (step==31 ||step==33)">Generating hash from Merkel tree and verifying：{{blockPro}}%</p>
 			<div class="progress" v-if="isBlcok">
 				<div class="curPro">
 					<div class="proIcon" :style="{'width':blockPro+'%'}"></div>
@@ -36,34 +36,34 @@
 			<div class="blockBox" v-if="isShowBlock">
 
 				<div class="col_block">
-					<p>区块高度：</p>
+					<p>block height：</p>
 					<p>{{this.height}}</p>
 				</div>
 				<div class="col_block" v-if="this.height >= 2">
-					<p>区块高度：</p>
+					<p>block height：</p>
 					<p>{{this.height - 1}}</p>
 				</div>
 				<div class="col_block" v-if="this.height >= 3">
-					<p>区块高度：</p>
+					<p>block height：</p>
 					<p>{{this.height - 2}}</p>
 				</div>
 				<div class="col_block" v-if="this.height >= 4">
-					<p>区块高度：</p>
+					<p>block height：</p>
 					<p>{{this.height - 3}}</p>
 				</div>
 				<div class="col_more" v-if="this.height >7 ">
 					<p>...</p>
 				</div>
 				<div class="col_block" v-if="this.height >= 5">
-					<p>区块高度：</p>
+					<p>block height：</p>
 					<p>{{this.height - 4 > 3 ? 3: this.height - 4}}</p>
 				</div>
 				<div class="col_block" v-if="this.height >= 6">
-					<p>区块高度：</p>
+					<p>block height：</p>
 					<p>{{this.height - 5 > 2 ? 2: this.height - 5}}</p>
 				</div>
 				<div class="col_block" v-if="this.height >= 7">
-					<p>区块高度：</p>
+					<p>block height：</p>
 					<p>{{this.height - 6 > 1 ? 1: this.height - 6}}</p>
 				</div>
 			</div>
@@ -72,13 +72,13 @@
 			<!---51%攻击-->
 			<template v-if="pageName==51 && isShowAmount==false">
 				<div class="bottomMess" v-if="isShowAmount==false && transNumber>=1">
-				 	  <span class="span1">未打包的事务</span><span class="span2">已被打包的事务</span><span class="span3">已被删除事务</span>
+				 	  <span class="span1">Unpackaged transactions</span><span class="span2">Packaged transactions</span><span class="span3">Transaction deleted</span>
 				</div>
 				<ul class="affairsList affairsList51" v-if="transNumber>=1">
       		 <li class="affairItem " :class="{'affairItem-blocked':step==12,'deleteAffairItem':item.isDelete}" v-for="(item,index) in tansferInfo" :key="index"@mouseenter="enter(index)" @mouseleave="leave()">
-      		 	 <div class="affairName">事务{{index+1}}</div>
-              <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
-              <div class="deltrans" v-if="tansferInfo.length>1 && step>=3 && step!=12 && !item.isDelete"><a class="chooseBtn" @click="showdel(index)" >删除</a></div>
+      		 	 <div class="affairName">transactions{{index+1}}</div>
+              <div >{{item.initiate}} transfer {{item.amount}} to {{item.object}}</div>
+              <div class="deltrans" v-if="tansferInfo.length>1 && step>=3 && step!=12 && !item.isDelete"><a class="chooseBtn" @click="showdel(index)" >delete</a></div>
       		 </li>
       	</ul>
 		
@@ -86,19 +86,19 @@
       <!--交易延展性攻击-->
       <template v-if="pageName==54 && isShowAmount==false">
       	<div class="bottomMess malleBottomMess" v-if="isShowAmount==false && tansferInfo.length > 0">
-				 	  <span class="span1">未打包的事务</span><span class="span2">已打包的事务</span>
-				 	  <span class="span3">已修改未打包事务</span><span class="span4">已修改已打包事务</span>
+				 	  <span class="span1">Unpackaged transactions</span><span class="span2">Packaged transactions</span>
+				 	  <span class="span3">Unpackaged transaction modified</span><span class="span4">Packaged transaction modified</span>
 				</div>
       	<ul class="affairsList malle-affairsList" >
       		 <li class="affairItem affairDefault " :class="{'finshAffair':step==12 && !item.isEdit}" v-for="(item,index) in tansferInfo" :key="index">
       		 	 <div  class="affairName">{{item.name}}</div>
-              <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
-              <div>事务id：{{item.id}}</div>
+              <div >{{item.initiate}} transfer {{item.amount}} to {{item.object}}</div>
+              <div>Transaction id：{{item.id}}</div>
       		 </li>
       		 <li class="affairItem editAffairItem" :class="{'finshAffair':step==12}" v-for="(item,index1) in tansferInfoEdit" :key="item.id" v-if="tansferInfoEdit.length > 0">
       		 	 <div class="affairName">{{item.name}}</div>
-              <div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>
-              <div>事务id：{{item.id}}</div>
+              <div >{{item.initiate}} transfer {{item.amount}} to {{item.object}}</div>
+              <div>Transaction id：{{item.id}}</div>
       		 </li>
       	</ul>
       
@@ -110,8 +110,8 @@
       <template v-if="pageName==53">
       	
       	<div class="bottomMess malleBottomMess " >
-				 	  <span class="span1">未打包的事务</span>
-				 	  <span class="span3">已修改未打包事务</span><span class="span4">已修改已打包事务</span>
+				 	  <span class="span1">Unpackaged transactions</span>
+				 	  <span class="span3">Unpackaged transaction modified</span><span class="span4">Packaged transaction modified</span>
 				</div>
 				
       	<ul class="affairsList replay-affairsList A-replay-affairsList" >
@@ -128,8 +128,8 @@
             <li class="affairItem blockItem" :class="{'finshAffair':step==12}" v-for="(item,index) in tansferInfo" :key="'info2'+index" v-if="step>=3">
       		 	 <div class="blockItem-box">
       		 	    <div class="item-box">
-      		 	    	 <div class="affairName">{{item.initiate}}给{{item.object}}</div>
-                   <div >转账{{item.amount}}</div>
+      		 	    	 <div class="affairName">{{item.initiate}} to {{item.object}}</div>
+                   <div >Transfer {{item.amount}}</div>
       		 	    </div>
       		 	 </div>
               <!--<div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>-->
@@ -153,8 +153,8 @@
       		 <li class="affairItem blockItem"  :class="{'finshAffair':step==12}" v-for="(item,index) in tansferInfo" :key="'info2'+index" v-if="step>=5">
       		 	 <div class="blockItem-box"  >
       		 	    <div class="item-box">
-      		 	    	 <div class="affairName">{{item.initiate}}给{{item.object}}</div>
-                   <div >转账{{item.amount}}</div>
+      		 	    	 <div class="affairName">{{item.initiate}} to {{item.object}}</div>
+                   <div >Transfer {{item.amount}}</div>
       		 	    </div>
       		 	 </div>
               <!--<div >{{item.initiate}}给{{item.object}}转账{{item.amount}}</div>-->

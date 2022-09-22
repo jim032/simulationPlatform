@@ -2,7 +2,7 @@
 	<div class="funbox">
 	    <div class="funcol">
 	    	  <div class="icon"></div>
-	    	  <p class="mess">下载模板</p>
+	    	  <p class="mess">Download template</p>
 	    	  <!--点击按钮触发请求window.location.href-->
 	    	  <a class="btn" @click="uploadExcel()">
 	    	  	 {{pageNum | dowloadTitle}}
@@ -11,7 +11,7 @@
 	    </div>
 	    <div class="funcol funcol-upload">
 	    	 <div class="icon"></div>
-	    	 <p class="mess">上传Excel表格</p>
+	    	 <p class="mess">Upload excel form</p>
 	    	<file-upload
             class="stu_upload"
             style="overflow:visible"
@@ -58,11 +58,11 @@ export default{
  	},
  	filters:{
  		btnTitle(value){
- 			let str = value==2?'上传学生信息':'上传老师信息'
+ 			let str = value==2?'Upload student information':'Upload teacher information'
  			return str;
  		},
  		dowloadTitle(value){
- 			let str = value==2?'下载学员信息模板':'下载老师信息模板'
+ 			let str = value==2?'Download student information template':'Download teacher information template'
  			return str;
  		}
  	},
@@ -95,7 +95,7 @@ export default{
         if (extension =='xlsx' ||extension =='xls' ) {
 
         } else {
-          this.$toast('只能上传后缀是.xlsx或xls的文件',2000)
+          this.$toast('Only files with suffix. Xlsx or XLS can be uploaded',2000)
           return prevent();
         }
       }

@@ -2,7 +2,7 @@
 	<div class="funbox">
 	    <div class="funcol">
 	    	  <div class="icon"></div>
-	    	  <p class="mess">下载模板</p>
+	    	  <p class="mess">Download template</p>
 	    	  <!--点击按钮触发请求window.location.href-->
 	    	  <a class="btn">
 	    	  	 {{pageNum | dowloadTitle}}
@@ -11,7 +11,7 @@
 	    </div>
 	    <div class="funcol funcol-upload">
 	    	 <div class="icon"></div>
-	    	 <p class="mess">上传Excel表格</p>
+	    	 <p class="mess">Upload excel form</p>
 	    	 <el-upload multiple :show-file-list="false"
 		      ref="upload"
 		      class="stu_upload"
@@ -45,11 +45,11 @@ export default{
  	},
  	filters:{
  		btnTitle(value){
- 			let str = value==1?'上传学生信息':'上传老师信息'
+ 			let str = value==1?'Upload student information':'Upload teacher information'
  			return str;
  		},
  		dowloadTitle(value){
- 			let str = value==1?'下载学员信息模板':'下载老师信息模板'
+ 			let str = value==1?'Download student information template':'Download teacher information template'
  			return str;
  		}
  	},
@@ -60,17 +60,17 @@ export default{
       	let extension = file.name.substring(file.name.lastIndexOf('.')+1)
         let size = file.size / 1024 / 1024
         if(!(extension == 'xlsx' || extension == 'xls')) {
-          this.$message.warning('只能上传后缀是.xlsx的文件')
+          this.$message.warning('Only files with suffix. Xlsx or XLS can be uploaded')
         }
         if(size > 10) {
-          this.$message.warning('文件大小不得超过10M')
+          this.$message.warning('The file size should not exceed 10m')
         }
       },
 
 
       // 文件超出个数限制
       handleExceed(files, fileList) {
-        this.$message.warning(`只能选择 ${this.limit} 个文件，当前共选择了 ${files.length + fileList.length} 个`)
+        this.$message.warning(`Only ${this.limit} file can be selected. Currently, ${files.length + fileList.length} file has been selected`)
       },
       
       //文件上传成功
@@ -86,7 +86,7 @@ export default{
       },
       // 文件上传失败
       handleError(err, file, fileList) {
-        this.$message.error('文件上传失败')
+        this.$message.error('File upload failed')
       },
  	}
  }

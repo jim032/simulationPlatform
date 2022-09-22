@@ -37,12 +37,12 @@
 	                  }
 	                 	
 	                 </div>
-	                 <span class="see-keystore">(查看keyStore)</span>
+	                 <span class="see-keystore">(check keyStore)</span>
 	              </el-tooltip>
 			  		 </p>
 			  		 <p v-for="(item,index) in operaTips.info">{{item}}</p>
 			  		 <div class="din" v-if="step==1">
-			  		 	 <input placeholder="请在此输入密码" type="password" autocomplete="off" v-model="ipassword" maxlength='20'/>
+			  		 	 <input placeholder="Please enter your password here" type="password" autocomplete="off" v-model="ipassword" maxlength='20'/>
 			  		 </div>
 			  		  <p class="progressMess" v-if="step==2 || step==3">
 			  		  	 {{progressMess}} {{(hashProgress!=100)?hashProgress+'%':''}}
@@ -54,12 +54,12 @@
 							</div>
 
 			  		 <div class="btnbox">
-			  		 	  <button class="btn cursorPoint" v-if="step==1" @click="surePasword">确定</button>
-			  		 	  <button class="btn cursorPoint" v-if="step==2 && hashProgress>=0 && hashProgress<100" @click="sureHash(1)">哈希计算</button>
-			  		 	  <button class="btn cursorPoint" v-if="step==2 && hashProgress==100" @click="surePath">下一步</button>
-			  		 	  <button class="btn cursorPoint" v-if="step==3 && hashProgress>=0 && hashProgress<100" @click="sureHash(2)">加密</button>
-			  		 	  <button class="btn cursorPoint" v-if="step==3 && hashProgress==100" @click="surefinsh">下一步</button>
-			  		 	   <button class="btn cursorPoint" v-if="step>=4"  @click="sureResult">我知道了</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==1" @click="surePasword">determine</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==2 && hashProgress>=0 && hashProgress<100" @click="sureHash(1)">Hash computation</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==2 && hashProgress==100" @click="surePath">next step</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==3 && hashProgress>=0 && hashProgress<100" @click="sureHash(2)">encryption</button>
+			  		 	  <button class="btn cursorPoint" v-if="step==3 && hashProgress==100" @click="surefinsh">next step</button>
+			  		 	   <button class="btn cursorPoint" v-if="step>=4"  @click="sureResult">I got it!</button>
 			  		 </div>
 			  	</div>
 			  </div>

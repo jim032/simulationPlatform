@@ -6,16 +6,16 @@
         <div class="userinfo" style="text-align: center">
           <div class="d-user">
             <div class="d-icon"><img :src="iconUrl_1"/></div>
-            <div class="d-name" style="color: white">用户A</div>
+            <div class="d-name" style="color: white">User A</div>
             <div class="d-name"  >
-              <p class="d-n-info borderRadius5" >余额：{{inputMoney}}元(范围0-256)</p>
+              <p class="d-n-info borderRadius5" >Balance: {{inputMoney}}(range 0-256)</p>
             </div>
           </div>
           
         </div>
       <div class="userinfo"   style="text-align: center;margin-top: 20px;">
           <div class="d-user">
-            <a class="el-button" @click="clickCash">提现</a>
+            <a class="el-button" @click="clickCash">Withdrawal</a>
           </div>
         </div>
       </div>

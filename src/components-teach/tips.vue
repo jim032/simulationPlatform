@@ -708,46 +708,38 @@
 	     if(that.pageName == '6'){
 			 	 switch(that.step){
 				   case 0:
-				    that.tipTiltle = '对称加密的基本概念及特点'
-				   	that.confirmInfo = '对称加密的基本概念及特点：采用单钥密码的加密方法,同一个密钥可以同时用来加密和解密,这种加密方法称为对称加密。'+
-                '其特点是算法公开、计算量小、加密速度快，但需要提前共享密钥，一旦密钥泄露，加密信息就会被破解。'
+				    that.tipTiltle = 'Basic concepts and characteristics of symmetric encryption'
+				   	that.confirmInfo = 'The basic concept and characteristics of symmetric encryption: using single key encryption method, the same key can be used to encrypt and decrypt at the same time, this encryption method is called symmetric encryption. It is characterized by open algorithm, small amount of calculation and fast encryption speed, but it needs to share the key in advance. Once the key is leaked, the encrypted information will be cracked.'
 				   	break;
 				   	case 3:
                that.tipTiltle = '';
-				   	that.confirmInfo = '通过本场景的对称密钥算法模拟，我们利用简单的单钥实现了对数据的加解密。'+
-               '对称密钥算法模拟已结束，点击右上方的重置按钮可再次体验哦。'
+				   	that.confirmInfo = 'Through the simulation of symmetric key algorithm in this scenario, we use a simple single key to encrypt and decrypt the data. Symmetric key algorithm simulation has ended, click the reset button on the top right to experience it again.'
 				   	break;
 			   }
 			 	 return; 
 			 }
 	     if(that.pageName == '2-1'){
-					that.confirmInfo = '在这一场景中，我们变换了不同的角色（医院A/B/C和病人）来体验区块链在病历信息共享及病人隐私保护上的实际应用。'+
-'至此，病例信息共享场景已模拟完毕，点击右上角重置按钮可再次体验哦。'
+					that.confirmInfo = 'In this scenario, we change different roles (hospital A / B / C and patient) to experience the practical application of blockchain in medical record information sharing and patient privacy protection. So far, the case information sharing scene has been simulated. Click the reset button in the upper right corner to experience it again.'
 					return					
 				}
 	     if(that.pageName == '2-2'){
-					that.confirmInfo = '在这一场景中，我们作为捐赠过程中的不同角色（捐赠人、红十字会、受益人）来体验了区块链在应对公益信任危机上的实际应用。'+
-            '至此，捐赠数据确权场景已模拟完毕，点击右上角重置按钮可再次体验哦。'
+					that.confirmInfo = 'In this scenario, as different roles in the donation process (donor, Red Cross, beneficiary), we experienced the practical application of blockchain in dealing with the public trust crisis. So far, the donation data confirmation scene has been simulated. Click the reset button in the upper right corner to experience it again.'
 					return					
 				}
 			 if(that.pageName == '2-3'){
-					that.confirmInfo = '在这一场景中，我们作为版权登记过程中的不同角色（登记人、出版社、查证处）来体验了区块链在数据存证方面的实际应用。'+
-            '至此，作品版权存证场景已模拟完毕，点击右上角的重置按钮可再次体验哦。'
+					that.confirmInfo = 'In this scenario, we have experienced the practical application of blockchain in data storage as different roles (registrant, publishing house and verification office) in the process of copyright registration. So far, the scene of copyright preservation has been simulated. Click the reset button in the upper right corner to experience it again.'
 					return					
 				}
 			 if(that.pageName == '2-4'){
-					that.confirmInfo = '在这一场景中，我们作为物流过程中的不同角色（寄件人、代收点、物流、收件人）来体验了区块链在精确溯源上的实际应用。'+
-             '至此，物流过程溯源场景已模拟完毕，点击右上角重置按钮可再次体验哦。'
+					that.confirmInfo = 'In this scenario, as different roles in the logistics process (sender, collection point, logistics, recipient), we experienced the practical application of blockchain in accurate traceability. So far, the logistics process traceability scenario has been simulated. Click the reset button in the upper right corner to experience it again.'
 					return					
 				}
 			 if(that.pageName == '2-5'){
-					that.confirmInfo = '在这一场景中，我们作为供应链金融中的不同角色（供应商、核心企业、银行）来体验了区块链针对微小企业向银行贷款难问题所做的实际应用。'+
-'至此，供应链金融审计场景已模拟完毕，点击右上角重置按钮可再次体验哦。'
+					that.confirmInfo = 'In this scenario, as different roles in Supply Chain Finance (suppliers, core enterprises and banks), we have experienced the practical application of blockchain to solve the problem of small and medium-sized enterprises difficulty in lending to banks. So far, the scene of supply chain financial audit has been simulated. Click the reset button in the upper right corner to experience it again.'
 					return					
 				}
 			 if(that.pageName == '2-6'){
-					that.confirmInfo = '在这一场景中，我们作为航空延误险处理中的不同角色（投保人、航空公司、保险公司）来体验了区块链在简化理赔流程上的实际应用。'+
-'至此，快速保单处理场景已模拟完毕，点击右上角重置按钮可再次体验哦。'
+					that.confirmInfo = 'In this scenario, we have experienced the practical application of blockchain in simplifying the claim process as different roles (policyholder, airline and insurance company) in the processing of aviation delay insurance. So far, the fast policy processing scene has been simulated. Click the reset button in the upper right corner to experience it again.'
 					return					
 				}
 			 
@@ -758,28 +750,24 @@
               //表示转账发起的弹出框
               //console.log(that.D1+'1233')
               if(that.D1){
-              	that.tipTiltle = '请注意'
-                that.confirmInfo = '转账交易已发起，区块正在等待被打包，尚未进入主链。'
+              	that.tipTiltle = 'Please note that'
+                that.confirmInfo = 'The transfer transaction has been initiated, the block is waiting to be packaged, and has not yet entered the main chain.'
               }else{
-              	that.tipTiltle = '51%攻击的基本概念和危害'
-                that.confirmInfo = '所谓51%算力攻击，是指当一笔交易已经发生但仍处于内存池中等待被打包，即尚未被记入到主链中去的时候，'+
-               '攻击者利用自己的优势算力占据打包权并篡改区块链上的记录，从而达到撤销已付款交易的目的。'+
-               '算力攻击一旦发生，人们对区块链网络的信心就会降至冰点，区块链货币的币值将受到重创。'
+              	that.tipTiltle = 'Basic concept and harm of 51% attack'
+                that.confirmInfo = 'The so-called 51% computing power attack means that when a transaction has occurred but is still in the memory pool waiting to be packaged, that is, it has not been recorded in the main chain, the attacker takes advantage of his own computing power to occupy the packaging right and tamper with the records on the blockchain, so as to achieve the purpose of canceling the paid transaction. Once the computing power attack occurs, people confidence in the blockchain network will drop to the freezing point, and the currency value of the blockchain currency will be severely damaged.'
               }
               
               break;
             case 2:
-              that.tipTiltle = '请注意'
-              that.confirmInfo = '当前' + that.upComputeUser + '用户的算力值已达51%，已超过全网算力值的一半水平，即表明用户' + that.upComputeUser + '已具备攻击区块链网络安全的功能'
+              that.tipTiltle = 'Please note that'
+              that.confirmInfo = 'current' + that.upComputeUser + 'The user computing power has reached 51%, which is more than half of that of the whole network' + that.upComputeUser + 'It has the function of attacking blockchain network security'
               break;
             case 4:
               
               break;
             case 12:
               that.tipTitle = ''
-              that.confirmInfo = '51%攻击是可能发生的，但从经济收益的角度来说，占据优势算力是需要付出巨大代价的，'+
-                '一旦发起攻击则会造成币值暴跌，最后很可能得不偿失。所以现实中发生的可能性并不高。'+
-                '至此，51%攻击的攻击过程已模拟完毕，点击右上角重置按钮可再次体验哦。'
+              that.confirmInfo = '51% attack is possible, but from the perspective of economic benefits, it costs a lot to occupy the dominant computing power. Once an attack is launched, it will cause a sharp drop in the value of the currency, and in the end, it may not be worth the loss. So in reality, the possibility is not high. So far, the attack process of 51% attack has been simulated. Click the reset button in the upper right corner to experience it again.'
               break;
           }
           return;
@@ -787,21 +775,16 @@
         if(that.pageName == '54') {
           switch(that.step){
             case 1:
-              that.tipTiltle = '交易延展性的基本概念及危害性'
-              that.confirmInfo = '交易延展性源于比特币源代码中的一个错误。这个错误，可以在不改变交易输出或交易内容的情况下更改交易ID。'+
-              '这个错误意味着在交易被矿工写入区块之前，交易签名可以被更改。'+
-              '换句话说，也就是一笔未被确认的比特币交易，有可能被黑客造出两笔合法的交易。'+
-              '虽然，矿机最终只会确认一笔交易，而且交易的输出保持不变，你的比特币还是会转给预期的收款人。但是交易ID变动会导致后续的'+
-              '哈希值都完全改变。黑客可利用交易延展性对交易所进行攻击。曾经最大的比特币交易所——Mt.Gox宣布倒闭的部分原因就是延展性攻击'
+              that.tipTiltle = 'The basic concept and harmfulness of transaction malleability'
+              that.confirmInfo = 'Transaction malleability stems from an error in bitcoin source code. This error can change the transaction ID without changing the transaction output or transaction content. This error means that the transaction signature can be changed before the transaction is written to the block. In other words, an unconfirmed bitcoin transaction may be hacked into two legitimate transactions. Although the miner will only confirm one transaction in the end, and the output of the transaction remains unchanged, your bitcoin will be transferred to the expected payee. However, the change of transaction ID will cause the subsequent hash values to change completely. Hackers can use transaction malleability to attack exchanges. Part of the reason that Mt. GOx, once the biggest bitcoin exchange, announced its collapse was the malleability attack'
               break;
             case 2:
-              that.tipTiltle = '请注意'
-              that.confirmInfo = '转账已发起成功，但区块还未被打包到链中。'
+              that.tipTiltle = 'Please note that'
+              that.confirmInfo = 'The transfer has been initiated successfully, but the block has not been packaged into the chain.'
               break;
             case 12:
-              that.tipTitle = '请注意'
-              that.confirmInfo = '打包结束，修改过后的数据代替原转账数据被打包进链，金额实际已到账。但由于交易ID发生'+
-               '改变，所以被修改的交易事务无法查询到，交易结果显示为“交易未完成”。'
+              that.tipTitle = 'Please note that'
+              that.confirmInfo = 'After packing, the modified data is packed into the chain instead of the original transfer data, and the amount has actually arrived. However, due to the change of transaction ID, the modified transaction cannot be found, and the transaction result is displayed as "transaction not completed"'
               break;
           }
           return;
@@ -811,13 +794,12 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '软分叉的基本概念及特点'
-                that.confirmInfo = '分叉指的是区块链在进行升级时发生了意见分歧，从而导致区块链分叉。根据分叉后新旧节点的相互兼容性，又分为硬分叉和软分叉。'+
-                '若旧节点不能发现新协议的变化，从而继续接受新节点用新协议所挖出的区块，这种情况就称为软分叉。'
+                that.tipTiltle = 'Basic concepts and characteristics of soft bifurcation'
+                that.confirmInfo = 'Bifurcation refers to the divergence of opinions when upgrading the blockchain, which leads to the bifurcation of the blockchain. According to the mutual compatibility of the new and old nodes after bifurcation, it can be divided into hard bifurcation and soft bifurcation. If the old node can not find the change of the new protocol and continue to accept the blocks dug up by the new node with the new protocol, this situation is called soft bifurcation.'
                 break;
               default:
-                that.tipTiltle = '请注意!'
-                that.confirmInfo = '软分叉模拟已结束，可点击右上方的重置或者返回。'
+                that.tipTiltle = 'Please note that!'
+                that.confirmInfo = 'Soft bifurcation simulation has ended, you can click Reset or return at the top right.'
                 break;
              
             }
@@ -829,13 +811,12 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '硬分叉的基本概念及特点'
-                that.confirmInfo = '分叉指的是区块链在进行升级时发生了意见分歧，从而导致区块链分叉。根据分叉后新旧节点的相互兼容性，又分为硬分叉和软分叉。'+
-                '当系统中出现了新版本的软件，并且和之前的版本软件不能兼容，旧节点无法接受新节点挖出的全部或部分区块，导致同时出现两条链，这种情况称为硬分叉。'
+                that.tipTiltle = 'The basic concept and characteristics of hard bifurcation'
+                that.confirmInfo = 'Bifurcation refers to the divergence of opinions when upgrading the blockchain, which leads to the bifurcation of the blockchain. According to the mutual compatibility of the new and old nodes after bifurcation, it can be divided into hard bifurcation and soft bifurcation. When a new version of the software appears in the system and is not compatible with the previous version of the software, the old node cannot accept all or part of the blocks dug up by the new node, resulting in two chains at the same time, which is called hard bifurcation.'
                 break;
               default:
-                that.tipTiltle = '请注意!'
-                that.confirmInfo = '硬分叉模拟已结束，可点击右上方的重置或者返回。'
+                that.tipTiltle = 'Please note that!'
+                that.confirmInfo = 'Hard bifurcation simulation has ended. You can click Reset or return at the top right.'
                 break;
              
             }
@@ -846,32 +827,28 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '重放攻击的基本概念及特点'
-                that.confirmInfo = '重放，顾名思义就是重复播放的意思。重放攻击又称重播攻击、回放攻击，指攻击者发送一个目的主机已接收过的数据包，'+
-                '来达到欺骗系统的目的。在区块链技术中，重放攻击通常出现在区块链硬分叉的时候。由于硬分叉的两条链，'+
-                '它们的地址和私钥生产的算法相同，交易格式也完全相同，因此导致在其中一条链上的交易在另一条链上很可能是完全合法的。'+
-                '在其中一条链上发起的交易再到另一条链上去重新广播，可能也会得到确认，这就是区块链的重放攻击。'
+                that.tipTiltle = 'Basic concepts and characteristics of replay attack'
+                that.confirmInfo = 'Replay, as the name suggests, means replay. Replay attack, also known as replay attack and replay attack, means that the attacker sends a data packet received by the destination host to cheat the system. In blockchain technology, replay attacks usually occur when the blockchain is hard forked. Because the algorithms of address and private key production are the same, and the transaction format is the same, the transaction in one chain is likely to be completely legal in the other chain. If a transaction initiated on one chain is rebroadcast on another chain, it may also be confirmed. This is the replay attack of blockchain.'
                 break;
               case 2:
-                that.tipTiltle = '请注意!'
-                that.confirmInfo = '转账发起已成功，请点击广播按钮进行广播。'
+                that.tipTiltle = 'Please note that!'
+                that.confirmInfo = 'Transfer initiated successfully, please click broadcast button to broadcast.'
                 break;
               case 3:
-                that.tipTiltle = '请注意!'
-                that.confirmInfo = '用户A给用户B的转账在A链中广播，但事务还未被打包到链中。'
+                that.tipTiltle = 'Please note that!'
+                that.confirmInfo = 'Transfer initiated successfully, please click broadcast button to broadcast.'
                 break;
               case 4:
-                that.tipTiltle = '请注意!';
-                that.confirmInfo = '黑客已成功截获用户A给B的转账事务！'
+                that.tipTiltle = 'Please note that!';
+                that.confirmInfo = 'The hacker has successfully intercepted the transfer transaction from user a to user B!'
                 break;
               case 5:
-                that.tipTiltle = '请注意!';
-                that.confirmInfo = '黑客已将用户A给用户B的转账事务截获并在B链中广播！'
+                that.tipTiltle = 'Please note that!';
+                that.confirmInfo = 'The hacker has intercepted the transfer transaction from user a to user B and broadcast it in the B chain!'
                 break;
               case 12:
-                that.tipTiltle = '请注意!';
-                that.confirmInfo = ' 由于B链是由A链硬分叉之后生成的，所以校验的方法是一致的，因为重放攻击的特性，'+
-                '原转账事务与黑客截获到B链广播的事务都能被打包接收，这也导致了发起一笔转账事务由于重放攻击后，被转出了两笔钱。'
+                that.tipTiltle = 'Please note that!';
+                that.confirmInfo = 'Because the B chain is generated after the hard bifurcation of the a chain, the verification method is consistent. Because of the characteristics of replay attack, the original transfer transaction and the transaction intercepted by the hacker to the B chain broadcast can be packaged and received, which also leads to the launch of a transfer transaction. Because of the replay attack, two sums of money are transferred out.'
                 break;
             }
             return;
@@ -882,23 +859,20 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '长程攻击的基本概念及危害性'
-                that.confirmInfo = '长程攻击是指攻击者创建了一条从创世区块开始的长区块链分支，并试图替换掉当前的合法主'+
-                  '链。该分支上可能存有和主链不同的交易和区块，所以这种攻击又被称替换历史攻击或历史覆写攻击。'+
-                  '恶意攻击者可以购买大量代币余额私钥，这些代币余额已经在验证过程中被使用了。接下来，恶'+
-                  '意攻击者可以使用这个代币余额生成一个区块链替代历史，从而基于权益证明让他们获得更多激励。'
+                that.tipTiltle = 'Basic concept and harmfulness of long range attack'
+                that.confirmInfo = 'Long range attack means that the attacker creates a long blockchain branch starting from Genesis block and tries to replace the current legal main chain. The branch may have different transactions and blocks from the main chain, so this attack is also called replace history attack or history override attack. Malicious attackers can purchase a large number of token balance private keys, which have been used in the verification process. Next, malicious attackers can use the token balance to generate a blockchain replacement history, so as to give them more incentive based on proof of interest.'
                 break;
               case 2:
-                that.tipTiltle = '请注意!'
-                that.confirmInfo = 'A链已出部分区块，可点击左侧工具箱的攻击按钮开始下一步的操作！'
+                that.tipTiltle = 'Please note that!'
+                that.confirmInfo = 'A chain has been out of some blocks, you can click the attack button in the left toolbox to start the next operation!'
                 break;
               case 4:
-                that.tipTiltle = '请注意!';
-                that.confirmInfo = '由于B链的出块速度大于A链的出块速度，B链覆盖A链'
+                that.tipTiltle = 'Please note that!';
+                that.confirmInfo = 'Because the block speed of B chain is higher than A chain, B chain covers A chain'
                 break;
               case 5:
-                that.tipTiltle = '请注意!';
-                that.confirmInfo = '至此，长程攻击的模拟已结束'
+                that.tipTiltle = 'Please note that!';
+                that.confirmInfo = 'So far, the simulation of long-range attack is over'
                 break;
                 
             }
@@ -909,18 +883,15 @@
           if(that.confirShow == true){
             switch(that.step){
               case 1:
-                that.tipTiltle = '合约漏洞的基本概念及危害性'
-                that.confirmInfo = '智能合约本质是一段运行在区块链网络中的代码，它完成用户所赋予的业务逻辑。但是我们知道，'+
-                  '只要是由人编写的程序，就一定会出现错误和缺陷。本场景以常见的编程陷阱——整数溢出漏洞为例。'+
-                  '计算机中整数都有一个宽度，因此它有一个可以表示的最大值。当保存一个超过最大值的数时，'+
-                  '就会发生整数溢出。如果不去解决溢出的情况，就会造成数据的不准确和智能合约的输出错误。'
+                that.tipTiltle = 'The basic concept and harmfulness of contract loopholes'
+                that.confirmInfo = 'The essence of smart contract is a piece of code running in the blockchain network, which completes the business logic given by users. But we know that as long as the program is written by people, there will be errors and defects. This scenario takes the common programming trap integer overflow vulnerability as an example. All integers in a computer have a width, so it has a maximum value that can be represented. Integer overflow occurs when saving a number that exceeds the maximum value. If we don not solve the problem of overflow, it will result in inaccurate data and wrong output of smart contract.'
                 break;
               case 2:
-                that.tipTiltle = '请注意!'
-                that.confirmInfo = '余额为0，提现合约没有进行校验，A用户发起的提现1元的操作导致余额变成'+ that.inputMoney +'元。'
+                that.tipTiltle = 'Please note that!'
+                that.confirmInfo = 'The balance is 0, the withdrawal contract is not verified, and the withdrawal of 1 yuan initiated by user a causes the balance to be'+ that.inputMoney +'yuan。'
                 break;
              /* case 5:
-                that.tipTiltle = '请注意!';
+                that.tipTiltle = 'Please note that!';
                 that.confirmInfo = '合约漏洞攻击已结束，可点击右上方的重置或者返回。'
                 break;*/
             }
@@ -953,11 +924,11 @@
 			sureLine(){
 				let that = this;
 				if(that.a ==''){
-					that.$toast('请输入a的值',2000)
+					that.$toast('Please enter a value for a',2000)
 					return;
 				}
 				if(that.b == ''){
-					that.$toast('请输入b的值',2000)
+					that.$toast('Please enter the value of b',2000)
 					return;
 				}
 				that.lineFinsh = true;
@@ -977,12 +948,12 @@
 			// 提升算力点击确定
       sureUpCompute() {
         let that = this;
-        if(that.upComputeUser == '没有人'){
-      	  that.$toast('请选择提升对象',3000)
+        if(that.upComputeUser == 'no one'){
+      	  that.$toast('Please select promotion object',3000)
       	  return;
         }
         if(that.computevalue < 51) {
-          that.$toast('请提升算力值最少至51%！')
+          that.$toast('Please increase the calculation power to at least 51%！')
           return;
         }
         that.$emit('sureUpCompute', that.upComputeUser)
@@ -993,34 +964,34 @@
       	
         let that = this;
         if (that.tansferInfo.initiate == '') {
-          that.$toast('转账发起人不能为空！',3000)
+          that.$toast('Transfer initiator cannot be blank!',3000)
           return;
         }
         if (that.tansferInfo.object == '') {
-          that.$toast('转账对象不能为空！',3000)
+          that.$toast('Transfer object cannot be empty!',3000)
           return;
         }
         if(that.tansferInfo.amount<0){
-        	 that.$toast('请输入金额必须是正整数！',3000)
+        	 that.$toast('Please input the amount must be a positive integer!',3000)
           return;
         }
          if (that.tansferInfo.amount == '' || that.tansferInfo.amount == 0) {
-          that.$toast('请输入金额必须是正整数！',3000)
+          that.$toast('Transfer amount cannot be greater than available balance!',3000)
           return;
         }
         if (that.tansferInfo.amount.match(/^-?[0-9]+$/) == null){
-					that.$toast('转账金额必须是正整数')
+					that.$toast('Please input the amount must be a positive integer!')
 					return
 				}
        
         if(num==1){
         	 if (that.tansferInfo.amount > that.useBalance) {
-		          that.$toast('转账金额不能大于可用余额！',3000)
+		          that.$toast('Transfer amount cannot be greater than available balance!',3000)
 		          return;
 		        }
           }else{
         	 if (that.tansferInfo.amount > that.balance) {
-		          that.$toast('转账金额不能大于余额！',3000)
+		          that.$toast('Transfer amount cannot be greater than balance!',3000)
 		          return;
 		        }
         }
@@ -1044,11 +1015,11 @@
       sureEditAmount() {
         let that = this;
         if (this.selectIndexData==''){
-          that.$toast('请选择要修改的事务！',3000)
+          that.$toast('Please select the transaction to modify！',3000)
           return;
         }
         if (that.toEditAmount !== that.editAmount) {
-          that.$toast('金额请按要求修改！',3000)
+          that.$toast('Please modify the amount as required!',3000)
           return;
         }
         that.$emit('sureEditAmount', that.selectIndexData)
@@ -1082,7 +1053,7 @@
 	     //验证警戒值
 	    if(this.aa_vaule!='' && this.aa_vaule != undefined){
 	    	if (!reg.test(this.aa_vaule)) {
-	        this.$toast('请输入正整数',2000)
+	        this.$toast('Please enter a positive integer',2000)
 	        this.aa_vaule='';
 	        return ;
 	    	}
@@ -1102,15 +1073,15 @@
       D2click(){
         let that = this;  
         if(this.aa_vaule==''){
-        	 this.$toast('请输入转账金额',2000)
+        	 this.$toast('Please enter the transfer amount',2000)
         	 return;
         }
         if(this.aa_vaule==0){
-        	this.$toast('请输入3位正整数余额',2000)
+        	this.$toast('Please enter 3-digit positive integer balance',2000)
         	return;
         }
         if(this.aa_vaule<0){
-        	this.$toast('转账金额必须是正整数',2000)
+        	this.$toast('The transfer amount must be a positive integer',2000)
         	return;
         }
         that.$emit('D2clickfinish',this.aa_vaule);

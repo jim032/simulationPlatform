@@ -8,7 +8,7 @@ export default{
 			menuShow:false,//上方菜单按钮是否显示
 	
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -42,21 +42,21 @@ export default{
 	    isParse:false,//是否解析
 	    
 	    userA:{
-	    	userName:'用户A',
+	    	userName:'userA',
 	    	publicKey:'ldkewjrewf231fwe5r413ew2132fd1s32fsf2d1f5ew2',
 	      
 	    },
 	    userB:{
-	    	userName:'用户B',
+	    	userName:'userB',
 	    	publicKey:'ldkewjrewf231fwe5r413ew2132fd1s32fsf2d1f5ew2',
 	      privateKey:'fkjekjf13er21t5re1d32a1weq3wr14581gfs3d21fs32'
 	    },
 	    userC:{
-	    	userName:'用户C',
+	    	userName:'userC',
 	    	publicKey:'ldkewjrewf231fwe5r413ew2132fd1s32fsf2d1f5ew2',
 	     
 	    },
-	    menuText:'区块链密码学-椭圆线密码算法',
+	    menuText:'Block chain cryptography elliptic line cryptography algorithm',
 	    category_id:'',
 	    
 	    isHashFinsh:false,//判断哈希是否生产
@@ -127,7 +127,7 @@ export default{
 					if(that.wprogress == 100) {
 						clearInterval(timer)
 						that.operaInfo.infolist=[];
-					  that.operaInfo.mess = '用户B已成功收到从A用户发送的数据，并通过自己的私钥解析成功。';
+					  that.operaInfo.mess = 'User B has successfully received the data sent from user a and successfully resolved it through its own private key.';
 			   	}
 				},50)
 			}
@@ -143,11 +143,11 @@ export default{
 	  	let that = this
 	  	that.confirShow = false;
 	  	if(that.isHashFinsh && that.step==2){
-	  		that.operaInfo.mess = '用户B已通过椭圆线密码生成公钥以及私钥';
+	  		that.operaInfo.mess = 'User B has generated the public key and private key through elliptic line cryptography';
 				that.operaInfo.infolist=[];
-				that.operaInfo.infolist.push('公钥：'+that.userB.publicKey);
-		    that.operaInfo.infolist.push('私钥：'+that.userB.privateKey);
-		    that.operaInfo.infolist.push('并且A用户与C用户已收到B用户公布出来的公钥。')
+				that.operaInfo.infolist.push('Public key：'+that.userB.publicKey);
+		    that.operaInfo.infolist.push('Private key：'+that.userB.privateKey);
+		    that.operaInfo.infolist.push('And user a and user C have received the public key published by user B.')
 		    that.clickParse = true
 	  	}
 	  	
@@ -177,7 +177,7 @@ export default{
 	  	//console.log('123')
 	  	if(that.fileFinsh && that.step==3){
 	  		that.operaInfo.infolist=[]; 
-				that.operaInfo.mess = '用户B已成功收到从A用户发送的数据，中途用户C试图通过用户B的公钥来解析数据但失败。';
+				that.operaInfo.mess = 'User B has successfully received the data sent from user A. user C attempts to parse the data through user B public key, but fails.';
 	  	}
 	  	if(that.step==4){
 	  		
@@ -193,9 +193,9 @@ export default{
 	  	
 	  	if(that.step==1){
 	  		if(num==2){
-	  		   that.$toast('用户还未生成公钥和私钥',3000)
+	  		   that.$toast('The user has not yet generated the public and private keys',3000)
 	  		}else{
-	  			that.$toast('用户还未生成公钥',3000)
+	  			that.$toast('The user has not generated a public key yet',3000)
 	  		}
 	  	}else{
 	  	
@@ -203,12 +203,12 @@ export default{
 	  	if(num==2){
 	  		that.operaInfo.infolist=[];
 				that.operaInfo.mess = obj.userName;
-				that.operaInfo.infolist.push('公钥'+obj.publicKey);
-				that.operaInfo.infolist.push('私钥'+obj.privateKey)
+				that.operaInfo.infolist.push('Public key'+obj.publicKey);
+				that.operaInfo.infolist.push('Private key'+obj.privateKey)
 	  	}else{
 	  		that.operaInfo.infolist=[];
 	  		that.operaInfo.mess = obj.userName;
-				that.operaInfo.infolist.push('公钥'+obj.publicKey);
+				that.operaInfo.infolist.push('Public key'+obj.publicKey);
 	  	}
 	  	}
 	  }
@@ -216,7 +216,7 @@ export default{
 	},
 	mounted(){
 		let that = this
-		this.menuText = '区块链密码学-'+this.$route.params.name
+		this.menuText = 'Blockchain cryptography-'+this.$route.params.name
 		that.category_id = this.$route.params.id;
 	  that.getvisit();
 		that.$nextTick(() => {

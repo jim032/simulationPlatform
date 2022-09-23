@@ -8,7 +8,7 @@ export default{
 			menuShow:false,//上方菜单按钮是否显示
 	
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -20,14 +20,14 @@ export default{
 	  	funNum:0,//左侧点击判断工具箱
 	    showTool:false,//左侧工具箱是否显示
 	    
-	    progressMess:'哈希生成',
+	    progressMess:'Hash generation',
 	    /*页面中间操作框信息*/
 	    operaTips:{
-	    	mess:'此处已有一串私钥与一串随机生成的随机盐，请在下方方框内随意输入一段密码：',
-	    	info:['私钥：3215e12qwe5qwe5d1a2sd1f12dsg2dgs5fwe6r6we5r','随机盐：3f78d45833f293f7622876f121e90ab24be0043fef6475047']
+	    	mess:'There is a string of private key and a string of randomly generated random salt here. Please enter a password in the box below:',
+	    	info:['Private key：3215e12qwe5qwe5d1a2sd1f12dsg2dgs5fwe6r6we5r','Random salt:3f78d45833f293f7622876f121e90ab24be0043fef6475047']
 	    },
 	    /*操作步骤*/
-	   operaStep:['输入密码','哈希计算','对称加密','加密完成'],
+	   operaStep:['Input password','Hash computation','Symmetric encryption','Encryption complete'],
 	   ipassword:'',//当前用户输入的密码
 	   
 	   isShowProgress:false,
@@ -38,9 +38,9 @@ export default{
 	   
 	   consoleShow:true,//头部控制台是否显示
 	   
-	   menuText:'区块链密码学-keystore',
+	   menuText:'Blockchain cryptography keystore',
 	   isPrompt:false,
-	   promptText:'当前无工具可用！',
+	   promptText:'No tools available at present!',
 	   singleStep:true,//单个步骤提示
 	   category_id:''
 		}
@@ -81,13 +81,13 @@ export default{
 	  surePasword(){
 	  	let that = this
 	  	if(that.ipassword==''){
-	  		this.$toast('请输入密码',3000)
+	  		this.$toast('Please enter password',3000)
 	  	}else{
 	  		this.step = that.step+1;
-	  		that.operaTips.mess='我们通过随机生成的盐与步骤一输入的密码相结合，并通过哈希计算 生成一串密钥：'
+	  		that.operaTips.mess='We combine the randomly generated salt with the password input in step 1, and generate a string of keys through hash calculation:'
 	      that.operaTips.info =[];
-	      that.operaTips.info.push('随机盐：3f78d45833f293f7622876f121e90ab24be0043fef6475047')
-	      that.operaTips.info.push('密码:'+that.ipassword)
+	      that.operaTips.info.push('Random salt：3f78d45833f293f7622876f121e90ab24be0043fef6475047')
+	      that.operaTips.info.push('Password:'+that.ipassword)
 	      that.isShowProgress = true;
 	  	}
 	  },
@@ -100,7 +100,7 @@ export default{
        	  that.hashProgress++;
        	  if(that.hashProgress==100){
        	  	 clearInterval(timer)
-       	  	 that.progressMess = r_num==1?'生成完毕！':'加密完毕！'
+       	  	 that.progressMess = r_num==1?'Finished!':'Encryption complete!'
        	  }
        },50)
 	  	}
@@ -109,22 +109,22 @@ export default{
 	  surePath(){
 	  	let that = this;
 	  	this.step = that.step+1;
-	  	that.operaTips.mess='我们已通过步骤二的随机盐与密码，哈希计算之后得到了一串密钥， 我们将通过密钥把私钥进行加密处理：'
+	  	that.operaTips.mess='We have obtained a series of keys after hashing the random salt and password in step 2. We will encrypt the private key through the key:'
 	    that.operaTips.info =[];
-	    that.operaTips.info.push('密钥：7eecd8beca1f6528c48efc8b7e5396b1132af8409a0f')
-	    that.operaTips.info.push('私钥：3215e12qwe5qwe5d1a2sd1f12dsg2dgs5fwe6r6we5r')
+	    that.operaTips.info.push('Key：7eecd8beca1f6528c48efc8b7e5396b1132af8409a0f')
+	    that.operaTips.info.push('Private key：3215e12qwe5qwe5d1a2sd1f12dsg2dgs5fwe6r6we5r')
 	    that.isShowProgress = true;
 	    that.hashProgress = 0;
-	    that.progressMess='密钥加密'
+	    that.progressMess='Key encryption'
 	  },
 	  //最后点击下一步
 	  surefinsh(){
 	  	let that = this
 	  	that.step = that.step+1;
-	  	that.operaTips.mess='已使用步骤二获得的密钥通过对称加密将私钥进行了加密保护，生成的新字符串即为keystore'
+	  	that.operaTips.mess='The key obtained in step 2 has been used to encrypt and protect the private key through symmetric encryption, and the generated new string is keystore'
 	    that.operaTips.info =[];
 	    
-	    that.operaTips.info.push('由此可知，keystore其实是利用对称加密对私钥进行加密保护的一种形式')
+	    that.operaTips.info.push('Therefore, keystore is actually a form of using symmetric encryption to protect the private key')
 	    that.isShowProgress = false;
 	  },
 	  //点击我知道了页面弹窗
@@ -149,7 +149,7 @@ export default{
 	},
 	mounted(){
 		let that = this;
-		this.menuText = '区块链密码学-'+this.$route.params.name
+		this.menuText = 'Blockchain cryptography-'+this.$route.params.name
 		that.category_id = this.$route.params.id;
 	  that.getvisit();
 	}

@@ -15,7 +15,7 @@ import 'jquery-ui/ui/widgets/draggable';
 				funNum: 0,//当前点击的操作按钮2表示出块，3表示广播
 				mainheight: 0,
 				//四个节点信息（左边遍历节点拖拽）
-				pointInto: [{id: 1,text: '节点1'}, {id: 2,text: '节点2'}, {id: 3,text: '节点3'}, {id: 4,text: '节点4'}].reverse(),
+				pointInto: [{id: 1,text: 'Node1'}, {id: 2,text: 'Node2'}, {id: 3,text: 'Node3'}, {id: 4,text: 'Node4'}].reverse(),
 				showPointNum: 0,
 				isDrog: true,
 				screenWidth: document.body.clientWidth,//当前屏幕尺寸
@@ -33,7 +33,7 @@ import 'jquery-ui/ui/widgets/draggable';
 				divnum: '', //直接放置进去的div
 				d_timer1: null,
 				lineList: [], //已经画好线的数组
-				operaInfo: {mess: '当前无状态，请按右侧提示步骤完成下一步操作',infolist: []}, //底部传递的信息
+				operaInfo: {mess: 'No status, please follow the steps on the right.',infolist: []}, //底部传递的信息
 				step:1, //当前页面进行的步骤
 				confirShow: false, //弹出框是否显示
 				pageName: 1, //当前页面名 1代表节点模拟，2代表发币
@@ -47,7 +47,7 @@ import 'jquery-ui/ui/widgets/draggable';
 				
 				consoleShow:false,//头部控制台是否显示
 				
-				menuText:'节点共识模拟',
+				menuText:'Node consensus simulation',
 				broadcasting:true,
 				category_id:''
 			}
@@ -99,9 +99,9 @@ import 'jquery-ui/ui/widgets/draggable';
 								let tmp = that.nodeList
 								let index = Math.floor((Math.random() * tmp.length));
 								that.winpoint = that.nodeList[index]
-								that.operaInfo.mess = '节点难度计算已完成，节点' + that.winpoint.pointId + '胜出。';
-								that.operaInfo.infolist.push('矿工地址：' + that.winpoint.address)
-								that.operaInfo.infolist.push('矿工余额：' + that.winpoint.balance)
+								that.operaInfo.mess = 'Node difficulty calculation has been completed，node' + that.winpoint.pointId + 'wins.';
+								that.operaInfo.infolist.push('Miner address：' + that.winpoint.address)
+								that.operaInfo.infolist.push('Miner balance：' + that.winpoint.balance)
 								that.winNum = that.winpoint.pointId
 								if(that.winpoint.div == 1) {
 									that.divInfo1.beat = true
@@ -164,10 +164,10 @@ import 'jquery-ui/ui/widgets/draggable';
 								clearInterval(timer)
 								let tmp = that.nodeList
 								that.winNum = that.winpoint.pointId
-								that.operaInfo.mess = '节点' + that.winpoint.pointId + '区块打包广播已完成并且节点' + that.winpoint.pointId + '获得了奖励。';
+								that.operaInfo.mess = 'Node' + that.winpoint.pointId + 'block has been completed ' + that.winpoint.pointId + 'wins。';
 								that.winpoint.balance = 10
-								that.operaInfo.infolist.push('矿工地址：' + that.winpoint.address)
-								that.operaInfo.infolist.push('矿工余额：' + that.winpoint.balance)
+								that.operaInfo.infolist.push('Minter address：' + that.winpoint.address)
+								that.operaInfo.infolist.push('Minter balance：' + that.winpoint.balance)
 
 						   clearTimeout(that.timer);
 								that.isBlcok = false;
@@ -219,19 +219,19 @@ import 'jquery-ui/ui/widgets/draggable';
 				if(num == 1) {
 					let that = this;
 					that.operaInfo.infolist = [];
-					that.operaInfo.mess = '创世区块';
-					that.operaInfo.infolist.push('区块高度:' + '0')
-					that.operaInfo.infolist.push('区块哈希:' + 'd46802ea8a7a8143e13e7cb59048f16d251b232f7077f1417c391b2c082ae19b')
-					that.operaInfo.infolist.push('父区块哈希:' + '0000000000000000000000000000000000000000000000000000000000000000')
-					that.operaInfo.infolist.push('梅克尔树根:' + '51dd5336762b8a52e44016bdec5acd790785623a5b070d66ff32d9c3eab0c79e')
+					that.operaInfo.mess = 'Genesis block';
+					that.operaInfo.infolist.push('Block height:' + '0')
+					that.operaInfo.infolist.push('Block hash:' + 'd46802ea8a7a8143e13e7cb59048f16d251b232f7077f1417c391b2c082ae19b')
+					that.operaInfo.infolist.push('Parent hash:' + '0000000000000000000000000000000000000000000000000000000000000000')
+					that.operaInfo.infolist.push('Merkel root:' + '51dd5336762b8a52e44016bdec5acd790785623a5b070d66ff32d9c3eab0c79e')
 				} else {
 					let that = this;
 					that.operaInfo.infolist = [];
-					that.operaInfo.mess = '区块1';
-					that.operaInfo.infolist.push('区块高度:' + '1')
-					that.operaInfo.infolist.push('区块哈希:' + '9ee6329a8d9c1179a49e35839e8e6076aa40936a60435b63ef15e4e4ab65a19f')
-					that.operaInfo.infolist.push('父区块哈希:' + 'd46802ea8a7a8143e13e7cb59048f16d251b232f7077f1417c391b2c082ae19b')
-					that.operaInfo.infolist.push('梅克尔树根:' + '7e331e0490d94833201f84591ac1a1c1a9f747b6c4020e4c4ac5912e2fba6070')
+					that.operaInfo.mess = 'Block1';
+					that.operaInfo.infolist.push('Block height:' + '1')
+					that.operaInfo.infolist.push('Block hash:' + '9ee6329a8d9c1179a49e35839e8e6076aa40936a60435b63ef15e4e4ab65a19f')
+					that.operaInfo.infolist.push('Parent hash:' + 'd46802ea8a7a8143e13e7cb59048f16d251b232f7077f1417c391b2c082ae19b')
+					that.operaInfo.infolist.push('Merkel root:' + '7e331e0490d94833201f84591ac1a1c1a9f747b6c4020e4c4ac5912e2fba6070')
 				}
 			},
 			/*给节点区域设置高度*/
@@ -383,7 +383,7 @@ import 'jquery-ui/ui/widgets/draggable';
 				startSteps(obj,id,num) {
 					let that = this;
 					obj.pointId = id;
-					obj.pointText = '节点' + id;
+					obj.pointText = 'Node' + id;
 					obj.prowidth = 1;
 					obj.icon = require('../assets/teachImg/icon_wk.png');
 					obj.statusList.push(that.$store.state.node_sta1)
@@ -480,8 +480,8 @@ import 'jquery-ui/ui/widgets/draggable';
 					that.operaInfo.mess = obj.pointText + that.$store.state.node_noFinsh
 				} else {
 					that.operaInfo.mess = obj.pointText
-					that.operaInfo.infolist.push('矿工地址：' + obj.address)
-					that.operaInfo.infolist.push('矿工余额：' + obj.balance)
+					that.operaInfo.infolist.push('Minter address：' + obj.address)
+					that.operaInfo.infolist.push('Minter balance：' + obj.balance)
 				}
 				
 			},
@@ -544,7 +544,7 @@ import 'jquery-ui/ui/widgets/draggable';
 
 		mounted() {
 			let that = this;
-      this.menuText = '区块链密码学-'+this.$route.params.name
+      this.menuText = 'Blockchain cryptography-'+this.$route.params.name
       that.category_id = this.$route.params.id;
 	    that.getvisit();
 			window.onresize = () => {

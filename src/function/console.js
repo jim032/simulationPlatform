@@ -3,7 +3,7 @@
 		data(){
 			return{
 				 menuShow:false,//上方菜单按钮是否显示
-				 menuText:'控制台',
+				 menuText:'Console',
 				 courseId:0,
 				 total:[] ,//命令结果
 				 
@@ -78,7 +78,7 @@
 		  		let command_end = command.substring(command.length-2, command.length)
 		  		if (!(command_start == "tds newAccounts('" && command_end=="')")) {
 		  			that.total.push(that.command);
-		  			that.total.push('\''+that.command+'\'不是内部或外部命令，也不是可运行的程序');
+		  			that.total.push('\''+that.command+'\'It is not an internal or external command, nor a runnable program');
 		  		} else {
 		  			command_type = 1
 		  		}
@@ -88,59 +88,59 @@
 		  		let command_end = command.substring(command.length-2, command.length)
 		  		if (!(command_start == "tds getBalance('" && command_end=="')")) {
 		  			that.total.push(that.command);
-		  			that.total.push('\''+that.command+'\'不是内部或外部命令，也不是可运行的程序');
+		  			that.total.push('\''+that.command+'\'It is not an internal or external command, nor a runnable program');
 		  		} else {
 		  			command_type = 2
 		  		}
 		  	}
 		  	else if (that.commandList.indexOf(that.command) == -1) {
 		  		that.total.push(that.command);
-		  		that.total.push('\''+that.command+'\'不是内部或外部命令，也不是可运行的程序');
+		  		that.total.push('\''+that.command+'\'It is not an internal or external command, nor a runnable program');
 		  	}
 		  	if(that.accountList.length==0){
 		  	  if(that.command=='tds height'){
 		  	  	that.total.push('tds height');
-		  			that.total.push('暂无区块');
+		  			that.total.push('No block');
 		  		}
 		  	  if(that.command=='tds miner start'){
 		  	  	that.total.push('tds miner start');
-		  			that.total.push('请先生成地址');
+		  			that.total.push('Please give me your address');
 		  		}
 		  	  if(that.command=='tds accounts'){
 		  	  	that.total.push('tds accounts');
-		  			that.total.push('暂无地址');
+		  			that.total.push('No address');
 		  		}
 		  	  if(that.command=='tds miner stop'){
 		  	  	that.total.push('tds miner stop');
-		  			that.total.push('请先生成地址');
+		  			that.total.push('Please give me your address');
 		  		}
 		  	  if (command_type == 1) {
 		  	  	let index = Math.floor(Math.random()*that.duserList.length)
 		  	  	that.accountList.push(that.duserList[index])
 		  	  	that.total.push(that.command);
-		  	  	that.total.push('地址生成，地址为：'+that.duserList[index] +' 默认为:矿工');
+		  	  	that.total.push('Address generation, address：'+that.duserList[index] +' default: miner');
 		  	  	that.duserList.splice(index, 1)
 		  	  	let password = command.substring(17, command.length-2)
 		  	  	that.passwordList.push(password)
 		  	  }
 		  	  if (command_type == 2) {
 		  	  	that.total.push(that.command);
-		  	  	that.total.push('地址不存在');
+		  	  	that.total.push('The address does not exist');
 		  	  }
 		  	} else {
 		  		if (command_type == 1) {
 		  			let password = command.substring(17, command.length-2)
 		  			if (that.accountList.length == 10) {
 		  				that.total.push(that.command);
-		  				that.total.push('最多生成10个用户');
+		  				that.total.push('Generate up to 10 users');
 		  			} else if (that.passwordList.indexOf(password) != -1) {
 		  				that.total.push(that.command);
-		  				that.total.push('该密码已被使用')
+		  				that.total.push('The password has been used')
 		  			} else {
 		  				that.passwordList.push(password)
 		  				let index = Math.floor(Math.random()*that.duserList.length)
 			  	  	that.accountList.push(that.duserList[index])
-			  	  	that.total.push('地址生成，地址为：'+that.duserList[index]);
+			  	  	that.total.push('Address generation, address:'+that.duserList[index]);
 			  	  	that.duserList.splice(index, 1)
 		  			}
 		  	  }
@@ -155,15 +155,15 @@
 		  	    if(that.accountList.indexOf(command_str)!=-1){
 		  	    	if(command_str != account){
 		  	    		that.total.push(that.command);
-	  							that.total.push('地址余额：0');	  
+	  							that.total.push('Address balance: 0');	  
 	  						}
 		  	    	else{
 		  	    		that.total.push(that.command);
-					  		that.total.push('地址余额：' + that.money);
+					  		that.total.push('Address balance:' + that.money);
 					  	}
 		  	    }else{
 		  	    	that.total.push(that.command);
-		  	    	that.total.push('地址不存在');
+		  	    	that.total.push('The address does not exist');
 		  	    }
 	  				
 		  		
@@ -177,12 +177,12 @@
   					let length = that.blockList.length;
   					if(length==0){
   						that.total.push('tds height')
-  						that.total.push('暂无区块');
+  						that.total.push('No block');
   					}else{
   						//最新的区块在前面显示
   					   let obj = that.blockList[0];
   					   that.total.push('tds height');
-  					   that.total.push('区块高度:' + obj.value);
+  					   that.total.push('Block height:' + obj.value);
   					}
   					
 		  		}
@@ -190,7 +190,7 @@
 		  			that.total.push('tds accounts')
 		  			for(let i=0; i< that.accountList.length; i++) {
 		  				if(i==0){
-		  					that.total.push(that.accountList[i]+'(矿工)');
+		  					that.total.push(that.accountList[i]+'(Miner)');
 		  				}else{
 		  					that.total.push(that.accountList[i]);
 		  				}
@@ -202,11 +202,11 @@
 		  			//这个表示接着挖矿
 		  			if(that.blockList.length>0){
 		  				that.total.push('tds miner start');
-			  			that.total.push('开启挖矿');
+			  			that.total.push('Start mining');
 			  			let curLength = that.blockList.length;
 			  			let temp = that.blockList[0].value;
 			  			let tmpobj = {}
-			  			tmpobj.name= '区块'+temp
+			  			tmpobj.name= 'block'+temp
 			  			tmpobj.value= temp+1
 			  			that.money = parseInt(that.money + 3)
 			  			that.blockList.unshift(tmpobj)
@@ -218,7 +218,7 @@
 			  				let obj = {}
 			  				//最新的区块在前面显示
 		  					let new_obj = that.blockList[0]
-		  					obj.name = '区块' + parseInt(new_obj.value + 1)
+		  					obj.name = 'block' + parseInt(new_obj.value + 1)
 		  					obj.value = parseInt(new_obj.value+ 1)
 
 		  					that.blockList.unshift(obj)
@@ -230,9 +230,9 @@
 			  		
 		  			}else{
 		  				that.total.push('tds miner start');
-			  			that.total.push('开启挖矿');
+			  			that.total.push('Start mining');
 			  			let obj = {}
-			  			obj.name = '区块1'
+			  			obj.name = 'block1'
 	  					obj.value = 1
 	  					that.blockList.push(obj)
 	  					that.money = parseInt(that.money + 3)
@@ -240,7 +240,7 @@
 			  				let obj = {}
 			  				//最新的区块在前面显示
 		  					let new_obj = that.blockList[0]
-		  					obj.name = '区块' + parseInt(new_obj.value + 1)
+		  					obj.name = 'block' + parseInt(new_obj.value + 1)
 		  					obj.value = parseInt(new_obj.value+ 1)
 		  					that.blockList.unshift(obj)
 		  					if (that.blockList.length == 8) {
@@ -263,7 +263,7 @@
 		  		if (that.command=='tds miner stop') {
 		  			that.total.push('tds miner stop');
 		  			clearInterval(that.timer);
-		  			that.total.push('关闭挖矿');
+		  			that.total.push('Close mining');
 		  		}
 		  		
 		  	}

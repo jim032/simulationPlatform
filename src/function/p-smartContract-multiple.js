@@ -31,13 +31,13 @@ export default{
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	
 	  	step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	//当前页面展示的userList
 	    userList:[ //type:0普通用户   1房主  2机器人
 	       {
 		       icon:require('../assets/teachImg/icon_user1n.png'),
 		       icon_1:require('../assets/teachImg/icon_user1.png'),
-		       name:'用户1',
+		       name:'user1',
 		       userId:'',
 		       amount:0,//用户余额
 		       onlineStatus:false,
@@ -46,7 +46,7 @@ export default{
 	       {
 		       icon:require('../assets/teachImg/icon_user2n.png'),
 		       icon_1:require('../assets/teachImg/icon_user2.png'),
-		       name:'用户2',
+		       name:'user2',
 		       userId:'',
 		       amount:0,//用户余额
 		       onlineStatus:false,
@@ -55,7 +55,7 @@ export default{
 	       {
 		       icon:require('../assets/teachImg/icon_user3n.png'),
 		       icon_1:require('../assets/teachImg/icon_user3.png'),
-		       name:'用户3',
+		       name:'user3',
 		       userId:'',
 		       amount:0,//用户余额
 		       onlineStatus:false,
@@ -64,7 +64,7 @@ export default{
 	       {
 		       icon:require('../assets/teachImg/icon_user4n.png'),
 		       icon_1:require('../assets/teachImg/icon_user4.png'),
-		       name:'用户4',
+		       name:'user4',
 		       userId:'',
 		       amount:0,//用户余额
 		       onlineStatus:false,
@@ -95,7 +95,7 @@ export default{
 			transUserList:[],//转账用户列表
 
 			consoleShow:false,//头部控制台是否显示
-			menuText:'智能合约部署与调用',
+			menuText:'Deployment and call of smart contract',
 			
 			coinName:'', //币种名称
 			moneyNumber:'',//设置金额
@@ -160,7 +160,7 @@ export default{
   },
   mounted(){
 		 	let that = this;
-		 	this.menuText = '区块链密码学-'+this.$route.params.name
+		 	this.menuText = 'Blockchain cryptography-'+this.$route.params.name
 		 	that.category_id = this.$route.params.id;
 	    that.getvisit();
 			window.onresize = () => {
@@ -219,7 +219,7 @@ export default{
 		initWebSocket(){ //初始化weosocket
      let that = this
 		 if(typeof(WebSocket) == "undefined") {
-        that.$toast("您的浏览器不支持WebSocket",3000);
+        that.$toast("Your browser does not support websocket",3000);
      }else{      	 
          if(this.websock!=null){
             this.websock.close();
@@ -297,7 +297,7 @@ export default{
 		     	  let index = userList.length
 		     	  for(var i=0;i<that.userList.length;i++){
 		     	   	that.userList[i].onlineStatus=false
-		     	   	that.userList[i].name = '用户'+(1+index)
+		     	   	that.userList[i].name = 'user'+(1+index)
 		     	   	that.userList[i].amount = 0;
 		     	  }
 		     	  that.onlineList(mess,202);
@@ -315,7 +315,7 @@ export default{
 		      if(mess.code=='203' && mess.code){         
 		  
 		        //that.setShow = false;
-					  that.issueCurrencyMess ='智能合约部署完成'
+					  that.issueCurrencyMess ='Smart contract deployment completed'
 					  that.issueCurrency(mess,203)
 		
 		     }
@@ -323,7 +323,7 @@ export default{
 		     //转账成功
 		     if(mess.code=='204' && mess.code){
 		     	 //转账成功首先那个
-		       that.transMess = '转账事务打包成功'
+		       that.transMess = 'The transaction packed successfully'
 		       that.transferOperation(mess,204)
 		     	
 		     }
@@ -361,7 +361,7 @@ export default{
      	  that.blockPro++;
         if(that.blockPro==100){
             clearInterval(timer)
-            that.operaInfo.mess = '当前合约正在部署中:'+that.blockPro+'%';
+            that.operaInfo.mess = 'The current contract is being deployed:'+that.blockPro+'%';
             that.isBlcok = false;
             clearTimeout(that.timer1);
             /*
@@ -377,15 +377,15 @@ export default{
 						that.contractDeployment = true;
 						that.onlineList(mess,code); 
 						that.operaInfo.infolist = [];
-						that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
+						that.operaInfo.infolist.push('Contract address：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
 						let temp =that.coinName==''?that.coin_name:that.coinName
-						that.operaInfo.infolist.push('资产名称：'+temp)
-						that.operaInfo.infolist.push('拥有者：'+that.onlineUserList[0].user_name)						
+						that.operaInfo.infolist.push('Asset Name：'+temp)
+						that.operaInfo.infolist.push('Owner：'+that.onlineUserList[0].user_name)						
 						that.blockPro = 0;
 						sessionStorage.setItem('contractDeployment',true)
 						
 	      }else{
-						that.operaInfo.mess = '当前合约正在部署:'+that.blockPro+'%';
+						that.operaInfo.mess = 'The current contract is being deployed:'+that.blockPro+'%';
 			  }
       },50)
     },
@@ -420,7 +420,7 @@ export default{
 					    //that.showAnimate(that.start,end)
 											
 		      }else{
-							that.operaInfo.mess = '转账事务打包中:'+that.blockPro+'%';
+							that.operaInfo.mess = 'In transfer transaction packaging:'+that.blockPro+'%';
 				  }
 		    },50)
 	  } ,
@@ -471,14 +471,14 @@ export default{
 				for(var j = 0; j < arr.length; j++) {
 				   if(arr[j].userId==that.userId){
 				   	  if( arr[j].type!=1){
-				   	  	this.$toast('您不是房主，无权限添加机器人！',3000);
+				   	  	this.$toast('You are not the owner, no permission to add robots!',3000);
 				   	  	return;
 				   	  }		   	
 				   }		  
 				}
 				
 				if(that.onlineNumber==4){
-					that.$toast('当前小组人数已有4人，可直接设置币种',2000)
+					that.$toast('Currently, the size of the group is  4 people. And the currency can be set directly',2000)
 				}else{
 			    let userId = that.userId;
 			    let params =  '{"userID":"'+userId+'","type":"'+1+'","data":{"room_id":"'+that.roomid+'","class_id":"'+that.classid+'"}}';;    
@@ -499,7 +499,7 @@ export default{
 				for(var j = 0; j < arr.length; j++) {
 				   if(arr[j].userId==that.userId){
 				   	  if( arr[j].type!=1){
-				   	  	this.$toast('您不是房主，无权设置币种！',3000);
+				   	  	this.$toast('You are not the owner of the house and not allow to set currency!',3000);
 				   	  	return;
 				   	  }		   	
 				   }		  
@@ -509,11 +509,11 @@ export default{
 				   return
 			   }
 				if(that.coin_name!='' || that.coinName!='' ){
-					that.$toast('币种已设置',2000)
+					that.$toast('The currency has been set',2000)
 					return;
 				}
 				if(that.onlineNumber<4){
-					that.$toast('小组人数达到4人，才可设置币种',2000)
+					that.$toast('The currency can be set only when the number of group members reaches 4',2000)
 					return;
 				}			
 			
@@ -531,17 +531,17 @@ export default{
 			for(var j = 0; j < arr.length; j++) {
 			   if(arr[j].userId==that.userId){
 			   	  if( arr[j].type!=1){
-			   	  	this.$toast('您不是房主，无权限部署合约！',3000);
+			   	  	this.$toast('You are not the owner of the house, no permission to deploy the contract!',3000);
 			   	  	return;
 			   	  }		   	
 			   }		  
 			}
 			if (that.coin_name!=''){
-				this.$toast('合约部署已完成！',3000);
+				this.$toast('Contract deployment completed!',3000);
 				return;
 			}
 			if(that.coinName==''){
-				this.$toast('请先设置币种！',3000);
+				this.$toast('Please set currency first!',3000);
 				return;
 			}
 			
@@ -581,11 +581,11 @@ export default{
      
     
      if (that.transUser.amount < that.transAmout){
-			  that.$toast('余额不足')
+			  that.$toast('Sorry, your credit is running low')
 			return
 		}
 		if (that.transAmout.match(/^-?[0-9]+$/) == null){
-			that.$toast('转账金额必须是0-9999区间的正整数')
+			that.$toast('The transfer amount must be a positive integer in the range of 0-9999')
 			return
 		}
 		
@@ -609,7 +609,7 @@ export default{
 	   }
 		
 	  if(obj.userId!=that.userId && parseInt(obj.type)!=2){
-	  	this.$toast('您不是当前用户',2000)
+	  	this.$toast('You are not the current user',2000)
 	  	return
 	  }
 	  that.chooseUserObj.id='';
@@ -731,7 +731,7 @@ export default{
    showPointInfo(obj){
 	   let that = this;
 	   if (that.coin_name==''){
-		   return this.$toast('智能合约部署未完成',2000)
+		   return this.$toast('Smart contract deployment not completed',2000)
 	   }
 	 
 	   that.isShowBlock = false
@@ -741,12 +741,12 @@ export default{
 	  	that.operaInfo.infolist = [];
 	   if(that.coinName ==''){
 				  that.operaInfo.mess =''
-				  that.operaInfo.infolist.push('余额：'+ obj.amount)
-	  	 	      that.operaInfo.infolist.push('姓名：'+ obj.name)
+				  that.operaInfo.infolist.push('Balance：'+ obj.amount)
+	  	 	      that.operaInfo.infolist.push('Name：'+ obj.name)
 	  	 	   } else{
-					  that.operaInfo.mess = '币种名称: '+that.coinName;
-					  that.operaInfo.infolist.push('账户余额：'+ obj.amount)
-					  that.operaInfo.infolist.push('姓名：'+ obj.name)
+					  that.operaInfo.mess = 'Currency name: '+that.coinName;
+					  that.operaInfo.infolist.push('Balance：'+ obj.amount)
+					  that.operaInfo.infolist.push('Name：'+ obj.name)
 			}
    },
        
@@ -756,7 +756,7 @@ export default{
   	var reg = /^[A-Za-z]{3,8}$/
   	if(this.coinName!='' && this.coinName != undefined){
   		if (!reg.test(this.coinName)) {
-	        this.$toast('币种名称为3-8个英文字符',2000)
+	        this.$toast('Currency name is 3-8 English characters',2000)
 	        this.coinName='';
 	        this.$refs.coinName.focus()
 	    	}
@@ -770,7 +770,7 @@ export default{
 	     //验证警戒值
 	    if(this.moneyNumber!='' && this.moneyNumber != undefined){
 	    	if (!reg.test(this.moneyNumber)) {
-	        this.$toast('请输入0-9999区间正整数',2000)
+	        this.$toast('Please enter a positive integer in the range of 0-9999',2000)
 	        this.moneyNumber='';
 	          this.$refs.moneyNumber.focus()
 	    	}
@@ -783,7 +783,7 @@ export default{
 	     //验证警戒值
 	    if(this.transAmout!='' && this.transAmout != undefined){
 	    	if (!reg.test(this.transAmout)) {
-	        this.$toast('请输入0-9999区间',2000)
+	        this.$toast('Please enter the range of 0-9999',2000)
 	        this.transAmout='';
 	         this.$refs.transAmout.focus()
 	    	}
@@ -804,11 +804,11 @@ export default{
 		let that = this
 		// that.funNum = 0;
 		if(that.coinName == ''){
-			that.$toast('请输入币种名称',3000)
+			that.$toast('Please input currency name',3000)
 			return
 		}
 		if (that.moneyNumber == ''){
-			that.$toast('币种数量不能为空且只能为数字',3000)
+			that.$toast('Currency quantity cannot be empty and can only be a number',3000)
 			return
 		}
 		/*

@@ -9,17 +9,17 @@ export default{
 		  showTool:false,//左侧工具箱是否显示
       confirShow:false,//右侧弹窗
 		  funNum:0,//左侧点击判断工具箱
-		  menuText:'异常篇-长程攻击',
+		  menuText:'Long range attack',
 		   category_id:'',//课程id
       iconUrl_1:require('../assets/teachImg/icon_user1.png'),//头像
 		  step:1,//当前步骤
 		  pageName:55,//异常-长程攻击
-		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+		  operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
       D1:false,//提现金额对话框
       inputMoney:0,
       singleStep:true,//单个步骤提示
       
-      AchainList:[{name:'创世区块',height:1}],//A链
+      AchainList:[{name:'Genesis block',height:1}],//A链
       attackList:[],//B链
       chainNuber:0,//A链
       mergedChainList:[],//合并链
@@ -58,7 +58,7 @@ export default{
 			that.spaceTimer=setInterval(function(){
 				that.curheight++;
 				that.chainNuber++;
-				that.AchainList.push({height:that.curheight,name:'区块'})
+				that.AchainList.push({height:that.curheight,name:'block'})
 			//	console.log('定时器主体')
 				if(that.curheight==2 && !that.isAttacked){
 					clearInterval(that.spaceTimer);
@@ -108,11 +108,11 @@ export default{
 	  		that.step= that.step+1
 	  		that.mergedChainList = that.attackList;
 	  		if(that.click_attackNumber==1){
-	  			that.mergedChainList.unshift({name:'创世区块',height:0}) 
+	  			that.mergedChainList.unshift({name:'Genesis block',height:0}) 
 	  		}else{
 	  			
-	  			that.mergedChainList.unshift({name:'区块1',height:1})
-          that.mergedChainList.unshift({name:'创世区块',height:0}) 
+	  			that.mergedChainList.unshift({name:'block1',height:1})
+          that.mergedChainList.unshift({name:'Genesis block',height:0}) 
 	  		}
 
        if(that.mergedChainList.length==7){
@@ -135,13 +135,13 @@ export default{
       if(num==1){
       	//that.spaceTimer=null;
       	if(that.AchainList.length<2){
-      		return that.$toast("创世区块不可攻击",2000)
+      		return that.$toast("Genesis block is not attachable",2000)
       	}
       	if(that.isAttacked){
-      		return that.$toast("已攻击",2000)
+      		return that.$toast("Attacked",2000)
       	}
       	if(that.isCovered){
-      	 	return that.$toast("长程攻击模拟已结束",2000)
+      	 	return that.$toast("Long range attack simulation ended",2000)
       	 }
       	that.step=3;
       	clearInterval(that.spaceTimer);
@@ -151,7 +151,7 @@ export default{
       	let attHeight =that.curheight	
       	that.attackNumber = that.chainNuber
       	that.click_attackNumber = that.chainNuber
-      	that.attackList.push({name:'区块'+that.attackNumber,height:attHeight})
+      	that.attackList.push({name:'block'+that.attackNumber,height:attHeight})
       	that.attackTimer=setInterval(function(){
       		that.attack_Number++;     	
       		if(that.click_attackNumber==1){
@@ -168,17 +168,17 @@ export default{
       			}
 	      		
       		}
-					that.attackList.push({name:'区块'+parseInt(that.attackNumber+that.attack_Number),height:attHeight+1})	
+					that.attackList.push({name:'block'+parseInt(that.attackNumber+that.attack_Number),height:attHeight+1})	
 			 },8000)
       	
       }
       /*覆盖*/
       if(num==2){
       	 if(!that.isAttacked){
-      	 	return that.$toast("请先点击攻击",2000)
+      	 	return that.$toast("Please click attack first",2000)
       	 }
       	 if(that.isCovered){
-      	 	return that.$toast("长程攻击模拟已结束",2000)
+      	 	return that.$toast("Long range attack simulation ended",2000)
       	 }else{
       	 	 that.step=4
       	 	 
@@ -215,7 +215,7 @@ export default{
 	},
   mounted(){
 	  let that = this
-	  this.menuText = '异常篇-'+this.$route.params.name
+	  this.menuText = 'Abnormal-'+this.$route.params.name
 	 	that.category_id = this.$route.params.id;
 	  that.$nextTick(() => {
 	    that.confirShow = true;

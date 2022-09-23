@@ -10,16 +10,16 @@ export default{
 		  showTool:false,//左侧工具箱是否显示
       confirShow:false,//右侧弹窗
 	
-		  menuText:'异常篇-合约漏洞',
+		  menuText:'Contract loopholes',
       iconUrl_1:require('../assets/teachImg/icon_user1.png'),//头像
 		  step:1,//当前步骤
 		  pageName:56,//异常-合约漏洞
-		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+		  operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
       D1:false,//提现金额对话框
       inputMoney:0,
      
       isPrompt:false,
-	    promptText:'当前无工具可用！',
+	    promptText:'No tools available at present！',
 	    singleStep:true,//单个步骤提示
 	    
 	    cashNumber:0,//0提现次数 第一次余额为0 0-1 =255
@@ -100,7 +100,7 @@ export default{
 	},
   mounted(){
 	  let that = this
-	  this.menuText = '异常篇-'+this.$route.params.name
+	  this.menuText = 'Abnormal-'+this.$route.params.name
  	  that.category_id = this.$route.params.id;
 	  that.$nextTick(() => {
 	    that.confirShow = true

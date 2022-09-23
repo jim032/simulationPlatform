@@ -8,12 +8,12 @@ export default{
 		  menuShow:false,//上方菜单按钮是否显示
 		  showTool:false,//左侧工具箱是否显示		
 		  funNum:0,//左侧点击判断工具箱
-		  menuText:'异常篇-交易延展性',
+		  menuText:'Abnormal part - transaction malleability',
 		  category_id:'',//课程id
 		  step:1,//当前步骤
 		  pageName:'54',
 
-		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+		  operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 		
 		  
 		  confirShow:false,
@@ -32,9 +32,9 @@ export default{
       toEditAmount: '',
       
        userList:[
-        {name:'用户A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:850,},
-        {name:'用户B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:850,},
-        {name:'用户C',userId:'C',icon:require('../assets/teachImg/icon_user4.png'),balance:850,}
+        {name:'userA',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:850,},
+        {name:'userB',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:850,},
+        {name:'userC',userId:'C',icon:require('../assets/teachImg/icon_user4.png'),balance:850,}
       ],
       transNumber:0,//转账次数
       cureditIndex:'',//当前修改的是哪一个事务
@@ -88,24 +88,24 @@ export default{
 	        that.isShowAmount = false;
 		        that.funNum = num;
 		        if(that.transNumber==0){
-		        	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
+		        	that.operaInfo.mess = 'No status, please follow the steps on the right.'
 		        }else{
 		          	that.operaInfo.mess = ''
 		            that.operaInfo.infolist = [];
 		        }
 	
 	      }else{
-	      	that.$toast('转账事务已完成，请进行下一步操作',3000)
+	      	that.$toast('Transfer transaction completed, please proceed to the next step',3000)
 	      }
         
       }
       if(num==2){
       	if(that.transNumber<2){
-      		that.$toast('转账必须达到2笔',3000);
+      		that.$toast('There must be 2 transfers',3000);
       		return;
       	}
       	if(that.tansferInfo.length==that.editNumber){
-      	 	that.$toast('转账事务都已修改',3000);
+      	 	that.$toast('All transfer transactions have been modified',3000);
       		return;
         }
       	if(that.step<=3 && that.tansferInfo.length>0){
@@ -125,12 +125,12 @@ export default{
       
       if(num==3 && that.wprogressmalleability==0){
       	if(that.tansferInfo.length==0){
-      		that.$toast('请先转账，生成事务',2000);
+      		that.$toast('Please transfer money first to generate transaction',2000);
       		return;
       	}
       	if(that.tansferInfo.length>0){
       		if(that.editNumber==0){
-      			that.$toast('请先修改事务',2000);
+      			that.$toast('Please modify the transaction first',2000);
       			return;
       		}else{
       			that.step = 4
@@ -204,7 +204,7 @@ export default{
         amount: tansferInfo.amount,
         id:'1'+parseInt(that.transNumber+1),
         isEdit:false,  
-        name:'事务'+parseInt(that.transNumber+1)
+        name:'transaction'+parseInt(that.transNumber+1)
       })
       that.transNumber = that.transNumber + 1;
       if(that.transNumber==2){
@@ -225,7 +225,7 @@ export default{
       that.isShowAmount = false;
       that.lineDrawMalleabilityShow = false
       if(that.tansferInfo.length==0){
-        that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
+        that.operaInfo.mess = 'No status, please follow the steps on the right.'
       }
     },
     //点击透明区域隐藏
@@ -235,15 +235,15 @@ export default{
     showUserAmount(user) {
       let that = this;
       that.isShowAmount = true;
-      that.operaInfo.mess=user.name+','+'账户余额为'+user.balance;
+      that.operaInfo.mess=user.name+','+'The account balance is'+user.balance;
       that.operaInfo.infolist = [];
       if(that.step==12){
 	      for(var i=0;i<that.tansferInfo.length;i++){
 	        if(user.userId==that.tansferInfo[i].initiate || user.userId==that.tansferInfo[i].object){
 	        	if(that.tansferInfo[i].isEdit==true){
-	        		that.operaInfo.infolist.push(that.tansferInfo[i].initiate+'给'+that.tansferInfo[i].object+'转账交易未完成')
+	        		that.operaInfo.infolist.push(that.tansferInfo[i].initiate+'to'+that.tansferInfo[i].object+'transfer transaction not completed')
 	        	}else{
-	        		that.operaInfo.infolist.push(that.tansferInfo[i].initiate+'给'+that.tansferInfo[i].object+'转账交易已完成')
+	        		that.operaInfo.infolist.push(that.tansferInfo[i].initiate+'to'+that.tansferInfo[i].object+'transfer transaction completed')
 	        	}
 	        	
 	        }
@@ -267,7 +267,7 @@ export default{
  	},
   mounted(){
     let that = this
-     this.menuText = '异常篇-'+this.$route.params.name
+     this.menuText = 'Abnormal-'+this.$route.params.name
  	  that.category_id = this.$route.params.id;
     that.$nextTick(() => {
       that.confirShow = true;

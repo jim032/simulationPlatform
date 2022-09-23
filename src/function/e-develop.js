@@ -3,66 +3,66 @@ import {visitCourse,courseDatail} from '@/API/api-teach'
 export default{
 	 data(){
 	 	return{
-	 		 menuText:'启蒙篇-区块链发展史',
+	 		 menuText:'Enlightenment - Blockchain Development History',
 	 		 timeIndex: 0,
 	 		 menuShow:false,//上方菜单按钮是否显示
 	 		 courseId:1,
 	 		 
         timeLineList: [{
-              timestamp: '2008年11月',
+              timestamp: 'November, 2008',
               color: '#fff',
               fontsize: 24,
               size: '28',
               bgcolor: '#e4e7ed',
               icon: 'el-iconprev',
-              year: '2008年11月',
-              info: '中本聪发布《比特币白皮书》',
-              detailInfo:'2008年11月中本聪发表论文《比特币：一种点对点的电子现金系统》，提出了BlockChain这种数据结构。'
+              year: 'November, 2008',
+              info: 'Nakamoto releases bitcoin white paper',
+              detailInfo:'In November 2008, Ben Cong published his paper bitcoin: a peer-to-peer e-cash system, which proposed the data structure of blockchain.'
             }, {
-              timestamp: '2010年5月',
+              timestamp: 'May, 2010',
               color: '#fff',
               fontsize: 24,
               size: '28',
               bgcolor: '#e4e7ed',
-              year: '2010年5月',
-              info: '弗罗里达程序员用一万比特币购买披萨',
-              detailInfo:'2010年5月佛罗里达程序员Laszlo Hanyecz用一万比特币购买了价值25美元的披萨，完成了比特币历史上的第一笔实物交易。'
+              year: 'May, 2010',
+              info: 'Rorida programmer buys pizza with 10000 bitcoin',
+              detailInfo:'In May 2010, Florida programmer Laszlo hanyecz bought $25 worth of pizza with 10000 bitcoin, completing the first physical transaction in the history of bitcoin.'
             }, {
-              timestamp: '2013年11月',
+              timestamp: 'November, 2013',
               color: '#fff',
               fontsize: 24,
               size: '28',
               bgcolor: '#e4e7ed',
-              year: '2013年11月',
-              info: '以太坊项目发起',
-              detailInfo:'2013年11月 Vitalik Buterin发起Ethereum项目，并在12月发布了以太坊白皮书的首个版本，预示区块链进入2.0时代。'
+              year: 'November, 2013',
+              info: 'Ethereum project launched',
+              detailInfo:'Vitalik buterin launched Ethereum project in November 2013 and released the first version of Ethereum white paper in December, which indicates that blockchain has entered the era of 2.0.'
             }, {
-              timestamp: '2016年3月',
+              timestamp: 'March, 2016',
               color: '#fff',
               fontsize: 24,
-              year: '2016年3月',
+              year: 'March, 2016',
               size: '28',
               bgcolor: '#e4e7ed',
-              info: '以太坊硬分叉',
-              detailInfo:'2016年3月 以太坊著名的The DAO被攻击事件发生，以太坊硬分叉，出现了ETC和ETH并行。'
+              info: 'Ethereum hard fork',
+              detailInfo:'In March 2016, the famous Dao of Ethereum was attacked. Ethereum was hard bifurcated and the parallel of etc and eth appeared.'
             }, {
-              timestamp: '2017年8月',
+              timestamp: 'August, 2017',
               color: '#fff',
               fontsize: 24,
               size: '28',
-              year: '2017年8月',
+              year: 'August, 2017',
               bgcolor: '#e4e7ed',
-              info: '比特币硬分叉，同年比特币达到最高价',
-              detailInfo:'2017年8月，比特币发生硬分叉，BCH诞生；12月，比特币价格达到有史以来最高价，接近20000美元。'
+              info: 'Bitcoin hard bifurcation, bitcoin reached the highest price in the same year',
+              detailInfo:'In August 2017, bitcoin hard bifurcated and BCH was born; In December, bitcoin reached its highest price ever, close to $20000.'
             }, {
-              timestamp: '2019年10月',
+              timestamp: 'October, 2019',
               color: '#fff',
               fontsize:24,
               size: '28',
               bgcolor: '#e4e7ed',
-              year: '2019年10月',
-              info: '我国将区块链技术上升到国家战略高度',
-              detailInfo:'2019年10月24日，中共中央政治局召开区块链学习会议，重点强调要将发展区块链技术上升到了国家战略高度。'
+              year: 'October, 2019',
+              info: 'China blockchain technology has risen to the height of national strategy',
+              detailInfo:'On October 24, 2019, the Political Bureau of the CPC Central Committee held a blockchain learning conference, which focused on upgrading the development of blockchain technology to a national strategic level.'
             }],
             category_id:'',//访问课程的id
             title:'',//总title

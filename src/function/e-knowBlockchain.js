@@ -13,14 +13,14 @@ export default{
 			menuShow:false,//上方菜单按钮是否显示
 	  	funNum:0,//左侧点击判断工具箱
 	    showTool:false,//左侧工具箱是否显示	 
-	    menuText:'启蒙篇-初识区块链',
+	    menuText:'Enlightenment - first knowledge of blockchain',
 	    courseId:1,
 	    
 	    cateList:[
-	      {icon:require('../assets/teachImg/logi4.png'),name:'区块链与比特币',intro:['区块链技术是比特币的底层技术','比特币是基于区块链 技术的第一个应用']},
-	      {icon:require('../assets/teachImg/logi4.png'),name:'区块链与大数据',intro:['区块链与大数据的联系','两者区别']},
-	      {icon:require('../assets/teachImg/logi4.png'),name:'区块链与数据库',intro:['分散式控制','历史技术','适用范围']},
-	      {icon:require('../assets/teachImg/logi4.png'),name:'区块链与网络',intro:['从互联网看区块链','从区块链看互联网']},
+	      {icon:require('../assets/teachImg/logi4.png'),name:'Blockchain and bitcoin',intro:['Blockchain technology is the underlying technology of bitcoin','Bitcoin is the first application based on blockchain technology']},
+	      {icon:require('../assets/teachImg/logi4.png'),name:'Blockchain and big data',intro:['The connection between blockchain and big data','The difference between the two']},
+	      {icon:require('../assets/teachImg/logi4.png'),name:'Blockchain and database',intro:['Distributed control','Historical Technology','Scope of application']},
+	      {icon:require('../assets/teachImg/logi4.png'),name:'Blockchain and network',intro:['Blockchain from the perspective of Internet','Internet from the perspective of blockchain']},
 	    ],
 	    dialogWidth:0,
 	    //点击详情弹出框

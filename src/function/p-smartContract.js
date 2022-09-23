@@ -20,7 +20,7 @@ export default{
 	  	winNum:0,//代表当前不显示获胜节点
 	  	pageName:2,//代表页面是发币页面
 	  	 	
-    	userInfo:[{id:1,text:'用户1'},{id:2,text:'用户2'},{id:3,text:'用户3'},{id:4,text:'用户4'}].reverse(),//左侧拖拽设置四个用户信息进行遍历
+    	userInfo:[{id:1,text:'user1'},{id:2,text:'user2'},{id:3,text:'user3'},{id:4,text:'user4'}].reverse(),//左侧拖拽设置四个用户信息进行遍历
     	
     	funNum:0,//左侧点击判断工具箱
 	    showTool:false,//左侧工具箱是否显示
@@ -30,7 +30,7 @@ export default{
 	  	isBlcok:false,//是否展示节点计算进度条
 	    invisable:true,	 
 	  	step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	    pointList:[],//四个div的四个点坐标
 	    
 	    isDrag:false,//拖拽是否放入到指定元素中
@@ -68,7 +68,7 @@ export default{
 			transUserList:[],//转账用户列表
 
 			consoleShow:false,//头部控制台是否显示
-			menuText:'智能合约部署与调用',
+			menuText:'Deployment and call of smart contract',
 			moneyNumber:'',//设置金额
 			transAmout:'',//转账金额
 			
@@ -91,16 +91,16 @@ export default{
 		  let str = '';
 		  switch(parseInt(value)){
 		     case 1:
-		       str='用户1'
+		       str='user1'
 		       break;
 		     case 2:
-		       str='用户2'
+		       str='user2'
 		       break;
 		     case 3:
-		       str='用户3'
+		       str='user3'
 		       break;
 		     case 4:
-		       str='用户4'
+		       str='user4'
 		       break;
 		  }
 		  return str	  
@@ -159,7 +159,7 @@ export default{
        	  that.blockPro++;
           if(that.blockPro==100){
 	            clearInterval(timer)
-	            that.operaInfo.mess = '当前合约正在部署中:'+that.blockPro+'%';
+	            that.operaInfo.mess = 'The current contract is being deployed:'+that.blockPro+'%';
 	            that.isBlcok = false;
 	            clearTimeout(that.timer1);
 						  that.timer1 = setTimeout(function(){
@@ -167,17 +167,17 @@ export default{
 							},500)
 	            //that.confirShow = true; 
 	            that.top = that.top-40;
-							that.operaInfo.mess = "当前合约部署完成"
-							that.operaInfo.infolist.push('合约地址：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
-							that.operaInfo.infolist.push('资产名称：'+that.coinName)
-							that.operaInfo.infolist.push('初始拥有者：'+'用户'+that.chooseUserObj)
+							that.operaInfo.mess = "Current contract deployment completed"
+							that.operaInfo.infolist.push('Contract address：4b1c95a1ed859cc68abb9819d34ed95d541a6f5c')
+							that.operaInfo.infolist.push('Asset name：'+that.coinName)
+							that.operaInfo.infolist.push('Initial owner：'+'user'+that.chooseUserObj)
 							that.$set(that.divInfo1,'operable',1)
    	   	    	that.$set(that.divInfo2,'operable',1)
    	   	    	that.$set(that.divInfo3,'operable',1)
    	   	    	that.$set(that.divInfo4,'operable',1)
 							that.blockPro = 0;
 		      }else{
-							that.operaInfo.mess = '当前合约正在部署:'+that.blockPro+'%';
+							that.operaInfo.mess = 'The current contract is being deployed:'+that.blockPro+'%';
 				  }
         },50)
 			}   
@@ -221,15 +221,15 @@ export default{
       let end = null;
       let transferAmount = document.getElementById("transferAmount").value;
       if (that.getCurrentTranferBalance(that.currentLocation) < transferAmount){
-			  that.toast('余额不足')
+			  that.toast('Sorry, your credit is running low')
 			return
 		}
 		if (transferAmount.match(/^[0-9]+$/) == null){
-			that.toast('转账金额必须是正整数')
+			that.toast('The transfer amount must be a positive integer')
 			return
 		}
 		if(transferAmount==0){
-			that.toast('转账金额必须是正整数')
+			that.toast('The transfer amount must be a positive integer')
 			return
 		}
 		
@@ -274,7 +274,7 @@ export default{
    	  
       if(that.blockPro==100){
           clearInterval(timer)
-          that.operaInfo.mess = '转账事务打包完成';
+          that.operaInfo.mess = 'Transfer transaction package completed';
           that.isBlcok = false;
          
          
@@ -296,7 +296,7 @@ export default{
 					}
 					
       }else{
-					that.operaInfo.mess = '转账事务打包中:'+that.blockPro+'%';
+					that.operaInfo.mess = 'In transfer transaction packaging:'+that.blockPro+'%';
 		  }
     },50)
 	  
@@ -542,15 +542,15 @@ export default{
 			}
 	  	that.operaInfo.infolist = [];
 	  	if(obj.status==0){
-	  	 	   	  that.operaInfo.mess ='您还未拖动用户'
+	  	 	   	  that.operaInfo.mess ='You have not dragged the user yet'
 	  	}else if(that.coinName ==''){
 				  that.operaInfo.mess =''
-				  that.operaInfo.infolist.push('余额：'+ obj.balance)
-	  	 	      that.operaInfo.infolist.push('用户地址：'+ obj.address)
+				  that.operaInfo.infolist.push('Balance：'+ obj.balance)
+	  	 	      that.operaInfo.infolist.push('User address：'+ obj.address)
 	  	 	   } else{
-					  that.operaInfo.mess = '币种名称: '+that.coinName;
-					  that.operaInfo.infolist.push('账户余额：'+ obj.balance)
-					  that.operaInfo.infolist.push('用户地址：'+ obj.address)
+					  that.operaInfo.mess = 'Asset name: '+that.coinName;
+					  that.operaInfo.infolist.push('Balance：'+ obj.balance)
+					  that.operaInfo.infolist.push('User address：'+ obj.address)
 			}
    },
        
@@ -572,7 +572,7 @@ export default{
 	     //验证警戒值
 	    if(this.moneyNumber!='' && this.moneyNumber != undefined){
 	    	if (!reg.test(this.moneyNumber)) {
-	        this.$toast('请输入正整数',2000)
+	        this.$toast('Please enter a positive integer',2000)
 	        this.moneyNumber='';
 	        return ;
 	    	}
@@ -583,7 +583,7 @@ export default{
 	     //验证警戒值
 	    if(this.transAmout!='' && this.transAmout != undefined){
 	    	if (!reg.test(this.transAmout)) {
-	        this.$toast('请输入正整数',2000)
+	        this.$toast('Please enter a positive integer',2000)
 	        this.transAmout='';
 	        return ;
 	    	}
@@ -606,17 +606,17 @@ export default{
 		that.coinNumber = document.getElementById("coinNumber").value;
 		
 		if(that.coinName == ''){
-			that.toast('请输入币种名称')
+			that.toast('Please input currency name')
 			return
 		}
 		
 		if (that.coinNumber == ''){
-			that.toast('币种数量不能为空且只能为数字')
+			that.toast('Currency quantity cannot be empty and can only be a number')
 			return
 		}
 		
 		if(that.chooseUserObj == ''){
-			that.toast('请选择初始拥有者')
+			that.toast('Please select initial owner')
 			return
 		}
 		if (parseInt(this.chooseUserObj) == that.divInfo1.userId){
@@ -671,7 +671,7 @@ export default{
 		sragSetInfo(obj,id,num,iconUrl){
 			  let that = this;
 		  	obj.userId = id;
-		  	obj.userName = '用户'+id;
+		  	obj.userName = 'user'+id;
 		  	obj.icon = iconUrl;
 		  	obj.div = num;
 		  	obj.balance = 0;
@@ -693,7 +693,7 @@ export default{
  },
   	mounted(){
 		 	let that = this;
-		 	this.menuText = '区块链密码学-'+this.$route.params.name
+		 	this.menuText = 'Blockchain cryptography-'+this.$route.params.name
 		 	that.category_id = this.$route.params.id;
 	    that.getvisit();
 			window.onresize = () => {

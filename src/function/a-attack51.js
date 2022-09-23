@@ -8,13 +8,13 @@ export default{
 		  menuShow:false,//上方菜单按钮是否显示
 		  showTool:false,//左侧工具箱是否显示		
 		  funNum:0,//左侧点击判断工具箱
-		  menuText:'异常篇-51%攻击',
+		  menuText:'Abnormal chapter - 51% attack',
 		  category_id:'',//课程id
 		  step:1,//当前步骤
 		  
 		  pageName:'51',
 
-		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+		  operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 		  singleStep:false,//单步骤提示
 		  
 		  confirShow:false,
@@ -105,24 +105,24 @@ export default{
 	        that.isShowAmount = false;
 	        
 	        if(that.transNumber==0){
-	        	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
+	        	that.operaInfo.mess = 'No status, please follow the steps on the right.'
 	        }else{
 	          	that.operaInfo.mess = ''
 	            that.operaInfo.infolist = [];
 	        }
 	
 	      }else{
-	      	that.$toast('转账最多可达3笔',3000)
+	      	that.$toast('Up to 3 transfers',3000)
 	      }
       }
       
       if(num==2){
       	if(that.transNumber<3){
-      		that.$toast('转账必须达到3笔',3000);
+      		that.$toast('There must be three transfers',3000);
       		return;
       	}
       	if(that.isPower){
-      		that.$toast('算力已提升',3000);
+      		that.$toast('Computing power has been improved',3000);
       		return;
       	}
       	if(that.tansferInfo.length>0 && that.step<=3){
@@ -137,21 +137,21 @@ export default{
       if(num==3){
       
       	if(that.transNumber<3){
-      		that.$toast('转账必须达到3笔',3000);
+      		that.$toast('Up to 3 transfers',3000);
       		return;
       	}
       	if(!that.isPower){
-      		that.$toast('请先提升算力',3000);
+      		that.$toast('Please improve your computing power first',3000);
       		return;
       	}
       	if(that.tansferInfo.length>1){
        	 if(that.delNumber==0){
-       	 	this.$toast('打包前，至少删除一个事务',3000);
+       	 	this.$toast('Delete at least one transaction before packaging',3000);
        	 	return;
        	 }
         }
       	if(that.isPack){
-      		this.$toast('当前事务已打包',3000);
+      		this.$toast('The current transaction is packaged',3000);
        	 	return;
       	}
       	
@@ -305,7 +305,7 @@ export default{
     showAmount(user) {
       let that = this;
       that.isShowAmount = true;
-      that.operaInfo.mess=user.name+','+'账户余额为'+user.balance
+      that.operaInfo.mess=user.name+','+'The account balance is'+user.balance
       that.operaInfo.infolist = [];
       
     },
@@ -314,7 +314,7 @@ export default{
       
       that.lineDraw51Show = false
       if(that.tansferInfo.length==0){
-      	that.operaInfo.mess = '暂无状态，请先按照右侧步骤提示操作~。'
+      	that.operaInfo.mess = 'No status, please follow the steps on the right.'
         that.operaInfo.infolist = [];
       }else{
       	that.operaInfo.mess = ''
@@ -332,7 +332,7 @@ export default{
  	},
   mounted(){
     let that = this
-    this.menuText = '异常篇-'+this.$route.params.name
+    this.menuText = 'Abnormal-'+this.$route.params.name
  	  that.category_id = this.$route.params.id;
     that.$nextTick(() => {
       that.confirShow = true

@@ -7,9 +7,9 @@ export default{
 	data(){
 		return{
 			menuShow:false,//上方菜单按钮是否显示
-	    menuText:'区块链密码学-对称密钥算法',
+	    menuText:'Block chain cryptography symmetric key algorithm',
 			step:0,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	confirShow:false,//右侧弹出框是否显示
@@ -22,7 +22,7 @@ export default{
 
 	    consoleShow:true,//头部控制台是否显示
 	    //字母置换表
-	    letterTable:[{number:'铭文',letter:'密文'},{number:0,letter:'R'},{number:1,letter:'A'},{number:2,letter:'Y'},{number:3,letter:'E'},{number:4,letter:'O'},
+	    letterTable:[{number:'inscription',letter:'ciphertext'},{number:0,letter:'R'},{number:1,letter:'A'},{number:2,letter:'Y'},{number:3,letter:'E'},{number:4,letter:'O'},
 	    {number:5,letter:'I'},{number:6,letter:'P'},{number:7,letter:'W'},{number:8,letter:'L'},{number:9,letter:'D'}],
 	    encryptedContent:{text:'64730',result:'POWER'},//加密内容
 	    
@@ -81,7 +81,7 @@ export default{
 			if(num==2 ) {
 				
 				if(!that.isEncryptionSuc){
-					return this.$toast('请先加密',2000)
+					return this.$toast('Please encrypt first',2000)
 				}else{				
 					that.isEncryption = false
 					that.isDecrypt = true;
@@ -115,17 +115,17 @@ export default{
 	  	if(that.step==1){
 	  		if(that.encryptionText==''){
 	  			that.isPrompt = true;
-	  			that.promptText = '请输入加密内容'
+	  			that.promptText = 'Please enter the encrypted content'
 	  			return;
 	  		}
 	  		if(that.encryptionText!=that.encryptedContent.result){
 	  			that.isPrompt = true;
-	  			that.promptText = '加密内容错误，请重新输入'
+	  			that.promptText = 'Encrypted content error, please re-enter'
 	  			return;
 	  		}
 	  		
 	  		that.isPrompt = true;
-	  		that.promptText = '加密内容正确'
+	  		that.promptText = 'The encrypted content is correct'
 	  	
 	  		that.isRight = true;
 	  	}
@@ -134,7 +134,7 @@ export default{
 	  	if(that.step==2){
 	  		if(that.isEncryptionSuc ==true){	
 	  			that.isPrompt = true;
-	  			that.promptText = '加密已结束，请点击右侧的解密按钮进行解密'
+	  			that.promptText = 'Encryption is over, please click the decryption button on the right to decrypt'
 	  			that.isRight = false;
 	  			
 	  			return;
@@ -149,19 +149,19 @@ export default{
 	  	if(that.step==2){
 	  		if(that.decryptText==''){
 	  			that.isPrompt = true;
-	  			that.promptText = '请输入解密内容'
+	  			that.promptText = 'Please input the decryption content'
 	  			return;
 	  		}
 	  		if(that.decryptText!=that.encryptedContent.text){
 	  			that.isPrompt = true;
-	  			that.promptText = '解密内容错误，请重新输入';
+	  			that.promptText = 'Decryption content error, please re-enter';
 	  			that.isRight = false;
 	  			return;
 	  		}	  			  		
 	  	  
 	
 	  	  that.isPrompt = true;
-	  		that.promptText = '解密内容正确'
+	  		that.promptText = 'The decryption content is correct'
 	  		that.isRight = true;
 	  		//that.decryptText1 = that.decryptText
 	  		//that.isDecryptSuc = true
@@ -206,7 +206,7 @@ export default{
 	},
 	mounted(){
 		let that = this
-		this.menuText = '区块链密码学-'+this.$route.params.name
+		this.menuText = 'Blockchain cryptography-'+this.$route.params.name
 		that.category_id = this.$route.params.id;
 	  that.getvisit();
 		that.$nextTick(() => {

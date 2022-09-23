@@ -17,11 +17,11 @@ export default{
 		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
 		  
       isPrompt:false,
-	    promptText:'当前无工具可用！',
+	    promptText:'No tools available at present!',
 	    
 	    isUpgrade:false,//是否点击升级
 	    AchainList:[
-	       {name:'创世区块',height:1}
+	       {name:'Genesis block',height:1}
 	    ],//A链
 	    singleStep:true,
 	    AchainNumber:0,//当前区块数量
@@ -89,7 +89,7 @@ export default{
       //定时器开启
       that.spaceTimer = setInterval(function(){
       	that.AchainNumber++
-      	that.AchainList.push({'name:':'区块'+that.AchainNumber,height:that.AchainNumber})
+      	that.AchainList.push({'name:':'block'+that.AchainNumber,height:that.AchainNumber})
       	//console.log(that.AchainNumber)
       	if(that.AchainNumber==5){
       		that.showMess=true
@@ -111,7 +111,7 @@ export default{
 	},
   mounted(){
 	  let that = this
-	  this.menuText = '异常篇-'+this.$route.params.name
+	  this.menuText = 'Abnormal-'+this.$route.params.name
 	 	that.category_id = this.$route.params.id;
 	  that.$nextTick(() => {
 	    that.confirShow = true

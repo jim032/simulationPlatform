@@ -10,7 +10,7 @@ export default{
 		  showTool:false,//左侧工具箱是否显示
       confirShow:false,//右侧弹窗
 		  funNum:0,//左侧点击判断工具箱
-		  menuText:'异常篇-重放攻击',
+		  menuText:'Exception - replay attack',
 		  category_id:'',//课程id
       iconUrl_1:require('../assets/teachImg/block_a.png'),//
 		  step:1,//当前步骤
@@ -25,23 +25,23 @@ export default{
       singleStep:false,//单个步骤提示
       
       userList:[
-        {name:'用户A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:0,isWarning:false,
+        {name:'userA',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:0,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user2_warning.png')},
-        {name:'用户B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:0,isWarning:false,
+        {name:'userB',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:0,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user3_warning.png')},
-        {name:'黑客',userId:'3',icon:require('../assets/teachImg/icon_user4_warning.png'),balance:0,isWarning:false,
+        {name:'hacker',userId:'3',icon:require('../assets/teachImg/icon_user4_warning.png'),balance:0,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user4_warning.png')}
       ],
       transNumber:0,//转账次数
-      tansferInfo:[],//转账区块
+      tansferInfo:[],//转账block
       isPack:false,//是否已打包
       isIntercept:false,//是否已接获
       broadcastNumber:0,//广播次数
       AChainList:[
-        {'name':'区块1'},{'name':'区块2'},{'name':'区块3'},{'name':'区块4'},{'name':'区块5'}
+        {'name':'block1'},{'name':'block2'},{'name':'block3'},{'name':'block4'},{'name':'block5'}
       ],
       BChainList:[
-      	 {'name':'区块3'},{'name':'区块4'},{'name':'区块5'}
+      	 {'name':'block3'},{'name':'block4'},{'name':'block5'}
       ]
 		}
 	},
@@ -97,7 +97,7 @@ export default{
       
       if(num==1){
       	if(that.transNumber>=1){
-      		return that.$toast('已转账',3000)
+      		return that.$toast('Transferred',3000)
       	}      	
         that.D2=true; 
       }
@@ -105,16 +105,16 @@ export default{
       if(num==2 ){
      
       	if(that.transNumber<1){
-      		return that.$toast('必须有一笔转账',3000)
+      		return that.$toast('There must be a transfer',3000)
       	} 
       	if(that.broadcastNumber==2){
-      		return that.$toast('已广播',3000)
+      		return that.$toast('Broadcast',3000)
       	}
       	if(that.broadcastNumber==2 && that.isIntercept){
-      		return that.$toast('已广播',3000)
+      		return that.$toast('Broadcast',3000)
       	}
       	if(that.broadcastNumber==1 && that.step==3){
-      		return that.$toast('已广播',3000)
+      		return that.$toast('Broadcast',3000)
       	}
       	
         that.lineDraw53Show = true;
@@ -138,16 +138,16 @@ export default{
     
       if(num==3){
        	if(that.transNumber<1){
-      		return that.$toast('必须有一笔转账',3000)
+      		return that.$toast('There must be a transfer',3000)
       	}
        	if(that.broadcastNumber<1){
-      		return that.$toast('请先点击广播',3000)
+      		return that.$toast('Please click broadcast first',3000)
       	}
        	if(that.isIntercept){ 		 
-      		return that.$toast('已截获',3000)
+      		return that.$toast('Intercepted',3000)
       	}
       	if(that.broadcastNumber==2){
-      		return that.$toast('已广播',3000)
+      		return that.$toast('Broadcast',3000)
       	}
       	
       	that.lineDraw53Show = true;
@@ -173,20 +173,20 @@ export default{
   
       if(num==4){
       	if(that.transNumber<1){
-      		return that.$toast('必须有一笔转账',3000)
+      		return that.$toast('There must be a transfer',3000)
       	}
       	if(that.broadcastNumber=1 && !that.isIntercept){
-      		return that.$toast('请先点击截获',3000)
+      		return that.$toast('Please click capture first',3000)
       	}
       	if(that.broadcastNumber=2 && that.step==4){
-      		return that.$toast('请先对截获事务进行广播',3000)
+      		return that.$toast('Please broadcast the interception first',3000)
       	}
        	if(!that.isIntercept){
-      		return that.$toast('请先点击截获',3000)
+      		return that.$toast('Please click capture first',3000)
       	}
        	
        	if(that.isPack){ 		 
-      		return that.$toast('已打包',3000)
+      		return that.$toast('Packed',3000)
       	}
 
       	
@@ -252,7 +252,7 @@ export default{
 	},
   mounted(){
   let that = this
-  this.menuText = '异常篇-'+this.$route.params.name
+  this.menuText = 'Abnormal-'+this.$route.params.name
  	that.category_id = this.$route.params.id;
   that.$nextTick(() => {
     that.confirShow = true;

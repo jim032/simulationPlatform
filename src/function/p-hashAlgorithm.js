@@ -8,7 +8,7 @@ export default{
 			menuShow:false,//上方菜单按钮是否显示
 	
 			step:0,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,	
@@ -34,7 +34,7 @@ export default{
 	    
 	    consoleShow:true,//头部控制台是否显示
 	    
-	    menuText:'区块链密码学-哈希算法',
+	    menuText:'Block chain cryptography hash algorithm',
 	    category_id:'',
 	  
 	    
@@ -75,8 +75,8 @@ export default{
 					that.blockPro++;
 					if(that.blockPro == 100) {
 						clearInterval(timer)
-						that.operaInfo.mess = 'hash值已生成';
-						that.operaInfo.infolist.push('当前hash值：e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda');
+						that.operaInfo.mess = 'Hash value generated';
+						that.operaInfo.infolist.push('Current hash value:e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda');
 						that.isBlcok = false;
 						that.delayTimer = setTimeout(function(){
 							that.confirShow = true;
@@ -101,11 +101,11 @@ export default{
 					if(that.blockPro == 100) {
 						clearInterval(timer)
 						if(that.isAttack==1){
-							that.operaInfo.mess = '由A输送到B的“文件A”已被篡改变为“文件B”，hash值已由：';
+							that.operaInfo.mess = 'The "file a" transferred from a to B has been changed to "file B", and the hash value has changed from:';
 						  that.operaInfo.infolist.push('e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda变为f5q4wq9e32d1as821c65sad465w4eq56weq56d6asda');
 						  
 						}else{
-							that.operaInfo.mess = '由A输送过来的“文件A”未受到篡改';
+							that.operaInfo.mess = 'The "file a" sent by a has not been tampered with';
 						  that.operaInfo.infolist.push('hash值为： e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda');
 						}
 						
@@ -127,19 +127,19 @@ export default{
 			}
 			if(num==1){
 				  if(that.step==1){
-				  	that.$toast('文件hash还未生成',3000)
+				  	that.$toast('The file hash has not been generated',3000)
 				  	return;
 				  }
-					that.operaInfo.mess = '当前文件的hash值：';
+					that.operaInfo.mess = 'Hash value of current file:';
 					that.operaInfo.infolist.push('e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda');
 			}
 			if(num==2){
 				if(that.isAttack==1){
-					that.operaInfo.mess = '当前文件的hash值：';
+					that.operaInfo.mess = 'Hash value of current file:';
 					that.operaInfo.infolist.push('f5q4wq9e32d1as821c65sad465w4eq56weq56d6asda');
 					return ;
 				}else{
-					that.operaInfo.mess = '当前文件的hash值：';
+					that.operaInfo.mess = 'Hash value of current file:';
 					that.operaInfo.infolist.push('e5q4wq5e32d1as321c65sad465w4eq56weq56d6asda');
 				}
 			}
@@ -178,7 +178,7 @@ export default{
 	  	if(num==2){
 	  		that.line1Show = true
 				that.delayTimer = setTimeout(function(){
-				   that.operaInfo.mess = 'A成功将“文件A”输送给了B，中途没有受到攻击篡改。'
+				   that.operaInfo.mess = 'A successfully delivered the "file a" to B, and it was not tampered with during the attack.'
 				   that.operaInfo.infolist = [];
 				   that.confirShow = true
 				   that.fileFinsh = true;
@@ -192,7 +192,7 @@ export default{
 	  		that.line2Show = true
 	  		that.delayTimer = setTimeout(function(){
 					that.fileFinsh = true;
-					that.operaInfo.mess = 'A在给B传输“文件”时遭到了C的攻击，文件已被篡改'
+					that.operaInfo.mess = 'A has been attacked by C when transmitting "file" to B. the file has been tampered with'
 				  that.operaInfo.infolist = [];
 				  
 				},2000)
@@ -208,7 +208,7 @@ export default{
 	},
 	mounted(){
 		let that = this
-		this.menuText = '区块链密码学-'+this.$route.params.name
+		this.menuText = 'Blockchain cryptography-'+this.$route.params.name
 		that.category_id = this.$route.params.id;
 	  that.getvisit();
 		that.$nextTick(() => {

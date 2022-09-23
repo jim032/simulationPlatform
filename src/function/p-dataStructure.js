@@ -8,7 +8,7 @@ export default{
 			menuShow:false,//上方菜单按钮是否显示
 	
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -29,9 +29,9 @@ export default{
 	   
 	   consoleShow:true,//头部控制台是否显示
 	   
-	   menuText:'原理篇-数据结构原理',
+	   menuText:'Principles - Principles of data structure',
 	   isPrompt:false,
-	   promptText:'当前无工具可用！',
+	   promptText:'No tools available at present!',
 	   
 	   showContent:false,
 	   category_id:''
@@ -92,7 +92,7 @@ export default{
 	},
 	mounted(){
 		let that = this;
-		that.menuText = '区块链密码学-'+this.$route.params.name
+		that.menuText = 'Blockchain cryptography-'+this.$route.params.name
 		that.category_id = this.$route.params.id;
 	  that.getvisit();
 	}

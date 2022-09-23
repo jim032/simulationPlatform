@@ -9,19 +9,19 @@ export default{
 		  showTool:false,//左侧工具箱是否显示
       confirShow:false,//右侧弹窗
 		  funNum:0,//左侧点击判断工具箱
-		  menuText:'软分叉与硬分叉',
+		  menuText:'Soft bifurcation and hard bifurcation',
 		  category_id:'',//课程id
       iconUrl_1:require('../assets/teachImg/block_a.png'),//
 		  step:1,//当前步骤
 		  pageName:57,//
-		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+		  operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 		  
       isPrompt:false,
-	    promptText:'当前无工具可用！',
+	    promptText:'No tools available at present!',
 	    
 	    isUpgrade:false,//是否点击升级
 	    AchainList:[
-	       {name:'创世区块',height:1}
+	       {name:'Genesis block',height:1}
 	    ],//A链
 	    singleStep:true,
 	    AchainNumber:0,//当前区块数量
@@ -95,7 +95,7 @@ export default{
       that.spaceTimer = setInterval(function(){
       	that.AchainNumber++;
       	let temp = that.AchainNumber+1
-      	that.AchainList.push({'name:':'区块'+that.AchainNumber,height:temp})
+      	that.AchainList.push({'name:':'block'+that.AchainNumber,height:temp})
       	//console.log(that.AchainNumber)
       	if(that.AchainNumber==5){
       		
@@ -108,7 +108,7 @@ export default{
         let temp = that.AchainNumber
         that.attackSpaceTimer =setInterval(function(){
         	that.attack_number++;	
-        	that.attackChainList.push({name:'区块'+parseInt(temp+that.attack_number),height:parseInt(temp+that.attack_number)})
+        	that.attackChainList.push({name:'block'+parseInt(temp+that.attack_number),height:parseInt(temp+that.attack_number)})
           if(that.attack_number==4){
           	clearInterval(that.attackSpaceTimer);
           	that.showMess=true;
@@ -129,7 +129,7 @@ export default{
 	},
   mounted(){
 	  let that = this
-	  this.menuText = '异常篇-'+this.$route.params.name
+	  this.menuText = 'Abnormal-'+this.$route.params.name
 	 	that.category_id = this.$route.params.id;
 	  that.$nextTick(() => {
 	    that.confirShow = true

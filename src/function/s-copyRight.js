@@ -7,7 +7,7 @@ export default{
 		return{
 			menuShow:false,//上方菜单按钮是否显示
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -20,14 +20,14 @@ export default{
 	    showTool:false,//左侧工具箱是否显示
 	    
 	    navList:[ 
-		    {title:'登记人',icon:require('../assets/teachImg/cr_1.png')},
-		    {title:'出版社',icon:require('../assets/teachImg/cr_2.png')},
-		    {title:'查证处',icon:require('../assets/teachImg/cr_3.png')}
+		    {title:'Registrant',icon:require('../assets/teachImg/cr_1.png')},
+		    {title:'Publisher',icon:require('../assets/teachImg/cr_2.png')},
+		    {title:'Investigation Division',icon:require('../assets/teachImg/cr_3.png')}
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成
-	    resultMess:'恭喜您！版权存证上链成功！下面是您的上链哈希，您可通过查证处查询：',
-	    resultMess1:'恭喜您！版权存证上链成功！下面是您的上链哈希：',
+	    resultMess:'Congratulations! Copyright certificate on the chain successfully! Here is your uplink hash. You can query it through the verification office:',
+	    resultMess1:'Congratulations! Copyright certificate on the chain successfully! Here is your uplink hash:',
 	    //登记人
 	    rgisteInfo:{
 	    	name:'',//姓名
@@ -47,7 +47,7 @@ export default{
 	    searchHash:'',//查询hash
       
       searchStep:0,//查询的步骤
-      menuText:'场景篇-作品版权存证',
+      menuText:'Scenes - Copyright preservation',
       singleStep:true,//单个步骤提示
 			category_id:''
 		}
@@ -79,7 +79,7 @@ export default{
  },
  mounted(){
  	let that = this;
- 	this.menuText = '场景篇-'+this.$route.params.name
+ 	this.menuText = 'Scenes-'+this.$route.params.name
  	that.category_id = this.$route.params.id;
  	that.getvisit();
  },
@@ -116,8 +116,8 @@ export default{
 	  	if(num==1){
 	  		if(that.step!=1){	
 	  			that.operaInfo.infolist=[]
-	  	  	that.operaInfo.mess='登记信息。'//底部传递的信息
-	  		  that.operaInfo.infolist.push('哈希：'+that.rgisteInfo.affairHash)
+	  	  	that.operaInfo.mess='Registration information.'//底部传递的信息
+	  		  that.operaInfo.infolist.push('Hash：'+that.rgisteInfo.affairHash)
 	  		}else{
 	  		that.showNav = false
 	  		
@@ -125,7 +125,7 @@ export default{
 	  	}else if(num==2){
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先登记信息',2000)
+	  			  that.$toast('Please register the information first',2000)
 	  			  break;
 	  			case 2:
 	  			  that.showNav = false
@@ -133,18 +133,18 @@ export default{
 	  			  break;
 	  			case 3:
 	  			  that.operaInfo.infolist=[]
-	  			  that.operaInfo.mess='出版社佐证存证上链。'//底部传递的信息
-	  			  that.operaInfo.infolist.push('哈希：'+that.press.affairHash)
+	  			  that.operaInfo.mess='The publishing house supports the chain of the deposit certificate.'//底部传递的信息
+	  			  that.operaInfo.infolist.push('Hash：'+that.press.affairHash)
 	  			  break
 	  		}
 	  	}else{
 	  		that.searchText = '';
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先登记信息',2000)
+	  			  that.$toast('Please register the information first',2000)
 	  			  break;
 	  			case 2:
-	  			  that.$toast('请点击出版社存证上链',2000)
+	  			  that.$toast('Please click the publishing house certificate to link',2000)
 	  			  break;
 	  			case 3:
 	  			  that.showNav=false;
@@ -163,28 +163,28 @@ export default{
 	  	let that = this;
 	  	let obj = that.rgisteInfo
 	  	if(obj.name==''){
-	  		that.$toast('请输入登记姓名',2000)
+	  		that.$toast('Please enter your registered name',2000)
 	  		return;
 	  	}
 	    if(obj.workTitle == ''){
-	      that.$toast('请输入 著作标题',2000)
+	      that.$toast('Please enter the title of the work',2000)
 	  		return;
 	    }
 	    if(obj.id == ''){
-	    	that.$toast('请输入身份证号',2000)
+	    	that.$toast('Please enter your ID number.',2000)
 	  		return;
 	    }
 	 
 	    if(obj.id.length != 18){
-	    	that.$toast('请输入正确的身份证号',2000)
+	    	that.$toast('Please input the correct ID number.',2000)
 	  		return;
 	    }
 	    if(!that.checkIDCard(obj.id)){
-	    	that.$toast('请输入正确的身份证号',2000)
+	    	that.$toast('Please input the correct ID number.',2000)
 	  		return;
 	    }
 	    if(obj.intro == ''){
-	    	that.$toast('请输入创意说明',2000)
+	    	that.$toast('Please input the description of your idea',2000)
 	  		return;
 	    }
 	   
@@ -228,7 +228,7 @@ export default{
 	  	let that = this;
 	  	
 	  	if(that.searchHash.replace(/\s*/g,'')!=that.rgisteInfo.affairHash){
-	  		that.$toast('请输入正确的hash值',2000)
+	  		that.$toast('Please enter the correct hash value',2000)
 	  	}else{
 	  		that.searchStep = 1
 	  	}

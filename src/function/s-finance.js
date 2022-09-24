@@ -7,7 +7,7 @@ export default{
 		return{
 			menuShow:false,//上方菜单按钮是否显示
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -20,14 +20,14 @@ export default{
 	    showTool:false,//左侧工具箱是否显示
 	    
 	    navList:[ 
-		    {title:'供应商',icon:require('../assets/teachImg/jr1.png')},
-		    {title:'核心企业',icon:require('../assets/teachImg/jr2.png')},
-		    {title:'银行',icon:require('../assets/teachImg/jr3.png')}
+		    {title:'Supplier',icon:require('../assets/teachImg/jr1.png')},
+		    {title:'Core enterprise',icon:require('../assets/teachImg/jr2.png')},
+		    {title:'Bank',icon:require('../assets/teachImg/jr3.png')}
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成
-	    resultMess:'恭喜您！供应商信息登记上链成功！下面是您的上链哈希，您可通过点击银行查询：',
-	    resultMess1:'恭喜您！核心企业佐证上链成功！下面是您的上链哈希：',
+	    resultMess:'Congratulations! Supplier information registration on the chain success! The following is your uplink hash. You can query by clicking Bank:',
+	    resultMess1:'Congratulations! Core enterprises prove the success of the chain! Here is your uplink hash:',
 	    //登记人
 	    rgisteInfo:{
 	    	bussinessName:'',//企业名称
@@ -48,7 +48,7 @@ export default{
 	    searchHash:'',//查询hash
       
       searchStep:0,//查询的步骤
-      menuText:'场景篇-供应链金融审计',
+      menuText:'Scenario part supply chain financial audit',
       singleStep:true,//单个步骤提示
       category_id:''
 			
@@ -81,7 +81,7 @@ export default{
  },
  mounted(){
  	let that = this;
- 	this.menuText = '场景篇-'+this.$route.params.name
+ 	this.menuText = 'Scenario-'+this.$route.params.name
  	that.category_id = this.$route.params.id;
 	that.getvisit();
  },
@@ -117,8 +117,8 @@ export default{
 	  	if(num==1){
 	  		if(that.step!=1){	
 	  			that.operaInfo.infolist=[]
-	  	  	that.operaInfo.mess='登记信息。'//底部传递的信息
-	  		  that.operaInfo.infolist.push('哈希：'+that.rgisteInfo.affairHash)
+	  	  	that.operaInfo.mess='Registration information.'//底部传递的信息
+	  		  that.operaInfo.infolist.push('Hash：'+that.rgisteInfo.affairHash)
 	  		}else{
 	  		that.showNav = false
 	  		
@@ -126,7 +126,7 @@ export default{
 	  	}else if(num==2){
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先供应商登记信息',2000)
+	  			  that.$toast('Please register the supplier information first',2000)
 	  			  break;
 	  			case 2:
 	  			  that.showNav = false
@@ -134,18 +134,18 @@ export default{
 	  			  break;
 	  			case 3:
 	  			  that.operaInfo.infolist=[]
-	  			  that.operaInfo.mess='核心企业佐证存证上链。'//底部传递的信息
-	  			  that.operaInfo.infolist.push('哈希：'+that.press.affairHash)
+	  			  that.operaInfo.mess='The core enterprise evidence is stored on the chain.'//底部传递的信息
+	  			  that.operaInfo.infolist.push('Hash：'+that.press.affairHash)
 	  			  break
 	  		}
 	  	}else{
 	  		that.searchText = '';
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先供应商登记信息',2000)
+	  			  that.$toast('Please register the supplier information first',2000)
 	  			  break;
 	  			case 2:
-	  			  that.$toast('请点击核心企业存证上链',2000)
+	  			  that.$toast('Please click on the core enterprise certificate on the chain',2000)
 	  			  break;
 	  			case 3:
 	  			  that.showNav=false;
@@ -165,34 +165,34 @@ export default{
 	  	let obj = that.rgisteInfo
 	  	
 	  	if(obj.bussinessName==''){
-	  		that.$toast('请输入企业名称',2000)
+	  		that.$toast('Please enter the name of the enterprise',2000)
 	  		return;
 	  	}
 	  	
 	  	if(obj.name==''){
-	  		that.$toast('请输入法人姓名',2000)
+	  		that.$toast('Please enter the name of the legal person',2000)
 	  		return;
 	  	}
 	    
 	    if(obj.id == ''){
-	    	that.$toast('请输入法人身份证号',2000)
+	    	that.$toast('Please enter the legal person Id number.',2000)
 	  		return;
 	    }
 	 
 	    if(obj.id.length != 18){
-	    	that.$toast('请输入正确的身份证号',2000)
+	    	that.$toast('Please input the correct ID number.',2000)
 	  		return;
 	    }
 	    if(!that.checkIDCard(obj.id)){
-	    	that.$toast('请输入正确的身份证号',2000)
+	    	that.$toast('Please input the correct ID number.',2000)
 	  		return;
 	    }
 	    if(obj.financeAmount == ''){
-	    	that.$toast('请输入融资金额',2000)
+	    	that.$toast('Please input financing amount',2000)
 	  		return;
 	    }
 	    if(obj.contractNo == ''){
-	    	that.$toast('请输入合同编号',2000)
+	    	that.$toast('Please enter the contract number',2000)
 	  		return;
 	    }
 	    
@@ -237,7 +237,7 @@ export default{
 	  	let that = this;
 	  	
 	  	if(that.searchHash.replace(/\s*/g,'')!=that.rgisteInfo.affairHash){
-	  		that.$toast('请输入正确的hash值',2000)
+	  		that.$toast('Please enter the correct hash value',2000)
 	  	}else{
 	  		that.searchStep = 1
 	  	}

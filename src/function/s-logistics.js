@@ -7,7 +7,7 @@ export default{
 		return{
 			menuShow:false,//上方菜单按钮是否显示
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -20,14 +20,14 @@ export default{
 	    showTool:false,//左侧工具箱是否显示
 	    
 	    navList:[ 
-		    {title:'寄件人',icon:require('../assets/teachImg/logi1.png')},
-		    {title:'代收点',icon:require('../assets/teachImg/logi2.png')},
-		    {title:'物流',icon:require('../assets/teachImg/logi3.png')},
-		    {title:'收件人',icon:require('../assets/teachImg/logi4.png')}
+		    {title:'Sender',icon:require('../assets/teachImg/logi1.png')},
+		    {title:'Collection point',icon:require('../assets/teachImg/logi2.png')},
+		    {title:'Logistics',icon:require('../assets/teachImg/logi3.png')},
+		    {title:'Addressee',icon:require('../assets/teachImg/logi4.png')}
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成
-	    resultMess:'恭喜您信息登记成功！以下是您的上链哈希',//点击存证上链之后的提示信息
+	    resultMess:'Congratulations on your successful registration! Here is your uplink hash',//点击存证上链之后的提示信息
 	    
 	    //登记人
 	    rgisteInfo:{
@@ -63,7 +63,7 @@ export default{
 	    searchText:'',//查询hash
       
       searchStep:0,//查询的步骤
-      menuText:'场景篇-物流过程追溯',
+      menuText:'Scenes - logistics process tracing',
 			singleStep:true,//单个步骤提示
 			category_id:''
 		}
@@ -77,11 +77,11 @@ export default{
 		},
 		addresList(){
 			let sarray =[];
-			sarray.push('2020-05-18 19:15:32  快递件已到达'+this.collectionPoint.orgin+'某某某快递站等待发货。')
-			sarray.push('2020-05-18 19:15:32  快递件已由XXXX物流公司签收并发往XXXXXXXXXX。')
-			sarray.push('2020-05-18 19:15:32  快递件已由XXXXXXXXXXX签收并发往XXXXXXXXXXX。')
-			sarray.push('2020-05-18 19:15:32  快递件已由XXXXXXXXXXX签收并发往'+this.collectionPoint.orgin+'XXXXXXXXXXX。')
-			sarray.push('2020-05-18 19:15:32  快递已签收，并由收件人取走。')
+			sarray.push('2020-05-18 19:15:32  The express has arrived at the express station of'+this.collectionPoint.orgin+'waiting for delivery.')
+			sarray.push('2020-05-18 19:15:32  The express delivery has been signed by XXX logistics company and sent to XXXXXXXX.')
+			sarray.push('2020-05-18 19:15:32  The express has been signed by XXXXXXXXXXX and sent to XXXXXXXXXXX.')
+			sarray.push('2020-05-18 19:15:32  The express has been signed by XXXXXXXXXXXand sent to'+this.collectionPoint.orgin)
+			sarray.push('2020-05-18 19:15:32  The delivery has been signed and taken by the addressee.')
 			return sarray;
 		}
 	},
@@ -104,7 +104,7 @@ export default{
  },
 mounted(){
 		let that = this;
-	  this.menuText = '场景篇-'+this.$route.params.name
+	  this.menuText = 'Scene-'+this.$route.params.name
 	  that.category_id = this.$route.params.id;
 		that.getvisit();
 	},
@@ -139,8 +139,8 @@ mounted(){
 	  	if(num==1){
 	  		if(that.step!=1){	
 	  			that.operaInfo.infolist=[]
-	  	  	that.operaInfo.mess='寄件人登记信息。'//底部传递的信息
-	  		  that.operaInfo.infolist.push('哈希：'+that.rgisteInfo.affairHash)
+	  	  	that.operaInfo.mess='Sender registration information.'//底部传递的信息
+	  		  that.operaInfo.infolist.push('Hash：'+that.rgisteInfo.affairHash)
 	  		}else{
 	  		that.showNav = false
 	  		
@@ -148,46 +148,46 @@ mounted(){
 	  	}else if(num==2){		
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先寄件人信息存证上链',2000)
+	  			  that.$toast('Please store the sender information on the chain first',2000)
 	  			  break;
 	  			case 2:
 	  			  that.showNav = false	  			
 	  			  break;
 	  			default:
 	  			  that.operaInfo.infolist=[]
-	  			  that.operaInfo.mess='代收点登记信息。'//底部传递的信息
-	  			  that.operaInfo.infolist.push('哈希：'+that.collectionPoint.affairHash)
-	  			  that.operaInfo.infolist.push('单  号：'+that.collectionPoint.oddNumber)
+	  			  that.operaInfo.mess='Collection point registration information.'//底部传递的信息
+	  			  that.operaInfo.infolist.push('Hash：'+that.collectionPoint.affairHash)
+	  			  that.operaInfo.infolist.push('Odd Numbers：'+that.collectionPoint.oddNumber)
 	  			  break
 	  		}
 	  	}else if(num==3){
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先寄件人信息存证上链',2000)
+	  			  that.$toast('Please store the sender information on the chain first',2000)
 	  			  break;
 	  			case 2:
-	  			  that.$toast('请先点击代收点存证上链',2000)
+	  			  that.$toast('Please click the collection point to deposit the certificate on the chain first',2000)
 	  			  break;
 	  			case 3:
 	  			  that.showNav=false;
 	  			  break;
 	  			default:
 	  			  that.operaInfo.infolist=[]
-	  			  that.operaInfo.mess='物流存证上链。'//底部传递的信息
-	  			  that.operaInfo.infolist.push('哈希：'+that.logistics.affairHash)
+	  			  that.operaInfo.mess='Logistics certificate on the chain.'//底部传递的信息
+	  			  that.operaInfo.infolist.push('Hash：'+that.logistics.affairHash)
 	  			   break;
 	  		}
 	  	}else{
 	  		that.searchText = '';
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先寄件人信息存证上链',2000)
+	  			  that.$toast('Please store the sender information on the chain first',2000)
 	  			  break;
 	  			case 2:
-	  			  that.$toast('请先点击代收点存证上链',2000)
+	  			  that.$toast('Please click the collection point to deposit the certificate on the chain first',2000)
 	  			  break;
 	  			case 3:
-	  			  that.$toast('请先点击物流存证上链',2000)
+	  			  that.$toast('Please click on the logistics deposit certificate chain first',2000)
 	  			  
 	  			  break;
 	  			default:
@@ -207,41 +207,41 @@ mounted(){
 	  	let that = this;
 	  	let obj = that.rgisteInfo
 	  	if(obj.type==''){
-	  		that.$toast('请输入物品类型',2000)
+	  		that.$toast('Please enter the item type',2000)
 	  		return;
 	  	}
 	  	
 	  	if(obj.name==''){
-	  		that.$toast('请输入登记姓名',2000)
+	  		that.$toast('Please enter your registered name',2000)
 	  		return;
 	  	}
 	    if(obj.workTitle == ''){
-	      that.$toast('请输入 著作标题',2000)
+	      that.$toast('Please enter the title of the work',2000)
 	  		return;
 	    }
 	    if(obj.id == ''){
-	    	that.$toast('请输入身份证号',2000)
+	    	that.$toast('Please enter your ID number.',2000)
 	  		return;
 	    }
 	 
 	    if(obj.id.length != 18){
-	    	that.$toast('请输入正确的身份证号',2000)
+	    	that.$toast('Please input the correct ID number.',2000)
 	  		return;
 	    }
 	    if(!that.checkIDCard(obj.id)){
-	    	that.$toast('请输入正确的身份证号',2000)
+	    	that.$toast('Please input the correct ID number.',2000)
 	  		return;
 	    }
 	    if(obj.phoneNumber== ''){
-	    	that.$toast('请输入手机号',2000)
+	    	that.$toast('Please input mobile phone number',2000)
 	    	return;
 	    }
 	    if(!/^1[3456789]\d{9}$/.test(obj.phoneNumber)){
-	    	that.$toast('请输入正确的手机号',2000)
+	    	that.$toast('Please input the correct mobile phone number',2000)
 	    	return;
 	    }
 	    if(obj.intro == ''){
-	    	that.$toast('请输入创意说明',2000)
+	    	that.$toast('Please input the description of your idea',2000)
 	  		return;
 	    }
 	   
@@ -256,19 +256,19 @@ mounted(){
 	  	let that = this;
 	  	let obj = that.collectionPoint
 	  	if(obj.oddNumber == ''){
-	  		that.$toast('请输入订单号',2000)
+	  		that.$toast('Please enter the order number',2000)
 	  		return;
 	  	}
 	  	if(!/^[A-Za-z0-9]+$/.test(obj.oddNumber)){
-	  		that.$toast('请输入正确的物流单号',2000)
+	  		that.$toast('Please input the correct logistics order number',2000)
 	  		return;
 	  	}
 	  	if(obj.orgin == ''){
-	  		that.$toast('请输入始发地',2000)
+	  		that.$toast('Please enter the origin',2000)
 	  		return;
 	  	}
 	  	if(obj.destination == ''){
-	  		that.$toast('请输入目的地',2000)
+	  		that.$toast('Please enter the destination',2000)
 	  		return;
 	  	}
 	  	that.showNav = false;
@@ -319,7 +319,7 @@ mounted(){
 	  	let that = this;
 	  	if(that.searchText.replace(/\s*/g,'')!=that.rgisteInfo.affairHash){
 	  		
-	  		that.$toast('请输入正确的哈希值',2000)
+	  		that.$toast('Please enter the correct hash value',2000)
 	  	}else{
 	  		that.searchStep = 1
 	  	}

@@ -7,7 +7,7 @@ export default{
 		return{
 			menuShow:false,//上方菜单按钮是否显示
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -25,14 +25,14 @@ export default{
 	    showTool:false,//左侧工具箱是否显示
 	    
 	    navList:[ 
-		    {title:'个人用户',icon:require('../assets/teachImg/bd_1.png')},
-		    {title:'航空公司',icon:require('../assets/teachImg/bd_2.png')},
-		    {title:'保险公司',icon:require('../assets/teachImg/bd_3.png')}
+		    {title:'Individual users',icon:require('../assets/teachImg/bd_1.png')},
+		    {title:'Airline company',icon:require('../assets/teachImg/bd_2.png')},
+		    {title:'Insurance company',icon:require('../assets/teachImg/bd_3.png')}
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成
-	    resultMess:'恭喜您！用户信息上链成功！下面是您的上链哈希，您可通过点击保险公司查询：',//点击存证上链之后的提示信息
-	    resultMess1:'恭喜您！航空公司佐证上链成功！下面是您的上链哈希：',
+	    resultMess:'Congratulations! User information on the chain success! Here is your online hash. You can query by clicking insurance company:',//点击存证上链之后的提示信息
+	    resultMess1:'Congratulations! Airlines prove the success of the chain! Here is your uplink hash:',
 	    //登记人
 	    rgisteInfo:{
 	    	name:'',//姓名
@@ -54,7 +54,7 @@ export default{
 	    searchHash:'',//查询hash
       
       searchStep:0,//查询的步骤
-      menuText:'场景篇-快速保单处理',
+      menuText:'Scene - quick policy processing',
        singleStep:true,//单个步骤提示
 			category_id:''
 		}
@@ -87,7 +87,7 @@ export default{
  },
  mounted(){
  	let that = this;
-  this.menuText = '场景篇-'+this.$route.params.name
+  this.menuText = 'Scene-'+this.$route.params.name
   that.category_id = this.$route.params.id;
 	that.getvisit();
  },
@@ -123,8 +123,8 @@ export default{
 	  	if(num==1){
 	  		if(that.step!=1){	
 	  			that.operaInfo.infolist=[]
-	  	  	that.operaInfo.mess='登记信息。'//底部传递的信息
-	  		  that.operaInfo.infolist.push('哈希：'+that.rgisteInfo.affairHash)
+	  	  	that.operaInfo.mess='Registration information.'//底部传递的信息
+	  		  that.operaInfo.infolist.push('Hash：'+that.rgisteInfo.affairHash)
 	  		}else{
 	  		that.showNav = false
 	  		
@@ -132,7 +132,7 @@ export default{
 	  	}else if(num==2){
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先登记信息',2000)
+	  			  that.$toast('Please register the information first',2000)
 	  			  break;
 	  			case 2:
 	  			  that.showNav = false
@@ -140,18 +140,18 @@ export default{
 	  			  break;
 	  			case 3:
 	  			  that.operaInfo.infolist=[]
-	  			  that.operaInfo.mess='航空公司存证上链。'//底部传递的信息
-	  			  that.operaInfo.infolist.push('哈希：'+that.press.affairHash)
+	  			  that.operaInfo.mess='Airlines deposit certificates on the chain.'//底部传递的信息
+	  			  that.operaInfo.infolist.push('Hash：'+that.press.affairHash)
 	  			  break
 	  		}
 	  	}else{
 	  		that.searchText = '';
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先登记信息',2000)
+	  			  that.$toast('Please register the information first',2000)
 	  			  break;
 	  			case 2:
-	  			  that.$toast('请点击航空公司存证上链',2000)
+	  			  that.$toast('Please click the link of airline deposit certificate',2000)
 	  			  break;
 	  			case 3:
 	  			  that.showNav=false;
@@ -170,19 +170,19 @@ export default{
 	  	let that = this;
 	  	let obj = that.rgisteInfo
 	  	if(obj.name==''){
-	  		that.$toast('请输入用户姓名',2000)
+	  		that.$toast('Please enter user name',2000)
 	  		return;
 	  	}
 	    if(obj.flightInfo == ''){
-	      that.$toast('请输入 航班信息',2000)
+	      that.$toast('Please input flight information',2000)
 	  		return;
 	    }
 	    if(obj.startTime == ''){
-	    	that.$toast('请选择起保时间',2000)
+	    	that.$toast('Please select the starting time',2000)
 	  		return;
 	    }
 	    if(obj.policyNumbe == ''){
-	    	that.$toast('请输入保单号码',2000)
+	    	that.$toast('Please enter the policy number',2000)
 	  		return;
 	    }
 	    
@@ -242,7 +242,7 @@ export default{
 	  	let that = this;
 	  	
 	  	if(that.searchHash.replace(/\s*/g,'')!=that.rgisteInfo.affairHash){
-	  		that.$toast('请输入正确的hash值',2000)
+	  		that.$toast('Please enter the correct hash value',2000)
 	  	}else{
 	  		that.searchStep = 1
 	  	}

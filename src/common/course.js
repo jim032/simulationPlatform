@@ -201,16 +201,16 @@ export default {
    sureBindClass(){
    	 let that = this;
    	 if(that.department==''){
-   	 	return this.$toast('请选择院系',2000)
+   	 	return this.$toast('Please choose a department',2000)
    	 }
    	 if(that.major==''){
-   	 	return this.$toast('请选择专业',2000)
+   	 	return this.$toast('Please choose a major',2000)
    	 }
    	 if(that.grade_name==''){
-   	 	return this.$toast('请选择年级',2000)
+   	 	return this.$toast('Please choose a grade',2000)
    	 }
    	 if(that.bindClassID==''){
-   	 	return this.$toast('请选择班级',2000)
+   	 	return this.$toast('Please choose a class',2000)
    	 }
    	 that.groupVisible=false;
    	 let obj1 = {};
@@ -276,7 +276,7 @@ export default {
     sureUpdateCourseName() {
       let that = this
       if (this.updateClassName == '') {
-        that.errorMess = '请输入课程名称'
+        that.errorMess = 'Please enter the course name'
         return;
       } else {
         let obj = {};
@@ -299,7 +299,7 @@ export default {
     sureNewClass() {
       let that = this
       if (this.newClassName == '') {
-        that.errorMess = '请输入课程名称'
+        that.errorMess = 'Please enter the course name'
         return;
       }else {
       	this.dialogVisible = false;
@@ -310,7 +310,7 @@ export default {
         obj.categories = that.categories;
         obj.type = that.newClassType;
         if (that.categories == "") {
-          that.$toast("请勾选知识点", 3000)
+          that.$toast("Please check the knowledge point", 3000)
           return;
         }
         addCourse(JSON.stringify(obj)).then(res => {
@@ -404,9 +404,9 @@ export default {
 
     //删除课程
     deleteCourse(course_id) {
-      this.$confirm('是否确认删除课程?', '确认', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure you want to delete the course??', 'confirm', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
         type: 'warning'
       }).then(() => {
         let that = this;

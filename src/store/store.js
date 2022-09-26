@@ -7,48 +7,48 @@ var store = new Vuex.Store({
   	socketUrl:'ws://192.168.1.167:8081/webSocket/',
 
   	 //节点未开始提示
-  	node_noStart:'您还未拖动节点',
+  	node_noStart:'You have not yet dragged the node',
   	//节点未启动状态的提示
-  	node_noFinsh:'还未启动完成，请稍后再试！',
+  	node_noFinsh:'Not finished yet, please try again later!',
   	//节点启动7s的每秒状态
-    node_sta1:'节点正在启动中',
-    node_sta2:'校验创世区块完成',
-    node_sta3:'生成创世区块完成',
-    node_sta4:'P2P网络初始化完成',
-    node_sta5:'内置合约初始化完成',
-    node_sta6:'RPC接口初始化完成',
-    node_sta7:'节点启动成功',
+    node_sta1:'The node is starting',
+    node_sta2:'Verification of Genesis block completed',
+    node_sta3:'Generation of Chuangshi block completed',
+    node_sta4:'P2P network initialization completed',
+    node_sta5:'Initialization of built-in contract completed',
+    node_sta6:'RPC interface initialization complete',
+    node_sta7:'Node started successfully',
     //节点7s启动完成显示状态 
-    node_sta8:'节点状态正常',   
+    node_sta8:'The node status is normal',   
     //节点刚开始启动的提示步骤
-    node_start:'节点启动中，等四个节点都启动完成，请按右侧步骤提示进行下一步操作。',
+    node_start:'Node starting, wait for four nodes to start, please follow the steps on the right to proceed to the next step.',
     //四个节点启动完成的提示
-    node_finsh:'当前节点已全部启动完成，请按右侧进行下一步操作。',
+    node_finsh:'The current node has all been started, please press the right to proceed to the next step.',
     
     node_stepTips: [ //节点步骤提示
 				 {
 				 	  step: 1,
-						infolist: ['1、点击左侧工具箱拖拽按钮，拖拽节点至中央操作台。', 
-						'2、点击当前节点/区块，可从底部状态栏查看该节点/区块的具体参数信息。', 
-						'3、继续拖拽节点，直至四个节点全部安放完成。']
+						infolist: ['1. Click the left toolbox drag button to drag the node to the central console.', 
+						'2. Click the current node / block to view the specific parameter information of the node / block from the bottom status bar.', 
+						'3. Continue to drag nodes until all four nodes are placed.']
 					},
 					{
 						step: 2,
-						infolist: ['1、点击左侧工具箱的出块按钮，进行节点的出块操作。',
-						'2、等待各节点进行难度计算，胜出的一方节点将获得出块资格。', 
-						'3、出块后，点击新区块（区块1）可从底部状态栏查看相关参数信息。']
+						infolist: ['1. Click the block button in the left toolbox to block the node.',
+						'2. Waiting for each node to calculate the difficulty, the winning node will get the block qualification.', 
+						'3. After block output, click new block (block 1) to view relevant parameter information from the bottom status bar.']
 					},
 					{
 						step: 3,
-						infolist: ['1、点击左侧工具箱的广播按钮，进行节点的广播操作。',
-						'2、等待获胜节点将新区块打包，并广播至其他各个节点。',
-						'3、点击被广播的任一区块，可查看具体参数，与获胜节点区块1进行对比，查看信息是否一致，有无在广播过程中被篡改。'
+						infolist: ['1. Click the broadcast button in the left toolbox to broadcast the node.',
+						'2. Waiting for the winning node to pack the new block and broadcast it to other nodes.',
+						'3. Click any block being broadcasted to view the specific parameters, and compare with the winning node block 1 to see whether the information is consistent and whether it has been tampered in the broadcasting process.'
 						]
 					},
 					{
 						step: 4,
-						infolist: ['1、节点模拟运行已结束',
-						'2、用户可点击右上角的重置进行重新操作，或返回主界面选择其他篇章。'
+						infolist: ['1. The node simulation run has ended',
+						'2. The user can click Reset in the upper right corner to operate again, or return to the main interface to select other chapters.'
 						]
 					}
 					
@@ -57,73 +57,73 @@ var store = new Vuex.Store({
 		//多人发币步骤提示
 		sm_multiple_stepTips:[
 		   {step:1,infolist:[
-		   	'1、当前在线人数没有达到4人，可点击左侧工具内的添加机器人，添加在线人数。',
-		    '2、点击用户，可查看当前用户的具体参数信息。']
+		   	'1. Currently, the number of people online does not reach 4. You can click Add robot in the tool on the left to add the number of people online.',
+		    '2. Click user to view the specific parameter information of current user.']
 		   },
-		   {step:2,infolist:['1.提示用户点击左侧工具 内的设置按钮进行币种的 设置操作。','2.提示用户待设置币种完 成后，点击设置用户，到 底部状态栏进行查看该用 户新币种的一些信息。']},
+		   {step:2,infolist:['1. Prompt the user to click the setting button in the tool on the left to set the currency.','2. After prompting the user to set the currency, click set user to view some information of the users new currency in the bottom status bar.']},
 		  {step:3,
-		  	infolist:['1.提示用户拖动左侧工具内的部署按钮进行合约的部署操作。',
-		  	'2.等待合约的部署。',
-		  	'3.合约部署完毕之后查看下方状态栏关于合约的具体参数']
+		  	infolist:['1.Prompt the user to drag the deployment button in the tool on the left to deploy the contract.',
+		  	'2. Wait for the deployment of the contract.',
+		  	'3. After the contract is deployed, check the specific parameters of the contract in the status bar below']
 		  },
 		  {step:4,
-		  	infolist:['1.请点击初期拥有者用户下方的转账按钮进行转账操作。',
-		  	'2.点击转账目标用户，查看下方状态栏转账过后的参数信息。']
+		  	infolist:['1. Please click the transfer button below the initial owner user to transfer.',
+		  	'2. Click the transfer target user to view the parameter information after transfer in the status bar below.']
 		  }
 		],
 		
 		//发币步骤提示
 		sm_stepTips:
 		[//步骤提示
-		  {step:1,infolist:['1、点击左侧工具箱拖拽按钮，拖拽用户至中央操作台。','2、点击用户，可查看当前用户的具体参数信息。','3、继续拖拽用户，直至四名用户全部安放完成。']},
-		  {step:2,infolist:['1、点击左侧工具箱币种设置按钮进行币种的初始设置','2、币种设置完成后，可点击初始拥有者头像，在底部状态栏查看该用户的最新持币信息。']},
+		  {step:1,infolist:['1. Click the left toolbox drag button to drag the user to the central console.','2. Click the user to view the specific parameter information of the current user.','3. Continue to drag users until all four users are installed.']},
+		  {step:2,infolist:['1. Click the currency setting button in the left toolbox to set the currency initially.','2. After setting the currency, you can click the initial owners portrait to view the latest currency holding information of the user in the status bar at the bottom.']},
 		  {step:3,
-		  	infolist:['1.点击左侧工具箱部署按钮进行转账智能合约的部署操作。',
-		  	'2、等待智能合约部署完毕后，可从底部状态栏查看合约的具体参数信息。']
+		  	infolist:['1. Click the deployment button in the toolbox on the left to deploy the smart transfer contract.',
+		  	'2. After the smart contract is deployed, you can view the specific parameter information of the contract from the bottom status bar.']
 		  	
 		  },
 		  {step:4,
-		  	infolist:['1、请点击“初始拥有者”下方的转账按钮向其他任一用户发起转账操作',
-		  	'2、点击转账对象，可从状态栏查看该用户接收转账后的持币信息。','3、可进行用户间的连续转账。']
+		  	infolist:['1. Please click the transfer button under "initial owner" to initiate transfer operation to any other user',
+		  	'2. Click the transfer object to view the users holding information after receiving the transfer from the status bar.','3、Continuous transfer between users can be carried out.']
 		  }
 		],
 		
 		hash_stepTips:
 		[//步骤提示
 		  {step:0,infolist:
-	  	  ['1、点击左侧工具箱内“生成哈希”按钮，通过哈希计算为“文件A”生成哈希值。',
-	  	    '2.点击“文件A”可查看生成完毕的哈希值。',
+	  	  ['1. Click the "generate hash" button in the left toolbox to generate hash value for "file a" through hash calculation.',
+	  	    '2. Click "file A" to view the generated hash value.',
 	  	  ]
 		  },
 		  {step:1,infolist:
-	  	  ['1、点击左侧工具箱内“生成哈希”按钮，通过哈希计算为“文件A”生成哈希值。',
-	  	    '2.点击“文件A”可查看生成完毕的哈希值。',
+	  	  ['1. Click the "generate hash" button in the left toolbox to generate hash value for "file a" through hash calculation.',
+	  	    '2. Click "file A" to view the generated hash value.',
 	  	  ]
 		  },
 		  {step:2,infolist:
-	  	  ['1.点击左侧工具箱内“发送”按钮，在新弹出的框内选择“攻击”或“不攻击”。',
-	  	    '2.点击“文件A”可查看生成完毕的哈希值。',
+	  	  ['1.Click the "send" button in the left toolbox and select "attack" or "no attack" in the new pop-up box.',
+	  	    '2. Click "file A" to view the generated hash value.',
 	  	  ]
 		  },
 		  {step:31,infolist:
-	  	  ['1.在“用户B”接收到文件之后，点击“校验”按钮，对文件进行校验操作。',
-	  	    '2.分别点击“文件A”与“文件B”对比查看哈希值。',
+	  	  ['1.After "user B" receives the file, click the "check" button to check the file.',
+	  	    '2.Click "file A" and "file B" respectively to check the hash value.',
 	  	  ]
 		  },
 		  {step:32,infolist:
-	  	  ['1.哈希算法模拟已结束',
-	  	   '2、用户可点击右上角的重置进行重新操作，或返回主界面选择其他篇章。'
+	  	  ['1.Hash algorithm simulation ended',
+	  	   '2.The user can click Reset in the upper right corner to operate again, or return to the main interface to select another chapter.'
 	  	  ]
 		  },
 		  {step:33,infolist:
-	  	  ['1.在“用户B”接受到文件之后，点击“校验”按钮，对文件进行校验操作。',
-	  	    '2.分别点击“文件A”与“文件A”对比查看哈希值。',
+	  	  ['1.After "user B" receives the file, click "verify" button to verify the file.',
+	  	    '2.Click "file A" and "file B" respectively to check the hash value.',
 	  	   
 	  	  ]
 		  },
 		  {step:34,infolist:
-	  	  ['1.哈希算法模拟已结束',
-	  	   '2、用户可点击右上角的重置进行重新操作，或返回主界面选择其他篇章。'
+	  	  ['1.Hash algorithm simulation ended',
+	  	   '2.The user can click Reset in the upper right corner to operate again, or return to the main interface to select another chapter.'
 	  	  ]
 		  },
 		 
@@ -131,33 +131,33 @@ var store = new Vuex.Store({
 		
 		//椭圆线
 		ecc__stepTips:[
-		  {step:1,infolist:['1、点击左侧工具箱内“生成哈希”按钮，通过改变a与b的数值尝试生成一段椭圆线。并通过椭圆线点的相加运算得出公钥与私钥。',
-		   '2.可分别点击用户A,B,C 查看公钥以及私钥。']
+		  {step:1,infolist:['1. Click the "generate hash" button in the left toolbox, and try to generate an ellipse by changing the values of a and B. The public key and the private key are obtained by the addition of ellipse points.',
+		   '2. Click users a, B and C to view the public key and private key.']
 		  },
-		  {step:2,infolist:['1.点击左侧工具箱内“发送”按钮，将用户A通过用户B公钥加密过后的数据传输至用户B。',
-		   '2.等待数据传输完毕，并点击查看用户C的状态。']
+		  {step:2,infolist:['1.Click the "send" button in the left toolbox to transmit the data encrypted by user a through user Bs public key to user B.',
+		   '2.Wait for the data transmission to complete, and click to view the status of user C.']
 		  },
-		  {step:3,infolist:['1.点击左侧工具箱内“解析”按钮，将用户B接受到的数据进行解析。',
-		   '2.等待解析过程完毕，点击查看用户B的状态。']
+		  {step:3,infolist:['1.Click the "parse" button in the left toolbox to parse the data received by user B.',
+		   '2.Wait for the data transmission to complete, and click to view the status of user B.']
 		  },
-		  {step:4,infolist:['1.点击左侧工具箱内“解析”按钮，将用户B接受到的数据进行解析。',
-		   '2.等待解析过程完毕，点击查看用户B的状态。']
+		  {step:4,infolist:['1.Click the "parse" button in the left toolbox to parse the data received by user B.',
+		   '2.Wait for the data transmission to complete, and click to view the status of user B.']
 		  }
 		 ],
 		
 		//对称加密
-		encrAlgorithm_stepTips:[{step:1,infolist:['1、点击左侧工具箱的加密按钮，使用对称密钥算法对一串数据进行加密。',
-		'2、点击左侧工具箱的解密按钮，用相同的密钥对加密数据进行解密']}],
+		encrAlgorithm_stepTips:[{step:1,infolist:['1. Click the encryption button in the left toolbox to encrypt a string of data using symmetric key algorithm.',
+		'2. Click the decryption button in the left toolbox to decrypt the encrypted data with the same key']}],
 		//keystore
-		keyStore_stepTips:[{step:1,infolist:['1、请按页面内步骤进行操作。']}], 
+		keyStore_stepTips:[{step:1,infolist:['1. Please follow the steps on the page.']}], 
 		
-		data_stepTips:[{step:1,infolist:['1、点击区块图标，查看区块的数据结构']}],
+		data_stepTips:[{step:1,infolist:['1. Click the block icon to view the data structure of the block']}],
 		
 		s_medicalCare:[
 		  {step:1,infolist:[
-		  	'1、点击A、B、C中的任一医院，将病人信息上链，生成哈希。',
-		  	'2、病人信息上传成功则默认病人对此医院授权开放,随后进入病人页面，我们可以更改授权，或对其他医院开放授权。',
-		  	'3、点击任意医院进行病人信息查询。如无法操作则需至“病人”开放授权。'
+		  	'1. Click any hospital in a, B, C to link the patient information and generate hash.',
+		  	'2. If the patient information is uploaded successfully, the patient will be authorized to open to this hospital by default. After entering the patient page, we can change the authorization or open the authorization to other hospitals.',
+		  	'3. Click any hospital for patient information query. If it cannot be operated, it needs to be authorized by the "patient".'
 		  ]
 		  },
 		  
@@ -165,127 +165,127 @@ var store = new Vuex.Store({
 		
 		s_copyRight:[
 		  {step:1,infolist:[
-		  	'1、点开登记人页面填写版权信息，并存证上链生成哈希。',
-		  	'2、点击页面内“出版社”板块进行信息内容二次确认并上链存证。',
-		  	'3、在主界面，分别点击登记人和出版社可查询对应哈希。',
-		  	'4、点击进入查证处，输入登记人哈希可查询版权详情'
+		  	'1. Click the registrant page to fill in the copyright information, and generate hash on the certificate chain.',
+		  	'2. Click the "publishing house" section in the page to confirm the information content again and store the certificate on the chain.',
+		  	'3. In the main interface, click registrant and publisher respectively to query the corresponding hash.',
+		  	'4. Click to enter the verification office and enter the registered person hash to query the copyright details'
 		    ]
 		  }
 		],
 		
 		s_donation:[
 		  {step:1,infolist:[
-		  	'1、点击页面内“捐赠人”板块，进行捐赠人信息内容登记上链。',
-		  	'2、点击页面内“红十字会”板块进行信息内容二次确认并上链存证。',
-		  	'3、分别点击“捐赠人”与“红十字会“板块可查看上链存证之后的哈希值。',
-		  	'4、点击页面内“受益人”并输入登记哈希值进行查询。'
+		  	'1. Click on the "donor" section of the page to register the donor information.',
+		  	'2. Click the "Red Cross" section in the page to confirm the information content and store the certificate on the chain.',
+		  	'3. Click the "donor" and "Red Cross" plates respectively to view the hash value after the card is stored on the chain.',
+		  	'4. Click "beneficiary" in the page and enter the registered hash value to query.'
 		    ]
 		  }
 		],
 		s_logistics:[
 		  {step:1,infolist:[
-		  	'1、点击寄件人，输入寄件信息，并存证上链生成哈希。',
-		  	'2、点击代收点输入订单信息，并存证上链生成哈希。',
-		  	'3、点击物流，可查询物流信息并存证上链，获得哈希。',
-		  	'4、在主界面，分别点击寄件人、代收点、物流可查询对应哈希。',
-		  	'5、点击收件人，输入寄件可查询物流详情。'
+		  	'1. Click the sender, input the sending information, and generate the hash on the card chain.',
+		  	'2. Click the collection point to input the order information and generate the hash on the certificate chain.',
+		  	'3. Click logistics to query the logistics information and get the hash.',
+		  	'4. In the main interface, click sender, collection point and logistics to query the corresponding hash.',
+		  	'5. Click the recipient and enter the mail to query the logistics details.'
 		    ]
 		  }
 		],
 		s_finance:[
 		  {step:1,infolist:[
-		  	'1、点击供应商，提供融资和供货合同信息，并存证上链生成哈希。',
-		  	'2、点击核心企业。核心企业对供应商提供的信息予以佐证并上链。',
-		  	'3、在主界面，分别点击供应商、核心企业可查询对应哈希。',
-		  	'4、点击银行，输入供应商哈希可查询融资详情。',
+		  	'1. Click on the supplier to provide financing and supply contract information, and generate hash on the certificate chain.',
+		  	'2. Click on core enterprises. The information provided by the supplier is supported by the core enterprise and put on the chain.',
+		  	'3. In the main interface, click supplier and core enterprise respectively to query the corresponding hash.',
+		  	'4. Click bank and enter supplier hash to query financing details.',
 		    ]
 		  }
 		],
 		s_insurance:[
 		  {step:1,infolist:[
-		  	'1、点击个人用户，填写航空延误险的保单信息来申请理赔，并存证上链生成哈希。',
-		  	'2、点击航空公司，对航班延误进行佐证上链。',
-		  	'3、在主界面，分别点击个人用户和航空公司可查询对应哈希。',
-		  	'4、点击保险公司页面，输入个人用户哈希，查询保单和航班详情，并确认理赔。',
+		  	'1. Click individual user to fill in the policy information of aviation delay insurance to apply for claim settlement, and generate hash on the certificate chain.',
+		  	'2. Click on the airline to prove the flight delay.',
+		  	'3. In the main interface, click individual user and airline respectively to query the corresponding hash.',
+		  	'4. Click the insurance company page, input the individual user hash, query the details of the policy and flight, and confirm the claim.',
 		    ]
 		  }
 		],
 		//异常篇步骤提示
 		a_51attack:[
 		  {step:1,infolist:[
-		  	'1、分别点击A、B、C三位矿工的头像，从底部状态栏查看他们的初始余额。',
-		  	'2、点击左侧工具箱的转账按钮，连续发起三笔转账交易。',
-		  	'3、再次点击矿工A、B、C，从底部状态栏查看余额变化。',		  	
+		  	'1. Click the portraits of miners a, B and C to view their initial balance from the status bar at the bottom.',
+		  	'2. Click the transfer button in the left toolbox to launch three consecutive transfer transactions.',
+		  	'3. Click a, B and C again to view the balance change from the bottom status bar.',		  	
 		    ]
 		  },
 		 
 		  {step:2,infolist:[
-		  	'1、点击左侧工具栏的“提升算力”按钮，选择一位矿工进行算力提升。',
-		  	'2、从底部状态栏的交易事务中选择一笔进行删除操作。',
+		  	'1. Click the "increase calculation force" button on the left toolbar to select a miner to increase calculation force.',
+		  	'2. Select a transaction in the bottom status bar to delete.',
 		    ]
 		  },
 		  {step:3,infolist:[
-		  	'1、点击左侧工具箱的打包按钮，进行交易事务打包。',
-		  	'2、打包完成后，再次点击矿工A、B、C，从底部状态栏查看余额，并观察打包前后的余额变化。',
+		  	'1. Click the package button in the toolbox on the left to package the transaction.',
+		  	'2. After packing, click a, B, C again to view the balance from the bottom status bar, and observe the balance changes before and after packing.',
 		    ]
 		  },
 		  
 		  {step:12,infolist:[
-		  	'1、点击左侧工具箱的打包按钮，进行交易事务打包。',
-		  	'2、打包完成后，再次点击矿工A、B、C，从底部状态栏查看余额，并观察打包前后的余额变化。',
+		  	'1. Please click the withdrawal button in the page to operate.',
+		  	'2. Please note the change of balance in the page',
 		    ]
 		  }
 		],
 		//a-智能合约部署与漏洞
-		a_smartLoophole:[{step:1,infolist:['1、请点击页面内的提现按钮进行操作。','2、请注意页面内余额变化']}],
+		a_smartLoophole:[{step:1,infolist:['1. Please click the withdrawal button in the page to operate.','2. Please note the change of balance in the page']}],
 		//异常篇—-重放攻击
 		a_replayAttack:[
-		  {step:1,infolist:['1、点击左侧工具箱的转账按钮，在弹框中设置转账信息。']},
-		  {step:2,infolist:['1、点击左侧工具箱的广播按钮，将转账事务进行广播操作（但并未被打包进链中）',
-        '2、等待交易事务被广播，待广播结束生成新的区块']
+		  {step:1,infolist:['1. Click the transfer button in the left toolbox to set the transfer information in the pop-up box.']},
+		  {step:2,infolist:['1. Click the broadcast button in the left toolbox to broadcast the transfer transaction (but it is not packaged into the chain)）',
+        '2. Wait for the transaction to be broadcast, and generate a new block when the broadcast ends']
 		  },
-		  {step:3,infolist:['1、点击左侧工具箱内的截获按钮操作“黑客”截获新生成的转账事务。',
-        '2、等待截获成功。']
+		  {step:3,infolist:['1. Click the capture button in the toolbox on the left to operate "hacker" to intercept the newly generated transfer transaction.',
+        '2. Wait for the successful interception.']
 		  },
-		  {step:4,infolist:['1、点击左侧工具箱内的广播按钮，将黑客截获的事务在分叉后的链上进行广播。',
-        '2、等待广播成功。']
+		  {step:4,infolist:['1. Click the broadcast button in the left toolbox to broadcast the transaction intercepted by the hacker on the forked chain.',
+        '2. Wait for the broadcast to succeed.']
 		  },
-		  {step:5,infolist:['1、点击左侧工具箱内的打包按钮，将新生成的两个区块在各自链上进行打包。',
-        '2、等待打包结束。']
+		  {step:5,infolist:['1. Click the package button in the toolbox on the left to package the two newly generated blocks on their respective chains.',
+        '2. Wait for the packaging to finish.']
 		  },
-		  {step:12,infolist:['1、点击左侧工具箱内的打包按钮，将新生成的两个区块在各自链上进行打包。',
-        '2、等待打包结束。']
+		  {step:12,infolist:['1. Click the package button in the toolbox on the left to package the two newly generated blocks on their respective chains.',
+        '2. Wait for the packaging to finish.']
 		  }
 		],
 		//异常-长程攻击
 		a_longRangAttack:[{step:1,infolist:[
-		  	'1、等待A链生成区块1。',
-        '2、点击左侧工具箱的攻击按钮对A链发起攻击，攻击者将创建一条B链分支。',
-        '3、等待B链出块。',
-        '4、点击左侧工具箱的覆盖按钮。'
+		  	'1. Wait for chain A to generate block 1.',
+        '2. Click the attack button in the left toolbox to attack a chain, and the attacker will create a B chain branch.',
+        '3. Wait for chain B to block.',
+        '4. Click the overlay button in the toolbox on the left.'
 		  ]}],
 		//异常-交易延展性
 		a_malleabilityAttack:[
-		  {step:1,infolist:['1、分别点击A、B、C三位用户的头像，从底部状态栏查看他们的初始余额。','2、点击左侧工具箱的转账按钮，连续发起两笔转账交易。']},
-		  {step:2,infolist:['1、点击左侧工具箱的修改按钮，对未打包进区块的事务按要求进行修改。','2、从底部状态栏查看交易事务状态。']},
-		  {step:3,infolist:['1、点击左侧工具箱的打包按钮，对交易事务进行打包操作。',
-		    '2、从底部状态栏查看交易事务状态。',
-		    '3、再次点击用户A、B、C，从底部状态栏查看余额变化和交易结果。'
+		  {step:1,infolist:['1. Click the avatars of users A, B and C to view their initial balance from the bottom status bar.','2. Click the transfer button in the left toolbox to launch two consecutive transfer transactions.']},
+		  {step:2,infolist:['1. Click the Modify button in the toolbox on the left to modify the transactions that are not packaged into blocks as required.','2. View the transaction status from the bottom status bar.']},
+		  {step:3,infolist:['1. Click the package button in the toolbox on the left to package the transaction.',
+		    '2. View the transaction status from the bottom status bar.',
+		    '3. Click users A, B and C again to view the balance changes and transaction results from the bottom status bar.'
 		    ]
 		 },
-		 {step:4,infolist:['1、点击左侧工具箱的打包按钮，对交易事务进行打包操作。',
-		    '2、从底部状态栏查看交易事务状态。',
-		    '3、再次点击用户A、B、C，从底部状态栏查看余额变化和交易结果。'
+		 {step:4,infolist:['1. Click the package button in the toolbox on the left to package the transaction.',
+		    '2. View the transaction status from the bottom status bar.',
+		    '3. Click users A, B and C again to view the balance changes and transaction results from the bottom status bar.'
 		    ]
 		 },
-		  {step:12,infolist:['1、点击左侧工具箱的打包按钮，对交易事务进行打包操作。',
-		    '2、从底部状态栏查看交易事务状态。',
-		    '3、再次点击用户A、B、C，从底部状态栏查看余额变化和交易结果。'
+		  {step:12,infolist:['1. Click the package button in the toolbox on the left to package the transaction.',
+		    '2. View the transaction status from the bottom status bar.',
+		    '3. Click users A, B and C again to view the balance changes and transaction results from the bottom status bar.'
 		    ]
 		  }
 		],
-		a_softfork:[{step:1,infolist:['1、点击页面的升级按钮开始出块。','2、新规则出的块被原始链兼容承认在一条链上展示']}],
-    a_hardfork:[{step:1,infolist:['1、点击页面的升级按钮开始出块。','2、新规则出的块与旧规则的块不兼容，形成新的链']}]
+		a_softfork:[{step:1,infolist:['1. Click the upgrade button on the page to start the block.','2. The blocks of the new rule are displayed on a chain by the original chain']}],
+    a_hardfork:[{step:1,infolist:['1. Click the upgrade button on the page to start the block.','2. The new rule blocks are not compatible with the old rule blocks, forming a new chain']}]
   },
   mutations: {
   

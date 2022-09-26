@@ -431,7 +431,7 @@
 			        <div class="e-in"><label style="left: -60px;">Withdrawal amount:</label><input placeholder="Please enter the transfer amount"  maxlength="10"  value="1" readonly="true"/></div>
 			      </div>
 			      <div class="btnbox">
-			        <a class="chooseBtn" @click="D1click">确定提现</a>
+			        <a class="chooseBtn" @click="D1click">Determined withdrawal</a>
 			      </div>
 			    </div>
 			    <div class="icon"></div>
@@ -650,7 +650,7 @@
 				   	that.confirmInfo = 'The initial setting of currency has been completed, please follow the prompt bar on the right to proceed to the next step.'
 				   	break;
 				   case 3:
-				   	that.confirmInfo = '一个转账智能合约已部署完毕，你可以和其他用户之间进行相互转账啦！'
+				   	that.confirmInfo = 'A smart transfer contract has been deployed. You can transfer money with other users!'
 				   	break;
 			   }				
 				   return;

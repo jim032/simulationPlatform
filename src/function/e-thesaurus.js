@@ -12,7 +12,7 @@ export default{
 			menuShow:false,//上方菜单按钮是否显示
 	  	funNum:0,//左侧点击判断工具箱
 	    showTool:false,//左侧工具箱是否显示	 
-	    menuText:'启蒙篇-名词库',
+	    menuText:'Enlightenment - noun lexicon',
 	    courseId:1,
 	    
 	    cateList:[

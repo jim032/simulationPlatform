@@ -9,12 +9,12 @@ export default{
 		  showTool:false,//左侧工具箱是否显示
       confirShow:false,//右侧弹窗
 		  funNum:0,//左侧点击判断工具箱
-		  menuText:'软分叉与硬分叉',
+		  menuText:'Soft bifurcation and hard bifurcation',
 		  category_id:'',//课程id
       iconUrl_1:require('../assets/teachImg/block_a.png'),//
 		  step:1,//当前步骤
 		  pageName:52,//
-		  operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+		  operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 		  
       isPrompt:false,
 	    promptText:'No tools available at present!',

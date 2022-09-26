@@ -6,7 +6,7 @@
         <div class="d-user">
           <div class="d-icon"><img :src="iconUrl_1" /></div>
           <div class="el-button" style="color: blue" @click="gotoStep(3)">
-            升级
+            upgrade
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
 
             <div class="divC1" v-if="index != 0">
               <div class="tabcel">
-                <p class="blockname">{{ "区块" + index }}</p>
+                <p class="blockname">{{ "block" + index }}</p>
                 <p class="desrc">
                   {{ index == 3 || index == 5 ? "NEW" : "OLD" }}
                 </p>

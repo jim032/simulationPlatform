@@ -8,7 +8,7 @@
             <div class="d-icon"><img :src="iconUrl_1" /></div>
             <p class="d-name">User A</p>
           </div>
-          <div class="d-file cursorPoint" @click="showHash(1)">文件A</div>
+          <div class="d-file cursorPoint" @click="showHash(1)">file A</div>
         </div>
 
         <div class="userinfo1">
@@ -17,7 +17,7 @@
             <p class="d-name">User B</p>
           </div>
           <div class="d-file cursorPoint" v-if="fileFinsh" @click="showHash(2)">
-            {{ isAttack == 1 ? "文件B" : "文件A" }}
+            {{ isAttack == 1 ? "file B" : "file A" }}
           </div>
         </div>
 

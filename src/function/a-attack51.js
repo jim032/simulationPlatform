@@ -36,11 +36,11 @@ export default{
       transNumber:0,//转账次数
       
       userList:[
-        {name:'矿工A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:850,useBalance:850,isWarning:false,
+        {name:'miner A',userId:'A',icon:require('../assets/teachImg/icon_user2.png'),balance:850,useBalance:850,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user2_warning.png'),isAva:false},
-        {name:'矿工B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:850,useBalance:850,isWarning:false,
+        {name:'miner B',userId:'B',icon:require('../assets/teachImg/icon_user3.png'),balance:850,useBalance:850,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user3_warning.png'),isAva:false},
-        {name:'矿工C',userId:'C',icon:require('../assets/teachImg/icon_user4.png'),balance:850,useBalance:850,isWarning:false,
+        {name:'miner C',userId:'C',icon:require('../assets/teachImg/icon_user4.png'),balance:850,useBalance:850,isWarning:false,
         warnIcon:require('../assets/teachImg/icon_user4_warning.png'),isAva:false}
       ],
       delNumber:0,//事务删除个数

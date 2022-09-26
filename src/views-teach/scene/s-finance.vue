@@ -144,7 +144,7 @@
             <div class="searchIn">
               <input
                 type="text"
-                placeholder="请输入登记哈希进行查询"
+                placeholder="Please input the registration hash to query"
                 v-model="searchHash"
               />
             </div>

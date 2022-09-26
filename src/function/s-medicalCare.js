@@ -7,7 +7,7 @@ export default{
 		return{
 			menuShow:false,//上方菜单按钮是否显示
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -20,31 +20,31 @@ export default{
 	    showTool:false,//左侧工具箱是否显示
 	    
 	    navList:[ 
-		    {title:'医院A',icon:require('../assets/teachImg/logi1.png')},
-		    {title:'医院B',icon:require('../assets/teachImg/logi2.png')},
-		    {title:'医院C',icon:require('../assets/teachImg/logi3.png')},
-		    {title:'病人',icon:require('../assets/teachImg/yy_2.png')}
+		    {title:'hospital A',icon:require('../assets/teachImg/logi1.png')},
+		    {title:'hospital B',icon:require('../assets/teachImg/logi2.png')},
+		    {title:'hospital C',icon:require('../assets/teachImg/logi3.png')},
+		    {title:'patient',icon:require('../assets/teachImg/yy_2.png')}
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成
-	    resultMess:'恭喜您信息登记成功！以下是您的上链哈希',//点击存证上链之后的提示信息
+	    resultMess:'Congratulations on your successful registration! Here is your uplink hash',//点击存证上链之后的提示信息
 	    
 	    hospitalA:{
 	    	id:'A',
 	    	authorized:false,//是否授权
-	    	name:'医院A',
+	    	name:'hospital A',
 	    	islinked:false,//是否对病人进行上链
 	    },
 	    hospitalB:{
 	    	id:'B',
 	    	authorized:false,
-	    	name:'医院B',
+	    	name:'hospital B',
 	    	islinked:false,
 	    },
 	    hospitalC:{
 	    	id:'C',
 	    	authorized:false,
-	    	name:'医院C',
+	    	name:'hospital C',
 	    	islinked:false,
 	    },
 	    
@@ -65,7 +65,7 @@ export default{
 	     medicalRecord:[],//就诊记录
 	     
 	    searchText:'',//查询hash   
-      menuText:'场景篇-病历信息共享',
+      menuText:'Scene - medical record information sharing',
       showAuthorize:false,//授权列表框是否显示
       
       curHospital:0,
@@ -112,7 +112,7 @@ export default{
  },
  mounted(){
  	let that = this;
- 	that.menuText = '场景篇-'+this.$route.params.name
+ 	that.menuText = 'Scene-'+this.$route.params.name
  	that.category_id = this.$route.params.id;
  	that.getvisit();
  },
@@ -197,11 +197,11 @@ export default{
 	  	let that = this;
 	  	//console.log('123:'+that.rgisteInfo.affairHash)
 	  	if(that.rgisteInfo.affairHash==''){
-	  		that.$toast('暂无病人信息，请先上链病人信息',3000);
+	  		that.$toast('No patient information, please link the patient information first',3000);
 	  		return;
 	  	}
 	  	if(!that.cur_Hospital.authorized){
-	  		that.$toast('请点击病人对该医院进行授权',3000);
+	  		that.$toast('Please click patient to authorize the hospital',3000);
 	  		return;
 	  	}
 	  	that.showSearch = true;
@@ -213,7 +213,7 @@ export default{
 	  LinkedForm(){
 	  	let that = this;
 	  	if(that.rgisteInfo.affairHash!=''){
-	  		that.$toast("病人信息已完善！",2000)
+	  		that.$toast("Patient information is complete!",2000)
 	  	}else{
 	  	that.showNav = false
 	  	that.showForm = true;
@@ -224,7 +224,7 @@ export default{
 	  hauthorize(num){
 	  	let that = this;
 	  	if(that.rgisteInfo.name==''){
-	  		return that.$toast("请先点击医院，病人信息上链！",2000)
+	  		return that.$toast("Please click the hospital first, patient information on the chain!",2000)
 	  	}
 	  	switch
 	  	(parseInt(num)){
@@ -250,21 +250,21 @@ export default{
 	  	let that = this;
 	  	let obj = that.rgisteInfo
 	  	if(obj.name==''){
-	  		that.$toast('请输入病人姓名',2000)
+	  		that.$toast('Please enter the patients name',2000)
 	  		return;
 	  	}
 	  	
 	  	if(obj.medicalTime==''){
-	  		that.$toast('请输入病人就诊时间',2000)
+	  		that.$toast('Please enter the patients visit time',2000)
 	  		return;
 	  	}
 	    if(obj.doctor == ''){
-	      that.$toast('请输入 病人就诊医生',2000)
+	      that.$toast('Please input the patients doctor',2000)
 	  		return;
 	    }
 	  
 	    if(obj.medicalDescription== ''){
-	    	that.$toast('请输入病人的就诊描述',2000)
+	    	that.$toast('Please enter the patients visit description',2000)
 	    	return;
 	    }
    
@@ -328,7 +328,7 @@ export default{
 	  	let searchValue = '';
 	  	
 	  	if(that.searchText.replace(/\s*/g,'')!=that.rgisteInfo.affairHash){
-	  		that.$toast('请输入正确的hash',3000)
+	  		that.$toast('Please enter the correct hash value',3000)
 	  		return;
 	  	}
 	  	that.showResult = true

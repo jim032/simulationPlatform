@@ -8,7 +8,7 @@ export default{
 		return{
 			menuShow:false,//上方菜单按钮是否显示
 			step:1,
-	  	operaInfo:{mess:'暂无状态，请先按照右侧步骤提示操作~。',infolist:[]},//底部传递的信息
+	  	operaInfo:{mess:'No status, please follow the steps on the right.',infolist:[]},//底部传递的信息
 	  	blockPro:0, //部署合约的进度
 	  	isBlcok:false,//是否展示节点计算进度条
 	  	invisable:false,
@@ -24,20 +24,20 @@ export default{
 	    showTool:false,//左侧工具箱是否显示
 	    
 	    navList:[ 
-		    {title:'捐赠人',icon:require('../assets/teachImg/jz1.png')},
-		    {title:'红十字会',icon:require('../assets/teachImg/jz2.png')},
-		    {title:'受益人',icon:require('../assets/teachImg/jz3.png')}
+		    {title:'Donor',icon:require('../assets/teachImg/jz1.png')},
+		    {title:'Red Cross Society',icon:require('../assets/teachImg/jz2.png')},
+		    {title:'beneficiary',icon:require('../assets/teachImg/jz3.png')}
 	    ],
 	    showNav:true,//三个操作按钮是否显示
 	    chainFinsh:false,//存证上链是否完成
-	    resultMess:'恭喜您！捐赠信息登记上链成功！下面是您的上链哈希，您可通过点击受益人查询：',//点击存证上链之后的提示信息
-	    resultMess1:'恭喜您！红十字会存证上链成功！下面是您的上链哈希：',
+	    resultMess:'Congratulations! Donation information registration on the chain success! The following is your uplink hash. You can query by clicking the beneficiary:',//点击存证上链之后的提示信息
+	    resultMess1:'Congratulations! Red cross certificate on the chain success! Here is your uplink hash:',
 	    goodList:[
-	      {value:'1',label: '防毒面具'},
-	      {value:'2',label: '口罩'},
-	      {value:'3',label: '衣服'},
-	      {value:'4',label: '书籍'},
-	      {value:'4',label: '药物'},
+	      {value:'1',label: 'antigas mask'},
+	      {value:'2',label: 'Mask'},
+	      {value:'3',label: 'clothes'},
+	      {value:'4',label: 'book'},
+	      {value:'4',label: 'medicine'},
 	    ],//捐赠东西列表
 	    //登记人
 	    rgisteInfo:{
@@ -62,7 +62,7 @@ export default{
 	    searchHash:'',//查询hash
       
       searchStep:0,//查询的步骤
-      menuText:'场景篇-捐赠数据确权',
+      menuText:'Scenario part - confirmation of donation data',
       category_id:''
 			
 		}
@@ -95,7 +95,7 @@ export default{
  },
  mounted(){
  	let that = this;
- 	that.menuText = '场景篇-'+this.$route.params.name
+ 	that.menuText = 'Scenario part-'+this.$route.params.name
  	that.category_id = this.$route.params.id;
  	that.getvisit();
  },
@@ -131,8 +131,8 @@ export default{
 	  	if(num==1){
 	  		if(that.step!=1){	
 	  			that.operaInfo.infolist=[]
-	  	  	that.operaInfo.mess='登记信息。'//底部传递的信息
-	  		  that.operaInfo.infolist.push('哈希：'+that.rgisteInfo.affairHash)
+	  	  	that.operaInfo.mess='Registration information.'//底部传递的信息
+	  		  that.operaInfo.infolist.push('hash:'+that.rgisteInfo.affairHash)
 	  		}else{
 	  		that.showNav = false
 	  		
@@ -140,7 +140,7 @@ export default{
 	  	}else if(num==2){
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先登记捐赠信息',2000)
+	  			  that.$toast('Please register the donation information first',2000)
 	  			  break;
 	  			case 2:
 	  			  that.showNav = false
@@ -148,18 +148,18 @@ export default{
 	  			  break;
 	  			case 3:
 	  			  that.operaInfo.infolist=[]
-	  			  that.operaInfo.mess='红十字会存证上链。'//底部传递的信息
-	  			  that.operaInfo.infolist.push('哈希：'+that.press.affairHash)
+	  			  that.operaInfo.mess='Red cross certificate on the chain.'//底部传递的信息
+	  			  that.operaInfo.infolist.push('hash:'+that.press.affairHash)
 	  			  break
 	  		}
 	  	}else{
 	  		that.searchHash = '';
 	  		switch(parseInt(that.step)){
 	  			case 1:
-	  			  that.$toast('请先登记信息',2000)
+	  			  that.$toast('Please register the information first',2000)
 	  			  break;
 	  			case 2:
-	  			  that.$toast('红十字会存证上链',2000)
+	  			  that.$toast('Red cross certificate on the chain',2000)
 	  			  break;
 	  			case 3:
 	  			  that.showNav=false;
@@ -178,31 +178,31 @@ export default{
 	  	let that = this;
 	  	let obj = that.rgisteInfo
 	  	if(obj.name==''){
-	  		that.$toast('请输入登记姓名',2000)
+	  		that.$toast('Please enter your registered name',2000)
 	  		return;
 	  	}
 	  	if(obj.goodName==''){
-	  		that.$toast('请选择捐赠物',2000)
+	  		that.$toast('Please select donation',2000)
 	  		return;
 	  	}
 	  	if(obj.goodNumer==''){
-	  		that.$toast('请输入捐赠数量',2000)
+	  		that.$toast('Please input the donation quantity',2000)
 	  		return;
 	  	}
 	  	if(obj.goodAbout==''){
-	  		that.$toast('请输入简介',2000)
+	  		that.$toast('Please enter the profile',2000)
 	  		return;
 	  	}
 	    if(obj.address == ''){
-	      that.$toast('请输入地址',2000)
+	      that.$toast('Please enter the address',2000)
 	  		return;
 	    }
 	    if(obj.beneficiary==''){
-	  		that.$toast('请输入受益人',2000)
+	  		that.$toast('Please enter the beneficiary',2000)
 	  		return;
 	  	}
 	    if(obj.mechanism==''){
-	  		that.$toast('请输入捐赠机构',2000)
+	  		that.$toast('Please enter the donor institution',2000)
 	  		return;
 	  	}
 	 
@@ -245,7 +245,7 @@ export default{
 	  	let that = this;
 	  	
 	  	if(that.searchHash.replace(/\s*/g,'')!=that.rgisteInfo.affairHash){
-	  		that.$toast('请输入正确的hash值',2000);
+	  		that.$toast('Please enter the correct hash value',2000);
 	  		that.that.searchHash = '';
 	  		return;
 	  	}else{

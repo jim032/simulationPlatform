@@ -105,7 +105,7 @@ export default {
       let that = this;
       //that.courseId = this.$route.params.id
       //that.courName = this.$route.params.name
-      that.courName = "User defined";
+      that.courName = "Customization";
       that.iconSrc = require("../../assets/teachImg/cat_icon5.png");
       that.getCourseList();
     },

@@ -15,7 +15,7 @@
               </div>
               <div class="cn_col cn_col2">
                 <div class="dinfo">
-                  <p class="pt line1">Hardware memory</p>
+                  <p class="pt line1">Hardware Memory</p>
                   <div class="line"></div>
                   <p class="pdata">{{ memoryUse }}</p>
                 </div>
@@ -64,7 +64,7 @@
                 style="width: 100%"
                 height="336"
               >
-                <el-table-column prop="created_at" label="time" align="center">
+                <el-table-column prop="created_at" label="Time" align="center">
                 </el-table-column>
                 <el-table-column
                   prop="category_name_chs"

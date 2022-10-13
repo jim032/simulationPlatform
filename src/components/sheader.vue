@@ -13,10 +13,10 @@
 				</div>
 			</div>
 			<ul class="nav">
-				<li class="curItem" :class="{'cur':pageNum==1}" @click="linkRoute(1)">data statistics</li>
-				<li class="curItem" :class="{'cur':pageNum==2}" @click="linkRoute(2)">Personnel management</li>
+				<li class="curItem" :class="{'cur':pageNum==1}" @click="linkRoute(1)">Data Statistics</li>
+				<li class="curItem" :class="{'cur':pageNum==2}" @click="linkRoute(2)">Personnel Management</li>
 				<!--<li class="curItem" :class="{'cur':pageNum==3}" @click="linkRoute(3)">自定义课程</li>-->
-				<li class="curItem" :class="{'cur':pageNum==3}" @click="linkRoute(3)">course management</li>
+				<li class="curItem" :class="{'cur':pageNum==3}" @click="linkRoute(3)">Course Management</li>
 			</ul>
 		</div>
 	</div>

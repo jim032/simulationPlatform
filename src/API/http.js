@@ -7,8 +7,8 @@ import router from '@/router/index'
 const http = axios.create({
 	//baseURL: 'http://47.96.19.10:8282',
   //baseURL: 'http://192.168.1.52:8282',liu
-	//baseURL: 'http://192.168.1.167:8080',//统
-	baseURL:'http://47.96.19.10:8282',//服务器
+	baseURL: 'http://192.168.1.77:8282',//统
+	// baseURL:'http://47.96.19.10:8282',//服务器
 
 	headers: {
 		'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
